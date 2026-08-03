@@ -1,0 +1,6699 @@
+{
+ "version": 1,
+ "rows": [
+  {
+   "tierIndex": 0,
+   "wallClockMs": 7085,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750000000000,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 82,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 42.51,
+    "holdMs": 7085
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2918889803
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 13346,
+   "raw": {
+    "dropletsLanded": 117,
+    "peakVelocity": 562.2646577190608,
+    "tiltEnergy": 4.91437807213515,
+    "holdMs": 323
+   },
+   "timestampMs": 1750000097003,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 6,
+    "peakVelocity": 562.2646577190608,
+    "tiltEnergy": 1.9380000000000002,
+    "holdMs": 323
+   },
+   "violations": [
+    "dropletsLanded",
+    "tiltEnergy"
+   ],
+   "hash": 2844013910
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 14619,
+   "raw": {
+    "dropletsLanded": 11,
+    "peakVelocity": 1817.0263091102242,
+    "tiltEnergy": 4.192771441303194,
+    "holdMs": 6013
+   },
+   "timestampMs": 1750000194006,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 11,
+    "peakVelocity": 1817.0263091102242,
+    "tiltEnergy": 4.192771441303194,
+    "holdMs": 6013
+   },
+   "violations": [],
+   "hash": 3513436309
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 10096,
+   "raw": {
+    "dropletsLanded": 29,
+    "peakVelocity": 1059.5294300932437,
+    "tiltEnergy": 0.908000870840624,
+    "holdMs": 6060
+   },
+   "timestampMs": 1750000291009,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 29,
+    "peakVelocity": 1059.5294300932437,
+    "tiltEnergy": 0.908000870840624,
+    "holdMs": 6060
+   },
+   "violations": [],
+   "hash": 3954601951
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 15268,
+   "raw": {
+    "dropletsLanded": 36,
+    "peakVelocity": 514.4707596395165,
+    "tiltEnergy": 2.726964543107897,
+    "holdMs": 8240
+   },
+   "timestampMs": 1750000388012,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 36,
+    "peakVelocity": 514.4707596395165,
+    "tiltEnergy": 2.726964543107897,
+    "holdMs": 8240
+   },
+   "violations": [],
+   "hash": 1949482305
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 11903,
+   "raw": {
+    "dropletsLanded": 37,
+    "peakVelocity": 2149.435015581548,
+    "tiltEnergy": 1.7825180338695645,
+    "holdMs": 15337
+   },
+   "timestampMs": 1750000485015,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 37,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 1.7825180338695645,
+    "holdMs": 11903
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3411774506
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 2043,
+   "raw": {
+    "dropletsLanded": 124,
+    "peakVelocity": 281.84677101671696,
+    "tiltEnergy": 4.853057524887845,
+    "holdMs": 5672
+   },
+   "timestampMs": 1750000582018,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 24,
+    "peakVelocity": 281.84677101671696,
+    "tiltEnergy": 4.853057524887845,
+    "holdMs": 2043
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 4159305397
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 9340,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750000679021,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 172,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 56.04,
+    "holdMs": 9340
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1079259424
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 5728,
+   "raw": {
+    "dropletsLanded": 102,
+    "peakVelocity": 1833.010155102238,
+    "tiltEnergy": 0.5969996086787432,
+    "holdMs": 10717
+   },
+   "timestampMs": 1750000776024,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 102,
+    "peakVelocity": 1833.010155102238,
+    "tiltEnergy": 0.5969996086787432,
+    "holdMs": 5728
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2568724607
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 12705,
+   "raw": {
+    "dropletsLanded": 55,
+    "peakVelocity": 1251.2451509479433,
+    "tiltEnergy": 2.2242849110625684,
+    "holdMs": 11363
+   },
+   "timestampMs": 1750000873027,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 55,
+    "peakVelocity": 1251.2451509479433,
+    "tiltEnergy": 2.2242849110625684,
+    "holdMs": 11363
+   },
+   "violations": [],
+   "hash": 1628971394
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 1351,
+   "raw": {
+    "dropletsLanded": 124,
+    "peakVelocity": 1320.0705262366682,
+    "tiltEnergy": 2.2500705264974385,
+    "holdMs": 4280
+   },
+   "timestampMs": 1750000970030,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 44,
+    "peakVelocity": 1320.0705262366682,
+    "tiltEnergy": 2.2500705264974385,
+    "holdMs": 1351
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 1773794564
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 2480,
+   "raw": {
+    "dropletsLanded": 122,
+    "peakVelocity": 959.8138661123812,
+    "tiltEnergy": 2.5968236615881324,
+    "holdMs": 6326
+   },
+   "timestampMs": 1750001067033,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 97,
+    "peakVelocity": 959.8138661123812,
+    "tiltEnergy": 2.5968236615881324,
+    "holdMs": 2480
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2227583266
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 10807,
+   "raw": {
+    "dropletsLanded": 38,
+    "peakVelocity": 898.3862651046365,
+    "tiltEnergy": 4.602920465404168,
+    "holdMs": 3624
+   },
+   "timestampMs": 1750001164036,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 38,
+    "peakVelocity": 898.3862651046365,
+    "tiltEnergy": 4.602920465404168,
+    "holdMs": 3624
+   },
+   "violations": [],
+   "hash": 2224193005
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 16014,
+   "raw": {
+    "dropletsLanded": 127,
+    "peakVelocity": 1677.0047733094543,
+    "tiltEnergy": 4.307664945954457,
+    "holdMs": 397
+   },
+   "timestampMs": 1750001261039,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 8,
+    "peakVelocity": 745.026223967989,
+    "tiltEnergy": 2.382,
+    "holdMs": 397
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3628828820
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 11750,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750001358042,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 271,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 70.5,
+    "holdMs": 11750
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1045546939
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 6764,
+   "raw": {
+    "dropletsLanded": 66,
+    "peakVelocity": 182.49096502549946,
+    "tiltEnergy": 2.9364496376365423,
+    "holdMs": 5604
+   },
+   "timestampMs": 1750001455045,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 66,
+    "peakVelocity": 182.49096502549946,
+    "tiltEnergy": 2.9364496376365423,
+    "holdMs": 5604
+   },
+   "violations": [],
+   "hash": 1751835019
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 4889,
+   "raw": {
+    "dropletsLanded": 1,
+    "peakVelocity": 107.31432191096246,
+    "tiltEnergy": 0.7632486766669899,
+    "holdMs": 13072
+   },
+   "timestampMs": 1750001552048,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 1,
+    "peakVelocity": 107.31432191096246,
+    "tiltEnergy": 0.7632486766669899,
+    "holdMs": 4889
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 271056150
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 9180,
+   "raw": {
+    "dropletsLanded": 113,
+    "peakVelocity": 1319.2838310729712,
+    "tiltEnergy": 0.7437546493019909,
+    "holdMs": 12162
+   },
+   "timestampMs": 1750001649051,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 113,
+    "peakVelocity": 1319.2838310729712,
+    "tiltEnergy": 0.7437546493019909,
+    "holdMs": 9180
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3490096966
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 12731,
+   "raw": {
+    "dropletsLanded": 7,
+    "peakVelocity": 83.1377511844039,
+    "tiltEnergy": 1.8561478715855628,
+    "holdMs": 9409
+   },
+   "timestampMs": 1750001746054,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 7,
+    "peakVelocity": 83.1377511844039,
+    "tiltEnergy": 1.8561478715855628,
+    "holdMs": 9409
+   },
+   "violations": [],
+   "hash": 2943927672
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 6911,
+   "raw": {
+    "dropletsLanded": 16,
+    "peakVelocity": 1210.847182618454,
+    "tiltEnergy": 2.0683164871297777,
+    "holdMs": 8152
+   },
+   "timestampMs": 1750001843057,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 16,
+    "peakVelocity": 1210.847182618454,
+    "tiltEnergy": 2.0683164871297777,
+    "holdMs": 6911
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3530632470
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 16494,
+   "raw": {
+    "dropletsLanded": 100,
+    "peakVelocity": 70.85085366852582,
+    "tiltEnergy": 4.378373819636181,
+    "holdMs": 15574
+   },
+   "timestampMs": 1750001940060,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 100,
+    "peakVelocity": 70.85085366852582,
+    "tiltEnergy": 4.378373819636181,
+    "holdMs": 15000
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 753343921
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 6488,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750002037063,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 180,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 38.928000000000004,
+    "holdMs": 6488
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 455561778
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 2003,
+   "raw": {
+    "dropletsLanded": 91,
+    "peakVelocity": 1252.8790693730116,
+    "tiltEnergy": 0.11156030930578709,
+    "holdMs": 14542
+   },
+   "timestampMs": 1750002134066,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 65,
+    "peakVelocity": 1252.8790693730116,
+    "tiltEnergy": 0.11156030930578709,
+    "holdMs": 2003
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 632676954
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 1619,
+   "raw": {
+    "dropletsLanded": 47,
+    "peakVelocity": 2242.9348850622773,
+    "tiltEnergy": 0.34849902149289846,
+    "holdMs": 13089
+   },
+   "timestampMs": 1750002231069,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 47,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 0.34849902149289846,
+    "holdMs": 1619
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 263725621
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 11150,
+   "raw": {
+    "dropletsLanded": 133,
+    "peakVelocity": 1330.3587355650961,
+    "tiltEnergy": 2.2693169966805726,
+    "holdMs": 9201
+   },
+   "timestampMs": 1750002328072,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 106,
+    "peakVelocity": 1330.3587355650961,
+    "tiltEnergy": 2.2693169966805726,
+    "holdMs": 9201
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 207863845
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 12598,
+   "raw": {
+    "dropletsLanded": 126,
+    "peakVelocity": 997.5184494163841,
+    "tiltEnergy": 2.573780483799055,
+    "holdMs": 12174
+   },
+   "timestampMs": 1750002425075,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 126,
+    "peakVelocity": 997.5184494163841,
+    "tiltEnergy": 2.573780483799055,
+    "holdMs": 12174
+   },
+   "violations": [],
+   "hash": 2823599920
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 8239,
+   "raw": {
+    "dropletsLanded": 83,
+    "peakVelocity": 553.8697610143572,
+    "tiltEnergy": 0.8147136599291116,
+    "holdMs": 2552
+   },
+   "timestampMs": 1750002522078,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 59,
+    "peakVelocity": 553.8697610143572,
+    "tiltEnergy": 0.8147136599291116,
+    "holdMs": 2552
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 952935415
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 4497,
+   "raw": {
+    "dropletsLanded": 14,
+    "peakVelocity": 2360.3515055030584,
+    "tiltEnergy": 1.091387242777273,
+    "holdMs": 6189
+   },
+   "timestampMs": 1750002619081,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 14,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 1.091387242777273,
+    "holdMs": 4497
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 1425599230
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 2468,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750002716084,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 80,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 14.808,
+    "holdMs": 2468
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3454015486
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 11084,
+   "raw": {
+    "dropletsLanded": 37,
+    "peakVelocity": 487.80402676202357,
+    "tiltEnergy": 4.30955883464776,
+    "holdMs": 3596
+   },
+   "timestampMs": 1750002813087,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 37,
+    "peakVelocity": 487.80402676202357,
+    "tiltEnergy": 4.30955883464776,
+    "holdMs": 3596
+   },
+   "violations": [],
+   "hash": 2046533592
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 9323,
+   "raw": {
+    "dropletsLanded": 7,
+    "peakVelocity": 718.313522497192,
+    "tiltEnergy": 1.3358962978236377,
+    "holdMs": 5334
+   },
+   "timestampMs": 1750002910090,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 7,
+    "peakVelocity": 718.313522497192,
+    "tiltEnergy": 1.3358962978236377,
+    "holdMs": 5334
+   },
+   "violations": [],
+   "hash": 2548590561
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 8800,
+   "raw": {
+    "dropletsLanded": 72,
+    "peakVelocity": 868.564275931567,
+    "tiltEnergy": 4.611267048167065,
+    "holdMs": 4870
+   },
+   "timestampMs": 1750003007093,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 72,
+    "peakVelocity": 868.564275931567,
+    "tiltEnergy": 4.611267048167065,
+    "holdMs": 4870
+   },
+   "violations": [],
+   "hash": 1647677151
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 8346,
+   "raw": {
+    "dropletsLanded": 68,
+    "peakVelocity": 1339.66263551265,
+    "tiltEnergy": 3.9181069924961776,
+    "holdMs": 6379
+   },
+   "timestampMs": 1750003104096,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 68,
+    "peakVelocity": 1339.66263551265,
+    "tiltEnergy": 3.9181069924961776,
+    "holdMs": 6379
+   },
+   "violations": [],
+   "hash": 3876212821
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 11862,
+   "raw": {
+    "dropletsLanded": 28,
+    "peakVelocity": 729.4083524029702,
+    "tiltEnergy": 0.10501874145120382,
+    "holdMs": 1153
+   },
+   "timestampMs": 1750003201099,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 28,
+    "peakVelocity": 729.4083524029702,
+    "tiltEnergy": 0.10501874145120382,
+    "holdMs": 1153
+   },
+   "violations": [],
+   "hash": 2611218891
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9548,
+   "raw": {
+    "dropletsLanded": 104,
+    "peakVelocity": 1785.595966456458,
+    "tiltEnergy": 2.3311382776591927,
+    "holdMs": 207
+   },
+   "timestampMs": 1750003298102,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 7,
+    "peakVelocity": 453.4896453062628,
+    "tiltEnergy": 1.242,
+    "holdMs": 207
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1179177131
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 3911,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750003395105,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 153,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 23.466,
+    "holdMs": 3911
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2228437729
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 5259,
+   "raw": {
+    "dropletsLanded": 105,
+    "peakVelocity": 1742.4415261484683,
+    "tiltEnergy": 4.311472625704482,
+    "holdMs": 12109
+   },
+   "timestampMs": 1750003492108,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 61,
+    "peakVelocity": 1742.4415261484683,
+    "tiltEnergy": 4.311472625704482,
+    "holdMs": 5259
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 4286625925
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 3002,
+   "raw": {
+    "dropletsLanded": 64,
+    "peakVelocity": 236.86061282642186,
+    "tiltEnergy": 0.6579531636089087,
+    "holdMs": 9943
+   },
+   "timestampMs": 1750003589111,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 56,
+    "peakVelocity": 236.86061282642186,
+    "tiltEnergy": 0.6579531636089087,
+    "holdMs": 3002
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2537225447
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 3197,
+   "raw": {
+    "dropletsLanded": 72,
+    "peakVelocity": 395.8074233494699,
+    "tiltEnergy": 4.079574424540624,
+    "holdMs": 6616
+   },
+   "timestampMs": 1750003686114,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 72,
+    "peakVelocity": 395.8074233494699,
+    "tiltEnergy": 4.079574424540624,
+    "holdMs": 3197
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 809109499
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 8477,
+   "raw": {
+    "dropletsLanded": 25,
+    "peakVelocity": 922.0310485456139,
+    "tiltEnergy": 3.3092662401031703,
+    "holdMs": 2053
+   },
+   "timestampMs": 1750003783117,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 25,
+    "peakVelocity": 922.0310485456139,
+    "tiltEnergy": 3.3092662401031703,
+    "holdMs": 2053
+   },
+   "violations": [],
+   "hash": 664460144
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 7365,
+   "raw": {
+    "dropletsLanded": 122,
+    "peakVelocity": 2137.8634540364146,
+    "tiltEnergy": 2.279921341687441,
+    "holdMs": 2682
+   },
+   "timestampMs": 1750003880120,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 87,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.279921341687441,
+    "holdMs": 2682
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 1282379008
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 3934,
+   "raw": {
+    "dropletsLanded": 64,
+    "peakVelocity": 1200.5922220647335,
+    "tiltEnergy": 3.033796828240156,
+    "holdMs": 8310
+   },
+   "timestampMs": 1750003977123,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 64,
+    "peakVelocity": 1200.5922220647335,
+    "tiltEnergy": 3.033796828240156,
+    "holdMs": 3934
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3049049692
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 11579,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750004074126,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 134,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 69.474,
+    "holdMs": 11579
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3776720482
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 9111,
+   "raw": {
+    "dropletsLanded": 12,
+    "peakVelocity": 208.15079528838396,
+    "tiltEnergy": 1.8322054285090417,
+    "holdMs": 5986
+   },
+   "timestampMs": 1750004171129,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 12,
+    "peakVelocity": 208.15079528838396,
+    "tiltEnergy": 1.8322054285090417,
+    "holdMs": 5986
+   },
+   "violations": [],
+   "hash": 215442100
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 2628,
+   "raw": {
+    "dropletsLanded": 60,
+    "peakVelocity": 375.50374888814986,
+    "tiltEnergy": 2.318373965099454,
+    "holdMs": 9338
+   },
+   "timestampMs": 1750004268132,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 60,
+    "peakVelocity": 375.50374888814986,
+    "tiltEnergy": 2.318373965099454,
+    "holdMs": 2628
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1138289784
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 3242,
+   "raw": {
+    "dropletsLanded": 87,
+    "peakVelocity": 1277.5359276216477,
+    "tiltEnergy": 1.8051967839710414,
+    "holdMs": 9165
+   },
+   "timestampMs": 1750004365135,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 87,
+    "peakVelocity": 1277.5359276216477,
+    "tiltEnergy": 1.8051967839710414,
+    "holdMs": 3242
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2366671800
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 2973,
+   "raw": {
+    "dropletsLanded": 30,
+    "peakVelocity": 1924.3752951268107,
+    "tiltEnergy": 4.199506082804874,
+    "holdMs": 6009
+   },
+   "timestampMs": 1750004462138,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 30,
+    "peakVelocity": 1924.3752951268107,
+    "tiltEnergy": 4.199506082804874,
+    "holdMs": 2973
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1438758168
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 12508,
+   "raw": {
+    "dropletsLanded": 20,
+    "peakVelocity": 1272.3161006346345,
+    "tiltEnergy": 3.1277580582536757,
+    "holdMs": 7110
+   },
+   "timestampMs": 1750004559141,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 20,
+    "peakVelocity": 1272.3161006346345,
+    "tiltEnergy": 3.1277580582536757,
+    "holdMs": 7110
+   },
+   "violations": [],
+   "hash": 321187717
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 4043,
+   "raw": {
+    "dropletsLanded": 96,
+    "peakVelocity": 956.816100794822,
+    "tiltEnergy": 2.7429646637756377,
+    "holdMs": 12356
+   },
+   "timestampMs": 1750004656144,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 47,
+    "peakVelocity": 956.816100794822,
+    "tiltEnergy": 2.7429646637756377,
+    "holdMs": 4043
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2871660454
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 9471,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750004753147,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 175,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 56.826,
+    "holdMs": 9471
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1231599633
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 1264,
+   "raw": {
+    "dropletsLanded": 50,
+    "peakVelocity": 170.06210279650986,
+    "tiltEnergy": 0.8837335999123752,
+    "holdMs": 11936
+   },
+   "timestampMs": 1750004850150,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 30,
+    "peakVelocity": 170.06210279650986,
+    "tiltEnergy": 0.8837335999123752,
+    "holdMs": 1264
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 631107751
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 1186,
+   "raw": {
+    "dropletsLanded": 135,
+    "peakVelocity": 2227.201983658597,
+    "tiltEnergy": 4.196961089037359,
+    "holdMs": 3132
+   },
+   "timestampMs": 1750004947153,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 33,
+    "peakVelocity": 1959.065461795496,
+    "tiltEnergy": 4.196961089037359,
+    "holdMs": 1186
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3898944843
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 14873,
+   "raw": {
+    "dropletsLanded": 64,
+    "peakVelocity": 1484.0946899261326,
+    "tiltEnergy": 4.590526178944856,
+    "holdMs": 13861
+   },
+   "timestampMs": 1750005044156,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 64,
+    "peakVelocity": 1484.0946899261326,
+    "tiltEnergy": 4.590526178944856,
+    "holdMs": 13861
+   },
+   "violations": [],
+   "hash": 1780210279
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 13772,
+   "raw": {
+    "dropletsLanded": 61,
+    "peakVelocity": 1038.4970424231142,
+    "tiltEnergy": 4.637913595652208,
+    "holdMs": 9438
+   },
+   "timestampMs": 1750005141159,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 61,
+    "peakVelocity": 1038.4970424231142,
+    "tiltEnergy": 4.637913595652208,
+    "holdMs": 9438
+   },
+   "violations": [],
+   "hash": 1115591445
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 5010,
+   "raw": {
+    "dropletsLanded": 2,
+    "peakVelocity": 617.7978921681643,
+    "tiltEnergy": 1.8558012822177261,
+    "holdMs": 13527
+   },
+   "timestampMs": 1750005238162,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 2,
+    "peakVelocity": 617.7978921681643,
+    "tiltEnergy": 1.8558012822177261,
+    "holdMs": 5010
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1851630916
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 14678,
+   "raw": {
+    "dropletsLanded": 91,
+    "peakVelocity": 1623.2612320687622,
+    "tiltEnergy": 1.2477735721040517,
+    "holdMs": 3819
+   },
+   "timestampMs": 1750005335165,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 71,
+    "peakVelocity": 1623.2612320687622,
+    "tiltEnergy": 1.2477735721040517,
+    "holdMs": 3819
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 287245152
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 6570,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750005432168,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 152,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 39.42,
+    "holdMs": 6570
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2204016189
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 5004,
+   "raw": {
+    "dropletsLanded": 16,
+    "peakVelocity": 1102.6897442061454,
+    "tiltEnergy": 4.115796678233892,
+    "holdMs": 6102
+   },
+   "timestampMs": 1750005529171,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 16,
+    "peakVelocity": 1102.6897442061454,
+    "tiltEnergy": 4.115796678233892,
+    "holdMs": 5004
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3955064512
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 4019,
+   "raw": {
+    "dropletsLanded": 109,
+    "peakVelocity": 1537.152084428817,
+    "tiltEnergy": 1.4348082360811532,
+    "holdMs": 5065
+   },
+   "timestampMs": 1750005626174,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 109,
+    "peakVelocity": 1537.152084428817,
+    "tiltEnergy": 1.4348082360811532,
+    "holdMs": 4019
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 4249270932
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 6834,
+   "raw": {
+    "dropletsLanded": 115,
+    "peakVelocity": 1267.187085468322,
+    "tiltEnergy": 4.901529325870797,
+    "holdMs": 6665
+   },
+   "timestampMs": 1750005723177,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 115,
+    "peakVelocity": 1267.187085468322,
+    "tiltEnergy": 4.901529325870797,
+    "holdMs": 6665
+   },
+   "violations": [],
+   "hash": 4002535603
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 4622,
+   "raw": {
+    "dropletsLanded": 125,
+    "peakVelocity": 1037.566661508754,
+    "tiltEnergy": 4.714846431743354,
+    "holdMs": 6232
+   },
+   "timestampMs": 1750005820180,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 54,
+    "peakVelocity": 1037.566661508754,
+    "tiltEnergy": 4.714846431743354,
+    "holdMs": 4622
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2091344756
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 16221,
+   "raw": {
+    "dropletsLanded": 78,
+    "peakVelocity": 739.524098392576,
+    "tiltEnergy": 1.5175265085417777,
+    "holdMs": 7943
+   },
+   "timestampMs": 1750005917183,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 78,
+    "peakVelocity": 739.524098392576,
+    "tiltEnergy": 1.5175265085417777,
+    "holdMs": 7943
+   },
+   "violations": [],
+   "hash": 4104017588
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 14607,
+   "raw": {
+    "dropletsLanded": 20,
+    "peakVelocity": 1799.4305022992194,
+    "tiltEnergy": 1.2438312324229628,
+    "holdMs": 12198
+   },
+   "timestampMs": 1750006014186,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 20,
+    "peakVelocity": 1799.4305022992194,
+    "tiltEnergy": 1.2438312324229628,
+    "holdMs": 12198
+   },
+   "violations": [],
+   "hash": 4270217170
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 12850,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750006111189,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 355,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 77.1,
+    "holdMs": 12850
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 602679678
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 3742,
+   "raw": {
+    "dropletsLanded": 102,
+    "peakVelocity": 905.1190669182688,
+    "tiltEnergy": 4.9258015607483685,
+    "holdMs": 9353
+   },
+   "timestampMs": 1750006208192,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 102,
+    "peakVelocity": 905.1190669182688,
+    "tiltEnergy": 4.9258015607483685,
+    "holdMs": 3742
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 955237219
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 11538,
+   "raw": {
+    "dropletsLanded": 125,
+    "peakVelocity": 97.96320754103363,
+    "tiltEnergy": 0.9844183723907918,
+    "holdMs": 15138
+   },
+   "timestampMs": 1750006305195,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 125,
+    "peakVelocity": 97.96320754103363,
+    "tiltEnergy": 0.9844183723907918,
+    "holdMs": 11538
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3041235300
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 10600,
+   "raw": {
+    "dropletsLanded": 55,
+    "peakVelocity": 1373.4925567172468,
+    "tiltEnergy": 3.48129031364806,
+    "holdMs": 15143
+   },
+   "timestampMs": 1750006402198,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 55,
+    "peakVelocity": 1373.4925567172468,
+    "tiltEnergy": 3.48129031364806,
+    "holdMs": 10600
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2351091417
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 2745,
+   "raw": {
+    "dropletsLanded": 31,
+    "peakVelocity": 453.67610030807555,
+    "tiltEnergy": 4.258472023066133,
+    "holdMs": 10606
+   },
+   "timestampMs": 1750006499201,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 31,
+    "peakVelocity": 453.67610030807555,
+    "tiltEnergy": 4.258472023066133,
+    "holdMs": 2745
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3980198375
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 4818,
+   "raw": {
+    "dropletsLanded": 22,
+    "peakVelocity": 1475.8069600444287,
+    "tiltEnergy": 4.679624759592116,
+    "holdMs": 3266
+   },
+   "timestampMs": 1750006596204,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 22,
+    "peakVelocity": 1475.8069600444287,
+    "tiltEnergy": 4.679624759592116,
+    "holdMs": 3266
+   },
+   "violations": [],
+   "hash": 1236686943
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 3865,
+   "raw": {
+    "dropletsLanded": 95,
+    "peakVelocity": 51.4493927359581,
+    "tiltEnergy": 3.131548287346959,
+    "holdMs": 7879
+   },
+   "timestampMs": 1750006693207,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 95,
+    "peakVelocity": 51.4493927359581,
+    "tiltEnergy": 3.131548287346959,
+    "holdMs": 3865
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2751526372
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9906,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750006790210,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 319,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 59.43600000000001,
+    "holdMs": 9906
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3293382293
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 1153,
+   "raw": {
+    "dropletsLanded": 29,
+    "peakVelocity": 645.3945791814476,
+    "tiltEnergy": 2.1691175445448607,
+    "holdMs": 2547
+   },
+   "timestampMs": 1750006887213,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 29,
+    "peakVelocity": 645.3945791814476,
+    "tiltEnergy": 2.1691175445448607,
+    "holdMs": 1153
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 14128925
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 11309,
+   "raw": {
+    "dropletsLanded": 83,
+    "peakVelocity": 2536.1982909496874,
+    "tiltEnergy": 2.5041525857523084,
+    "holdMs": 9435
+   },
+   "timestampMs": 1750006984216,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 83,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.5041525857523084,
+    "holdMs": 9435
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 1423527975
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 14609,
+   "raw": {
+    "dropletsLanded": 72,
+    "peakVelocity": 2160.7845947612077,
+    "tiltEnergy": 3.396721981698647,
+    "holdMs": 506
+   },
+   "timestampMs": 1750007081219,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 10,
+    "peakVelocity": 912.5834688399742,
+    "tiltEnergy": 3.036,
+    "holdMs": 506
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2953906046
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 15647,
+   "raw": {
+    "dropletsLanded": 64,
+    "peakVelocity": 158.96841883659363,
+    "tiltEnergy": 2.4072814465034753,
+    "holdMs": 1078
+   },
+   "timestampMs": 1750007178222,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 25,
+    "peakVelocity": 158.96841883659363,
+    "tiltEnergy": 2.4072814465034753,
+    "holdMs": 1078
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3760604412
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 12059,
+   "raw": {
+    "dropletsLanded": 138,
+    "peakVelocity": 1026.185305789113,
+    "tiltEnergy": 0.27355868369340897,
+    "holdMs": 11717
+   },
+   "timestampMs": 1750007275225,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 138,
+    "peakVelocity": 1026.185305789113,
+    "tiltEnergy": 0.27355868369340897,
+    "holdMs": 11717
+   },
+   "violations": [],
+   "hash": 763588197
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 7010,
+   "raw": {
+    "dropletsLanded": 110,
+    "peakVelocity": 78.1716134864837,
+    "tiltEnergy": 1.6585816151928157,
+    "holdMs": 4543
+   },
+   "timestampMs": 1750007372228,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 110,
+    "peakVelocity": 78.1716134864837,
+    "tiltEnergy": 1.6585816151928157,
+    "holdMs": 4543
+   },
+   "violations": [],
+   "hash": 2308545908
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 2450,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750007469231,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 96,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 14.700000000000001,
+    "holdMs": 2450
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2001131797
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 3888,
+   "raw": {
+    "dropletsLanded": 124,
+    "peakVelocity": 1961.9562325067818,
+    "tiltEnergy": 1.1360296548809856,
+    "holdMs": 8069
+   },
+   "timestampMs": 1750007566234,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 45,
+    "peakVelocity": 1961.9562325067818,
+    "tiltEnergy": 1.1360296548809856,
+    "holdMs": 3888
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2837462597
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 9581,
+   "raw": {
+    "dropletsLanded": 80,
+    "peakVelocity": 215.4135804157704,
+    "tiltEnergy": 4.760211789980531,
+    "holdMs": 13161
+   },
+   "timestampMs": 1750007663237,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 80,
+    "peakVelocity": 215.4135804157704,
+    "tiltEnergy": 4.760211789980531,
+    "holdMs": 9581
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 304998081
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 14982,
+   "raw": {
+    "dropletsLanded": 51,
+    "peakVelocity": 1053.820191603154,
+    "tiltEnergy": 3.343086583772674,
+    "holdMs": 2481
+   },
+   "timestampMs": 1750007760240,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 51,
+    "peakVelocity": 1053.820191603154,
+    "tiltEnergy": 3.343086583772674,
+    "holdMs": 2481
+   },
+   "violations": [],
+   "hash": 2092922302
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 10237,
+   "raw": {
+    "dropletsLanded": 54,
+    "peakVelocity": 1428.3696418162435,
+    "tiltEnergy": 4.449448770610616,
+    "holdMs": 6223
+   },
+   "timestampMs": 1750007857243,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 54,
+    "peakVelocity": 1428.3696418162435,
+    "tiltEnergy": 4.449448770610616,
+    "holdMs": 6223
+   },
+   "violations": [],
+   "hash": 3203117945
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 11995,
+   "raw": {
+    "dropletsLanded": 85,
+    "peakVelocity": 109.86880715936422,
+    "tiltEnergy": 2.9418858943972737,
+    "holdMs": 704
+   },
+   "timestampMs": 1750007954246,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 23,
+    "peakVelocity": 109.86880715936422,
+    "tiltEnergy": 2.9418858943972737,
+    "holdMs": 704
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 1568335098
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 15045,
+   "raw": {
+    "dropletsLanded": 122,
+    "peakVelocity": 1166.259518172592,
+    "tiltEnergy": 2.848472979385406,
+    "holdMs": 1911
+   },
+   "timestampMs": 1750008051249,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 75,
+    "peakVelocity": 1166.259518172592,
+    "tiltEnergy": 2.848472979385406,
+    "holdMs": 1911
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3172798928
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 9126,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750008148252,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 105,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 54.756,
+    "holdMs": 9126
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1531169134
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 15674,
+   "raw": {
+    "dropletsLanded": 88,
+    "peakVelocity": 2561.0465136822313,
+    "tiltEnergy": 3.2921277882996947,
+    "holdMs": 3844
+   },
+   "timestampMs": 1750008245255,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 71,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.2921277882996947,
+    "holdMs": 3844
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 2689933931
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 1069,
+   "raw": {
+    "dropletsLanded": 30,
+    "peakVelocity": 668.3249492198229,
+    "tiltEnergy": 2.163293786579743,
+    "holdMs": 8520
+   },
+   "timestampMs": 1750008342258,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 25,
+    "peakVelocity": 668.3249492198229,
+    "tiltEnergy": 2.163293786579743,
+    "holdMs": 1069
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2925648984
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 6958,
+   "raw": {
+    "dropletsLanded": 31,
+    "peakVelocity": 1895.1080291066319,
+    "tiltEnergy": 2.3553336912300438,
+    "holdMs": 13401
+   },
+   "timestampMs": 1750008439261,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 31,
+    "peakVelocity": 1895.1080291066319,
+    "tiltEnergy": 2.3553336912300438,
+    "holdMs": 6958
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1110717335
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 3687,
+   "raw": {
+    "dropletsLanded": 55,
+    "peakVelocity": 281.8013611715287,
+    "tiltEnergy": 0.2603662700857967,
+    "holdMs": 12498
+   },
+   "timestampMs": 1750008536264,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 55,
+    "peakVelocity": 281.8013611715287,
+    "tiltEnergy": 0.2603662700857967,
+    "holdMs": 3687
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1883583572
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 13295,
+   "raw": {
+    "dropletsLanded": 37,
+    "peakVelocity": 500.52714282646775,
+    "tiltEnergy": 3.4414628229569644,
+    "holdMs": 2992
+   },
+   "timestampMs": 1750008633267,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 37,
+    "peakVelocity": 500.52714282646775,
+    "tiltEnergy": 3.4414628229569644,
+    "holdMs": 2992
+   },
+   "violations": [],
+   "hash": 1969457280
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 790,
+   "raw": {
+    "dropletsLanded": 41,
+    "peakVelocity": 273.41344002634287,
+    "tiltEnergy": 0.9754479222465307,
+    "holdMs": 15774
+   },
+   "timestampMs": 1750008730270,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 10,
+    "peakVelocity": 273.41344002634287,
+    "tiltEnergy": 0.9754479222465307,
+    "holdMs": 790
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 1251563918
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 15368,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750008827273,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 276,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 90,
+    "holdMs": 15000
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1705890844
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 5696,
+   "raw": {
+    "dropletsLanded": 109,
+    "peakVelocity": 108.20968034677207,
+    "tiltEnergy": 1.9536432542372495,
+    "holdMs": 252
+   },
+   "timestampMs": 1750008924276,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 6,
+    "peakVelocity": 108.20968034677207,
+    "tiltEnergy": 1.512,
+    "holdMs": 252
+   },
+   "violations": [
+    "dropletsLanded",
+    "tiltEnergy"
+   ],
+   "hash": 3207382445
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 2490,
+   "raw": {
+    "dropletsLanded": 31,
+    "peakVelocity": 1962.4821829143912,
+    "tiltEnergy": 4.069340476999059,
+    "holdMs": 2339
+   },
+   "timestampMs": 1750009021279,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 31,
+    "peakVelocity": 1962.4821829143912,
+    "tiltEnergy": 4.069340476999059,
+    "holdMs": 2339
+   },
+   "violations": [],
+   "hash": 513407038
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 14610,
+   "raw": {
+    "dropletsLanded": 126,
+    "peakVelocity": 1411.158372182399,
+    "tiltEnergy": 3.4930479805916548,
+    "holdMs": 15965
+   },
+   "timestampMs": 1750009118282,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 126,
+    "peakVelocity": 1411.158372182399,
+    "tiltEnergy": 3.4930479805916548,
+    "holdMs": 14610
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1460602385
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 13026,
+   "raw": {
+    "dropletsLanded": 57,
+    "peakVelocity": 172.02043710276484,
+    "tiltEnergy": 2.1403687179554254,
+    "holdMs": 12308
+   },
+   "timestampMs": 1750009215285,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 57,
+    "peakVelocity": 172.02043710276484,
+    "tiltEnergy": 2.1403687179554254,
+    "holdMs": 12308
+   },
+   "violations": [],
+   "hash": 261241940
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 10735,
+   "raw": {
+    "dropletsLanded": 48,
+    "peakVelocity": 2011.9083007797599,
+    "tiltEnergy": 2.355679669417441,
+    "holdMs": 5532
+   },
+   "timestampMs": 1750009312288,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 48,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.355679669417441,
+    "holdMs": 5532
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 907622411
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 1910,
+   "raw": {
+    "dropletsLanded": 102,
+    "peakVelocity": 436.6681594867259,
+    "tiltEnergy": 3.74722758657299,
+    "holdMs": 4855
+   },
+   "timestampMs": 1750009409291,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 36,
+    "peakVelocity": 436.6681594867259,
+    "tiltEnergy": 3.74722758657299,
+    "holdMs": 1910
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2889083034
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 7588,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750009506294,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 175,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 45.528,
+    "holdMs": 7588
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 4228638786
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 11108,
+   "raw": {
+    "dropletsLanded": 56,
+    "peakVelocity": 1986.202704720199,
+    "tiltEnergy": 0.7978014566469938,
+    "holdMs": 2502
+   },
+   "timestampMs": 1750009603297,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 56,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 0.7978014566469938,
+    "holdMs": 2502
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 2967015634
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9392,
+   "raw": {
+    "dropletsLanded": 6,
+    "peakVelocity": 889.8582146968693,
+    "tiltEnergy": 1.7217251018155366,
+    "holdMs": 5764
+   },
+   "timestampMs": 1750009700300,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 6,
+    "peakVelocity": 889.8582146968693,
+    "tiltEnergy": 1.7217251018155366,
+    "holdMs": 5764
+   },
+   "violations": [],
+   "hash": 1977520617
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 11715,
+   "raw": {
+    "dropletsLanded": 139,
+    "peakVelocity": 1682.2087205015123,
+    "tiltEnergy": 0.7123035890981555,
+    "holdMs": 14519
+   },
+   "timestampMs": 1750009797303,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 139,
+    "peakVelocity": 1682.2087205015123,
+    "tiltEnergy": 0.7123035890981555,
+    "holdMs": 11715
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2201436128
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 2664,
+   "raw": {
+    "dropletsLanded": 34,
+    "peakVelocity": 2042.3478016164154,
+    "tiltEnergy": 3.6078818200621754,
+    "holdMs": 4326
+   },
+   "timestampMs": 1750009894306,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 31,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.6078818200621754,
+    "holdMs": 2664
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 81407728
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 8585,
+   "raw": {
+    "dropletsLanded": 40,
+    "peakVelocity": 773.616090696305,
+    "tiltEnergy": 1.923912945203483,
+    "holdMs": 7652
+   },
+   "timestampMs": 1750009991309,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 40,
+    "peakVelocity": 773.616090696305,
+    "tiltEnergy": 1.923912945203483,
+    "holdMs": 7652
+   },
+   "violations": [],
+   "hash": 1520805861
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 6136,
+   "raw": {
+    "dropletsLanded": 113,
+    "peakVelocity": 2233.878553006798,
+    "tiltEnergy": 0.4873331554699689,
+    "holdMs": 195
+   },
+   "timestampMs": 1750010088312,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 5,
+    "peakVelocity": 435.1247407353436,
+    "tiltEnergy": 0.4873331554699689,
+    "holdMs": 195
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 4155822940
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 13505,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750010185315,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 373,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 81.03,
+    "holdMs": 13505
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 4081596843
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 2102,
+   "raw": {
+    "dropletsLanded": 101,
+    "peakVelocity": 1393.0206697899848,
+    "tiltEnergy": 3.556867392035201,
+    "holdMs": 7483
+   },
+   "timestampMs": 1750010282318,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 68,
+    "peakVelocity": 1393.0206697899848,
+    "tiltEnergy": 3.556867392035201,
+    "holdMs": 2102
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 170791673
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 5157,
+   "raw": {
+    "dropletsLanded": 116,
+    "peakVelocity": 2518.69389526546,
+    "tiltEnergy": 3.7352886784356087,
+    "holdMs": 7766
+   },
+   "timestampMs": 1750010379321,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 116,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.7352886784356087,
+    "holdMs": 5157
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3049587852
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 14045,
+   "raw": {
+    "dropletsLanded": 113,
+    "peakVelocity": 257.65075008384883,
+    "tiltEnergy": 1.5996610035654157,
+    "holdMs": 9821
+   },
+   "timestampMs": 1750010476324,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 113,
+    "peakVelocity": 257.65075008384883,
+    "tiltEnergy": 1.5996610035654157,
+    "holdMs": 9821
+   },
+   "violations": [],
+   "hash": 194003649
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 6001,
+   "raw": {
+    "dropletsLanded": 14,
+    "peakVelocity": 171.40869027934968,
+    "tiltEnergy": 4.00170071516186,
+    "holdMs": 11609
+   },
+   "timestampMs": 1750010573327,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 14,
+    "peakVelocity": 171.40869027934968,
+    "tiltEnergy": 4.00170071516186,
+    "holdMs": 6001
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3301911697
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 5079,
+   "raw": {
+    "dropletsLanded": 111,
+    "peakVelocity": 2385.3527498431504,
+    "tiltEnergy": 0.14338216511532664,
+    "holdMs": 7091
+   },
+   "timestampMs": 1750010670330,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 111,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 0.14338216511532664,
+    "holdMs": 5079
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3864806326
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 974,
+   "raw": {
+    "dropletsLanded": 119,
+    "peakVelocity": 1528.5882560536265,
+    "tiltEnergy": 3.2898498559370637,
+    "holdMs": 7462
+   },
+   "timestampMs": 1750010767333,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 27,
+    "peakVelocity": 1528.5882560536265,
+    "tiltEnergy": 3.2898498559370637,
+    "holdMs": 974
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 3737269315
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 863,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750010864336,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 28,
+    "peakVelocity": 1461.8583003834538,
+    "tiltEnergy": 5.178,
+    "holdMs": 863
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2265680614
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 3005,
+   "raw": {
+    "dropletsLanded": 5,
+    "peakVelocity": 797.07359704189,
+    "tiltEnergy": 1.0808136861305684,
+    "holdMs": 14161
+   },
+   "timestampMs": 1750010961339,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 5,
+    "peakVelocity": 797.07359704189,
+    "tiltEnergy": 1.0808136861305684,
+    "holdMs": 3005
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2101888266
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 9600,
+   "raw": {
+    "dropletsLanded": 70,
+    "peakVelocity": 2100.3720354288816,
+    "tiltEnergy": 3.48521297913976,
+    "holdMs": 12286
+   },
+   "timestampMs": 1750011058342,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 70,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.48521297913976,
+    "holdMs": 9600
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 2280189533
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 10899,
+   "raw": {
+    "dropletsLanded": 53,
+    "peakVelocity": 1029.1227627545595,
+    "tiltEnergy": 2.431548024760559,
+    "holdMs": 4477
+   },
+   "timestampMs": 1750011155345,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 53,
+    "peakVelocity": 1029.1227627545595,
+    "tiltEnergy": 2.431548024760559,
+    "holdMs": 4477
+   },
+   "violations": [],
+   "hash": 1762724510
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 16257,
+   "raw": {
+    "dropletsLanded": 5,
+    "peakVelocity": 2543.6556907370687,
+    "tiltEnergy": 4.210845232009888,
+    "holdMs": 1774
+   },
+   "timestampMs": 1750011252348,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 5,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.210845232009888,
+    "holdMs": 1774
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 1690476937
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 9212,
+   "raw": {
+    "dropletsLanded": 47,
+    "peakVelocity": 1860.1242548320442,
+    "tiltEnergy": 1.5887864446267486,
+    "holdMs": 1098
+   },
+   "timestampMs": 1750011349351,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 31,
+    "peakVelocity": 1823.5919435005192,
+    "tiltEnergy": 1.5887864446267486,
+    "holdMs": 1098
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 238356891
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9150,
+   "raw": {
+    "dropletsLanded": 27,
+    "peakVelocity": 1149.8304888606071,
+    "tiltEnergy": 0.6992487388197333,
+    "holdMs": 53
+   },
+   "timestampMs": 1750011446354,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 2,
+    "peakVelocity": 219.28008208681428,
+    "tiltEnergy": 0.318,
+    "holdMs": 53
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1546349715
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 3253,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750011543357,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 128,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 19.518,
+    "holdMs": 3253
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 4034866729
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 1498,
+   "raw": {
+    "dropletsLanded": 127,
+    "peakVelocity": 1204.91110435687,
+    "tiltEnergy": 2.3420375015120953,
+    "holdMs": 6915
+   },
+   "timestampMs": 1750011640360,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 18,
+    "peakVelocity": 1204.91110435687,
+    "tiltEnergy": 2.3420375015120953,
+    "holdMs": 1498
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 1400920534
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 3380,
+   "raw": {
+    "dropletsLanded": 65,
+    "peakVelocity": 2139.501659013331,
+    "tiltEnergy": 2.3750042088795453,
+    "holdMs": 2839
+   },
+   "timestampMs": 1750011737363,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 53,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.3750042088795453,
+    "holdMs": 2839
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 1244158856
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 1365,
+   "raw": {
+    "dropletsLanded": 84,
+    "peakVelocity": 1361.296490393579,
+    "tiltEnergy": 3.972432118607685,
+    "holdMs": 12232
+   },
+   "timestampMs": 1750011834366,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 32,
+    "peakVelocity": 1361.296490393579,
+    "tiltEnergy": 3.972432118607685,
+    "holdMs": 1365
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2522317386
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 711,
+   "raw": {
+    "dropletsLanded": 56,
+    "peakVelocity": 617.0384648256004,
+    "tiltEnergy": 0.18299401504918933,
+    "holdMs": 4724
+   },
+   "timestampMs": 1750011931369,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 20,
+    "peakVelocity": 617.0384648256004,
+    "tiltEnergy": 0.18299401504918933,
+    "holdMs": 711
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 3184459374
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 13085,
+   "raw": {
+    "dropletsLanded": 73,
+    "peakVelocity": 570.5608493182808,
+    "tiltEnergy": 4.696372189791873,
+    "holdMs": 14957
+   },
+   "timestampMs": 1750012028372,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 73,
+    "peakVelocity": 570.5608493182808,
+    "tiltEnergy": 4.696372189791873,
+    "holdMs": 13085
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2765348454
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 8196,
+   "raw": {
+    "dropletsLanded": 9,
+    "peakVelocity": 1082.1661819238216,
+    "tiltEnergy": 2.7628270944114774,
+    "holdMs": 14577
+   },
+   "timestampMs": 1750012125375,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 9,
+    "peakVelocity": 1082.1661819238216,
+    "tiltEnergy": 2.7628270944114774,
+    "holdMs": 8196
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1778224562
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 6445,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750012222378,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 75,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 38.67,
+    "holdMs": 6445
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 370701039
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 13385,
+   "raw": {
+    "dropletsLanded": 21,
+    "peakVelocity": 1313.2875576615334,
+    "tiltEnergy": 0.8493648539297283,
+    "holdMs": 4574
+   },
+   "timestampMs": 1750012319381,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 21,
+    "peakVelocity": 1313.2875576615334,
+    "tiltEnergy": 0.8493648539297283,
+    "holdMs": 4574
+   },
+   "violations": [],
+   "hash": 2273582469
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 9075,
+   "raw": {
+    "dropletsLanded": 105,
+    "peakVelocity": 1056.1081926804036,
+    "tiltEnergy": 4.173391474178061,
+    "holdMs": 9929
+   },
+   "timestampMs": 1750012416384,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 105,
+    "peakVelocity": 1056.1081926804036,
+    "tiltEnergy": 4.173391474178061,
+    "holdMs": 9075
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2012650890
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 5634,
+   "raw": {
+    "dropletsLanded": 70,
+    "peakVelocity": 1055.9915265534073,
+    "tiltEnergy": 1.4838344231247902,
+    "holdMs": 5869
+   },
+   "timestampMs": 1750012513387,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 70,
+    "peakVelocity": 1055.9915265534073,
+    "tiltEnergy": 1.4838344231247902,
+    "holdMs": 5634
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1086170747
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 10844,
+   "raw": {
+    "dropletsLanded": 85,
+    "peakVelocity": 379.12675933912396,
+    "tiltEnergy": 4.557069811271504,
+    "holdMs": 13791
+   },
+   "timestampMs": 1750012610390,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 85,
+    "peakVelocity": 379.12675933912396,
+    "tiltEnergy": 4.557069811271504,
+    "holdMs": 10844
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1595955984
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 8084,
+   "raw": {
+    "dropletsLanded": 72,
+    "peakVelocity": 1274.8068124521524,
+    "tiltEnergy": 1.2660972902085632,
+    "holdMs": 2577
+   },
+   "timestampMs": 1750012707393,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 72,
+    "peakVelocity": 1274.8068124521524,
+    "tiltEnergy": 1.2660972902085632,
+    "holdMs": 2577
+   },
+   "violations": [],
+   "hash": 671924481
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 7645,
+   "raw": {
+    "dropletsLanded": 12,
+    "peakVelocity": 666.5412636008114,
+    "tiltEnergy": 1.8418110813945532,
+    "holdMs": 14851
+   },
+   "timestampMs": 1750012804396,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 12,
+    "peakVelocity": 666.5412636008114,
+    "tiltEnergy": 1.8418110813945532,
+    "holdMs": 7645
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2301254862
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 576,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750012901399,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 11,
+    "peakVelocity": 1020.2415261103619,
+    "tiltEnergy": 3.4559999999999995,
+    "holdMs": 576
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 670390177
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 7017,
+   "raw": {
+    "dropletsLanded": 47,
+    "peakVelocity": 246.0139501374215,
+    "tiltEnergy": 4.009582562139258,
+    "holdMs": 12804
+   },
+   "timestampMs": 1750012998402,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 47,
+    "peakVelocity": 246.0139501374215,
+    "tiltEnergy": 4.009582562139258,
+    "holdMs": 7017
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 631514171
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 12324,
+   "raw": {
+    "dropletsLanded": 109,
+    "peakVelocity": 723.2367426156998,
+    "tiltEnergy": 0.6824793003033847,
+    "holdMs": 10831
+   },
+   "timestampMs": 1750013095405,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 109,
+    "peakVelocity": 723.2367426156998,
+    "tiltEnergy": 0.6824793003033847,
+    "holdMs": 10831
+   },
+   "violations": [],
+   "hash": 2120483269
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9335,
+   "raw": {
+    "dropletsLanded": 130,
+    "peakVelocity": 1582.2749110404402,
+    "tiltEnergy": 2.4453109165187925,
+    "holdMs": 2528
+   },
+   "timestampMs": 1750013192408,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 82,
+    "peakVelocity": 1582.2749110404402,
+    "tiltEnergy": 2.4453109165187925,
+    "holdMs": 2528
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 449874810
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 4425,
+   "raw": {
+    "dropletsLanded": 121,
+    "peakVelocity": 2371.972615737468,
+    "tiltEnergy": 2.849880252033472,
+    "holdMs": 9579
+   },
+   "timestampMs": 1750013289411,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 121,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.849880252033472,
+    "holdMs": 4425
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 420074895
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 3951,
+   "raw": {
+    "dropletsLanded": 66,
+    "peakVelocity": 1325.2655861433595,
+    "tiltEnergy": 3.4899466042406857,
+    "holdMs": 9454
+   },
+   "timestampMs": 1750013386414,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 46,
+    "peakVelocity": 1325.2655861433595,
+    "tiltEnergy": 3.4899466042406857,
+    "holdMs": 3951
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 4278264167
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 6278,
+   "raw": {
+    "dropletsLanded": 73,
+    "peakVelocity": 1937.3783440329134,
+    "tiltEnergy": 3.078935294179246,
+    "holdMs": 12852
+   },
+   "timestampMs": 1750013483417,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 73,
+    "peakVelocity": 1937.3783440329134,
+    "tiltEnergy": 3.078935294179246,
+    "holdMs": 6278
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1566083976
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 4530,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750013580420,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 105,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 27.18,
+    "holdMs": 4530
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1880009031
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 13495,
+   "raw": {
+    "dropletsLanded": 66,
+    "peakVelocity": 704.2027210816741,
+    "tiltEnergy": 2.4167003843467683,
+    "holdMs": 3024
+   },
+   "timestampMs": 1750013677423,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 66,
+    "peakVelocity": 704.2027210816741,
+    "tiltEnergy": 2.4167003843467683,
+    "holdMs": 3024
+   },
+   "violations": [],
+   "hash": 367383978
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 3132,
+   "raw": {
+    "dropletsLanded": 25,
+    "peakVelocity": 2514.4941749982536,
+    "tiltEnergy": 0.434543244773522,
+    "holdMs": 9913
+   },
+   "timestampMs": 1750013774426,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 25,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 0.434543244773522,
+    "holdMs": 3132
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 195008593
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 11998,
+   "raw": {
+    "dropletsLanded": 62,
+    "peakVelocity": 1646.918785572052,
+    "tiltEnergy": 3.6158489680383354,
+    "holdMs": 12354
+   },
+   "timestampMs": 1750013871429,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 62,
+    "peakVelocity": 1646.918785572052,
+    "tiltEnergy": 3.6158489680383354,
+    "holdMs": 11998
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3515270797
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 1432,
+   "raw": {
+    "dropletsLanded": 110,
+    "peakVelocity": 1911.85966366902,
+    "tiltEnergy": 1.4417526533361524,
+    "holdMs": 211
+   },
+   "timestampMs": 1750013968432,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 3,
+    "peakVelocity": 459.61333052904376,
+    "tiltEnergy": 1.266,
+    "holdMs": 211
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 441360918
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 9293,
+   "raw": {
+    "dropletsLanded": 137,
+    "peakVelocity": 2512.908051535487,
+    "tiltEnergy": 2.982221950078383,
+    "holdMs": 14590
+   },
+   "timestampMs": 1750014065435,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 137,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.982221950078383,
+    "holdMs": 9293
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 1007146354
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 2639,
+   "raw": {
+    "dropletsLanded": 105,
+    "peakVelocity": 2537.411822192371,
+    "tiltEnergy": 0.4465754400007427,
+    "holdMs": 13299
+   },
+   "timestampMs": 1750014162438,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 61,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 0.4465754400007427,
+    "holdMs": 2639
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 2060872897
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 2518,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750014259441,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 70,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 15.107999999999999,
+    "holdMs": 2518
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 4235466843
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 6064,
+   "raw": {
+    "dropletsLanded": 66,
+    "peakVelocity": 2492.668218910694,
+    "tiltEnergy": 3.62007501302287,
+    "holdMs": 11015
+   },
+   "timestampMs": 1750014356444,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 66,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.62007501302287,
+    "holdMs": 6064
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 1747735188
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 2447,
+   "raw": {
+    "dropletsLanded": 129,
+    "peakVelocity": 1747.7053918410093,
+    "tiltEnergy": 2.13401188259013,
+    "holdMs": 2131
+   },
+   "timestampMs": 1750014453447,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 84,
+    "peakVelocity": 1747.7053918410093,
+    "tiltEnergy": 2.13401188259013,
+    "holdMs": 2131
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3208617105
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 3788,
+   "raw": {
+    "dropletsLanded": 30,
+    "peakVelocity": 413.41660618782043,
+    "tiltEnergy": 3.7148399802390486,
+    "holdMs": 11120
+   },
+   "timestampMs": 1750014550450,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 30,
+    "peakVelocity": 413.41660618782043,
+    "tiltEnergy": 3.7148399802390486,
+    "holdMs": 3788
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1505916277
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 10880,
+   "raw": {
+    "dropletsLanded": 59,
+    "peakVelocity": 2122.490759799257,
+    "tiltEnergy": 3.6285916855558753,
+    "holdMs": 10856
+   },
+   "timestampMs": 1750014647453,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 59,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.6285916855558753,
+    "holdMs": 10856
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 573761996
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 11754,
+   "raw": {
+    "dropletsLanded": 121,
+    "peakVelocity": 257.8399800695479,
+    "tiltEnergy": 0.34389031236059964,
+    "holdMs": 12303
+   },
+   "timestampMs": 1750014744456,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 121,
+    "peakVelocity": 257.8399800695479,
+    "tiltEnergy": 0.34389031236059964,
+    "holdMs": 11754
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1448378936
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 16217,
+   "raw": {
+    "dropletsLanded": 35,
+    "peakVelocity": 1150.5425637587905,
+    "tiltEnergy": 0.6065326486714184,
+    "holdMs": 6611
+   },
+   "timestampMs": 1750014841459,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 35,
+    "peakVelocity": 1150.5425637587905,
+    "tiltEnergy": 0.6065326486714184,
+    "holdMs": 6611
+   },
+   "violations": [],
+   "hash": 223862050
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 6251,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750014938462,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 202,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 37.506,
+    "holdMs": 6251
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 77512404
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 7779,
+   "raw": {
+    "dropletsLanded": 61,
+    "peakVelocity": 889.6274873055518,
+    "tiltEnergy": 0.9563739178702235,
+    "holdMs": 4305
+   },
+   "timestampMs": 1750015035465,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 61,
+    "peakVelocity": 889.6274873055518,
+    "tiltEnergy": 0.9563739178702235,
+    "holdMs": 4305
+   },
+   "violations": [],
+   "hash": 1398581992
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 11217,
+   "raw": {
+    "dropletsLanded": 33,
+    "peakVelocity": 2579.3470572214574,
+    "tiltEnergy": 0.6361168366856873,
+    "holdMs": 13425
+   },
+   "timestampMs": 1750015132468,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 33,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 0.6361168366856873,
+    "holdMs": 11217
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 1557045283
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 10683,
+   "raw": {
+    "dropletsLanded": 113,
+    "peakVelocity": 855.1072399597615,
+    "tiltEnergy": 2.9915206064470112,
+    "holdMs": 8028
+   },
+   "timestampMs": 1750015229471,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 113,
+    "peakVelocity": 855.1072399597615,
+    "tiltEnergy": 2.9915206064470112,
+    "holdMs": 8028
+   },
+   "violations": [],
+   "hash": 39369452
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 4801,
+   "raw": {
+    "dropletsLanded": 99,
+    "peakVelocity": 998.4995915554464,
+    "tiltEnergy": 1.266038283938542,
+    "holdMs": 710
+   },
+   "timestampMs": 1750015326474,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 17,
+    "peakVelocity": 998.4995915554464,
+    "tiltEnergy": 1.266038283938542,
+    "holdMs": 710
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3222561729
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 11244,
+   "raw": {
+    "dropletsLanded": 102,
+    "peakVelocity": 2582.2618501260877,
+    "tiltEnergy": 4.589369986206293,
+    "holdMs": 7847
+   },
+   "timestampMs": 1750015423477,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 102,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.589369986206293,
+    "holdMs": 7847
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 665754248
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 6321,
+   "raw": {
+    "dropletsLanded": 105,
+    "peakVelocity": 1475.1392446924,
+    "tiltEnergy": 4.9052386346738786,
+    "holdMs": 1267
+   },
+   "timestampMs": 1750015520480,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 41,
+    "peakVelocity": 1475.1392446924,
+    "tiltEnergy": 4.9052386346738786,
+    "holdMs": 1267
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3586766141
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 3367,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750015617483,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 132,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 20.201999999999998,
+    "holdMs": 3367
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3103193034
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 579,
+   "raw": {
+    "dropletsLanded": 75,
+    "peakVelocity": 1943.1009833700955,
+    "tiltEnergy": 4.639754765667021,
+    "holdMs": 13934
+   },
+   "timestampMs": 1750015714486,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 7,
+    "peakVelocity": 1024.8561097051625,
+    "tiltEnergy": 3.4739999999999998,
+    "holdMs": 579
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1363708738
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 10394,
+   "raw": {
+    "dropletsLanded": 139,
+    "peakVelocity": 2096.577872848138,
+    "tiltEnergy": 1.3634110824204981,
+    "holdMs": 6055
+   },
+   "timestampMs": 1750015811489,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 112,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 1.3634110824204981,
+    "holdMs": 6055
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 2652678031
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 12524,
+   "raw": {
+    "dropletsLanded": 123,
+    "peakVelocity": 1941.440077405423,
+    "tiltEnergy": 0.3153638483490795,
+    "holdMs": 12736
+   },
+   "timestampMs": 1750015908492,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 123,
+    "peakVelocity": 1941.440077405423,
+    "tiltEnergy": 0.3153638483490795,
+    "holdMs": 12524
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 238995780
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 9943,
+   "raw": {
+    "dropletsLanded": 83,
+    "peakVelocity": 2309.2472525313497,
+    "tiltEnergy": 4.5275630033575,
+    "holdMs": 15714
+   },
+   "timestampMs": 1750016005495,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 83,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.5275630033575,
+    "holdMs": 9943
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 62165905
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 4505,
+   "raw": {
+    "dropletsLanded": 122,
+    "peakVelocity": 2116.124847717583,
+    "tiltEnergy": 1.8317083432339132,
+    "holdMs": 11003
+   },
+   "timestampMs": 1750016102498,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 122,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 1.8317083432339132,
+    "holdMs": 4505
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 343842609
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 3870,
+   "raw": {
+    "dropletsLanded": 62,
+    "peakVelocity": 1114.3270011991262,
+    "tiltEnergy": 0.6537862657569349,
+    "holdMs": 11952
+   },
+   "timestampMs": 1750016199501,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 62,
+    "peakVelocity": 1114.3270011991262,
+    "tiltEnergy": 0.6537862657569349,
+    "holdMs": 3870
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1439678118
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 9630,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750016296504,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 111,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 57.78,
+    "holdMs": 9630
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 258121168
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 15013,
+   "raw": {
+    "dropletsLanded": 84,
+    "peakVelocity": 2169.1930539440364,
+    "tiltEnergy": 4.09686338971369,
+    "holdMs": 5746
+   },
+   "timestampMs": 1750016393507,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 84,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.09686338971369,
+    "holdMs": 5746
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 1533659281
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 1831,
+   "raw": {
+    "dropletsLanded": 57,
+    "peakVelocity": 392.190456809476,
+    "tiltEnergy": 2.0932590938173234,
+    "holdMs": 6137
+   },
+   "timestampMs": 1750016490510,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 43,
+    "peakVelocity": 392.190456809476,
+    "tiltEnergy": 2.0932590938173234,
+    "holdMs": 1831
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2925655867
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 15395,
+   "raw": {
+    "dropletsLanded": 34,
+    "peakVelocity": 466.8935851659626,
+    "tiltEnergy": 4.354070295812562,
+    "holdMs": 14551
+   },
+   "timestampMs": 1750016587513,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 34,
+    "peakVelocity": 466.8935851659626,
+    "tiltEnergy": 4.354070295812562,
+    "holdMs": 14551
+   },
+   "violations": [],
+   "hash": 3564410663
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 14077,
+   "raw": {
+    "dropletsLanded": 60,
+    "peakVelocity": 795.3305480070412,
+    "tiltEnergy": 4.534126145299524,
+    "holdMs": 14318
+   },
+   "timestampMs": 1750016684516,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 60,
+    "peakVelocity": 795.3305480070412,
+    "tiltEnergy": 4.534126145299524,
+    "holdMs": 14077
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 316532796
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 8237,
+   "raw": {
+    "dropletsLanded": 58,
+    "peakVelocity": 971.1485165171325,
+    "tiltEnergy": 4.8627669853158295,
+    "holdMs": 5101
+   },
+   "timestampMs": 1750016781519,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 58,
+    "peakVelocity": 971.1485165171325,
+    "tiltEnergy": 4.8627669853158295,
+    "holdMs": 5101
+   },
+   "violations": [],
+   "hash": 4065898031
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 12966,
+   "raw": {
+    "dropletsLanded": 89,
+    "peakVelocity": 1108.6398843675852,
+    "tiltEnergy": 4.154562221374363,
+    "holdMs": 15827
+   },
+   "timestampMs": 1750016878522,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 89,
+    "peakVelocity": 1108.6398843675852,
+    "tiltEnergy": 4.154562221374363,
+    "holdMs": 12966
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 326121576
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 12633,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750016975525,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 233,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 75.798,
+    "holdMs": 12633
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1737748711
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 6350,
+   "raw": {
+    "dropletsLanded": 39,
+    "peakVelocity": 299.84753862954676,
+    "tiltEnergy": 1.5428032039199024,
+    "holdMs": 8210
+   },
+   "timestampMs": 1750017072528,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 39,
+    "peakVelocity": 299.84753862954676,
+    "tiltEnergy": 1.5428032039199024,
+    "holdMs": 6350
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 772243423
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 11633,
+   "raw": {
+    "dropletsLanded": 65,
+    "peakVelocity": 359.6740886103362,
+    "tiltEnergy": 3.984440868953243,
+    "holdMs": 8548
+   },
+   "timestampMs": 1750017169531,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 65,
+    "peakVelocity": 359.6740886103362,
+    "tiltEnergy": 3.984440868953243,
+    "holdMs": 8548
+   },
+   "violations": [],
+   "hash": 3556731888
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 1320,
+   "raw": {
+    "dropletsLanded": 13,
+    "peakVelocity": 1849.1669160313904,
+    "tiltEnergy": 1.1170188756659627,
+    "holdMs": 13788
+   },
+   "timestampMs": 1750017266534,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 13,
+    "peakVelocity": 1849.1669160313904,
+    "tiltEnergy": 1.1170188756659627,
+    "holdMs": 1320
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2493155456
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 1853,
+   "raw": {
+    "dropletsLanded": 133,
+    "peakVelocity": 1964.077536901459,
+    "tiltEnergy": 4.67464032699354,
+    "holdMs": 385
+   },
+   "timestampMs": 1750017363537,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 16,
+    "peakVelocity": 726.5880951405686,
+    "tiltEnergy": 2.31,
+    "holdMs": 385
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3410316229
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 1353,
+   "raw": {
+    "dropletsLanded": 58,
+    "peakVelocity": 2400.386928766966,
+    "tiltEnergy": 3.646356943063438,
+    "holdMs": 154
+   },
+   "timestampMs": 1750017460540,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 2,
+    "peakVelocity": 372.46389838479655,
+    "tiltEnergy": 0.9239999999999999,
+    "holdMs": 154
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3601149768
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 11022,
+   "raw": {
+    "dropletsLanded": 38,
+    "peakVelocity": 1441.548712970689,
+    "tiltEnergy": 4.715244200779125,
+    "holdMs": 11834
+   },
+   "timestampMs": 1750017557543,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 38,
+    "peakVelocity": 1441.548712970689,
+    "tiltEnergy": 4.715244200779125,
+    "holdMs": 11022
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1574878381
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 893,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750017654546,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 21,
+    "peakVelocity": 1508.0326184801177,
+    "tiltEnergy": 5.3580000000000005,
+    "holdMs": 893
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1358373267
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 3525,
+   "raw": {
+    "dropletsLanded": 60,
+    "peakVelocity": 1318.412157939747,
+    "tiltEnergy": 4.036492381710559,
+    "holdMs": 14564
+   },
+   "timestampMs": 1750017751549,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 60,
+    "peakVelocity": 1318.412157939747,
+    "tiltEnergy": 4.036492381710559,
+    "holdMs": 3525
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3822294314
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 2330,
+   "raw": {
+    "dropletsLanded": 126,
+    "peakVelocity": 53.31639037467539,
+    "tiltEnergy": 3.722598262829706,
+    "holdMs": 14821
+   },
+   "timestampMs": 1750017848552,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 76,
+    "peakVelocity": 53.31639037467539,
+    "tiltEnergy": 3.722598262829706,
+    "holdMs": 2330
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 3174089504
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 11185,
+   "raw": {
+    "dropletsLanded": 44,
+    "peakVelocity": 939.888301724568,
+    "tiltEnergy": 0.07972383871674538,
+    "holdMs": 865
+   },
+   "timestampMs": 1750017945555,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 34,
+    "peakVelocity": 939.888301724568,
+    "tiltEnergy": 0.07972383871674538,
+    "holdMs": 865
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3230217958
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 11060,
+   "raw": {
+    "dropletsLanded": 109,
+    "peakVelocity": 742.9661904461682,
+    "tiltEnergy": 1.1728708469308913,
+    "holdMs": 7548
+   },
+   "timestampMs": 1750018042558,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 87,
+    "peakVelocity": 742.9661904461682,
+    "tiltEnergy": 1.1728708469308913,
+    "holdMs": 7548
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3142630494
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 12468,
+   "raw": {
+    "dropletsLanded": 96,
+    "peakVelocity": 1081.9901620969176,
+    "tiltEnergy": 4.593232785118744,
+    "holdMs": 14830
+   },
+   "timestampMs": 1750018139561,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 96,
+    "peakVelocity": 1081.9901620969176,
+    "tiltEnergy": 4.593232785118744,
+    "holdMs": 12468
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 619521956
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 6038,
+   "raw": {
+    "dropletsLanded": 6,
+    "peakVelocity": 999.9146821442991,
+    "tiltEnergy": 1.857473977142945,
+    "holdMs": 11530
+   },
+   "timestampMs": 1750018236564,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 6,
+    "peakVelocity": 999.9146821442991,
+    "tiltEnergy": 1.857473977142945,
+    "holdMs": 6038
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2421115641
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 6022,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750018333567,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 167,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 36.132000000000005,
+    "holdMs": 6022
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 4276184052
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 6452,
+   "raw": {
+    "dropletsLanded": 125,
+    "peakVelocity": 2221.4228618424386,
+    "tiltEnergy": 0.10904039838351309,
+    "holdMs": 6314
+   },
+   "timestampMs": 1750018430570,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 125,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 0.10904039838351309,
+    "holdMs": 6314
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 2066451152
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 8697,
+   "raw": {
+    "dropletsLanded": 68,
+    "peakVelocity": 1465.161584271118,
+    "tiltEnergy": 0.3443088859785348,
+    "holdMs": 14045
+   },
+   "timestampMs": 1750018527573,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 68,
+    "peakVelocity": 1465.161584271118,
+    "tiltEnergy": 0.3443088859785348,
+    "holdMs": 8697
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1724712759
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 3841,
+   "raw": {
+    "dropletsLanded": 106,
+    "peakVelocity": 570.1710285618901,
+    "tiltEnergy": 1.9249615038279444,
+    "holdMs": 4068
+   },
+   "timestampMs": 1750018624576,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 45,
+    "peakVelocity": 570.1710285618901,
+    "tiltEnergy": 1.9249615038279444,
+    "holdMs": 3841
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2679277262
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 15225,
+   "raw": {
+    "dropletsLanded": 54,
+    "peakVelocity": 555.4953024722636,
+    "tiltEnergy": 4.3959059251938015,
+    "holdMs": 7415
+   },
+   "timestampMs": 1750018721579,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 54,
+    "peakVelocity": 555.4953024722636,
+    "tiltEnergy": 4.3959059251938015,
+    "holdMs": 7415
+   },
+   "violations": [],
+   "hash": 117469608
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 7757,
+   "raw": {
+    "dropletsLanded": 23,
+    "peakVelocity": 2020.0845173560083,
+    "tiltEnergy": 4.891776911681518,
+    "holdMs": 9206
+   },
+   "timestampMs": 1750018818582,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 23,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.891776911681518,
+    "holdMs": 7757
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3340835559
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 15932,
+   "raw": {
+    "dropletsLanded": 116,
+    "peakVelocity": 1469.4086969364434,
+    "tiltEnergy": 4.315338555024937,
+    "holdMs": 2202
+   },
+   "timestampMs": 1750018915585,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 61,
+    "peakVelocity": 1469.4086969364434,
+    "tiltEnergy": 4.315338555024937,
+    "holdMs": 2202
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 527089412
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 11410,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750019012588,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 368,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 68.46000000000001,
+    "holdMs": 11410
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2281913330
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 4740,
+   "raw": {
+    "dropletsLanded": 57,
+    "peakVelocity": 448.1231178622693,
+    "tiltEnergy": 4.973559369100258,
+    "holdMs": 7539
+   },
+   "timestampMs": 1750019109591,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 57,
+    "peakVelocity": 448.1231178622693,
+    "tiltEnergy": 4.973559369100258,
+    "holdMs": 4740
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3278263687
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 13643,
+   "raw": {
+    "dropletsLanded": 101,
+    "peakVelocity": 1681.070031085983,
+    "tiltEnergy": 1.6369596705771983,
+    "holdMs": 6745
+   },
+   "timestampMs": 1750019206594,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 78,
+    "peakVelocity": 1681.070031085983,
+    "tiltEnergy": 1.6369596705771983,
+    "holdMs": 6745
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 2320536435
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 11978,
+   "raw": {
+    "dropletsLanded": 70,
+    "peakVelocity": 999.3080009706318,
+    "tiltEnergy": 4.3799731868784875,
+    "holdMs": 13835
+   },
+   "timestampMs": 1750019303597,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 70,
+    "peakVelocity": 999.3080009706318,
+    "tiltEnergy": 4.3799731868784875,
+    "holdMs": 11978
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 4292497758
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 6152,
+   "raw": {
+    "dropletsLanded": 84,
+    "peakVelocity": 482.40943062119186,
+    "tiltEnergy": 4.6843392855953425,
+    "holdMs": 15433
+   },
+   "timestampMs": 1750019400600,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 84,
+    "peakVelocity": 482.40943062119186,
+    "tiltEnergy": 4.6843392855953425,
+    "holdMs": 6152
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3248199516
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 15235,
+   "raw": {
+    "dropletsLanded": 81,
+    "peakVelocity": 338.46620293334126,
+    "tiltEnergy": 1.2924997333902866,
+    "holdMs": 1532
+   },
+   "timestampMs": 1750019497603,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 43,
+    "peakVelocity": 338.46620293334126,
+    "tiltEnergy": 1.2924997333902866,
+    "holdMs": 1532
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 1882873988
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 14166,
+   "raw": {
+    "dropletsLanded": 129,
+    "peakVelocity": 1733.0543940886855,
+    "tiltEnergy": 0.5272416607476771,
+    "holdMs": 7438
+   },
+   "timestampMs": 1750019594606,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 129,
+    "peakVelocity": 1733.0543940886855,
+    "tiltEnergy": 0.5272416607476771,
+    "holdMs": 7438
+   },
+   "violations": [],
+   "hash": 521144208
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 12305,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750019691609,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 482,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 73.83,
+    "holdMs": 12305
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1646734474
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 2495,
+   "raw": {
+    "dropletsLanded": 86,
+    "peakVelocity": 1215.7791689503938,
+    "tiltEnergy": 0.2381749008782208,
+    "holdMs": 7182
+   },
+   "timestampMs": 1750019788612,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 29,
+    "peakVelocity": 1215.7791689503938,
+    "tiltEnergy": 0.2381749008782208,
+    "holdMs": 2495
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 9555582
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 12729,
+   "raw": {
+    "dropletsLanded": 20,
+    "peakVelocity": 140.28034037910402,
+    "tiltEnergy": 1.3292031164746732,
+    "holdMs": 2320
+   },
+   "timestampMs": 1750019885615,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 20,
+    "peakVelocity": 140.28034037910402,
+    "tiltEnergy": 1.3292031164746732,
+    "holdMs": 2320
+   },
+   "violations": [],
+   "hash": 2605790303
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 9041,
+   "raw": {
+    "dropletsLanded": 36,
+    "peakVelocity": 2138.420052593574,
+    "tiltEnergy": 4.175367001444101,
+    "holdMs": 4251
+   },
+   "timestampMs": 1750019982618,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 36,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.175367001444101,
+    "holdMs": 4251
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 3080809066
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 14903,
+   "raw": {
+    "dropletsLanded": 76,
+    "peakVelocity": 376.09476456418633,
+    "tiltEnergy": 4.1124149900861084,
+    "holdMs": 113
+   },
+   "timestampMs": 1750020079621,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 4,
+    "peakVelocity": 309.9975651517283,
+    "tiltEnergy": 0.678,
+    "holdMs": 113
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3231601607
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 10247,
+   "raw": {
+    "dropletsLanded": 43,
+    "peakVelocity": 1175.297815958038,
+    "tiltEnergy": 4.830723564373329,
+    "holdMs": 3540
+   },
+   "timestampMs": 1750020176624,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 43,
+    "peakVelocity": 1175.297815958038,
+    "tiltEnergy": 4.830723564373329,
+    "holdMs": 3540
+   },
+   "violations": [],
+   "hash": 2645135752
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 6412,
+   "raw": {
+    "dropletsLanded": 136,
+    "peakVelocity": 2140.0056064128876,
+    "tiltEnergy": 3.7755818804726005,
+    "holdMs": 9707
+   },
+   "timestampMs": 1750020273627,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 136,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.7755818804726005,
+    "holdMs": 6412
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3558609958
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 3683,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750020370630,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 43,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 22.098,
+    "holdMs": 3683
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1504393845
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 4888,
+   "raw": {
+    "dropletsLanded": 65,
+    "peakVelocity": 1979.6450885478407,
+    "tiltEnergy": 1.761461115675047,
+    "holdMs": 9859
+   },
+   "timestampMs": 1750020467633,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 65,
+    "peakVelocity": 1979.6450885478407,
+    "tiltEnergy": 1.761461115675047,
+    "holdMs": 4888
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1580234932
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 4541,
+   "raw": {
+    "dropletsLanded": 99,
+    "peakVelocity": 1729.5681507326663,
+    "tiltEnergy": 4.674184966133907,
+    "holdMs": 15268
+   },
+   "timestampMs": 1750020564636,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 99,
+    "peakVelocity": 1729.5681507326663,
+    "tiltEnergy": 4.674184966133907,
+    "holdMs": 4541
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3418543411
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 15060,
+   "raw": {
+    "dropletsLanded": 84,
+    "peakVelocity": 390.9868649672717,
+    "tiltEnergy": 3.1704042619094253,
+    "holdMs": 12516
+   },
+   "timestampMs": 1750020661639,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 84,
+    "peakVelocity": 390.9868649672717,
+    "tiltEnergy": 3.1704042619094253,
+    "holdMs": 12516
+   },
+   "violations": [],
+   "hash": 1814659299
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 6504,
+   "raw": {
+    "dropletsLanded": 102,
+    "peakVelocity": 2127.8171494603157,
+    "tiltEnergy": 2.994445222429931,
+    "holdMs": 7225
+   },
+   "timestampMs": 1750020758642,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 102,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.994445222429931,
+    "holdMs": 6504
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 4294700465
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 671,
+   "raw": {
+    "dropletsLanded": 84,
+    "peakVelocity": 2584.4106529839337,
+    "tiltEnergy": 3.9729986165184528,
+    "holdMs": 11539
+   },
+   "timestampMs": 1750020855645,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 27,
+    "peakVelocity": 1166.3908288391162,
+    "tiltEnergy": 3.9729986165184528,
+    "holdMs": 671
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3717708082
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 15296,
+   "raw": {
+    "dropletsLanded": 123,
+    "peakVelocity": 1337.7172286622226,
+    "tiltEnergy": 3.3664908655919135,
+    "holdMs": 3983
+   },
+   "timestampMs": 1750020952648,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 46,
+    "peakVelocity": 1337.7172286622226,
+    "tiltEnergy": 3.3664908655919135,
+    "holdMs": 3983
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 2398400084
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 5762,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750021049651,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 107,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 34.571999999999996,
+    "holdMs": 5762
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1481264071
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 12092,
+   "raw": {
+    "dropletsLanded": 78,
+    "peakVelocity": 1248.6299747601151,
+    "tiltEnergy": 0.6028467149008065,
+    "holdMs": 7987
+   },
+   "timestampMs": 1750021146654,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 78,
+    "peakVelocity": 1248.6299747601151,
+    "tiltEnergy": 0.6028467149008065,
+    "holdMs": 7987
+   },
+   "violations": [],
+   "hash": 3618937939
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 1196,
+   "raw": {
+    "dropletsLanded": 15,
+    "peakVelocity": 1358.1660895608366,
+    "tiltEnergy": 4.58108177757822,
+    "holdMs": 14269
+   },
+   "timestampMs": 1750021243657,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 15,
+    "peakVelocity": 1358.1660895608366,
+    "tiltEnergy": 4.58108177757822,
+    "holdMs": 1196
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1111852096
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9810,
+   "raw": {
+    "dropletsLanded": 79,
+    "peakVelocity": 161.0503476113081,
+    "tiltEnergy": 4.731057308381423,
+    "holdMs": 13377
+   },
+   "timestampMs": 1750021340660,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 79,
+    "peakVelocity": 161.0503476113081,
+    "tiltEnergy": 4.731057308381423,
+    "holdMs": 9810
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 50685182
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 12224,
+   "raw": {
+    "dropletsLanded": 85,
+    "peakVelocity": 1174.4394940324128,
+    "tiltEnergy": 2.9162024753168225,
+    "holdMs": 13802
+   },
+   "timestampMs": 1750021437663,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 85,
+    "peakVelocity": 1174.4394940324128,
+    "tiltEnergy": 2.9162024753168225,
+    "holdMs": 12224
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2786542562
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 7745,
+   "raw": {
+    "dropletsLanded": 135,
+    "peakVelocity": 766.8611744884402,
+    "tiltEnergy": 1.1709759011864662,
+    "holdMs": 10792
+   },
+   "timestampMs": 1750021534666,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 90,
+    "peakVelocity": 766.8611744884402,
+    "tiltEnergy": 1.1709759011864662,
+    "holdMs": 7745
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 3114661435
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 4205,
+   "raw": {
+    "dropletsLanded": 116,
+    "peakVelocity": 2153.314979420975,
+    "tiltEnergy": 3.528040663804859,
+    "holdMs": 15522
+   },
+   "timestampMs": 1750021631669,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 78,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.528040663804859,
+    "holdMs": 4205
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 274011874
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 8889,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750021728672,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 205,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 53.333999999999996,
+    "holdMs": 8889
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 1765294081
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 10882,
+   "raw": {
+    "dropletsLanded": 38,
+    "peakVelocity": 210.73800870217383,
+    "tiltEnergy": 1.7922390415333211,
+    "holdMs": 7552
+   },
+   "timestampMs": 1750021825675,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 38,
+    "peakVelocity": 210.73800870217383,
+    "tiltEnergy": 1.7922390415333211,
+    "holdMs": 7552
+   },
+   "violations": [],
+   "hash": 326634940
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 4522,
+   "raw": {
+    "dropletsLanded": 129,
+    "peakVelocity": 1818.726647598669,
+    "tiltEnergy": 1.4437688689213246,
+    "holdMs": 10639
+   },
+   "timestampMs": 1750021922678,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 129,
+    "peakVelocity": 1818.726647598669,
+    "tiltEnergy": 1.4437688689213246,
+    "holdMs": 4522
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 4186732661
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 1489,
+   "raw": {
+    "dropletsLanded": 120,
+    "peakVelocity": 2038.239265466109,
+    "tiltEnergy": 2.346961048897356,
+    "holdMs": 8754
+   },
+   "timestampMs": 1750022019681,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 59,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.346961048897356,
+    "holdMs": 1489
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 1106513911
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 6066,
+   "raw": {
+    "dropletsLanded": 135,
+    "peakVelocity": 2303.6898588296026,
+    "tiltEnergy": 2.8729052818380296,
+    "holdMs": 8104
+   },
+   "timestampMs": 1750022116684,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 70,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.8729052818380296,
+    "holdMs": 6066
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 2475812282
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 11484,
+   "raw": {
+    "dropletsLanded": 45,
+    "peakVelocity": 736.45273828879,
+    "tiltEnergy": 1.3497904676478356,
+    "holdMs": 4993
+   },
+   "timestampMs": 1750022213687,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 45,
+    "peakVelocity": 736.45273828879,
+    "tiltEnergy": 1.3497904676478356,
+    "holdMs": 4993
+   },
+   "violations": [],
+   "hash": 3956593441
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 9814,
+   "raw": {
+    "dropletsLanded": 71,
+    "peakVelocity": 2328.4426187630743,
+    "tiltEnergy": 4.00224183104001,
+    "holdMs": 7520
+   },
+   "timestampMs": 1750022310690,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 71,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.00224183104001,
+    "holdMs": 7520
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 2015338183
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 3789,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750022407693,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 105,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 22.734,
+    "holdMs": 3789
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 272516776
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9843,
+   "raw": {
+    "dropletsLanded": 97,
+    "peakVelocity": 2119.2361034452915,
+    "tiltEnergy": 0.13033853145316243,
+    "holdMs": 709
+   },
+   "timestampMs": 1750022504696,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 23,
+    "peakVelocity": 1224.8606245610151,
+    "tiltEnergy": 0.13033853145316243,
+    "holdMs": 709
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 2403396083
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 7652,
+   "raw": {
+    "dropletsLanded": 73,
+    "peakVelocity": 715.4757852200419,
+    "tiltEnergy": 1.4859673078171909,
+    "holdMs": 5488
+   },
+   "timestampMs": 1750022601699,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 73,
+    "peakVelocity": 715.4757852200419,
+    "tiltEnergy": 1.4859673078171909,
+    "holdMs": 5488
+   },
+   "violations": [],
+   "hash": 777964628
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 13141,
+   "raw": {
+    "dropletsLanded": 80,
+    "peakVelocity": 417.83832516521215,
+    "tiltEnergy": 3.046917486935854,
+    "holdMs": 9040
+   },
+   "timestampMs": 1750022698702,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 80,
+    "peakVelocity": 417.83832516521215,
+    "tiltEnergy": 3.046917486935854,
+    "holdMs": 9040
+   },
+   "violations": [],
+   "hash": 3562282891
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 12239,
+   "raw": {
+    "dropletsLanded": 8,
+    "peakVelocity": 2199.8632167931646,
+    "tiltEnergy": 1.2900268181692809,
+    "holdMs": 14840
+   },
+   "timestampMs": 1750022795705,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 8,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 1.2900268181692809,
+    "holdMs": 12239
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 3615616830
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 10252,
+   "raw": {
+    "dropletsLanded": 4,
+    "peakVelocity": 2546.6536328196526,
+    "tiltEnergy": 2.880073671694845,
+    "holdMs": 1520
+   },
+   "timestampMs": 1750022892708,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 4,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.880073671694845,
+    "holdMs": 1520
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 4071561078
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 11061,
+   "raw": {
+    "dropletsLanded": 16,
+    "peakVelocity": 189.85253819264472,
+    "tiltEnergy": 2.94769219821319,
+    "holdMs": 15628
+   },
+   "timestampMs": 1750022989711,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 16,
+    "peakVelocity": 189.85253819264472,
+    "tiltEnergy": 2.94769219821319,
+    "holdMs": 11061
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2299207159
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 12009,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750023086714,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 387,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 72.054,
+    "holdMs": 12009
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 896382810
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 15878,
+   "raw": {
+    "dropletsLanded": 112,
+    "peakVelocity": 1257.9770404845476,
+    "tiltEnergy": 4.51518346904777,
+    "holdMs": 8683
+   },
+   "timestampMs": 1750023183717,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 112,
+    "peakVelocity": 1257.9770404845476,
+    "tiltEnergy": 4.51518346904777,
+    "holdMs": 8683
+   },
+   "violations": [],
+   "hash": 2342249819
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 3424,
+   "raw": {
+    "dropletsLanded": 87,
+    "peakVelocity": 697.7831269148737,
+    "tiltEnergy": 3.676864339504391,
+    "holdMs": 7688
+   },
+   "timestampMs": 1750023280720,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 40,
+    "peakVelocity": 697.7831269148737,
+    "tiltEnergy": 3.676864339504391,
+    "holdMs": 3424
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 2489271430
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 5770,
+   "raw": {
+    "dropletsLanded": 110,
+    "peakVelocity": 518.7842397019267,
+    "tiltEnergy": 2.461074920138344,
+    "holdMs": 3917
+   },
+   "timestampMs": 1750023377723,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 73,
+    "peakVelocity": 518.7842397019267,
+    "tiltEnergy": 2.461074920138344,
+    "holdMs": 3917
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3168824430
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 14515,
+   "raw": {
+    "dropletsLanded": 28,
+    "peakVelocity": 1749.2802544031292,
+    "tiltEnergy": 3.0208932084497064,
+    "holdMs": 5191
+   },
+   "timestampMs": 1750023474726,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 28,
+    "peakVelocity": 1749.2802544031292,
+    "tiltEnergy": 3.0208932084497064,
+    "holdMs": 5191
+   },
+   "violations": [],
+   "hash": 1893248165
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 1907,
+   "raw": {
+    "dropletsLanded": 122,
+    "peakVelocity": 981.885885167867,
+    "tiltEnergy": 4.244980131043121,
+    "holdMs": 5878
+   },
+   "timestampMs": 1750023571729,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 53,
+    "peakVelocity": 981.885885167867,
+    "tiltEnergy": 4.244980131043121,
+    "holdMs": 1907
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 3353468570
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 8007,
+   "raw": {
+    "dropletsLanded": 89,
+    "peakVelocity": 149.6382178273052,
+    "tiltEnergy": 0.42598116444423795,
+    "holdMs": 6787
+   },
+   "timestampMs": 1750023668732,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 89,
+    "peakVelocity": 149.6382178273052,
+    "tiltEnergy": 0.42598116444423795,
+    "holdMs": 6787
+   },
+   "violations": [],
+   "hash": 2271445328
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 15526,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750023765735,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 587,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 90,
+    "holdMs": 15000
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3836922212
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 8710,
+   "raw": {
+    "dropletsLanded": 86,
+    "peakVelocity": 456.9941584020853,
+    "tiltEnergy": 4.328334090532735,
+    "holdMs": 4976
+   },
+   "timestampMs": 1750023862738,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 58,
+    "peakVelocity": 456.9941584020853,
+    "tiltEnergy": 4.328334090532735,
+    "holdMs": 4976
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 1537052114
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 2453,
+   "raw": {
+    "dropletsLanded": 19,
+    "peakVelocity": 1967.8657814860344,
+    "tiltEnergy": 1.2477882707025856,
+    "holdMs": 12124
+   },
+   "timestampMs": 1750023959741,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 19,
+    "peakVelocity": 1967.8657814860344,
+    "tiltEnergy": 1.2477882707025856,
+    "holdMs": 2453
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1313175076
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 9486,
+   "raw": {
+    "dropletsLanded": 114,
+    "peakVelocity": 2044.7637363802642,
+    "tiltEnergy": 2.099995225435123,
+    "holdMs": 2316
+   },
+   "timestampMs": 1750024056744,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 54,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.099995225435123,
+    "holdMs": 2316
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 3251063329
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 1668,
+   "raw": {
+    "dropletsLanded": 104,
+    "peakVelocity": 1503.097335062921,
+    "tiltEnergy": 3.4280847653280944,
+    "holdMs": 4247
+   },
+   "timestampMs": 1750024153747,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 47,
+    "peakVelocity": 1503.097335062921,
+    "tiltEnergy": 3.4280847653280944,
+    "holdMs": 1668
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 606460615
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 4040,
+   "raw": {
+    "dropletsLanded": 29,
+    "peakVelocity": 835.7058934401721,
+    "tiltEnergy": 1.5788404375780374,
+    "holdMs": 13065
+   },
+   "timestampMs": 1750024250750,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 29,
+    "peakVelocity": 835.7058934401721,
+    "tiltEnergy": 1.5788404375780374,
+    "holdMs": 4040
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1827055503
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 16207,
+   "raw": {
+    "dropletsLanded": 34,
+    "peakVelocity": 872.9195488151163,
+    "tiltEnergy": 3.2258895342238247,
+    "holdMs": 6532
+   },
+   "timestampMs": 1750024347753,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 34,
+    "peakVelocity": 872.9195488151163,
+    "tiltEnergy": 3.2258895342238247,
+    "holdMs": 6532
+   },
+   "violations": [],
+   "hash": 555738011
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 11877,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750024444756,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 137,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 71.262,
+    "holdMs": 11877
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3279989601
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 14489,
+   "raw": {
+    "dropletsLanded": 120,
+    "peakVelocity": 162.0880872476846,
+    "tiltEnergy": 3.463759858859703,
+    "holdMs": 3811
+   },
+   "timestampMs": 1750024541759,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 71,
+    "peakVelocity": 162.0880872476846,
+    "tiltEnergy": 3.463759858859703,
+    "holdMs": 3811
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3637431362
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 14061,
+   "raw": {
+    "dropletsLanded": 124,
+    "peakVelocity": 2367.7451754454523,
+    "tiltEnergy": 3.571067388402298,
+    "holdMs": 3426
+   },
+   "timestampMs": 1750024638762,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 79,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 3.571067388402298,
+    "holdMs": 3426
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 169255477
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 15502,
+   "raw": {
+    "dropletsLanded": 29,
+    "peakVelocity": 772.2288987133652,
+    "tiltEnergy": 2.080516692949459,
+    "holdMs": 595
+   },
+   "timestampMs": 1750024735765,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 17,
+    "peakVelocity": 772.2288987133652,
+    "tiltEnergy": 2.080516692949459,
+    "holdMs": 595
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 4031911966
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 14266,
+   "raw": {
+    "dropletsLanded": 30,
+    "peakVelocity": 1770.6744479946792,
+    "tiltEnergy": 1.9186577864456922,
+    "holdMs": 2032
+   },
+   "timestampMs": 1750024832768,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 30,
+    "peakVelocity": 1770.6744479946792,
+    "tiltEnergy": 1.9186577864456922,
+    "holdMs": 2032
+   },
+   "violations": [],
+   "hash": 1673083030
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 12232,
+   "raw": {
+    "dropletsLanded": 132,
+    "peakVelocity": 1254.559983080253,
+    "tiltEnergy": 4.186270592035726,
+    "holdMs": 4394
+   },
+   "timestampMs": 1750024929771,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 132,
+    "peakVelocity": 1254.559983080253,
+    "tiltEnergy": 4.186270592035726,
+    "holdMs": 4394
+   },
+   "violations": [],
+   "hash": 935670308
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 13798,
+   "raw": {
+    "dropletsLanded": 92,
+    "peakVelocity": 1555.2416952326894,
+    "tiltEnergy": 4.45030492846854,
+    "holdMs": 3461
+   },
+   "timestampMs": 1750025026774,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 40,
+    "peakVelocity": 1555.2416952326894,
+    "tiltEnergy": 4.45030492846854,
+    "holdMs": 3461
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3067492872
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 2822,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750025123777,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 52,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 16.932000000000002,
+    "holdMs": 2822
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2675935658
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 1990,
+   "raw": {
+    "dropletsLanded": 19,
+    "peakVelocity": 1101.325008040294,
+    "tiltEnergy": 2.6197083643637598,
+    "holdMs": 14678
+   },
+   "timestampMs": 1750025220780,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 19,
+    "peakVelocity": 1101.325008040294,
+    "tiltEnergy": 2.6197083643637598,
+    "holdMs": 1990
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 798161718
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 15584,
+   "raw": {
+    "dropletsLanded": 21,
+    "peakVelocity": 921.8005487695336,
+    "tiltEnergy": 1.909374528331682,
+    "holdMs": 15653
+   },
+   "timestampMs": 1750025317783,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 21,
+    "peakVelocity": 921.8005487695336,
+    "tiltEnergy": 1.909374528331682,
+    "holdMs": 15000
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 4142655262
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 12131,
+   "raw": {
+    "dropletsLanded": 29,
+    "peakVelocity": 175.31502721831203,
+    "tiltEnergy": 4.005936289904639,
+    "holdMs": 12825
+   },
+   "timestampMs": 1750025414786,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 29,
+    "peakVelocity": 175.31502721831203,
+    "tiltEnergy": 4.005936289904639,
+    "holdMs": 12131
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3040893925
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 794,
+   "raw": {
+    "dropletsLanded": 119,
+    "peakVelocity": 450.71875364519656,
+    "tiltEnergy": 1.0531267093028873,
+    "holdMs": 12812
+   },
+   "timestampMs": 1750025511789,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 32,
+    "peakVelocity": 450.71875364519656,
+    "tiltEnergy": 1.0531267093028873,
+    "holdMs": 794
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 1989169229
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 16204,
+   "raw": {
+    "dropletsLanded": 64,
+    "peakVelocity": 2121.3408881798387,
+    "tiltEnergy": 2.2130312118679285,
+    "holdMs": 9479
+   },
+   "timestampMs": 1750025608792,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 64,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.2130312118679285,
+    "holdMs": 9479
+   },
+   "violations": [
+    "peakVelocity"
+   ],
+   "hash": 191397598
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 5507,
+   "raw": {
+    "dropletsLanded": 85,
+    "peakVelocity": 1671.2615045253187,
+    "tiltEnergy": 1.4379954198375344,
+    "holdMs": 8191
+   },
+   "timestampMs": 1750025705795,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 85,
+    "peakVelocity": 1671.2615045253187,
+    "tiltEnergy": 1.4379954198375344,
+    "holdMs": 5507
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 2566515315
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 12804,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750025802798,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 295,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 76.824,
+    "holdMs": 12804
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2091448821
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 6850,
+   "raw": {
+    "dropletsLanded": 107,
+    "peakVelocity": 1925.2347175963223,
+    "tiltEnergy": 3.614750561537221,
+    "holdMs": 8245
+   },
+   "timestampMs": 1750025899801,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 107,
+    "peakVelocity": 1925.2347175963223,
+    "tiltEnergy": 3.614750561537221,
+    "holdMs": 6850
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 4293306947
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 5359,
+   "raw": {
+    "dropletsLanded": 19,
+    "peakVelocity": 726.4756111893803,
+    "tiltEnergy": 3.0619030143134296,
+    "holdMs": 6862
+   },
+   "timestampMs": 1750025996804,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 19,
+    "peakVelocity": 726.4756111893803,
+    "tiltEnergy": 3.0619030143134296,
+    "holdMs": 5359
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3491386276
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 10132,
+   "raw": {
+    "dropletsLanded": 132,
+    "peakVelocity": 1157.5628345366567,
+    "tiltEnergy": 1.8741988705005497,
+    "holdMs": 15262
+   },
+   "timestampMs": 1750026093807,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 132,
+    "peakVelocity": 1157.5628345366567,
+    "tiltEnergy": 1.8741988705005497,
+    "holdMs": 10132
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3543173721
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 4215,
+   "raw": {
+    "dropletsLanded": 54,
+    "peakVelocity": 1331.317842612043,
+    "tiltEnergy": 1.0306258429773152,
+    "holdMs": 3225
+   },
+   "timestampMs": 1750026190810,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 38,
+    "peakVelocity": 1331.317842612043,
+    "tiltEnergy": 1.0306258429773152,
+    "holdMs": 3225
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 2142375057
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 13489,
+   "raw": {
+    "dropletsLanded": 79,
+    "peakVelocity": 2368.146119080484,
+    "tiltEnergy": 1.6457317443564534,
+    "holdMs": 1569
+   },
+   "timestampMs": 1750026287813,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 29,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 1.6457317443564534,
+    "holdMs": 1569
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 2322385991
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 10421,
+   "raw": {
+    "dropletsLanded": 26,
+    "peakVelocity": 1921.0443664807826,
+    "tiltEnergy": 2.0479662634897977,
+    "holdMs": 7182
+   },
+   "timestampMs": 1750026384816,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 26,
+    "peakVelocity": 1921.0443664807826,
+    "tiltEnergy": 2.0479662634897977,
+    "holdMs": 7182
+   },
+   "violations": [],
+   "hash": 2607171102
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 698,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750026481819,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 20,
+    "peakVelocity": 1207.9346573387156,
+    "tiltEnergy": 4.188,
+    "holdMs": 698
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 4060661078
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 9296,
+   "raw": {
+    "dropletsLanded": 133,
+    "peakVelocity": 1713.0387854762375,
+    "tiltEnergy": 1.1302984924986959,
+    "holdMs": 7713
+   },
+   "timestampMs": 1750026578822,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 133,
+    "peakVelocity": 1713.0387854762375,
+    "tiltEnergy": 1.1302984924986959,
+    "holdMs": 7713
+   },
+   "violations": [],
+   "hash": 3983576350
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 9739,
+   "raw": {
+    "dropletsLanded": 23,
+    "peakVelocity": 2188.9591369312257,
+    "tiltEnergy": 4.7457255423069,
+    "holdMs": 15776
+   },
+   "timestampMs": 1750026675825,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 23,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 4.7457255423069,
+    "holdMs": 9739
+   },
+   "violations": [
+    "holdMs",
+    "peakVelocity"
+   ],
+   "hash": 2908906375
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 12875,
+   "raw": {
+    "dropletsLanded": 20,
+    "peakVelocity": 889.2963047139347,
+    "tiltEnergy": 1.7680914385709912,
+    "holdMs": 3943
+   },
+   "timestampMs": 1750026772828,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 20,
+    "peakVelocity": 889.2963047139347,
+    "tiltEnergy": 1.7680914385709912,
+    "holdMs": 3943
+   },
+   "violations": [],
+   "hash": 1300841788
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 15012,
+   "raw": {
+    "dropletsLanded": 106,
+    "peakVelocity": 1291.3599895313382,
+    "tiltEnergy": 0.8968834136612713,
+    "holdMs": 14717
+   },
+   "timestampMs": 1750026869831,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 106,
+    "peakVelocity": 1291.3599895313382,
+    "tiltEnergy": 0.8968834136612713,
+    "holdMs": 14717
+   },
+   "violations": [],
+   "hash": 3706909314
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 5114,
+   "raw": {
+    "dropletsLanded": 139,
+    "peakVelocity": 1127.4026109371334,
+    "tiltEnergy": 4.53789519960992,
+    "holdMs": 13795
+   },
+   "timestampMs": 1750026966834,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 118,
+    "peakVelocity": 1127.4026109371334,
+    "tiltEnergy": 4.53789519960992,
+    "holdMs": 5114
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 3348332546
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 16094,
+   "raw": {
+    "dropletsLanded": 53,
+    "peakVelocity": 2283.2003994844854,
+    "tiltEnergy": 2.6851054572034627,
+    "holdMs": 1359
+   },
+   "timestampMs": 1750027063837,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 38,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.6851054572034627,
+    "holdMs": 1359
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 614684006
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 2300,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750027160840,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 75,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 13.799999999999999,
+    "holdMs": 2300
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 2583945104
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 10266,
+   "raw": {
+    "dropletsLanded": 137,
+    "peakVelocity": 1898.43728877604,
+    "tiltEnergy": 1.3762751943431795,
+    "holdMs": 13611
+   },
+   "timestampMs": 1750027257843,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 137,
+    "peakVelocity": 1898.43728877604,
+    "tiltEnergy": 1.3762751943431795,
+    "holdMs": 10266
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1656742720
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 10986,
+   "raw": {
+    "dropletsLanded": 89,
+    "peakVelocity": 1113.118039816618,
+    "tiltEnergy": 1.1381252761930227,
+    "holdMs": 6976
+   },
+   "timestampMs": 1750027354846,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 81,
+    "peakVelocity": 1113.118039816618,
+    "tiltEnergy": 1.1381252761930227,
+    "holdMs": 6976
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 2655824043
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 12536,
+   "raw": {
+    "dropletsLanded": 89,
+    "peakVelocity": 1886.5577668417245,
+    "tiltEnergy": 0.8687701856251806,
+    "holdMs": 11164
+   },
+   "timestampMs": 1750027451849,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 89,
+    "peakVelocity": 1886.5577668417245,
+    "tiltEnergy": 0.8687701856251806,
+    "holdMs": 11164
+   },
+   "violations": [],
+   "hash": 2413435580
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 15960,
+   "raw": {
+    "dropletsLanded": 74,
+    "peakVelocity": 558.2348346710205,
+    "tiltEnergy": 3.235545422649011,
+    "holdMs": 15583
+   },
+   "timestampMs": 1750027548852,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 74,
+    "peakVelocity": 558.2348346710205,
+    "tiltEnergy": 3.235545422649011,
+    "holdMs": 15000
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 498314203
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 14463,
+   "raw": {
+    "dropletsLanded": 116,
+    "peakVelocity": 1473.0522859841585,
+    "tiltEnergy": 4.001236950280145,
+    "holdMs": 3930
+   },
+   "timestampMs": 1750027645855,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 109,
+    "peakVelocity": 1473.0522859841585,
+    "tiltEnergy": 4.001236950280145,
+    "holdMs": 3930
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 823810529
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 1957,
+   "raw": {
+    "dropletsLanded": 86,
+    "peakVelocity": 948.380088666454,
+    "tiltEnergy": 3.3185916754882783,
+    "holdMs": 2693
+   },
+   "timestampMs": 1750027742858,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 64,
+    "peakVelocity": 948.380088666454,
+    "tiltEnergy": 3.3185916754882783,
+    "holdMs": 1957
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 3322422122
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 2385,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750027839861,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 94,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 14.309999999999999,
+    "holdMs": 2385
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3462177461
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 4211,
+   "raw": {
+    "dropletsLanded": 68,
+    "peakVelocity": 451.2144723907113,
+    "tiltEnergy": 4.1248864808585495,
+    "holdMs": 14481
+   },
+   "timestampMs": 1750027936864,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 49,
+    "peakVelocity": 451.2144723907113,
+    "tiltEnergy": 4.1248864808585495,
+    "holdMs": 4211
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs"
+   ],
+   "hash": 352925430
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 4449,
+   "raw": {
+    "dropletsLanded": 73,
+    "peakVelocity": 504.36784788034856,
+    "tiltEnergy": 3.13535044901073,
+    "holdMs": 3254
+   },
+   "timestampMs": 1750028033867,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 60,
+    "peakVelocity": 504.36784788034856,
+    "tiltEnergy": 3.13535044901073,
+    "holdMs": 3254
+   },
+   "violations": [
+    "dropletsLanded"
+   ],
+   "hash": 3357035267
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 12338,
+   "raw": {
+    "dropletsLanded": 14,
+    "peakVelocity": 46.59723821096122,
+    "tiltEnergy": 0.5957464396487921,
+    "holdMs": 9416
+   },
+   "timestampMs": 1750028130870,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 14,
+    "peakVelocity": 46.59723821096122,
+    "tiltEnergy": 0.5957464396487921,
+    "holdMs": 9416
+   },
+   "violations": [],
+   "hash": 1175676047
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 578,
+   "raw": {
+    "dropletsLanded": 124,
+    "peakVelocity": 2494.074400421232,
+    "tiltEnergy": 4.446238625096157,
+    "holdMs": 7341
+   },
+   "timestampMs": 1750028227873,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 16,
+    "peakVelocity": 1023.3179097426175,
+    "tiltEnergy": 3.468,
+    "holdMs": 578
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 4111549505
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 2318,
+   "raw": {
+    "dropletsLanded": 44,
+    "peakVelocity": 1010.1177094969898,
+    "tiltEnergy": 1.5972119756042957,
+    "holdMs": 4267
+   },
+   "timestampMs": 1750028324876,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 44,
+    "peakVelocity": 1010.1177094969898,
+    "tiltEnergy": 1.5972119756042957,
+    "holdMs": 2318
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 1908443832
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 12208,
+   "raw": {
+    "dropletsLanded": 102,
+    "peakVelocity": 1901.7185119446367,
+    "tiltEnergy": 3.9583109808154404,
+    "holdMs": 303
+   },
+   "timestampMs": 1750028421879,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 12,
+    "peakVelocity": 600.6630955868691,
+    "tiltEnergy": 1.818,
+    "holdMs": 303
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 318369806
+  },
+  {
+   "tierIndex": 0,
+   "wallClockMs": 5424,
+   "raw": {
+    "dropletsLanded": 9000000000,
+    "peakVelocity": 9000000000,
+    "tiltEnergy": 9000000000,
+    "holdMs": 9000000000
+   },
+   "timestampMs": 1750028518882,
+   "amountCents": 0,
+   "clamped": {
+    "dropletsLanded": 63,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 32.544000000000004,
+    "holdMs": 5424
+   },
+   "violations": [
+    "dropletsLanded",
+    "holdMs",
+    "peakVelocity",
+    "tiltEnergy"
+   ],
+   "hash": 3184086178
+  },
+  {
+   "tierIndex": 1,
+   "wallClockMs": 15873,
+   "raw": {
+    "dropletsLanded": 53,
+    "peakVelocity": 1705.4772160016,
+    "tiltEnergy": 3.8762919534929097,
+    "holdMs": 5428
+   },
+   "timestampMs": 1750028615885,
+   "amountCents": 299,
+   "clamped": {
+    "dropletsLanded": 53,
+    "peakVelocity": 1705.4772160016,
+    "tiltEnergy": 3.8762919534929097,
+    "holdMs": 5428
+   },
+   "violations": [],
+   "hash": 626658531
+  },
+  {
+   "tierIndex": 2,
+   "wallClockMs": 13720,
+   "raw": {
+    "dropletsLanded": 53,
+    "peakVelocity": 1992.2369892708957,
+    "tiltEnergy": 2.4889605457428843,
+    "holdMs": 1690
+   },
+   "timestampMs": 1750028712888,
+   "amountCents": 999,
+   "clamped": {
+    "dropletsLanded": 39,
+    "peakVelocity": 1980.6186533505133,
+    "tiltEnergy": 2.4889605457428843,
+    "holdMs": 1690
+   },
+   "violations": [
+    "dropletsLanded",
+    "peakVelocity"
+   ],
+   "hash": 3086026948
+  },
+  {
+   "tierIndex": 3,
+   "wallClockMs": 15305,
+   "raw": {
+    "dropletsLanded": 66,
+    "peakVelocity": 523.5639175400138,
+    "tiltEnergy": 3.7841462285723537,
+    "holdMs": 9218
+   },
+   "timestampMs": 1750028809891,
+   "amountCents": 2499,
+   "clamped": {
+    "dropletsLanded": 66,
+    "peakVelocity": 523.5639175400138,
+    "tiltEnergy": 3.7841462285723537,
+    "holdMs": 9218
+   },
+   "violations": [],
+   "hash": 2452995156
+  },
+  {
+   "tierIndex": 4,
+   "wallClockMs": 10540,
+   "raw": {
+    "dropletsLanded": 90,
+    "peakVelocity": 250.52255638875067,
+    "tiltEnergy": 4.1520067665260285,
+    "holdMs": 6944
+   },
+   "timestampMs": 1750028906894,
+   "amountCents": 4999,
+   "clamped": {
+    "dropletsLanded": 90,
+    "peakVelocity": 250.52255638875067,
+    "tiltEnergy": 4.1520067665260285,
+    "holdMs": 6944
+   },
+   "violations": [],
+   "hash": 2437391332
+  },
+  {
+   "tierIndex": 5,
+   "wallClockMs": 6696,
+   "raw": {
+    "dropletsLanded": 11,
+    "peakVelocity": 969.0887426957488,
+    "tiltEnergy": 2.3481304850429296,
+    "holdMs": 10669
+   },
+   "timestampMs": 1750029003897,
+   "amountCents": 9999,
+   "clamped": {
+    "dropletsLanded": 11,
+    "peakVelocity": 969.0887426957488,
+    "tiltEnergy": 2.3481304850429296,
+    "holdMs": 6696
+   },
+   "violations": [
+    "holdMs"
+   ],
+   "hash": 3543100313
+  }
+ ]
+}
