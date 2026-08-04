@@ -1,6 +1,14 @@
 import { writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 import { hashSeed, type BurnSeed } from './sigil';
 import { clampTelemetry } from './telemetry';
+
+// Written straight to where the Go test reads it, resolved from this file
+// rather than the CWD so the script works from anywhere. There is no separate
+// copy step: a corpus sitting next to the generator instead of in testdata is a
+// corpus the Go side never checks.
+const OUT = resolve(dirname(fileURLToPath(import.meta.url)), '../../api/sigil/testdata/corpus.json');
 
 let a = 0x5eed1234;
 const next = () => { a=(a+0x6d2b79f5)>>>0; let t=a; t=Math.imul(t^(t>>>15),t|1);
@@ -29,5 +37,6 @@ for (let i = 0; i < 300; i++) {
     clamped: c.telemetry, violations: c.violations.slice().sort(),
     hash: hashSeed(seed) });
 }
-writeFileSync('corpus.json', JSON.stringify({ version: 1, rows }, null, 1));
+writeFileSync(OUT, JSON.stringify({ version: 1, rows }, null, 1));
 console.log('rows', rows.length, '| sample hash', rows[0].hash, '| clamped[0]', JSON.stringify(rows[0].clamped));
+console.log('wrote', OUT);

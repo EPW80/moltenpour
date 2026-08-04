@@ -24,6 +24,8 @@ api/sigil/testdata/corpus.json                ── the referee
 | `sigil_test.go` | `api/sigil/sigil_test.go` | Reads the corpus; fails loudly on drift. |
 | `corpus.json` | `api/sigil/testdata/corpus.json` | Generated, committed, never hand-edited. |
 | `gencorpus.ts` | `app/sigil/gencorpus.ts` | Regenerates the corpus from the TS side. |
+| `sigil.ts` | `app/sigil/sigil.ts` | `hashSeed` + `generateSigil`. The TS source of truth. |
+| `sigil.test.ts` | `app/sigil/sigil.test.ts` | The TS-side mirror of the Go corpus tests. |
 
 ## The workflow
 
@@ -31,10 +33,18 @@ TypeScript is the source of truth. Go conforms to it.
 
 ```bash
 # 1. change telemetry.ts or hashSeed
-npx vite-node app/sigil/gencorpus.ts        # regenerate
-cp corpus.json api/sigil/testdata/          # ship it to Go
+npm run gencorpus                           # regenerates testdata/corpus.json in place
 go test ./api/sigil/...                     # Go must now agree
+git diff api/sigil/testdata/corpus.json     # review it — an unexpected diff is the point
 ```
+
+There is no longer a copy step: `gencorpus.ts` writes straight to
+`api/sigil/testdata/corpus.json`, resolved from its own location rather than the
+CWD. A corpus sitting anywhere else is a corpus the Go side never reads.
+
+The Go commands work from the repo root via `go.work`, even though the module
+itself lives in `api/`. Note that root-level `./...` still matches nothing — use
+`./api/...`.
 
 **IMPORTANT: never regenerate the corpus to make a failing Go test pass.** The
 corpus is generated from TS, so regenerating always makes Go's test go green —
@@ -88,6 +98,18 @@ Two things I got wrong that are worth knowing, because both looked right:
   corpus extended to cover trait output, not just the hash.
 - No fuzz testing. `go test -fuzz` against `ClampTelemetry` comparing to a TS
   oracle would be a stronger guarantee than 300 fixed rows.
-- The corpus is not checked in CI against a fresh TS regeneration. A CI step
-  that regenerates and diffs would catch a TS-side change that forgot step 2 of
-  the workflow above.
+
+## Done since
+
+- **The corpus is now checked in CI against a fresh TS regeneration.**
+  `.github/workflows/ci.yml` regenerates and fails on any diff, which catches a
+  TS-side change shipped without its corpus.
+- **`app/sigil/sigil.ts` was missing and has been restored.** It had been lost, so
+  `gencorpus.ts` could not run and the corpus could not be regenerated at all —
+  the Go tests were passing against a referee nothing could reproduce. The
+  restoration was reconstructed from the Go port and verified the only way that
+  counts: regenerating the corpus produced a byte-identical file.
+- **The TS side now has its own corpus tests** (`app/sigil/sigil.test.ts`), so a
+  change to `hashSeed` fails immediately rather than waiting for someone to
+  regenerate. Includes the seed 1–9999 geometry invariant the certificate handoff
+  asks for; measured span is 3.8…396.0 of 0…400.

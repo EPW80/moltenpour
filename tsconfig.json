@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+
+    // Deliberately no noUncheckedIndexedAccess: the sigil geometry in sigil.ts is
+    // lifted verbatim from the design prototype and indexes fixed-length arrays
+    // throughout. Rewriting it to satisfy the flag would mean re-deriving math the
+    // handoff says to copy, which is the drift this whole directory guards against.
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["app"]
+}
