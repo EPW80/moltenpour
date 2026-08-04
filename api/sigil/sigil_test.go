@@ -17,6 +17,8 @@ type row struct {
 	Clamped     Telemetry `json:"clamped"`
 	Violations  []string  `json:"violations"`
 	Hash        uint32    `json:"hash"`
+	RarityScore float64   `json:"rarityScore"`
+	Rarity      Rarity    `json:"rarity"`
 }
 
 func load(t *testing.T) []row {
@@ -72,6 +74,52 @@ func TestHashMatchesTypeScript(t *testing.T) {
 		if got != r.Hash {
 			t.Fatalf("row %d hash mismatch: go=%d ts=%d (ts=%d)", i, got, r.Hash, r.TimestampMs)
 		}
+	}
+}
+
+// The client labels the preview with a rarity and the server mints one. A
+// disagreement is silent in exactly the way a hash mismatch is: the user is told
+// they earned one classification and the ledger records another.
+func TestRarityMatchesTypeScript(t *testing.T) {
+	for i, r := range load(t) {
+		if got := RarityScore(r.Clamped, r.TierIndex); got != r.RarityScore {
+			t.Fatalf("row %d score mismatch: go=%v ts=%v", i, got, r.RarityScore)
+		}
+		if got := Classify(r.Clamped, r.TierIndex); got != r.Rarity {
+			t.Fatalf("row %d rarity mismatch: go=%q ts=%q", i, got, r.Rarity)
+		}
+	}
+}
+
+// The scoring is integer arithmetic specifically so a threshold comparison can
+// never straddle a last-ulp difference between the two languages. If a score
+// ever comes back fractional, that guarantee is gone.
+func TestRarityScoreIsIntegral(t *testing.T) {
+	for i, r := range load(t) {
+		got := RarityScore(r.Clamped, r.TierIndex)
+		if got != math.Trunc(got) {
+			t.Fatalf("row %d score is not an integer: %v", i, got)
+		}
+		if got < 0 || got > 1000 {
+			t.Fatalf("row %d score %v outside 0-1000", i, got)
+		}
+	}
+}
+
+// Out-of-range tiers must not panic — tierIndex reaches this from a request body.
+func TestClassifyHandlesOutOfRangeTier(t *testing.T) {
+	tel := Telemetry{DropletsLanded: 80, PeakVelocity: 1200, TiltEnergy: 12, HoldMs: 4000}
+	for _, tier := range []int{-5, -1, 6, 99} {
+		if got := Classify(tel, tier); got == "" {
+			t.Fatalf("tier %d returned empty rarity", tier)
+		}
+	}
+	// Clamping, not wrapping: a tier below the floor scores as tier 0.
+	if Classify(tel, -1) != Classify(tel, 0) {
+		t.Fatal("negative tier should clamp to tier 0")
+	}
+	if Classify(tel, 99) != Classify(tel, 5) {
+		t.Fatal("oversized tier should clamp to the top tier")
 	}
 }
 

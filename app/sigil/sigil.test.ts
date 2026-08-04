@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 import { generateSigil, hashSeed, type BurnSeed } from './sigil';
-import { clampTelemetry, type Telemetry } from './telemetry';
+import { clampTelemetry, SIM, TIER_BOUNDS, type Telemetry } from './telemetry';
+import { classify, rarityScore, RARITIES, type Rarity } from './rarity';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -17,6 +18,8 @@ type Row = {
   clamped: Telemetry;
   violations: string[];
   hash: number;
+  rarityScore: number;
+  rarity: Rarity;
 };
 
 const corpus: { version: number; rows: Row[] } = JSON.parse(
@@ -25,8 +28,13 @@ const corpus: { version: number; rows: Row[] } = JSON.parse(
 
 describe('the corpus', () => {
   it('is the 300 rows the Go side expects', () => {
-    expect(corpus.version).toBe(1);
+    expect(corpus.version).toBe(2);
     expect(corpus.rows).toHaveLength(300);
+  });
+
+  it('exercises all four rarities, or it is not a referee for the classifier', () => {
+    const seen = new Set(corpus.rows.map((r) => r.rarity));
+    for (const r of RARITIES) expect(seen, `no ${r} row`).toContain(r);
   });
 });
 
@@ -85,6 +93,77 @@ describe('clampTelemetry', () => {
       const got = clampTelemetry(r.raw, r.tierIndex, r.wallClockMs);
       expect(got.telemetry, `row ${i}`).toEqual(r.clamped);
       expect([...got.violations].sort(), `row ${i}`).toEqual([...r.violations].sort());
+    }
+  });
+});
+
+describe('rarity', () => {
+  it('matches every rarity and score in the corpus', () => {
+    for (const [i, r] of corpus.rows.entries()) {
+      expect(rarityScore(r.clamped, r.tierIndex), `row ${i}`).toBe(r.rarityScore);
+      expect(classify(r.clamped, r.tierIndex), `row ${i}`).toBe(r.rarity);
+    }
+  });
+
+  // The scoring is integer arithmetic specifically so a threshold comparison can
+  // never straddle a last-ulp difference between TS and Go. A fractional score
+  // means that guarantee is gone.
+  it('scores are integers in 0-1000', () => {
+    for (const [i, r] of corpus.rows.entries()) {
+      const s = rarityScore(r.clamped, r.tierIndex);
+      expect(Number.isInteger(s), `row ${i} score ${s}`).toBe(true);
+      expect(s).toBeGreaterThanOrEqual(0);
+      expect(s).toBeLessThanOrEqual(1000);
+    }
+  });
+
+  it('is a pure function of telemetry and tier — no luck component', () => {
+    const tel: Telemetry = { dropletsLanded: 80, peakVelocity: 1200, tiltEnergy: 12, holdMs: 4000 };
+    for (let i = 0; i < 50; i++) expect(classify(tel, 3)).toBe(classify(tel, 3));
+  });
+
+  it('clamps out-of-range tiers rather than throwing', () => {
+    const tel: Telemetry = { dropletsLanded: 80, peakVelocity: 1200, tiltEnergy: 12, holdMs: 4000 };
+    expect(classify(tel, -1)).toBe(classify(tel, 0));
+    expect(classify(tel, 99)).toBe(classify(tel, TIER_BOUNDS.length - 1));
+    expect(RARITIES).toContain(classify(tel, NaN));
+  });
+
+  // The accepted-risk note at the bottom of telemetry.ts states that a client
+  // claiming max-legal telemetry on every pour lands "Rare-to-Singular on tiers
+  // 3-5". That is a load-bearing claim — it is the reason input-trace replay is
+  // deliberately out of scope. If the thresholds drift, the note silently
+  // becomes a lie, so it is asserted here rather than trusted.
+  it('keeps the max-legal cheat at Rare-to-Singular on tiers 3-5', () => {
+    const maxLegal = { dropletsLanded: 9e9, peakVelocity: 9e9, tiltEnergy: 9e9, holdMs: 9e9 };
+    for (const tier of [3, 4, 5]) {
+      const { telemetry } = clampTelemetry(maxLegal, tier, 16_000);
+      expect(['Rare', 'Singular'], `tier ${tier}`).toContain(classify(telemetry, tier));
+    }
+    // ...and cannot reach Singular on the cheap tiers, which is what makes the
+    // per-attempt cost of the exploit the thing that bounds it.
+    for (const tier of [0, 1, 2]) {
+      const { telemetry } = clampTelemetry(maxLegal, tier, 16_000);
+      expect(classify(telemetry, tier), `tier ${tier}`).not.toBe('Singular');
+    }
+  });
+
+  it('rewards a steady hand over a shaken one', () => {
+    const holdMs = 10_000;
+    const holdS = holdMs / 1000;
+    const base = { dropletsLanded: 100, peakVelocity: 1500, holdMs };
+    const steady = classify({ ...base, tiltEnergy: 0 }, 4);
+    const shaken = classify({ ...base, tiltEnergy: SIM.maxTiltRate * holdS }, 4);
+    expect(rarityScore({ ...base, tiltEnergy: 0 }, 4)).toBeGreaterThan(
+      rarityScore({ ...base, tiltEnergy: SIM.maxTiltRate * holdS }, 4),
+    );
+    expect(RARITIES.indexOf(steady)).toBeGreaterThanOrEqual(RARITIES.indexOf(shaken));
+  });
+
+  it('lets a more expensive tier reach further on an identical pour', () => {
+    const tel: Telemetry = { dropletsLanded: 200, peakVelocity: 1600, tiltEnergy: 8, holdMs: 9000 };
+    for (let t = 1; t < TIER_BOUNDS.length; t++) {
+      expect(rarityScore(tel, t), `tier ${t} vs ${t - 1}`).toBeGreaterThanOrEqual(rarityScore(tel, t - 1));
     }
   });
 });
