@@ -1,0 +1,38 @@
+/*
+ * Bodoni Moda, self-hosted.
+ *
+ * IMPORTANT: self-hosted rather than loaded from Google Fonts specifically for
+ * the PDF path. A headless-Chrome print that races a font fetch renders the
+ * certificate in the fallback serif, and the type scale is tuned to Bodoni's
+ * metrics — the title would no longer fit its 290px motto rule. Rendering must
+ * never depend on a network round trip.
+ *
+ * Latin subset only (U+0000-00FF plus the usual punctuation). The certificate's
+ * copy is fixed English, so the other seven subsets Google serves are dead weight
+ * in a document that has to print identically every time.
+ *
+ * font-display: block, not swap. A flash of fallback serif mid-render is a
+ * visible defect on a document people print and keep.
+ */
+
+@font-face {
+  font-family: 'Bodoni Moda';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('./bodoni-moda-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Bodoni Moda';
+  font-style: italic;
+  font-weight: 400;
+  font-display: block;
+  src: url('./bodoni-moda-latin-400-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}

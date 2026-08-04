@@ -1,0 +1,56 @@
+/*
+ * print.css — the page geometry the Certificate component deliberately does not own
+ *
+ * The handoff is explicit that the document shell owns print geometry and the
+ * certificate must not author @page rules, paper dimensions or page-break CSS.
+ * This file is that shell.
+ *
+ * The sheet is A4 portrait at 96dpi (794x1123), full bleed, exactly one page.
+ * There is no reflow and no second sheet: content that misses the box is clipped.
+ */
+
+@page {
+  size: A4 portrait;
+  /* Full bleed. The certificate's own 52/62/46px inset is the only margin, and
+     a browser margin on top of it would push the fixed stack past the box. */
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  /* Everything except the sheet. The app chrome must not print. */
+  body > *:not(.print-root) {
+    display: none !important;
+  }
+
+  .print-root {
+    display: block !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .certificate-page {
+    /* Belt and braces with the component's own rule: some engines honour one and
+       not the other, and losing the plum ground turns the whole document into
+       gold text on white paper. */
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* On screen the sheet sits on the app's own ground rather than pretending to be
+   paper. The handoff forbids fake sheet cards — no drop shadow, no rounded
+   corner, no simulated stack. */
+.print-root {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 48px;
+}

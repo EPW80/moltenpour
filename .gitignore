@@ -2,3 +2,7 @@ node_modules/
 dist/
 *.log
 *:Zone.Identifier
+
+# Rendered certificate proofs and PDFs from `npm run verify:certificate`.
+# Regenerated on demand; the check is the deliverable, not the output.
+artifacts/

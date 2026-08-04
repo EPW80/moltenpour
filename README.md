@@ -1,0 +1,91 @@
+# MoltenPour
+
+Pay to pour molten metal down the screen and keep the splatter it leaves. One
+purchase yields three artifacts: the **sigil**, the **Certificate of Waste**, and
+the **collection entry**.
+
+## Running it
+
+```bash
+npm install
+npm run api      # Go API on :8787
+npm run dev      # app on :5173, proxying /api
+```
+
+The ledger is in memory and does not survive a restart.
+
+## Layout
+
+```
+app/
+  sigil/        hashSeed, generateSigil, clampTelemetry, rarity  ── ported to Go
+  ceremony/     tiers, droplet sim, the pour screen
+  certificate/  the A4 document, self-hosted Bodoni, print CSS
+  collection/   the gallery
+  design/       the specimen-ledger palette
+api/
+  sigil/        the Go half of the ported core + its corpus
+  pour/         mint, and the ledger behind a Store interface
+  httpapi/      handlers
+docs/handoffs/  the two design handoffs this is built from
+```
+
+## The one rule that matters
+
+`app/sigil/` is duplicated in `api/sigil/`. The client computes the seed hash,
+the clamp and the rarity to preview a sigil; the server recomputes all three to
+mint it. **If the two disagree, nothing crashes and nothing logs** — the user
+watches one artifact form and receives a different one.
+
+`api/sigil/testdata/corpus.json` is the referee. It is generated from TypeScript,
+committed, and verified by the Go tests.
+
+```bash
+npm run gencorpus              # regenerate (writes into api/sigil/testdata/)
+go test ./api/sigil/...        # Go must now agree
+```
+
+**Never regenerate the corpus to make a failing Go test pass.** Regenerating
+always makes Go go green, including when TypeScript is the thing that broke. See
+[app/sigil/CLAUDE.md](app/sigil/CLAUDE.md) before touching either side.
+
+## Two axes, deliberately separate
+
+|             | What it is          | Values          | Drives                                            |
+| ----------- | ------------------- | --------------- | ------------------------------------------------- |
+| `tierIndex` | what you **bought** | 0–5             | flow rate, price, the certificate's CONSIDERATION |
+| `rarity`    | what you **earned** | Common…Singular | accent pair, SUBSTANCE, CLASSIFICATION            |
+
+Rarity is a pure function of the clamped telemetry and the tier. There is no luck
+component: the brief forbids anything implying a randomized outcome.
+
+Thresholds are tuned so Common lands near 55% of certificates, and so a client
+claiming max-legal telemetry on every pour reaches Rare-to-Singular on tiers 3–5
+— the claim the accepted-risk note in `app/sigil/telemetry.ts` depends on. Both
+are asserted in tests. **Re-tune against the real ledger** once there is one.
+
+## Verifying
+
+```bash
+npm run typecheck
+npm test                       # includes the TS↔corpus and geometry invariants
+npm run gencorpus && git diff --exit-code api/sigil/testdata/corpus.json
+go vet ./api/... && go test ./api/...
+npm run verify:certificate     # renders and measures the A4 sheet, needs Chrome
+```
+
+`verify:certificate` is the one worth knowing about. The certificate prints at a
+fixed box with `overflow: hidden`, so content that misses the box is **clipped,
+not reflowed** — a silent failure that still produces a plausible-looking sheet.
+The script measures the rendered stack against the 794×1123 page box, checks the
+ground survives print, checks the serial is on one line, and prints one PDF page.
+Proofs land in `artifacts/certificate/`.
+
+## Not done
+
+- Payments. Receipt validation is a stub.
+- Persistence. Swap a Postgres-backed `pour.Store` in; nothing in `httpapi` reads
+  the concrete type.
+- Server-side sigil rendering (OG images). Needs the geometry pipeline ported and
+  the corpus extended to cover trait output, not just the hash.
+- Fuzzing `ClampTelemetry` against a TypeScript oracle.

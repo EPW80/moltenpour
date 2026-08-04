@@ -1,0 +1,48 @@
+/*
+ * global.css — app ground only. The certificate owns its own page box.
+ *
+ * IMPORTANT: no viewport units anywhere in this codebase's document styles. They
+ * track the window rather than the sheet and mis-size at print. Use percentages
+ * and fixed px.
+ */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #0a060d;
+  /* Never pure black: the ground is dark plum. */
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+button {
+  font: inherit;
+}
+
+/* Radius is zero everywhere. Not a stylistic accident — the document system has
+   no rounded corner in it. */
+button,
+input,
+fieldset,
+select {
+  border-radius: 0;
+}
+
+:focus-visible {
+  outline: 1px solid #f5d67a;
+  outline-offset: 2px;
+}
+
+@media print {
+  /* Belt and braces with print.css: app chrome must never reach the paper. */
+  .app-chrome {
+    display: none !important;
+  }
+}
