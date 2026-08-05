@@ -10,16 +10,18 @@ import (
 	"time"
 
 	"moltenpour/api/pour"
+	"moltenpour/api/session"
 )
 
 type Server struct {
-	store pour.Store
-	log   *slog.Logger
-	now   func() time.Time
+	store    pour.Store
+	sessions *session.Manager
+	log      *slog.Logger
+	now      func() time.Time
 }
 
-func New(store pour.Store, log *slog.Logger) *Server {
-	return &Server{store: store, log: log, now: time.Now}
+func New(store pour.Store, sessions *session.Manager, log *slog.Logger) *Server {
+	return &Server{store: store, sessions: sessions, log: log, now: time.Now}
 }
 
 func (s *Server) Routes() http.Handler {
@@ -47,6 +49,14 @@ func writeErr(w http.ResponseWriter, code int, msg string) {
 }
 
 func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
+	// Before anything is read or written: the owner must be resolved first,
+	// because SetCookie has to happen before the response body is committed.
+	ownerID, err := s.sessions.OwnerID(w, r)
+	if err != nil {
+		writeErr(w, http.StatusInternalServerError, "could not establish a session")
+		return
+	}
+
 	var req pour.Request
 	dec := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<16))
 	dec.DisallowUnknownFields()
@@ -65,7 +75,8 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 
 	now := s.now()
 	rec, err := s.store.Append(func(position int) (pour.Record, error) {
-		return pour.Mint(req, position, now)
+		// ownerID comes from the signed cookie, never from the request body.
+		return pour.Mint(req, position, ownerID, now)
 	})
 	if err != nil {
 		writeErr(w, http.StatusBadRequest, err.Error())
@@ -97,17 +108,37 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleList(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, http.StatusOK, s.store.List())
+	ownerID, err := s.sessions.OwnerID(w, r)
+	if err != nil {
+		writeErr(w, http.StatusInternalServerError, "could not establish a session")
+		return
+	}
+	records, err := s.store.List(ownerID)
+	if err != nil {
+		s.log.Error("listing the ledger", "err", err)
+		writeErr(w, http.StatusInternalServerError, "could not read the ledger")
+		return
+	}
+	writeJSON(w, http.StatusOK, records)
 }
 
 func (s *Server) handleGet(w http.ResponseWriter, r *http.Request) {
-	rec, err := s.store.Get(r.PathValue("id"))
+	ownerID, err := s.sessions.OwnerID(w, r)
+	if err != nil {
+		writeErr(w, http.StatusInternalServerError, "could not establish a session")
+		return
+	}
+
+	// Someone else's pour is indistinguishable from one that does not exist.
+	// A 403 here would confirm the serial is real to anyone who guessed it.
+	rec, err := s.store.Get(r.PathValue("id"), ownerID)
 	if errors.Is(err, pour.ErrNotFound) {
 		writeErr(w, http.StatusNotFound, "no such pour")
 		return
 	}
 	if err != nil {
-		writeErr(w, http.StatusInternalServerError, err.Error())
+		s.log.Error("reading a pour", "err", err)
+		writeErr(w, http.StatusInternalServerError, "could not read the ledger")
 		return
 	}
 	writeJSON(w, http.StatusOK, rec)

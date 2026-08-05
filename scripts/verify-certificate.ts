@@ -82,7 +82,18 @@ try {
 
       const header = content.querySelector('header')!;
       const [officeEl, serialEl] = Array.from(header.children) as HTMLElement[];
-      const lineHeightOf = (el: HTMLElement) => el.getClientRects().length;
+
+      // IMPORTANT: count line boxes with a Range, not element.getClientRects().
+      // These spans are flex items, so they are block-level, and getClientRects
+      // on a block returns its single border box no matter how many lines of text
+      // are inside — which made this check pass for anything at all. A Range over
+      // the contents returns one rect per line fragment, which is the question
+      // actually being asked.
+      const lineHeightOf = (el: HTMLElement) => {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        return range.getClientRects().length;
+      };
 
       const svg = sheet.querySelector('svg') as SVGElement;
       const svgBox = svg.getBoundingClientRect();
@@ -96,7 +107,33 @@ try {
 
       const dl = sheet.querySelector('dl');
 
+      // The footer disclaimer wraps to two lines at the specified max-width:70%
+      // and the 12px/1.9px floor. That is legible and it fits, so it stays — but
+      // a second line grows the footer downward toward the corner registration
+      // ticks, and text touching a tick reads as a printing fault. Measure the
+      // gap rather than trusting it.
+      const footer = content.querySelector('footer')!;
+      const disclaimer = footer.firstElementChild as HTMLElement;
+      const disclaimerBox = disclaimer.getBoundingClientRect();
+      const tickEl = sheet.querySelector<HTMLElement>('[data-corner-tick="bottom-left"]');
+      const bottomLeftTick = tickEl ? tickEl.getBoundingClientRect() : null;
+
+      // A real 2D test. The tick sits at inset 40 and the content column starts
+      // at the 62px page padding, so the two share vertical space by design —
+      // only an actual rectangle intersection is a fault, and the horizontal gap
+      // is the margin that matters.
+      const overlaps =
+        bottomLeftTick !== null &&
+        disclaimerBox.left < bottomLeftTick.right &&
+        disclaimerBox.right > bottomLeftTick.left &&
+        disclaimerBox.top < bottomLeftTick.bottom &&
+        disclaimerBox.bottom > bottomLeftTick.top;
+
       return {
+        disclaimerLines: lineHeightOf(disclaimer),
+        tickOverlap: overlaps,
+        tickGapX: bottomLeftTick ? disclaimerBox.left - bottomLeftTick.right : null,
+        footerBottomGap: box.bottom - footer.getBoundingClientRect().bottom,
         w: box.width,
         h: box.height,
         stack: stack + padding,
@@ -157,6 +194,21 @@ try {
       : fail(`ledger markup wrong: dl=${m.hasDl} dt=${m.dtCount} dd=${m.ddCount}`);
 
     m.sigilHidden ? pass('sigil is aria-hidden') : fail('sigil is not aria-hidden');
+
+    // The disclaimer is allowed to wrap — it is specified at max-width:70% and
+    // the 12px floor, and two lines are still legible. What is not allowed is it
+    // reaching the corner registration tick.
+    if (m.tickGapX === null) {
+      fail('could not find the bottom-left registration tick to measure against');
+    } else if (m.tickOverlap) {
+      fail(`disclaimer overlaps the corner registration tick — reads as a printing fault`);
+    } else {
+      pass(`disclaimer on ${m.disclaimerLines} line(s), ${m.tickGapX.toFixed(1)}px clear of the corner tick`);
+    }
+
+    m.footerBottomGap >= 0
+      ? pass(`footer ${m.footerBottomGap.toFixed(1)}px above the page edge`)
+      : fail(`footer runs ${(-m.footerBottomGap).toFixed(1)}px past the page edge and will be clipped`);
 
     console.log(`  · accent ${m.accent}`);
 

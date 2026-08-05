@@ -43,5 +43,30 @@ jobs:
       - name: Go vet
         run: go vet ./api/...
 
+      # -race because the ledger is the one place with real concurrency: Append
+      # assigns a position and mints inside the same critical section, and a data
+      # race there means two certificates printing the same serial.
       - name: Go tests
-        run: go test ./api/...
+        run: go test -race ./api/...
+
+  certificate:
+    name: certificate is print-exact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+
+      # The certificate prints at a fixed box with overflow:hidden, so content
+      # that misses the box is clipped rather than reflowed — it still produces a
+      # plausible-looking sheet with its footer missing. That is precisely the
+      # failure a human reviewer scrolling a diff will not catch, so it is
+      # measured here instead.
+      - name: Render and measure the A4 sheet
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: npm run verify:certificate

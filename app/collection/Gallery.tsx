@@ -10,7 +10,7 @@
 
 import { COLOR, FONT, RARITY_PRESENTATION } from '../design/tokens';
 import { SigilSvg } from '../sigil/SigilSvg';
-import { formatConsideration } from '../ceremony/tiers';
+import { formatUSD } from '../ceremony/tiers';
 import { formatOrdinal, type PourRecord } from '../pour/record';
 
 type Props = {
@@ -38,7 +38,8 @@ export function Gallery({ pours, onSelect }: Props) {
         }}
       >
         <span>Your pours · {pours.length}</span>
-        <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatConsideration(totalCents)}</span>
+        {/* A sum, not a price: an empty collection reads USD 0.00, never "Free". */}
+        <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatUSD(totalCents)}</span>
       </header>
 
       {pours.length === 0 ? (

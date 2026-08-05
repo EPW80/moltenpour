@@ -19,7 +19,11 @@ import (
 // without changing the other breaks the certificate silently — it renders with
 // a zero value rather than failing.
 type Record struct {
-	ID             string          `json:"id"`
+	ID string `json:"id"`
+	// Who poured it. Server-side only: the client already knows it is theirs,
+	// and shipping owner ids to the browser would put one visitor's identifier
+	// in another's reach the moment any listing leaked.
+	OwnerID        string          `json:"-"`
 	LedgerPosition int             `json:"ledgerPosition"`
 	TierIndex      int             `json:"tierIndex"`
 	AmountCents    int             `json:"amountCents"`
@@ -66,8 +70,10 @@ const maxClockSkew = 5 * time.Minute
 
 // Mint validates, clamps, and derives everything the certificate prints.
 //
-// ledgerPosition is supplied by the store, which owns ordering.
-func Mint(req Request, ledgerPosition int, now time.Time) (Record, error) {
+// ledgerPosition is supplied by the store, which owns ordering. ownerID comes
+// from the session, never from the request body — a client that could name its
+// own owner could mint into someone else's collection.
+func Mint(req Request, ledgerPosition int, ownerID string, now time.Time) (Record, error) {
 	if req.TierIndex < 0 || req.TierIndex >= len(amountCents) {
 		return Record{}, fmt.Errorf("tierIndex %d out of range", req.TierIndex)
 	}
@@ -104,6 +110,7 @@ func Mint(req Request, ledgerPosition int, now time.Time) (Record, error) {
 
 	return Record{
 		ID:             fmt.Sprintf("%08x-%d", seed, ledgerPosition),
+		OwnerID:        ownerID,
 		LedgerPosition: ledgerPosition,
 		TierIndex:      req.TierIndex,
 		AmountCents:    amountCents[req.TierIndex],

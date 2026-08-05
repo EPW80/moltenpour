@@ -6,3 +6,9 @@ dist/
 # Rendered certificate proofs and PDFs from `npm run verify:certificate`.
 # Regenerated on demand; the check is the deliverable, not the output.
 artifacts/
+
+# The ledger. Real pours, local to whoever ran the server — and the WAL and
+# shared-memory files SQLite keeps beside it.
+*.db
+*.db-wal
+*.db-shm

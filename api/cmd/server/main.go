@@ -14,19 +14,32 @@ import (
 
 	"moltenpour/api/httpapi"
 	"moltenpour/api/pour"
+	"moltenpour/api/session"
 )
 
 func main() {
 	addr := flag.String("addr", ":8787", "listen address")
+	dbPath := flag.String("db", "moltenpour.db", `ledger file, or ":memory:" for an ephemeral one`)
 	flag.Parse()
 
 	log := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
 
-	// In-memory: the ledger does not survive a restart. Swap in a Postgres-backed
-	// pour.Store when it needs to; nothing in httpapi reads the concrete type.
+	// The ledger outlives the process. A certificate's serial and ledger position
+	// are derived from it, so losing the file re-issues No. 1 to somebody — for a
+	// document whose entire register is institutional permanence.
+	store, err := pour.NewSQLiteStore(*dbPath)
+	if err != nil {
+		log.Error("opening the ledger", "path", *dbPath, "err", err)
+		os.Exit(1)
+	}
+	defer store.Close()
+	log.Info("ledger open", "path", *dbPath)
+
+	sessions := session.New(os.Getenv("MOLTENPOUR_SECRET"), log)
+
 	srv := &http.Server{
 		Addr:              *addr,
-		Handler:           httpapi.New(pour.NewMemoryStore(), log).Routes(),
+		Handler:           httpapi.New(store, sessions, log).Routes(),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 

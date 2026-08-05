@@ -8,11 +8,14 @@ the **collection entry**.
 
 ```bash
 npm install
-npm run api      # Go API on :8787
+npm run api      # Go API on :8787, ledger at ./moltenpour.db
 npm run dev      # app on :5173, proxying /api
 ```
 
-The ledger is in memory and does not survive a restart.
+The ledger is a SQLite file. `npm run api -- -db :memory:` for an ephemeral one.
+
+Set `MOLTENPOUR_SECRET` in anything but local development — it signs the owner
+cookie, and the default is a published constant that anyone can forge.
 
 ## Layout
 
@@ -25,10 +28,25 @@ app/
   design/       the specimen-ledger palette
 api/
   sigil/        the Go half of the ported core + its corpus
-  pour/         mint, and the ledger behind a Store interface
+  pour/         mint, and the ledger — memory and SQLite behind one Store
+  session/      the signed anonymous owner cookie
   httpapi/      handlers
 docs/handoffs/  the two design handoffs this is built from
 ```
+
+## Whose pours are they
+
+There is no login, no email and no password. A visitor is a random opaque id in
+an HMAC-signed `HttpOnly` cookie; a pour belongs to whoever poured it. Signing is
+the whole access control — an unsigned or edited cookie is treated as no cookie
+at all, and its bearer silently becomes a new owner with an empty collection.
+
+Reads are scoped to that owner, and someone else's pour returns **404, not 403**:
+whether a given serial exists is not public information.
+
+The ledger POSITION is deliberately *not* per-owner. `No. 1,284` is the Office's
+ledger, and one continuous sequence is what makes the register read as
+institutional rather than personal.
 
 ## The one rule that matters
 
@@ -64,14 +82,37 @@ claiming max-legal telemetry on every pour reaches Rare-to-Singular on tiers 3�
 — the claim the accepted-risk note in `app/sigil/telemetry.ts` depends on. Both
 are asserted in tests. **Re-tune against the real ledger** once there is one.
 
+Because reach scales with price, the cheap tiers genuinely cannot mint the rare
+classifications. The ceremony says so on every tier button rather than letting
+someone pour the free tier repeatedly wondering why:
+
+| Sample      | Measure     | Draught | Vessel      | Crucible    | Full Pour   |
+| ----------- | ----------- | ------- | ----------- | ----------- | ----------- |
+| to Uncommon | to Uncommon | to Rare | to Singular | to Singular | to Singular |
+
+`reachableRarity()` computes that from the real clamp and the real classifier, so
+it cannot drift when the thresholds move. Stating a ceiling is not implying a
+random outcome — the brief forbids the latter, not the former.
+
 ## Verifying
 
 ```bash
 npm run typecheck
 npm test                       # includes the TS↔corpus and geometry invariants
 npm run gencorpus && git diff --exit-code api/sigil/testdata/corpus.json
-go vet ./api/... && go test ./api/...
+go vet ./api/... && go test -race ./api/...
 npm run verify:certificate     # renders and measures the A4 sheet, needs Chrome
+```
+
+`-race` because the ledger is the one place with real concurrency: `Append`
+assigns a position and mints inside the same critical section, and a race there
+means two certificates printing the same serial.
+
+Export a real pour's sheet as a PDF — the ledger is owner-scoped, so this needs
+the owner's cookie, exactly as the app does:
+
+```bash
+MOLTENPOUR_COOKIE='mp_owner=<value>' npm run certificate:pdf -- <pourId>
 ```
 
 `verify:certificate` is the one worth knowing about. The certificate prints at a
@@ -83,9 +124,13 @@ Proofs land in `artifacts/certificate/`.
 
 ## Not done
 
-- Payments. Receipt validation is a stub.
-- Persistence. Swap a Postgres-backed `pour.Store` in; nothing in `httpapi` reads
-  the concrete type.
+- **Payments.** Receipt validation is a stub, so nothing charges for a tier.
+- **Accounts.** Ownership is a cookie: clear it and the collection is gone, and
+  it does not follow you to another device. Real accounts can adopt these owner
+  ids later by claiming them, so nothing minted anonymously is orphaned.
+- **A server-rendered PDF endpoint** for email delivery. `certificate:pdf` does
+  it from the command line; putting it behind a route means running a headless
+  browser in the deployment, which is an infrastructure decision.
 - Server-side sigil rendering (OG images). Needs the geometry pipeline ported and
   the corpus extended to cover trait output, not just the hash.
 - Fuzzing `ClampTelemetry` against a TypeScript oracle.

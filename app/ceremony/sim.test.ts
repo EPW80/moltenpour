@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest';
 
 import { createPour, stepPour, telemetryOf, type PourInput } from './sim';
 import { clampTelemetry, SIM } from '../sigil/telemetry';
-import { tierAt, TIERS } from './tiers';
+import { reachableRarity, tierAt, TIERS } from './tiers';
 import { hashSeed } from '../sigil/sigil';
+import { classify } from '../sigil/rarity';
 
 const HOLD: PourInput = { pouring: true, tiltDeg: 0 };
 const RELEASE: PourInput = { pouring: false, tiltDeg: 0 };
@@ -116,6 +117,85 @@ describe('the pour sim', () => {
 
     const still = run(3, 2000, HOLD);
     expect(still.tiltEnergy).toBe(0);
+  });
+
+  // The vessel now sizes itself to the viewport, so the same pour runs in a
+  // different box on a phone and a monitor. What a pour EARNS must not depend on
+  // that: droplets are spawned on a clock and settling waits for all of them, and
+  // the clamp's velocity ceiling is time-based rather than distance-based.
+  it('earns the same rarity regardless of how big the vessel is', () => {
+    const sizes: [number, number][] = [
+      [260, 288],
+      [360, 404],
+      [420, 474],
+    ];
+
+    const results = sizes.map(([w, h]) => {
+      let s = createPour(4);
+      for (let t = 0; t < 3000; t += 16) s = stepPour(s, HOLD, 16, w, h - 16);
+      for (let i = 0; i < 400 && !s.settled; i++) s = stepPour(s, RELEASE, 16, w, h - 16);
+      const { telemetry } = clampTelemetry(telemetryOf(s), 4, 30_000);
+      return {
+        size: `${w}x${h}`,
+        droplets: telemetry.dropletsLanded,
+        holdMs: telemetry.holdMs,
+        rarity: classify(telemetry, 4),
+      };
+    });
+
+    const first = results[0];
+    for (const r of results.slice(1)) {
+      expect(r.droplets, `${r.size} vs ${first.size}`).toBe(first.droplets);
+      expect(r.holdMs, `${r.size} vs ${first.size}`).toBe(first.holdMs);
+      expect(r.rarity, `${r.size} vs ${first.size}`).toBe(first.rarity);
+    }
+  });
+
+  it('keeps splatter inside a vessel of any size', () => {
+    for (const [w, h] of [[260, 288], [420, 474]] as [number, number][]) {
+      let s = createPour(5);
+      for (let t = 0; t < 2000; t += 16) s = stepPour(s, HOLD, 16, w, h - 16);
+      for (let i = 0; i < 400 && !s.settled; i++) s = stepPour(s, RELEASE, 16, w, h - 16);
+      for (const d of s.droplets) {
+        expect(d.x, `${w}x${h}`).toBeGreaterThanOrEqual(0);
+        expect(d.x, `${w}x${h}`).toBeLessThanOrEqual(w);
+        expect(d.y, `${w}x${h}`).toBeLessThanOrEqual(h - 16);
+      }
+    }
+  });
+
+  // The ceremony prints this ceiling on every tier button. If the thresholds are
+  // re-tuned and this is not, the UI starts promising a classification the tier
+  // cannot mint — the exact dishonesty showing it was meant to remove.
+  describe('the reachable ceiling shown on each tier', () => {
+    it('is what a flawless pour actually earns', () => {
+      const perfect = { dropletsLanded: 9e9, peakVelocity: 9e9, tiltEnergy: 0, holdMs: SIM.maxPourMs };
+      for (const tier of TIERS) {
+        const { telemetry } = clampTelemetry(perfect, tier.index, SIM.maxPourMs);
+        expect(reachableRarity(tier.index), `tier ${tier.index}`).toBe(classify(telemetry, tier.index));
+      }
+    });
+
+    it('never undersells a tier — no ordinary pour beats the stated ceiling', () => {
+      const order = ['Common', 'Uncommon', 'Rare', 'Singular'];
+      for (const tier of TIERS) {
+        const ceiling = order.indexOf(reachableRarity(tier.index));
+        for (const holdMs of [800, 2500, 7000, SIM.maxPourMs]) {
+          const s = pourAndSettle(tier.index, holdMs);
+          const { telemetry } = clampTelemetry(telemetryOf(s), tier.index, holdMs + 2000);
+          expect(order.indexOf(classify(telemetry, tier.index)), `tier ${tier.index} at ${holdMs}ms`)
+            .toBeLessThanOrEqual(ceiling);
+        }
+      }
+    });
+
+    it('rises with the tier and never falls', () => {
+      const order = ['Common', 'Uncommon', 'Rare', 'Singular'];
+      for (let t = 1; t < TIERS.length; t++) {
+        expect(order.indexOf(reachableRarity(t)), `tier ${t} vs ${t - 1}`)
+          .toBeGreaterThanOrEqual(order.indexOf(reachableRarity(t - 1)));
+      }
+    });
   });
 
   it('is frame-rate independent to within the spawn tolerance', () => {

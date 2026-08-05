@@ -10,7 +10,8 @@
     "gencorpus": "vite-node app/sigil/gencorpus.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "verify:certificate": "vite-node scripts/verify-certificate.ts"
+    "verify:certificate": "vite-node scripts/verify-certificate.ts",
+    "certificate:pdf": "vite-node scripts/certificate-pdf.ts"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",

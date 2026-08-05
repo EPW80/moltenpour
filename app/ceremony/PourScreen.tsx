@@ -20,12 +20,25 @@ import { clampTelemetry, SIM } from '../sigil/telemetry';
 import { COLOR, FONT, RARITY_PRESENTATION } from '../design/tokens';
 import { mintPour, type PourRecord } from '../pour/record';
 import { createPour, stepPour, telemetryOf, type PourState } from './sim';
-import { formatConsideration, MAX_POUR_MS, TIERS, tierAt } from './tiers';
+import { formatConsideration, MAX_POUR_MS, reachableRarity, TIERS, tierAt } from './tiers';
 
-const STAGE_W = 360;
-const STAGE_H = 420;
+/**
+ * The vessel sizes itself to the viewport — the brief calls this a mobile app,
+ * and a fixed 360x420 box is a desktop assumption.
+ *
+ * This is safe for the telemetry, which is the only reason to think twice. The
+ * clamp's velocity ceiling is time-based (spawnVyMax + gravity * min(holdS, 1.2)),
+ * not distance-based, so a taller vessel cannot push peak velocity past it; and
+ * spawning is time-based while settling waits for every droplet to land, so the
+ * droplet count is whatever the flow rate and the hold say it is. A pour of the
+ * same duration earns the same rarity on a phone and on a monitor.
+ */
+const STAGE_MIN_W = 260;
+const STAGE_MAX_W = 420;
+/** Portrait, like the thing it is imitating. */
+const STAGE_ASPECT = 420 / 360;
 /** Inset from the bottom edge so a landed droplet's full radius stays visible. */
-const FLOOR_Y = STAGE_H - 16;
+const FLOOR_INSET = 16;
 
 type Props = {
   onMinted: (record: PourRecord) => void;
@@ -48,11 +61,37 @@ export function PourScreen({ onMinted }: Props) {
 
   inputRef.current = { pouring, tiltDeg };
 
+  const [stage, setStage] = useState({ w: 360, h: 420 });
+  const stageRef = useRef(stage);
+  stageRef.current = stage;
+  const shellRef = useRef<HTMLDivElement | null>(null);
+
+  // Measure the space the vessel actually has rather than assuming it.
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+
+    const measure = () => {
+      const available = shell.getBoundingClientRect().width;
+      const w = Math.round(Math.max(STAGE_MIN_W, Math.min(STAGE_MAX_W, available)));
+      setStage((prev) => (prev.w === w ? prev : { w, h: Math.round(w * STAGE_ASPECT) }));
+    };
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(shell);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const tick = (t: number) => {
       const dt = lastRef.current ? t - lastRef.current : 16;
       lastRef.current = t;
-      setState((s) => stepPour(s, inputRef.current, dt, STAGE_W, FLOOR_Y));
+      // Read the size through a ref so a resize does not restart the loop —
+      // cancelling and re-requesting mid-pour would drop frames the sim is
+      // integrating over, and the telemetry would show it.
+      const { w, h } = stageRef.current;
+      setState((s) => stepPour(s, inputRef.current, dt, w, h - FLOOR_INSET));
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
@@ -169,7 +208,7 @@ export function PourScreen({ onMinted }: Props) {
           display: 'flex',
           flexDirection: 'column',
           gap: 10,
-          maxWidth: STAGE_W,
+          maxWidth: STAGE_MAX_W,
           width: '100%',
         }}
       >
@@ -202,6 +241,13 @@ export function PourScreen({ onMinted }: Props) {
                 {tier.name}
                 <br />
                 <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatConsideration(tier.amountCents)}</span>
+                <br />
+                {/* What this tier can reach at best. Stated plainly so nobody
+                    pours the free tier repeatedly waiting for a Singular that
+                    the reach curve will never give them. */}
+                <span style={{ fontSize: 12, letterSpacing: '1.2px', opacity: 0.75 }}>
+                  to {reachableRarity(tier.index)}
+                </span>
               </button>
             );
           })}
@@ -213,7 +259,25 @@ export function PourScreen({ onMinted }: Props) {
         )}
       </fieldset>
 
-      <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
+        {/* The shell is what gets measured; the vessel takes the size it reports.
+            Separating them keeps the ResizeObserver off the element whose size it
+            is setting, which would otherwise feed back on itself. */}
+        <div
+          ref={shellRef}
+          style={{
+            flex: `1 1 ${STAGE_MIN_W}px`,
+            maxWidth: STAGE_MAX_W,
+            // IMPORTANT: a flex item's default min-width is auto, which refuses
+            // to shrink below its content — and its content is the vessel, whose
+            // width comes from measuring this shell. Without this the two pin
+            // each other at whatever size they started, and the vessel never
+            // adapts. Measured: 420px at every viewport until this was set.
+            minWidth: 0,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
         {/* The vessel */}
         <div
           onPointerDown={startPour}
@@ -234,8 +298,8 @@ export function PourScreen({ onMinted }: Props) {
           }}
           style={{
             position: 'relative',
-            width: STAGE_W,
-            height: STAGE_H,
+            width: stage.w,
+            height: stage.h,
             border: `1px solid ${COLOR.rule}`,
             background: 'rgba(10,6,13,.4)',
             touchAction: 'none',
@@ -244,7 +308,7 @@ export function PourScreen({ onMinted }: Props) {
             userSelect: 'none',
           }}
         >
-          <svg width={STAGE_W} height={STAGE_H} style={{ display: 'block' }} aria-hidden="true">
+          <svg width={stage.w} height={stage.h} style={{ display: 'block' }} aria-hidden="true">
             {state.droplets.map((d, i) => (
               <circle
                 key={i}
@@ -287,10 +351,11 @@ export function PourScreen({ onMinted }: Props) {
             </span>
           )}
         </div>
+        </div>
 
         {/* The preview */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, width: 300 }}>
-          <div style={{ width: 300, height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, flex: '1 1 260px', maxWidth: 300 }}>
+          <div style={{ width: '100%', aspectRatio: '1 / 1', maxHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <SigilSvg seed={preview.seed} accent={accent} secondary={secondary} maxWidthPx={300} />
           </div>
           <span style={{ fontSize: 12, letterSpacing: '3px', textTransform: 'uppercase', color: secondary, textAlign: 'center' }}>

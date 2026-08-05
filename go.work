@@ -1,6 +1,6 @@
 // Lets `go vet ./...` and `go test ./...` run from the repo root. The module
 // itself lives in api/, so without this the commands documented in the sigil
 // handoff fail with "directory prefix . does not contain main module".
-go 1.25
+go 1.25.0
 
 use ./api

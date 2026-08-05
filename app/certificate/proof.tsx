@@ -48,7 +48,35 @@ function specimen(rarity: Rarity, i: number): PourRecord {
   };
 }
 
+/**
+ * A real pour, passed in the query string.
+ *
+ * scripts/certificate-pdf.ts fetches a record from the API and hands it here so
+ * the exported sheet is rendered by the same component the app renders, rather
+ * than a second implementation that could drift from it.
+ */
+function recordFromQuery(): PourRecord | null {
+  const raw = new URLSearchParams(window.location.search).get('record');
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as PourRecord;
+  } catch {
+    console.error('proof: ?record= is not valid JSON');
+    return null;
+  }
+}
+
 function Proof() {
+  const single = recordFromQuery();
+  if (single) {
+    // One sheet, no chrome, no caption — this is what gets printed.
+    return (
+      <div data-proof-sheet="single">
+        <Certificate pour={single} />
+      </div>
+    );
+  }
+
   return (
     <main style={{ padding: 24, fontFamily: FONT.instrument, color: COLOR.goldBody }}>
       <h1 style={{ fontSize: 12, letterSpacing: '3px', textTransform: 'uppercase', color: COLOR.goldLabel, fontWeight: 400, margin: '0 0 20px' }}>

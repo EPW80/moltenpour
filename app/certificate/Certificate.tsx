@@ -133,6 +133,9 @@ export function Certificate({ pour, grain = true }: Props) {
         return (
           <div
             key={`${vertical}-${horizontal}`}
+            // Labelled so verify-certificate can measure the footer's clearance
+            // against them without guessing which divs they are.
+            data-corner-tick={`${vertical}-${horizontal}`}
             style={{
               position: 'absolute',
               [vertical]: 40,
