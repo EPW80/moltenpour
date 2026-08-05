@@ -67,6 +67,21 @@ go test ./api/sigil/...        # Go must now agree
 always makes Go go green, including when TypeScript is the thing that broke. See
 [app/sigil/CLAUDE.md](app/sigil/CLAUDE.md) before touching either side.
 
+The corpus is also pinned to the JavaScript engine that produced it.
+`hashSeed`, `clampTelemetry` and `rarity` are integer or exactly-specified
+arithmetic and cannot drift — but `generateSigil` uses `Math.cos`/`Math.sin`,
+which ECMAScript leaves implementation-dependent. Each row therefore carries a
+`sigilDigest` over the emitted geometry, and `gencorpus` refuses to run on
+anything but Node:
+
+```bash
+bun app/sigil/gencorpus.ts     # exits 1, corpus untouched
+```
+
+Node 22 and Bun 1.3.14 currently produce byte-identical rows, so the recorded
+`engine` string — not the probes — is what catches a switch between them. See
+[app/sigil/ENGINE-PINNING.md](app/sigil/ENGINE-PINNING.md).
+
 ## Two axes, deliberately separate
 
 |             | What it is          | Values          | Drives                                            |

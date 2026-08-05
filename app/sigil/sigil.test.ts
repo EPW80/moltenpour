@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
-import { generateSigil, hashSeed, type BurnSeed } from './sigil';
+import { generateSigil, hashSeed, sigilDigest, type BurnSeed } from './sigil';
 import { clampTelemetry, SIM, TIER_BOUNDS, type Telemetry } from './telemetry';
 import { classify, rarityScore, RARITIES, type Rarity } from './rarity';
 
@@ -20,16 +20,31 @@ type Row = {
   hash: number;
   rarityScore: number;
   rarity: Rarity;
+  sigilDigest: number;
 };
 
-const corpus: { version: number; rows: Row[] } = JSON.parse(
-  readFileSync(resolve(HERE, '../../api/sigil/testdata/corpus.json'), 'utf8'),
-);
+const corpus: {
+  version: number;
+  engine: string;
+  probe: Record<string, string>;
+  rows: Row[];
+} = JSON.parse(readFileSync(resolve(HERE, '../../api/sigil/testdata/corpus.json'), 'utf8'));
 
 describe('the corpus', () => {
   it('is the 300 rows the Go side expects', () => {
-    expect(corpus.version).toBe(2);
+    expect(corpus.version).toBe(3);
     expect(corpus.rows).toHaveLength(300);
+  });
+
+  // Provenance. Math.sin/cos/pow are implementation-dependent per ECMAScript and
+  // feed generateSigil, so the corpus is only meaningful alongside the engine
+  // that produced it. The Go side pins the value; this only checks it is there,
+  // because a corpus with no engine recorded is one nobody can pin later.
+  it('records the engine that produced it, and its probes', () => {
+    expect(corpus.engine).toMatch(/^[a-z0-9-]+\/\d/);
+    for (const k of ['cos07', 'sin23', 'pow11_3']) {
+      expect(corpus.probe?.[k], `probe ${k}`).toBeTypeOf('string');
+    }
   });
 
   it('exercises all four rarities, or it is not a referee for the classifier', () => {
@@ -165,6 +180,78 @@ describe('rarity', () => {
     for (let t = 1; t < TIER_BOUNDS.length; t++) {
       expect(rarityScore(tel, t), `tier ${t} vs ${t - 1}`).toBeGreaterThanOrEqual(rarityScore(tel, t - 1));
     }
+  });
+});
+
+// The only guard on the one part of the pipeline that CAN drift between
+// JavaScript engines.
+//
+// hashSeed is integer arithmetic and clampTelemetry uses only exactly-specified
+// operations, so every other column in the corpus is identical on any engine —
+// which means the engine pin, on its own, guards data that was never at risk.
+// generateSigil uses Math.cos and Math.sin, which ECMAScript leaves
+// implementation-dependent. This is what notices when they move.
+describe('sigil geometry digest', () => {
+  it('matches the corpus for all 300 production seeds', () => {
+    for (const [i, r] of corpus.rows.entries()) {
+      // Seeded from the hash, because that is how production derives a sigil's
+      // seed — so these are the sigils these pours would actually mint.
+      expect(sigilDigest(r.hash), `row ${i} (seed ${r.hash})`).toBe(r.sigilDigest);
+    }
+  });
+
+  it('is deterministic and seed-sensitive', () => {
+    expect(sigilDigest(1284)).toBe(sigilDigest(1284));
+    expect(sigilDigest(1284)).not.toBe(sigilDigest(1285));
+  });
+
+  // If the digest ignored part of the geometry it would be a guard in name only.
+  it('covers every field the renderer draws', () => {
+    const base = generateSigil(4242);
+    const digestOf = (g: typeof base) => {
+      let h = 0x811c9dc5;
+      const feed = (s: string) => {
+        for (let i = 0; i < s.length; i++) {
+          h = (h ^ (s.charCodeAt(i) & 0xff)) >>> 0;
+          h = Math.imul(h, 0x01000193) >>> 0;
+        }
+        h = (h ^ 0x1f) >>> 0;
+        h = Math.imul(h, 0x01000193) >>> 0;
+      };
+      feed(g.viewBox);
+      feed(g.pool);
+      for (const t of g.tendrils) {
+        feed(t.x1); feed(t.y1); feed(t.x2); feed(t.y2);
+        feed(t.strokeOpacity); feed(t.strokeWidth);
+      }
+      for (const s of g.satellites) {
+        feed(s.cx); feed(s.cy); feed(s.r); feed(s.fillOpacity);
+      }
+      return h >>> 0;
+    };
+
+    expect(digestOf(base)).toBe(sigilDigest(4242));
+
+    // Perturb one field at a time; every one must move the digest.
+    const perturbations: [string, () => typeof base][] = [
+      ['pool', () => ({ ...base, pool: base.pool.replace('M ', 'M  ') })],
+      ['tendril x1', () => ({ ...base, tendrils: base.tendrils.map((t, i) => (i ? t : { ...t, x1: '999.9' })) })],
+      ['tendril strokeWidth', () => ({ ...base, tendrils: base.tendrils.map((t, i) => (i ? t : { ...t, strokeWidth: '9.99' })) })],
+      ['satellite cx', () => ({ ...base, satellites: base.satellites.map((s, i) => (i ? s : { ...s, cx: '111.1' })) })],
+      ['satellite r', () => ({ ...base, satellites: base.satellites.map((s, i) => (i ? s : { ...s, r: '9.99' })) })],
+      ['satellite fillOpacity', () => ({ ...base, satellites: base.satellites.map((s, i) => (i ? s : { ...s, fillOpacity: '0.11' })) })],
+    ];
+    for (const [name, mutate] of perturbations) {
+      expect(digestOf(mutate()), `changing ${name} did not move the digest`).not.toBe(digestOf(base));
+    }
+  });
+
+  // A last-ulp change in Math.cos survives .toFixed(1) only sometimes — but when
+  // it does not, it lands here rather than in a user's certificate.
+  it('changes when a coordinate changes at the precision the SVG carries', () => {
+    const g = generateSigil(777);
+    const shifted = { ...g, satellites: g.satellites.map((s, i) => (i ? s : { ...s, cx: (Number(s.cx) + 0.1).toFixed(1) })) };
+    expect(shifted.satellites[0]!.cx).not.toBe(g.satellites[0]!.cx);
   });
 });
 

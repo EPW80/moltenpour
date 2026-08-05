@@ -194,3 +194,47 @@ export function generateSigil(seed: number): SigilGeometry {
     satellites,
   };
 }
+
+/**
+ * A golden digest of everything generateSigil draws.
+ *
+ * IMPORTANT: this is the only guard on the one part of the pipeline that can
+ * drift between JavaScript engines. `hashSeed` is integer arithmetic and
+ * `clampTelemetry` uses only exactly-specified operations, so their corpus rows
+ * are identical everywhere. The geometry above is not: `Math.cos` and `Math.sin`
+ * are implementation-dependent per ECMAScript, and a last-ulp difference in a
+ * satellite coordinate changes the rendered SVG — the user watches one artifact
+ * form and receives another, silently. See app/sigil/ENGINE-PINNING.md.
+ *
+ * FNV-1a over the emitted strings in draw order. The digest itself is integer
+ * arithmetic, so it cannot drift; only its input can, which is the point.
+ *
+ * It covers the rendered VALUES, not the layout — the coordinates are already
+ * rounded to the same fixed precision the SVG carries, so this changes exactly
+ * when the drawn sigil changes.
+ */
+export function sigilDigest(seed: number): number {
+  const g = generateSigil(seed);
+
+  let h = 0x811c9dc5;
+  const feed = (s: string) => {
+    for (let i = 0; i < s.length; i++) {
+      h = (h ^ (s.charCodeAt(i) & 0xff)) >>> 0;
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    // A separator, so ["ab","c"] cannot collide with ["a","bc"].
+    h = (h ^ 0x1f) >>> 0;
+    h = Math.imul(h, 0x01000193) >>> 0;
+  };
+
+  feed(g.viewBox);
+  feed(g.pool);
+  for (const t of g.tendrils) {
+    feed(t.x1); feed(t.y1); feed(t.x2); feed(t.y2);
+    feed(t.strokeOpacity); feed(t.strokeWidth);
+  }
+  for (const s of g.satellites) {
+    feed(s.cx); feed(s.cy); feed(s.r); feed(s.fillOpacity);
+  }
+  return h >>> 0;
+}

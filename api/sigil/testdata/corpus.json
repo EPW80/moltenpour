@@ -1,5 +1,11 @@
 {
- "version": 2,
+ "version": 3,
+ "engine": "node-v8/12.4.254.21",
+ "probe": {
+  "cos07": "0.7648421872844885",
+  "sin23": "0.7457052121767203",
+  "pow11_3": "1.3310000000000004"
+ },
  "rows": [
   {
    "tierIndex": 0,
@@ -26,7 +32,8 @@
    ],
    "hash": 2918889803,
    "rarityScore": 409,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 902735386
   },
   {
    "tierIndex": 1,
@@ -51,7 +58,8 @@
    ],
    "hash": 2844013910,
    "rarityScore": 400,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2714359426
   },
   {
    "tierIndex": 2,
@@ -73,7 +81,8 @@
    "violations": [],
    "hash": 3513436309,
    "rarityScore": 345,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3352640182
   },
   {
    "tierIndex": 3,
@@ -95,7 +104,8 @@
    "violations": [],
    "hash": 3954601951,
    "rarityScore": 351,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2377531814
   },
   {
    "tierIndex": 4,
@@ -117,7 +127,8 @@
    "violations": [],
    "hash": 1949482305,
    "rarityScore": 336,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4013121497
   },
   {
    "tierIndex": 5,
@@ -142,7 +153,8 @@
    ],
    "hash": 3411774506,
    "rarityScore": 586,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 428202362
   },
   {
    "tierIndex": 0,
@@ -167,7 +179,8 @@
    ],
    "hash": 4159305397,
    "rarityScore": 304,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3856537352
   },
   {
    "tierIndex": 1,
@@ -194,7 +207,8 @@
    ],
    "hash": 1079259424,
    "rarityScore": 495,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2444392460
   },
   {
    "tierIndex": 2,
@@ -218,7 +232,8 @@
    ],
    "hash": 2568724607,
    "rarityScore": 556,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 482558593
   },
   {
    "tierIndex": 3,
@@ -240,7 +255,8 @@
    "violations": [],
    "hash": 1628971394,
    "rarityScore": 429,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3304541658
   },
   {
    "tierIndex": 4,
@@ -265,7 +281,8 @@
    ],
    "hash": 1773794564,
    "rarityScore": 629,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 619955501
   },
   {
    "tierIndex": 5,
@@ -290,7 +307,8 @@
    ],
    "hash": 2227583266,
    "rarityScore": 677,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 573169954
   },
   {
    "tierIndex": 0,
@@ -312,7 +330,8 @@
    "violations": [],
    "hash": 2224193005,
    "rarityScore": 352,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 681805523
   },
   {
    "tierIndex": 1,
@@ -338,7 +357,8 @@
    ],
    "hash": 3628828820,
    "rarityScore": 419,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1622577718
   },
   {
    "tierIndex": 2,
@@ -365,7 +385,8 @@
    ],
    "hash": 1045546939,
    "rarityScore": 588,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 979246319
   },
   {
    "tierIndex": 3,
@@ -387,7 +408,8 @@
    "violations": [],
    "hash": 1751835019,
    "rarityScore": 331,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3089399668
   },
   {
    "tierIndex": 4,
@@ -411,7 +433,8 @@
    ],
    "hash": 271056150,
    "rarityScore": 206,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1244986183
   },
   {
    "tierIndex": 5,
@@ -435,7 +458,8 @@
    ],
    "hash": 3490096966,
    "rarityScore": 562,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3412263455
   },
   {
    "tierIndex": 0,
@@ -457,7 +481,8 @@
    "violations": [],
    "hash": 2943927672,
    "rarityScore": 168,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1656956912
   },
   {
    "tierIndex": 1,
@@ -481,7 +506,8 @@
    ],
    "hash": 3530632470,
    "rarityScore": 279,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 367620883
   },
   {
    "tierIndex": 2,
@@ -505,7 +531,8 @@
    ],
    "hash": 753343921,
    "rarityScore": 340,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3698208968
   },
   {
    "tierIndex": 3,
@@ -532,7 +559,8 @@
    ],
    "hash": 455561778,
    "rarityScore": 603,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3639465934
   },
   {
    "tierIndex": 4,
@@ -557,7 +585,8 @@
    ],
    "hash": 632676954,
    "rarityScore": 667,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 363928440
   },
   {
    "tierIndex": 5,
@@ -582,7 +611,8 @@
    ],
    "hash": 263725621,
    "rarityScore": 709,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 1090656174
   },
   {
    "tierIndex": 0,
@@ -606,7 +636,8 @@
    ],
    "hash": 207863845,
    "rarityScore": 458,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1647920580
   },
   {
    "tierIndex": 1,
@@ -628,7 +659,8 @@
    "violations": [],
    "hash": 2823599920,
    "rarityScore": 419,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2665491332
   },
   {
    "tierIndex": 2,
@@ -652,7 +684,8 @@
    ],
    "hash": 952935415,
    "rarityScore": 470,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1168702302
   },
   {
    "tierIndex": 3,
@@ -677,7 +710,8 @@
    ],
    "hash": 1425599230,
    "rarityScore": 408,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3006749174
   },
   {
    "tierIndex": 4,
@@ -704,7 +738,8 @@
    ],
    "hash": 3454015486,
    "rarityScore": 620,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1951233228
   },
   {
    "tierIndex": 5,
@@ -726,7 +761,8 @@
    "violations": [],
    "hash": 2046533592,
    "rarityScore": 334,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1904693054
   },
   {
    "tierIndex": 0,
@@ -748,7 +784,8 @@
    "violations": [],
    "hash": 2548590561,
    "rarityScore": 192,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2677828380
   },
   {
    "tierIndex": 1,
@@ -770,7 +807,8 @@
    "violations": [],
    "hash": 1647677151,
    "rarityScore": 396,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4242826165
   },
   {
    "tierIndex": 2,
@@ -792,7 +830,8 @@
    "violations": [],
    "hash": 3876212821,
    "rarityScore": 418,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 211409718
   },
   {
    "tierIndex": 3,
@@ -814,7 +853,8 @@
    "violations": [],
    "hash": 2611218891,
    "rarityScore": 498,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1115943867
   },
   {
    "tierIndex": 4,
@@ -840,7 +880,8 @@
    ],
    "hash": 1179177131,
    "rarityScore": 593,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 572185752
   },
   {
    "tierIndex": 5,
@@ -867,7 +908,8 @@
    ],
    "hash": 2228437729,
    "rarityScore": 702,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 2596207743
   },
   {
    "tierIndex": 0,
@@ -892,7 +934,8 @@
    ],
    "hash": 4286625925,
    "rarityScore": 450,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2501873364
   },
   {
    "tierIndex": 1,
@@ -917,7 +960,8 @@
    ],
    "hash": 2537225447,
    "rarityScore": 392,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3733493698
   },
   {
    "tierIndex": 2,
@@ -941,7 +985,8 @@
    ],
    "hash": 809109499,
    "rarityScore": 437,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 512145121
   },
   {
    "tierIndex": 3,
@@ -963,7 +1008,8 @@
    "violations": [],
    "hash": 664460144,
    "rarityScore": 350,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1106801899
   },
   {
    "tierIndex": 4,
@@ -988,7 +1034,8 @@
    ],
    "hash": 1282379008,
    "rarityScore": 740,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 4224600419
   },
   {
    "tierIndex": 5,
@@ -1012,7 +1059,8 @@
    ],
    "hash": 3049049692,
    "rarityScore": 500,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4095479177
   },
   {
    "tierIndex": 0,
@@ -1039,7 +1087,8 @@
    ],
    "hash": 3776720482,
    "rarityScore": 442,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1056692372
   },
   {
    "tierIndex": 1,
@@ -1061,7 +1110,8 @@
    "violations": [],
    "hash": 215442100,
    "rarityScore": 186,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3295790320
   },
   {
    "tierIndex": 2,
@@ -1085,7 +1135,8 @@
    ],
    "hash": 1138289784,
    "rarityScore": 440,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1586721132
   },
   {
    "tierIndex": 3,
@@ -1109,7 +1160,8 @@
    ],
    "hash": 2366671800,
    "rarityScore": 596,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3386289792
   },
   {
    "tierIndex": 4,
@@ -1133,7 +1185,8 @@
    ],
    "hash": 1438758168,
    "rarityScore": 474,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3259919914
   },
   {
    "tierIndex": 5,
@@ -1155,7 +1208,8 @@
    "violations": [],
    "hash": 321187717,
    "rarityScore": 422,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1405261303
   },
   {
    "tierIndex": 0,
@@ -1180,7 +1234,8 @@
    ],
    "hash": 2871660454,
    "rarityScore": 388,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2073151455
   },
   {
    "tierIndex": 1,
@@ -1207,7 +1262,8 @@
    ],
    "hash": 1231599633,
    "rarityScore": 496,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1984491699
   },
   {
    "tierIndex": 2,
@@ -1232,7 +1288,8 @@
    ],
    "hash": 631107751,
    "rarityScore": 416,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2062847665
   },
   {
    "tierIndex": 3,
@@ -1258,7 +1315,8 @@
    ],
    "hash": 3898944843,
    "rarityScore": 596,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3072173238
   },
   {
    "tierIndex": 4,
@@ -1280,7 +1338,8 @@
    "violations": [],
    "hash": 1780210279,
    "rarityScore": 519,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2832168488
   },
   {
    "tierIndex": 5,
@@ -1302,7 +1361,8 @@
    "violations": [],
    "hash": 1115591445,
    "rarityScore": 460,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 636838544
   },
   {
    "tierIndex": 0,
@@ -1326,7 +1386,8 @@
    ],
    "hash": 1851630916,
    "rarityScore": 164,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1200473543
   },
   {
    "tierIndex": 1,
@@ -1350,7 +1411,8 @@
    ],
    "hash": 287245152,
    "rarityScore": 510,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 467845403
   },
   {
    "tierIndex": 2,
@@ -1377,7 +1439,8 @@
    ],
    "hash": 2204016189,
    "rarityScore": 538,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1508421600
   },
   {
    "tierIndex": 3,
@@ -1401,7 +1464,8 @@
    ],
    "hash": 3955064512,
    "rarityScore": 312,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3125621868
   },
   {
    "tierIndex": 4,
@@ -1425,7 +1489,8 @@
    ],
    "hash": 4249270932,
    "rarityScore": 657,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1911382185
   },
   {
    "tierIndex": 5,
@@ -1447,7 +1512,8 @@
    "violations": [],
    "hash": 4002535603,
    "rarityScore": 556,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3354465167
   },
   {
    "tierIndex": 0,
@@ -1472,7 +1538,8 @@
    ],
    "hash": 2091344756,
    "rarityScore": 393,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2557437692
   },
   {
    "tierIndex": 1,
@@ -1494,7 +1561,8 @@
    "violations": [],
    "hash": 4104017588,
    "rarityScore": 355,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1545835551
   },
   {
    "tierIndex": 2,
@@ -1516,7 +1584,8 @@
    "violations": [],
    "hash": 4270217170,
    "rarityScore": 412,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1662826523
   },
   {
    "tierIndex": 3,
@@ -1543,7 +1612,8 @@
    ],
    "hash": 602679678,
    "rarityScore": 673,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 1108840064
   },
   {
    "tierIndex": 4,
@@ -1567,7 +1637,8 @@
    ],
    "hash": 955237219,
    "rarityScore": 561,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1441950291
   },
   {
    "tierIndex": 5,
@@ -1591,7 +1662,8 @@
    ],
    "hash": 3041235300,
    "rarityScore": 424,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1261753121
   },
   {
    "tierIndex": 0,
@@ -1615,7 +1687,8 @@
    ],
    "hash": 2351091417,
    "rarityScore": 349,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3949501899
   },
   {
    "tierIndex": 1,
@@ -1639,7 +1712,8 @@
    ],
    "hash": 3980198375,
    "rarityScore": 286,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2481606549
   },
   {
    "tierIndex": 2,
@@ -1661,7 +1735,8 @@
    "violations": [],
    "hash": 1236686943,
    "rarityScore": 335,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1491826096
   },
   {
    "tierIndex": 3,
@@ -1685,7 +1760,8 @@
    ],
    "hash": 2751526372,
    "rarityScore": 444,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1322671098
   },
   {
    "tierIndex": 4,
@@ -1712,7 +1788,8 @@
    ],
    "hash": 3293382293,
    "rarityScore": 711,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 4226370030
   },
   {
    "tierIndex": 5,
@@ -1736,7 +1813,8 @@
    ],
    "hash": 14128925,
    "rarityScore": 454,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2332650263
   },
   {
    "tierIndex": 0,
@@ -1760,7 +1838,8 @@
    ],
    "hash": 1423527975,
    "rarityScore": 452,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1768961667
   },
   {
    "tierIndex": 1,
@@ -1786,7 +1865,8 @@
    ],
    "hash": 2953906046,
    "rarityScore": 419,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1565248754
   },
   {
    "tierIndex": 2,
@@ -1810,7 +1890,8 @@
    ],
    "hash": 3760604412,
    "rarityScore": 386,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1413564580
   },
   {
    "tierIndex": 3,
@@ -1832,7 +1913,8 @@
    "violations": [],
    "hash": 763588197,
    "rarityScore": 496,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 549183832
   },
   {
    "tierIndex": 4,
@@ -1854,7 +1936,8 @@
    "violations": [],
    "hash": 2308545908,
    "rarityScore": 464,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2425492225
   },
   {
    "tierIndex": 5,
@@ -1881,7 +1964,8 @@
    ],
    "hash": 2001131797,
    "rarityScore": 682,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3043024254
   },
   {
    "tierIndex": 0,
@@ -1906,7 +1990,8 @@
    ],
    "hash": 2837462597,
    "rarityScore": 463,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 982415336
   },
   {
    "tierIndex": 1,
@@ -1930,7 +2015,8 @@
    ],
    "hash": 304998081,
    "rarityScore": 302,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 308079671
   },
   {
    "tierIndex": 2,
@@ -1952,7 +2038,8 @@
    "violations": [],
    "hash": 2092922302,
    "rarityScore": 462,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3838158281
   },
   {
    "tierIndex": 3,
@@ -1974,7 +2061,8 @@
    "violations": [],
    "hash": 3203117945,
    "rarityScore": 426,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 720518224
   },
   {
    "tierIndex": 4,
@@ -1998,7 +2086,8 @@
    ],
    "hash": 1568335098,
    "rarityScore": 434,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2228916683
   },
   {
    "tierIndex": 5,
@@ -2022,7 +2111,8 @@
    ],
    "hash": 3172798928,
    "rarityScore": 685,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3941327451
   },
   {
    "tierIndex": 0,
@@ -2049,7 +2139,8 @@
    ],
    "hash": 1531169134,
    "rarityScore": 424,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2092413847
   },
   {
    "tierIndex": 1,
@@ -2074,7 +2165,8 @@
    ],
    "hash": 2689933931,
    "rarityScore": 530,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 296741538
   },
   {
    "tierIndex": 2,
@@ -2099,7 +2191,8 @@
    ],
    "hash": 2925648984,
    "rarityScore": 443,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 305573692
   },
   {
    "tierIndex": 3,
@@ -2123,7 +2216,8 @@
    ],
    "hash": 1110717335,
    "rarityScore": 440,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1957883345
   },
   {
    "tierIndex": 4,
@@ -2147,7 +2241,8 @@
    ],
    "hash": 1883583572,
    "rarityScore": 379,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3270100455
   },
   {
    "tierIndex": 5,
@@ -2169,7 +2264,8 @@
    "violations": [],
    "hash": 1969457280,
    "rarityScore": 350,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1960404251
   },
   {
    "tierIndex": 0,
@@ -2194,7 +2290,8 @@
    ],
    "hash": 1251563918,
    "rarityScore": 319,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2914043676
   },
   {
    "tierIndex": 1,
@@ -2221,7 +2318,8 @@
    ],
    "hash": 1705890844,
    "rarityScore": 544,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 4276712088
   },
   {
    "tierIndex": 2,
@@ -2246,7 +2344,8 @@
    ],
    "hash": 3207382445,
    "rarityScore": 331,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3438355399
   },
   {
    "tierIndex": 3,
@@ -2268,7 +2367,8 @@
    "violations": [],
    "hash": 513407038,
    "rarityScore": 471,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 657098541
   },
   {
    "tierIndex": 4,
@@ -2292,7 +2392,8 @@
    ],
    "hash": 1460602385,
    "rarityScore": 566,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 657133314
   },
   {
    "tierIndex": 5,
@@ -2314,7 +2415,8 @@
    "violations": [],
    "hash": 261241940,
    "rarityScore": 378,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 349828289
   },
   {
    "tierIndex": 0,
@@ -2338,7 +2440,8 @@
    ],
    "hash": 907622411,
    "rarityScore": 419,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3210918384
   },
   {
    "tierIndex": 1,
@@ -2363,7 +2466,8 @@
    ],
    "hash": 2889083034,
    "rarityScore": 371,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 186443030
   },
   {
    "tierIndex": 2,
@@ -2390,7 +2494,8 @@
    ],
    "hash": 4228638786,
    "rarityScore": 548,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1503132049
   },
   {
    "tierIndex": 3,
@@ -2414,7 +2519,8 @@
    ],
    "hash": 2967015634,
    "rarityScore": 610,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 996405611
   },
   {
    "tierIndex": 4,
@@ -2436,7 +2542,8 @@
    "violations": [],
    "hash": 1977520617,
    "rarityScore": 313,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 15061953
   },
   {
    "tierIndex": 5,
@@ -2460,7 +2567,8 @@
    ],
    "hash": 2201436128,
    "rarityScore": 637,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1064825654
   },
   {
    "tierIndex": 0,
@@ -2486,7 +2594,8 @@
    ],
    "hash": 81407728,
    "rarityScore": 440,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3794923872
   },
   {
    "tierIndex": 1,
@@ -2508,7 +2617,8 @@
    "violations": [],
    "hash": 1520805861,
    "rarityScore": 291,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2339775837
   },
   {
    "tierIndex": 2,
@@ -2533,7 +2643,8 @@
    ],
    "hash": 4155822940,
    "rarityScore": 540,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3118309457
   },
   {
    "tierIndex": 3,
@@ -2560,7 +2671,8 @@
    ],
    "hash": 4081596843,
    "rarityScore": 680,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 446455717
   },
   {
    "tierIndex": 4,
@@ -2585,7 +2697,8 @@
    ],
    "hash": 170791673,
    "rarityScore": 647,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2275574835
   },
   {
    "tierIndex": 5,
@@ -2610,7 +2723,8 @@
    ],
    "hash": 3049587852,
    "rarityScore": 680,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 2250740805
   },
   {
    "tierIndex": 0,
@@ -2632,7 +2746,8 @@
    "violations": [],
    "hash": 194003649,
    "rarityScore": 389,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 589030881
   },
   {
    "tierIndex": 1,
@@ -2656,7 +2771,8 @@
    ],
    "hash": 3301911697,
    "rarityScore": 182,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 441965769
   },
   {
    "tierIndex": 2,
@@ -2681,7 +2797,8 @@
    ],
    "hash": 3864806326,
    "rarityScore": 617,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1651389325
   },
   {
    "tierIndex": 3,
@@ -2706,7 +2823,8 @@
    ],
    "hash": 3737269315,
    "rarityScore": 583,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 116519065
   },
   {
    "tierIndex": 4,
@@ -2733,7 +2851,8 @@
    ],
    "hash": 2265680614,
    "rarityScore": 601,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 238619899
   },
   {
    "tierIndex": 5,
@@ -2757,7 +2876,8 @@
    ],
    "hash": 2101888266,
    "rarityScore": 298,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2261422435
   },
   {
    "tierIndex": 0,
@@ -2782,7 +2902,8 @@
    ],
    "hash": 2280189533,
    "rarityScore": 424,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 933835294
   },
   {
    "tierIndex": 1,
@@ -2804,7 +2925,8 @@
    "violations": [],
    "hash": 1762724510,
    "rarityScore": 371,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4000990826
   },
   {
    "tierIndex": 2,
@@ -2828,7 +2950,8 @@
    ],
    "hash": 1690476937,
    "rarityScore": 300,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3153308060
   },
   {
    "tierIndex": 3,
@@ -2853,7 +2976,8 @@
    ],
    "hash": 238356891,
    "rarityScore": 637,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 339627776
   },
   {
    "tierIndex": 4,
@@ -2879,7 +3003,8 @@
    ],
    "hash": 1546349715,
    "rarityScore": 591,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 185125277
   },
   {
    "tierIndex": 5,
@@ -2906,7 +3031,8 @@
    ],
    "hash": 4034866729,
    "rarityScore": 693,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3815997154
   },
   {
    "tierIndex": 0,
@@ -2931,7 +3057,8 @@
    ],
    "hash": 1400920534,
    "rarityScore": 375,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 933549236
   },
   {
    "tierIndex": 1,
@@ -2956,7 +3083,8 @@
    ],
    "hash": 1244158856,
    "rarityScore": 522,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 280316180
   },
   {
    "tierIndex": 2,
@@ -2981,7 +3109,8 @@
    ],
    "hash": 2522317386,
    "rarityScore": 486,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3430975546
   },
   {
    "tierIndex": 3,
@@ -3006,7 +3135,8 @@
    ],
    "hash": 3184459374,
    "rarityScore": 555,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 659555587
   },
   {
    "tierIndex": 4,
@@ -3030,7 +3160,8 @@
    ],
    "hash": 2765348454,
    "rarityScore": 414,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 57603432
   },
   {
    "tierIndex": 5,
@@ -3054,7 +3185,8 @@
    ],
    "hash": 1778224562,
    "rarityScore": 398,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1742445748
   },
   {
    "tierIndex": 0,
@@ -3081,7 +3213,8 @@
    ],
    "hash": 370701039,
    "rarityScore": 404,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1248335862
   },
   {
    "tierIndex": 1,
@@ -3103,7 +3236,8 @@
    "violations": [],
    "hash": 2273582469,
    "rarityScore": 300,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1221633262
   },
   {
    "tierIndex": 2,
@@ -3127,7 +3261,8 @@
    ],
    "hash": 2012650890,
    "rarityScore": 432,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3318680181
   },
   {
    "tierIndex": 3,
@@ -3151,7 +3286,8 @@
    ],
    "hash": 1086170747,
    "rarityScore": 435,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3707895776
   },
   {
    "tierIndex": 4,
@@ -3175,7 +3311,8 @@
    ],
    "hash": 1595955984,
    "rarityScore": 389,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2124020723
   },
   {
    "tierIndex": 5,
@@ -3197,7 +3334,8 @@
    "violations": [],
    "hash": 671924481,
    "rarityScore": 617,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3122808356
   },
   {
    "tierIndex": 0,
@@ -3221,7 +3359,8 @@
    ],
    "hash": 2301254862,
    "rarityScore": 211,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1673488484
   },
   {
    "tierIndex": 1,
@@ -3248,7 +3387,8 @@
    ],
    "hash": 670390177,
    "rarityScore": 420,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2787323256
   },
   {
    "tierIndex": 2,
@@ -3272,7 +3412,8 @@
    ],
    "hash": 631514171,
    "rarityScore": 274,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2996968689
   },
   {
    "tierIndex": 3,
@@ -3294,7 +3435,8 @@
    "violations": [],
    "hash": 2120483269,
    "rarityScore": 433,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3541765170
   },
   {
    "tierIndex": 4,
@@ -3318,7 +3460,8 @@
    ],
    "hash": 449874810,
    "rarityScore": 689,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3669437054
   },
   {
    "tierIndex": 5,
@@ -3343,7 +3486,8 @@
    ],
    "hash": 420074895,
    "rarityScore": 720,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3676100451
   },
   {
    "tierIndex": 0,
@@ -3368,7 +3512,8 @@
    ],
    "hash": 4278264167,
    "rarityScore": 410,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 488514164
   },
   {
    "tierIndex": 1,
@@ -3392,7 +3537,8 @@
    ],
    "hash": 1566083976,
    "rarityScore": 458,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2790267444
   },
   {
    "tierIndex": 2,
@@ -3419,7 +3565,8 @@
    ],
    "hash": 1880009031,
    "rarityScore": 518,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2446466526
   },
   {
    "tierIndex": 3,
@@ -3441,7 +3588,8 @@
    "violations": [],
    "hash": 367383978,
    "rarityScore": 469,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3087165766
   },
   {
    "tierIndex": 4,
@@ -3466,7 +3614,8 @@
    ],
    "hash": 195008593,
    "rarityScore": 487,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1761341622
   },
   {
    "tierIndex": 5,
@@ -3490,7 +3639,8 @@
    ],
    "hash": 3515270797,
    "rarityScore": 562,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1408290758
   },
   {
    "tierIndex": 0,
@@ -3516,7 +3666,8 @@
    ],
    "hash": 441360918,
    "rarityScore": 358,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 559830498
   },
   {
    "tierIndex": 1,
@@ -3541,7 +3692,8 @@
    ],
    "hash": 1007146354,
    "rarityScore": 535,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 4110970549
   },
   {
    "tierIndex": 2,
@@ -3567,7 +3719,8 @@
    ],
    "hash": 2060872897,
    "rarityScore": 605,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1963855659
   },
   {
    "tierIndex": 3,
@@ -3594,7 +3747,8 @@
    ],
    "hash": 4235466843,
    "rarityScore": 560,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3486774633
   },
   {
    "tierIndex": 4,
@@ -3619,7 +3773,8 @@
    ],
    "hash": 1747735188,
    "rarityScore": 546,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1079705221
   },
   {
    "tierIndex": 5,
@@ -3643,7 +3798,8 @@
    ],
    "hash": 3208617105,
    "rarityScore": 774,
-   "rarity": "Singular"
+   "rarity": "Singular",
+   "sigilDigest": 226277917
   },
   {
    "tierIndex": 0,
@@ -3667,7 +3823,8 @@
    ],
    "hash": 1505916277,
    "rarityScore": 275,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2099650375
   },
   {
    "tierIndex": 1,
@@ -3691,7 +3848,8 @@
    ],
    "hash": 573761996,
    "rarityScore": 418,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3870212031
   },
   {
    "tierIndex": 2,
@@ -3715,7 +3873,8 @@
    ],
    "hash": 1448378936,
    "rarityScore": 376,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2131282975
   },
   {
    "tierIndex": 3,
@@ -3737,7 +3896,8 @@
    "violations": [],
    "hash": 223862050,
    "rarityScore": 374,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4169096184
   },
   {
    "tierIndex": 4,
@@ -3764,7 +3924,8 @@
    ],
    "hash": 77512404,
    "rarityScore": 667,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3916700554
   },
   {
    "tierIndex": 5,
@@ -3786,7 +3947,8 @@
    "violations": [],
    "hash": 1398581992,
    "rarityScore": 458,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1550185736
   },
   {
    "tierIndex": 0,
@@ -3811,7 +3973,8 @@
    ],
    "hash": 1557045283,
    "rarityScore": 357,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 488323522
   },
   {
    "tierIndex": 1,
@@ -3833,7 +3996,8 @@
    "violations": [],
    "hash": 39369452,
    "rarityScore": 422,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 244880664
   },
   {
    "tierIndex": 2,
@@ -3857,7 +4021,8 @@
    ],
    "hash": 3222561729,
    "rarityScore": 524,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 517070719
   },
   {
    "tierIndex": 3,
@@ -3881,7 +4046,8 @@
    ],
    "hash": 665754248,
    "rarityScore": 555,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1586923574
   },
   {
    "tierIndex": 4,
@@ -3905,7 +4071,8 @@
    ],
    "hash": 3586766141,
    "rarityScore": 596,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2696571842
   },
   {
    "tierIndex": 5,
@@ -3932,7 +4099,8 @@
    ],
    "hash": 3103193034,
    "rarityScore": 694,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 2520171156
   },
   {
    "tierIndex": 0,
@@ -3959,7 +4127,8 @@
    ],
    "hash": 1363708738,
    "rarityScore": 361,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 164923933
   },
   {
    "tierIndex": 1,
@@ -3984,7 +4153,8 @@
    ],
    "hash": 2652678031,
    "rarityScore": 560,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1413550459
   },
   {
    "tierIndex": 2,
@@ -4008,7 +4178,8 @@
    ],
    "hash": 238995780,
    "rarityScore": 532,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 347092139
   },
   {
    "tierIndex": 3,
@@ -4033,7 +4204,8 @@
    ],
    "hash": 62165905,
    "rarityScore": 525,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3697326058
   },
   {
    "tierIndex": 4,
@@ -4058,7 +4230,8 @@
    ],
    "hash": 343842609,
    "rarityScore": 712,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 1557912719
   },
   {
    "tierIndex": 5,
@@ -4082,7 +4255,8 @@
    ],
    "hash": 1439678118,
    "rarityScore": 500,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1992015187
   },
   {
    "tierIndex": 0,
@@ -4109,7 +4283,8 @@
    ],
    "hash": 258121168,
    "rarityScore": 427,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 52571662
   },
   {
    "tierIndex": 1,
@@ -4133,7 +4308,8 @@
    ],
    "hash": 1533659281,
    "rarityScore": 496,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 538738014
   },
   {
    "tierIndex": 2,
@@ -4158,7 +4334,8 @@
    ],
    "hash": 2925655867,
    "rarityScore": 434,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1140856271
   },
   {
    "tierIndex": 3,
@@ -4180,7 +4357,8 @@
    "violations": [],
    "hash": 3564410663,
    "rarityScore": 351,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4050336607
   },
   {
    "tierIndex": 4,
@@ -4204,7 +4382,8 @@
    ],
    "hash": 316532796,
    "rarityScore": 438,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2035980055
   },
   {
    "tierIndex": 5,
@@ -4226,7 +4405,8 @@
    "violations": [],
    "hash": 4065898031,
    "rarityScore": 432,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 476413268
   },
   {
    "tierIndex": 0,
@@ -4250,7 +4430,8 @@
    ],
    "hash": 326121576,
    "rarityScore": 380,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 536580171
   },
   {
    "tierIndex": 1,
@@ -4277,7 +4458,8 @@
    ],
    "hash": 1737748711,
    "rarityScore": 523,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 963323828
   },
   {
    "tierIndex": 2,
@@ -4301,7 +4483,8 @@
    ],
    "hash": 772243423,
    "rarityScore": 271,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1525864488
   },
   {
    "tierIndex": 3,
@@ -4323,7 +4506,8 @@
    "violations": [],
    "hash": 3556731888,
    "rarityScore": 333,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2555320559
   },
   {
    "tierIndex": 4,
@@ -4347,7 +4531,8 @@
    ],
    "hash": 2493155456,
    "rarityScore": 455,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3309321592
   },
   {
    "tierIndex": 5,
@@ -4373,7 +4558,8 @@
    ],
    "hash": 3410316229,
    "rarityScore": 655,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1420791989
   },
   {
    "tierIndex": 0,
@@ -4399,7 +4585,8 @@
    ],
    "hash": 3601149768,
    "rarityScore": 358,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2759278033
   },
   {
    "tierIndex": 1,
@@ -4423,7 +4610,8 @@
    ],
    "hash": 1574878381,
    "rarityScore": 346,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3543950961
   },
   {
    "tierIndex": 2,
@@ -4450,7 +4638,8 @@
    ],
    "hash": 1358373267,
    "rarityScore": 482,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3742989371
   },
   {
    "tierIndex": 3,
@@ -4474,7 +4663,8 @@
    ],
    "hash": 3822294314,
    "rarityScore": 474,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3332660186
   },
   {
    "tierIndex": 4,
@@ -4499,7 +4689,8 @@
    ],
    "hash": 3174089504,
    "rarityScore": 497,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3990361257
   },
   {
    "tierIndex": 5,
@@ -4523,7 +4714,8 @@
    ],
    "hash": 3230217958,
    "rarityScore": 719,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 988299512
   },
   {
    "tierIndex": 0,
@@ -4547,7 +4739,8 @@
    ],
    "hash": 3142630494,
    "rarityScore": 407,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1940438794
   },
   {
    "tierIndex": 1,
@@ -4571,7 +4764,8 @@
    ],
    "hash": 619521956,
    "rarityScore": 390,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1676693755
   },
   {
    "tierIndex": 2,
@@ -4595,7 +4789,8 @@
    ],
    "hash": 2421115641,
    "rarityScore": 266,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2423842646
   },
   {
    "tierIndex": 3,
@@ -4622,7 +4817,8 @@
    ],
    "hash": 4276184052,
    "rarityScore": 598,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1030970924
   },
   {
    "tierIndex": 4,
@@ -4646,7 +4842,8 @@
    ],
    "hash": 2066451152,
    "rarityScore": 662,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3906140864
   },
   {
    "tierIndex": 5,
@@ -4670,7 +4867,8 @@
    ],
    "hash": 1724712759,
    "rarityScore": 529,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 803859695
   },
   {
    "tierIndex": 0,
@@ -4695,7 +4893,8 @@
    ],
    "hash": 2679277262,
    "rarityScore": 363,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 834111022
   },
   {
    "tierIndex": 1,
@@ -4717,7 +4916,8 @@
    "violations": [],
    "hash": 117469608,
    "rarityScore": 295,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1668324029
   },
   {
    "tierIndex": 2,
@@ -4742,7 +4942,8 @@
    ],
    "hash": 3340835559,
    "rarityScore": 392,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3280542855
   },
   {
    "tierIndex": 3,
@@ -4766,7 +4967,8 @@
    ],
    "hash": 527089412,
    "rarityScore": 586,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3371144095
   },
   {
    "tierIndex": 4,
@@ -4793,7 +4995,8 @@
    ],
    "hash": 2281913330,
    "rarityScore": 729,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 1274646331
   },
   {
    "tierIndex": 5,
@@ -4817,7 +5020,8 @@
    ],
    "hash": 3278263687,
    "rarityScore": 366,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2460685879
   },
   {
    "tierIndex": 0,
@@ -4841,7 +5045,8 @@
    ],
    "hash": 2320536435,
    "rarityScore": 464,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3999613182
   },
   {
    "tierIndex": 1,
@@ -4865,7 +5070,8 @@
    ],
    "hash": 4292497758,
    "rarityScore": 353,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 811694161
   },
   {
    "tierIndex": 2,
@@ -4889,7 +5095,8 @@
    ],
    "hash": 3248199516,
    "rarityScore": 372,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 792801036
   },
   {
    "tierIndex": 3,
@@ -4913,7 +5120,8 @@
    ],
    "hash": 1882873988,
    "rarityScore": 484,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1553477339
   },
   {
    "tierIndex": 4,
@@ -4935,7 +5143,8 @@
    "violations": [],
    "hash": 521144208,
    "rarityScore": 618,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3896089718
   },
   {
    "tierIndex": 5,
@@ -4962,7 +5171,8 @@
    ],
    "hash": 1646734474,
    "rarityScore": 814,
-   "rarity": "Singular"
+   "rarity": "Singular",
+   "sigilDigest": 3539270180
   },
   {
    "tierIndex": 0,
@@ -4987,7 +5197,8 @@
    ],
    "hash": 9555582,
    "rarityScore": 403,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 315784283
   },
   {
    "tierIndex": 1,
@@ -5009,7 +5220,8 @@
    "violations": [],
    "hash": 2605790303,
    "rarityScore": 236,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 803135183
   },
   {
    "tierIndex": 2,
@@ -5033,7 +5245,8 @@
    ],
    "hash": 3080809066,
    "rarityScore": 421,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1868257516
   },
   {
    "tierIndex": 3,
@@ -5059,7 +5272,8 @@
    ],
    "hash": 3231601607,
    "rarityScore": 533,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2786025112
   },
   {
    "tierIndex": 4,
@@ -5081,7 +5295,8 @@
    "violations": [],
    "hash": 2645135752,
    "rarityScore": 420,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3471638722
   },
   {
    "tierIndex": 5,
@@ -5106,7 +5321,8 @@
    ],
    "hash": 3558609958,
    "rarityScore": 687,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 516405937
   },
   {
    "tierIndex": 0,
@@ -5133,7 +5349,8 @@
    ],
    "hash": 1504393845,
    "rarityScore": 384,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3955890075
   },
   {
    "tierIndex": 1,
@@ -5157,7 +5374,8 @@
    ],
    "hash": 1580234932,
    "rarityScore": 476,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1148293143
   },
   {
    "tierIndex": 2,
@@ -5181,7 +5399,8 @@
    ],
    "hash": 3418543411,
    "rarityScore": 568,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 716726833
   },
   {
    "tierIndex": 3,
@@ -5203,7 +5422,8 @@
    "violations": [],
    "hash": 1814659299,
    "rarityScore": 373,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3577308312
   },
   {
    "tierIndex": 4,
@@ -5228,7 +5448,8 @@
    ],
    "hash": 4294700465,
    "rarityScore": 608,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3393865718
   },
   {
    "tierIndex": 5,
@@ -5254,7 +5475,8 @@
    ],
    "hash": 3717708082,
    "rarityScore": 660,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 195110778
   },
   {
    "tierIndex": 0,
@@ -5278,7 +5500,8 @@
    ],
    "hash": 2398400084,
    "rarityScore": 412,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 356163426
   },
   {
    "tierIndex": 1,
@@ -5305,7 +5528,8 @@
    ],
    "hash": 1481264071,
    "rarityScore": 464,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 960107245
   },
   {
    "tierIndex": 2,
@@ -5327,7 +5551,8 @@
    "violations": [],
    "hash": 3618937939,
    "rarityScore": 424,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2556040443
   },
   {
    "tierIndex": 3,
@@ -5351,7 +5576,8 @@
    ],
    "hash": 1111852096,
    "rarityScore": 342,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 343221855
   },
   {
    "tierIndex": 4,
@@ -5375,7 +5601,8 @@
    ],
    "hash": 50685182,
    "rarityScore": 353,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2693780478
   },
   {
    "tierIndex": 5,
@@ -5399,7 +5626,8 @@
    ],
    "hash": 2786542562,
    "rarityScore": 525,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 448506791
   },
   {
    "tierIndex": 0,
@@ -5424,7 +5652,8 @@
    ],
    "hash": 3114661435,
    "rarityScore": 410,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 613324318
   },
   {
    "tierIndex": 1,
@@ -5450,7 +5679,8 @@
    ],
    "hash": 274011874,
    "rarityScore": 534,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3212121740
   },
   {
    "tierIndex": 2,
@@ -5477,7 +5707,8 @@
    ],
    "hash": 1765294081,
    "rarityScore": 560,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1043426375
   },
   {
    "tierIndex": 3,
@@ -5499,7 +5730,8 @@
    "violations": [],
    "hash": 326634940,
    "rarityScore": 281,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4290502185
   },
   {
    "tierIndex": 4,
@@ -5523,7 +5755,8 @@
    ],
    "hash": 4186732661,
    "rarityScore": 713,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3520053492
   },
   {
    "tierIndex": 5,
@@ -5549,7 +5782,8 @@
    ],
    "hash": 1106513911,
    "rarityScore": 780,
-   "rarity": "Singular"
+   "rarity": "Singular",
+   "sigilDigest": 3489932563
   },
   {
    "tierIndex": 0,
@@ -5575,7 +5809,8 @@
    ],
    "hash": 2475812282,
    "rarityScore": 477,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2982577694
   },
   {
    "tierIndex": 1,
@@ -5597,7 +5832,8 @@
    "violations": [],
    "hash": 3956593441,
    "rarityScore": 318,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2016440524
   },
   {
    "tierIndex": 2,
@@ -5621,7 +5857,8 @@
    ],
    "hash": 2015338183,
    "rarityScore": 475,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4266140579
   },
   {
    "tierIndex": 3,
@@ -5648,7 +5885,8 @@
    ],
    "hash": 272516776,
    "rarityScore": 574,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2325298261
   },
   {
    "tierIndex": 4,
@@ -5673,7 +5911,8 @@
    ],
    "hash": 2403396083,
    "rarityScore": 731,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 4263180749
   },
   {
    "tierIndex": 5,
@@ -5695,7 +5934,8 @@
    "violations": [],
    "hash": 777964628,
    "rarityScore": 441,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 944623122
   },
   {
    "tierIndex": 0,
@@ -5717,7 +5957,8 @@
    "violations": [],
    "hash": 3562282891,
    "rarityScore": 342,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 394099934
   },
   {
    "tierIndex": 1,
@@ -5742,7 +5983,8 @@
    ],
    "hash": 3615616830,
    "rarityScore": 367,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2649898434
   },
   {
    "tierIndex": 2,
@@ -5766,7 +6008,8 @@
    ],
    "hash": 4071561078,
    "rarityScore": 305,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3623902016
   },
   {
    "tierIndex": 3,
@@ -5790,7 +6033,8 @@
    ],
    "hash": 2299207159,
    "rarityScore": 274,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3548839688
   },
   {
    "tierIndex": 4,
@@ -5817,7 +6061,8 @@
    ],
    "hash": 896382810,
    "rarityScore": 737,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3125795353
   },
   {
    "tierIndex": 5,
@@ -5839,7 +6084,8 @@
    "violations": [],
    "hash": 2342249819,
    "rarityScore": 543,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2638748754
   },
   {
    "tierIndex": 0,
@@ -5864,7 +6110,8 @@
    ],
    "hash": 2489271430,
    "rarityScore": 360,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4261313848
   },
   {
    "tierIndex": 1,
@@ -5888,7 +6135,8 @@
    ],
    "hash": 3168824430,
    "rarityScore": 416,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1925650264
   },
   {
    "tierIndex": 2,
@@ -5910,7 +6158,8 @@
    "violations": [],
    "hash": 1893248165,
    "rarityScore": 378,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2538265868
   },
   {
    "tierIndex": 3,
@@ -5935,7 +6184,8 @@
    ],
    "hash": 3353468570,
    "rarityScore": 527,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 417096989
   },
   {
    "tierIndex": 4,
@@ -5957,7 +6207,8 @@
    "violations": [],
    "hash": 2271445328,
    "rarityScore": 382,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 856788497
   },
   {
    "tierIndex": 5,
@@ -5984,7 +6235,8 @@
    ],
    "hash": 3836922212,
    "rarityScore": 850,
-   "rarity": "Singular"
+   "rarity": "Singular",
+   "sigilDigest": 1392378342
   },
   {
    "tierIndex": 0,
@@ -6008,7 +6260,8 @@
    ],
    "hash": 1537052114,
    "rarityScore": 358,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3071280906
   },
   {
    "tierIndex": 1,
@@ -6032,7 +6285,8 @@
    ],
    "hash": 1313175076,
    "rarityScore": 373,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2196858037
   },
   {
    "tierIndex": 2,
@@ -6057,7 +6311,8 @@
    ],
    "hash": 3251063329,
    "rarityScore": 589,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2115006947
   },
   {
    "tierIndex": 3,
@@ -6082,7 +6337,8 @@
    ],
    "hash": 606460615,
    "rarityScore": 582,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 4124515897
   },
   {
    "tierIndex": 4,
@@ -6106,7 +6362,8 @@
    ],
    "hash": 1827055503,
    "rarityScore": 352,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1577026416
   },
   {
    "tierIndex": 5,
@@ -6128,7 +6385,8 @@
    "violations": [],
    "hash": 555738011,
    "rarityScore": 387,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1567614726
   },
   {
    "tierIndex": 0,
@@ -6155,7 +6413,8 @@
    ],
    "hash": 3279989601,
    "rarityScore": 444,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 841595300
   },
   {
    "tierIndex": 1,
@@ -6179,7 +6438,8 @@
    ],
    "hash": 3637431362,
    "rarityScore": 382,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3826967946
   },
   {
    "tierIndex": 2,
@@ -6204,7 +6464,8 @@
    ],
    "hash": 169255477,
    "rarityScore": 597,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3495372371
   },
   {
    "tierIndex": 3,
@@ -6228,7 +6489,8 @@
    ],
    "hash": 4031911966,
    "rarityScore": 536,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 856306919
   },
   {
    "tierIndex": 4,
@@ -6250,7 +6512,8 @@
    "violations": [],
    "hash": 1673083030,
    "rarityScore": 507,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1405450676
   },
   {
    "tierIndex": 5,
@@ -6272,7 +6535,8 @@
    "violations": [],
    "hash": 935670308,
    "rarityScore": 649,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 704299909
   },
   {
    "tierIndex": 0,
@@ -6296,7 +6560,8 @@
    ],
    "hash": 3067492872,
    "rarityScore": 417,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2096118233
   },
   {
    "tierIndex": 1,
@@ -6323,7 +6588,8 @@
    ],
    "hash": 2675935658,
    "rarityScore": 439,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 847010023
   },
   {
    "tierIndex": 2,
@@ -6347,7 +6613,8 @@
    ],
    "hash": 798161718,
    "rarityScore": 326,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2506243500
   },
   {
    "tierIndex": 3,
@@ -6371,7 +6638,8 @@
    ],
    "hash": 4142655262,
    "rarityScore": 396,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 857282986
   },
   {
    "tierIndex": 4,
@@ -6395,7 +6663,8 @@
    ],
    "hash": 3040893925,
    "rarityScore": 322,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2406244565
   },
   {
    "tierIndex": 5,
@@ -6420,7 +6689,8 @@
    ],
    "hash": 1989169229,
    "rarityScore": 610,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3291543708
   },
   {
    "tierIndex": 0,
@@ -6444,7 +6714,8 @@
    ],
    "hash": 191397598,
    "rarityScore": 413,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2402926144
   },
   {
    "tierIndex": 1,
@@ -6468,7 +6739,8 @@
    ],
    "hash": 2566515315,
    "rarityScore": 486,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 2269723817
   },
   {
    "tierIndex": 2,
@@ -6495,7 +6767,8 @@
    ],
    "hash": 2091448821,
    "rarityScore": 598,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3357335143
   },
   {
    "tierIndex": 3,
@@ -6519,7 +6792,8 @@
    ],
    "hash": 4293306947,
    "rarityScore": 570,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2137964941
   },
   {
    "tierIndex": 4,
@@ -6543,7 +6817,8 @@
    ],
    "hash": 3491386276,
    "rarityScore": 311,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3107584909
   },
   {
    "tierIndex": 5,
@@ -6567,7 +6842,8 @@
    ],
    "hash": 3543173721,
    "rarityScore": 559,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 4085470989
   },
   {
    "tierIndex": 0,
@@ -6591,7 +6867,8 @@
    ],
    "hash": 2142375057,
    "rarityScore": 413,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 643832276
   },
   {
    "tierIndex": 1,
@@ -6616,7 +6893,8 @@
    ],
    "hash": 2322385991,
    "rarityScore": 508,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3046645710
   },
   {
    "tierIndex": 2,
@@ -6638,7 +6916,8 @@
    "violations": [],
    "hash": 2607171102,
    "rarityScore": 396,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 576843976
   },
   {
    "tierIndex": 3,
@@ -6665,7 +6944,8 @@
    ],
    "hash": 4060661078,
    "rarityScore": 540,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1627827930
   },
   {
    "tierIndex": 4,
@@ -6687,7 +6967,8 @@
    "violations": [],
    "hash": 3983576350,
    "rarityScore": 616,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 2488737778
   },
   {
    "tierIndex": 5,
@@ -6712,7 +6993,8 @@
    ],
    "hash": 2908906375,
    "rarityScore": 541,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1374119849
   },
   {
    "tierIndex": 0,
@@ -6734,7 +7016,8 @@
    "violations": [],
    "hash": 1300841788,
    "rarityScore": 261,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3825422703
   },
   {
    "tierIndex": 1,
@@ -6756,7 +7039,8 @@
    "violations": [],
    "hash": 3706909314,
    "rarityScore": 424,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 57427160
   },
   {
    "tierIndex": 2,
@@ -6781,7 +7065,8 @@
    ],
    "hash": 3348332546,
    "rarityScore": 538,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3939773955
   },
   {
    "tierIndex": 3,
@@ -6806,7 +7091,8 @@
    ],
    "hash": 614684006,
    "rarityScore": 629,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 918972125
   },
   {
    "tierIndex": 4,
@@ -6833,7 +7119,8 @@
    ],
    "hash": 2583945104,
    "rarityScore": 618,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 691934681
   },
   {
    "tierIndex": 5,
@@ -6857,7 +7144,8 @@
    ],
    "hash": 1656742720,
    "rarityScore": 659,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 79728136
   },
   {
    "tierIndex": 0,
@@ -6881,7 +7169,8 @@
    ],
    "hash": 2655824043,
    "rarityScore": 428,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 362416237
   },
   {
    "tierIndex": 1,
@@ -6903,7 +7192,8 @@
    "violations": [],
    "hash": 2413435580,
    "rarityScore": 452,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1825701467
   },
   {
    "tierIndex": 2,
@@ -6927,7 +7217,8 @@
    ],
    "hash": 498314203,
    "rarityScore": 365,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1227687745
   },
   {
    "tierIndex": 3,
@@ -6951,7 +7242,8 @@
    ],
    "hash": 823810529,
    "rarityScore": 624,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 1601339238
   },
   {
    "tierIndex": 4,
@@ -6976,7 +7268,8 @@
    ],
    "hash": 3322422122,
    "rarityScore": 594,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 423604009
   },
   {
    "tierIndex": 5,
@@ -7003,7 +7296,8 @@
    ],
    "hash": 3462177461,
    "rarityScore": 681,
-   "rarity": "Rare"
+   "rarity": "Rare",
+   "sigilDigest": 3625266371
   },
   {
    "tierIndex": 0,
@@ -7028,7 +7322,8 @@
    ],
    "hash": 352925430,
    "rarityScore": 350,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3593705053
   },
   {
    "tierIndex": 1,
@@ -7052,7 +7347,8 @@
    ],
    "hash": 3357035267,
    "rarityScore": 404,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3368883374
   },
   {
    "tierIndex": 2,
@@ -7074,7 +7370,8 @@
    "violations": [],
    "hash": 1175676047,
    "rarityScore": 222,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3788540987
   },
   {
    "tierIndex": 3,
@@ -7101,7 +7398,8 @@
    ],
    "hash": 4111549505,
    "rarityScore": 538,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 3184573643
   },
   {
    "tierIndex": 4,
@@ -7125,7 +7423,8 @@
    ],
    "hash": 1908443832,
    "rarityScore": 477,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 1522419729
   },
   {
    "tierIndex": 5,
@@ -7151,7 +7450,8 @@
    ],
    "hash": 318369806,
    "rarityScore": 654,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 763990233
   },
   {
    "tierIndex": 0,
@@ -7178,7 +7478,8 @@
    ],
    "hash": 3184086178,
    "rarityScore": 397,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 4171953985
   },
   {
    "tierIndex": 1,
@@ -7200,7 +7501,8 @@
    "violations": [],
    "hash": 626658531,
    "rarityScore": 403,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3097508391
   },
   {
    "tierIndex": 2,
@@ -7225,7 +7527,8 @@
    ],
    "hash": 3086026948,
    "rarityScore": 573,
-   "rarity": "Uncommon"
+   "rarity": "Uncommon",
+   "sigilDigest": 4075200328
   },
   {
    "tierIndex": 3,
@@ -7247,7 +7550,8 @@
    "violations": [],
    "hash": 2452995156,
    "rarityScore": 353,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 771209409
   },
   {
    "tierIndex": 4,
@@ -7269,7 +7573,8 @@
    "violations": [],
    "hash": 2437391332,
    "rarityScore": 381,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 3970987348
   },
   {
    "tierIndex": 5,
@@ -7293,7 +7598,8 @@
    ],
    "hash": 3543100313,
    "rarityScore": 369,
-   "rarity": "Common"
+   "rarity": "Common",
+   "sigilDigest": 608531622
   }
  ]
 }

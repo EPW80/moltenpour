@@ -22,11 +22,15 @@ stores the seed and the rarity, it does not render geometry.
 TypeScript is the source of truth. Go conforms to it.
 
 ```bash
-# 1. change telemetry.ts or hashSeed
+# 1. change telemetry.ts, hashSeed, rarity or generateSigil
 npm run gencorpus                  # regenerates api/sigil/testdata/corpus.json in place
 go test ./api/sigil/...            # Go must now agree
+npm test                           # and so must the geometry digests
 git diff api/sigil/testdata/corpus.json   # review it — an unexpected diff is the whole point
 ```
+
+Run it on Node. `gencorpus` refuses on any other engine — see
+[ENGINE-PINNING.md](ENGINE-PINNING.md).
 
 **IMPORTANT: never regenerate the corpus to make a failing Go test pass.** The corpus
 is generated from TypeScript, so regenerating *always* makes Go's test go green —
@@ -63,6 +67,13 @@ Go's `jsRound` pins the behaviour so a future signed field does not silently div
 **Sigil draw order.** `generateSigil` consumes its PRNG draws pool → tendrils →
 satellites. That sequence is a stable output format — reordering the draws changes every
 sigil that has already been minted.
+
+**The JavaScript engine.** `generateSigil` uses `Math.cos`/`Math.sin`, which ECMAScript
+leaves implementation-dependent — unlike everything else here, which is integer or
+exactly-specified arithmetic. The corpus records the engine that produced it, `gencorpus`
+refuses to run on another one, and each row carries a `sigilDigest` over the emitted
+geometry. See [ENGINE-PINNING.md](ENGINE-PINNING.md); never change `pinnedEngine` to make
+a test pass.
 
 **The tendril clip cap.** `CLIP_RADIUS = 194` is required, not cosmetic. The viewBox is
 `0 0 400 400` with `overflow:hidden`, so any endpoint past 200 units from centre is
