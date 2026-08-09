@@ -12,21 +12,59 @@
  * A tier is what you BUY. It is not what you earn — see app/sigil/rarity.ts.
  */
 
-import { clampTelemetry, SIM, TIER_BOUNDS } from '../sigil/telemetry';
-import { classify, type Rarity } from '../sigil/rarity';
+import { clampTelemetry, SIM, TIER_BOUNDS } from "../sigil/telemetry";
+import { classify, type Rarity } from "../sigil/rarity";
 
 /** Prices, index-aligned with TIER_BOUNDS. Cents, never floats. */
 const AMOUNT_CENTS = [0, 299, 999, 2499, 4999, 9999] as const;
 
 /** The ceremony's own name for each tier. Distinct from a rarity name. */
 const TIER_NAMES = [
-  'Sample',
-  'Measure',
-  'Draught',
-  'Vessel',
-  'Crucible',
-  'Full Pour',
+  "Sample",
+  "Measure",
+  "Draught",
+  "Vessel",
+  "Crucible",
+  "Full Pour",
 ] as const;
+
+/** The line the ledger prints under the selected tier. Deadpan, never a pitch. */
+const TIER_NOTES = [
+  "Free of charge, free of merit. The house pours what it cannot sell.",
+  "The minimum viable genuflection. Thin, but sincere in its way.",
+  "Enough to be noticed by staff. Coats the glass on the way down.",
+  "Gold-adjacent, legally distinct from gold. Nobody checks.",
+  "Refracts your name in the light, briefly, at certain angles.",
+  "Volume is the only remaining virtue. The vessel is a formality.",
+] as const;
+
+/**
+ * How the fluid behaves and looks at each tier.
+ *
+ * Presentation only: none of it reaches the telemetry, the clamp or the hash, so
+ * it has no Go counterpart and cannot move a rarity. The rig eases toward these
+ * every frame rather than cutting, so changing tier visibly thickens or thins
+ * what is in the vessel.
+ */
+export type TierFeel = {
+  /** Drag, bounce damping and how much a blob shrinks on impact. */
+  viscosity: number;
+  /** Thin-film rainbow in the shader. Zero below Draught. */
+  iridescence: number;
+  /** Inverted into specular shininess. Low is glassy. */
+  roughness: number;
+  /** Blob radius in sim units before the per-blob jitter. */
+  radius: number;
+};
+
+const TIER_FEEL: TierFeel[] = [
+  { viscosity: 0.15, iridescence: 0, roughness: 0.75, radius: 16 },
+  { viscosity: 0.45, iridescence: 0, roughness: 0.4, radius: 22 },
+  { viscosity: 0.6, iridescence: 0.1, roughness: 0.3, radius: 26 },
+  { viscosity: 0.72, iridescence: 0.25, roughness: 0.12, radius: 30 },
+  { viscosity: 0.82, iridescence: 0.75, roughness: 0.06, radius: 34 },
+  { viscosity: 0.92, iridescence: 1, roughness: 0.03, radius: 40 },
+];
 
 export type Tier = {
   index: number;
@@ -34,6 +72,8 @@ export type Tier = {
   /** Droplets spawned per second. The clamp derives its droplet ceiling from it. */
   flow: number;
   amountCents: number;
+  note: string;
+  feel: TierFeel;
 };
 
 export const TIERS: Tier[] = TIER_BOUNDS.map((bounds, index) => ({
@@ -41,6 +81,8 @@ export const TIERS: Tier[] = TIER_BOUNDS.map((bounds, index) => ({
   name: TIER_NAMES[index] ?? `Tier ${index}`,
   flow: bounds.flow,
   amountCents: AMOUNT_CENTS[index] ?? 0,
+  note: TIER_NOTES[index] ?? "",
+  feel: TIER_FEEL[index] ?? TIER_FEEL[0],
 }));
 
 export function tierAt(index: number): Tier {
@@ -66,7 +108,7 @@ export function formatUSD(amountCents: number): string {
  * Use formatUSD for sums.
  */
 export function formatConsideration(amountCents: number): string {
-  if (amountCents <= 0) return 'Free';
+  if (amountCents <= 0) return "Free";
   return formatUSD(amountCents);
 }
 
@@ -94,7 +136,12 @@ export function reachableRarity(tierIndex: number): Rarity {
   // perfectly steady hand, held to the hard stop. 9e9 rather than Infinity —
   // the clamp zeroes non-finite input rather than treating it as "the maximum".
   const { telemetry } = clampTelemetry(
-    { dropletsLanded: 9e9, peakVelocity: 9e9, tiltEnergy: 0, holdMs: SIM.maxPourMs },
+    {
+      dropletsLanded: 9e9,
+      peakVelocity: 9e9,
+      tiltEnergy: 0,
+      holdMs: SIM.maxPourMs,
+    },
     tierIndex,
     SIM.maxPourMs,
   );
