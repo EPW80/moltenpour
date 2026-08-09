@@ -1,104 +1,329 @@
 /**
  * PourScreen.tsx — the ceremony
  *
- * Hold to pour, tilt to steer. The preview updates live, and the sigil it shows
- * is computed through exactly the pipeline the server will run: clampTelemetry →
- * hashSeed → generateSigil, with the same client-chosen timestamp that will be
- * posted. That is what makes the preview honest rather than decorative.
+ * A graduated instrument on the left, a ruled ledger on the right. Hold the
+ * vessel to open the stream, lean to steer it, release and let it settle, then
+ * seal the pour into a certificate.
+ *
+ * The vessel is not an illustration of the pour. It IS the pour: app/ceremony/rig.ts
+ * counts the blobs the shader draws, and those counts are what gets hashed into
+ * the sigil. See the invariants at the top of rig.ts before touching the loop.
+ *
+ * TWO THINGS RUN AT SIXTY HERTZ AND NEITHER MAY RENDER:
+ *
+ *   1. The rig steps on its own requestAnimationFrame, independent of WebGL.
+ *      The renderer is attached and detached by a callback ref and only ever
+ *      draws. A machine that cannot give us a GL context loses the picture and
+ *      keeps the pour.
+ *   2. The readout is painted straight into DOM nodes through refs — bar widths
+ *      via style.width, values via textContent, each guarded by an equality
+ *      check. setState fires only on real transitions: a phase change, or a
+ *      rarity band change. Driving the bars through state makes the pour stutter
+ *      visibly.
  *
  * Register: restrained, institutional, faintly funereal. No celebration, no
  * "Pour again", no mystery-box framing, no flame imagery. If a choice here feels
  * playful, it is wrong.
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { SigilSvg } from '../sigil/SigilSvg';
-import { hashSeed } from '../sigil/sigil';
-import { classify } from '../sigil/rarity';
-import { clampTelemetry, SIM } from '../sigil/telemetry';
-import { COLOR, FONT, RARITY_PRESENTATION } from '../design/tokens';
-import { mintPour, type PourRecord } from '../pour/record';
-import { createPour, stepPour, telemetryOf, type PourState } from './sim';
-import { formatConsideration, MAX_POUR_MS, reachableRarity, TIERS, tierAt } from './tiers';
+import { backingSize, createRenderer, type Renderer } from "./metaball";
+import {
+  createRig,
+  FLOOR_Y,
+  isSettled,
+  MAX_BLOBS,
+  resetRig,
+  SPOUT_Y,
+  stepRig,
+  telemetryOf,
+} from "./rig";
+import { formatConsideration, reachableRarity, TIERS, tierAt } from "./tiers";
+import { classify, scoreParts, THRESHOLDS, type Rarity } from "../sigil/rarity";
+import { COLOR, FONT, GRAIN_URL, RARITY_PRESENTATION } from "../design/tokens";
+import type { MintRequest } from "../pour/record";
+
+export type Phase = "idle" | "pouring" | "settling" | "settled";
 
 /**
- * The vessel sizes itself to the viewport — the brief calls this a mobile app,
- * and a fixed 360x420 box is a desktop assumption.
+ * The tier row height, and the step the illuminated marker slides by.
  *
- * This is safe for the telemetry, which is the only reason to think twice. The
- * clamp's velocity ceiling is time-based (spawnVyMax + gravity * min(holdS, 1.2)),
- * not distance-based, so a taller vessel cannot push peak velocity past it; and
- * spawning is time-based while settling waits for every droplet to land, so the
- * droplet count is whatever the flow rate and the hold say it is. A pour of the
- * same duration earns the same rarity on a phone and on a monitor.
+ * IMPORTANT: one constant for both. A marker that steps by a different number
+ * than the rows are tall drifts a row out of register by the bottom of the
+ * table, and it drifts silently.
  */
-const STAGE_MIN_W = 260;
-const STAGE_MAX_W = 420;
-/** Portrait, like the thing it is imitating. */
-const STAGE_ASPECT = 420 / 360;
-/** Inset from the bottom edge so a landed droplet's full radius stays visible. */
-const FLOOR_INSET = 16;
+const ROW_H = 52;
 
-type Props = {
-  onMinted: (record: PourRecord) => void;
+/** How often the readout is repainted. Ten times a second reads as continuous. */
+const READOUT_MS = 100;
+
+const HARD_STOP_NOTICE =
+  "Hard stop reached at fifteen seconds. The vessel accepts no more.";
+const NO_WEBGL_NOTICE =
+  "The vessel could not be lit — WebGL is unavailable in this context.";
+
+const PHASE_LABEL: Record<Phase, string> = {
+  idle: "Hold to pour",
+  pouring: "Stream open",
+  settling: "Settling",
+  settled: "Stream closed",
 };
 
-export function PourScreen({ onMinted }: Props) {
-  const [tierIndex, setTierIndex] = useState(3);
-  const [state, setState] = useState<PourState>(() => createPour(3));
-  const [pouring, setPouring] = useState(false);
-  const [tiltDeg, setTiltDeg] = useState(0);
-  const [minting, setMinting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+const NOW_LABEL: Record<Phase, string> = {
+  idle: "Selected for disbursement",
+  pouring: "Now pouring",
+  settling: "Now pouring",
+  settled: "Poured · awaiting seal",
+};
 
-  // Pour-start, fixed the moment the stream first opens. It feeds the hash, so it
-  // must not be re-read per frame or the preview would churn.
+/** The four components of the rarity score, in weight order. */
+const SPEC_ROWS = ["Fill", "Force", "Commitment", "Steadiness"] as const;
+
+/**
+ * The ceremony's graduations. They mark the fifteen-second hard stop, NOT
+ * volume — the vessel has no volume, only a clock.
+ */
+const GRADUATIONS = ["15 s —", "12 s —", "9 s —", "6 s —", "3 s —", "0 —"];
+
+const LABEL_11: React.CSSProperties = {
+  fontSize: 11,
+  textTransform: "uppercase",
+  color: COLOR.goldLabel,
+};
+
+type Props = {
+  tierIndex: number;
+  onTierIndex: (index: number) => void;
+  phase: Phase;
+  onPhase: (phase: Phase) => void;
+  rarity: Rarity;
+  onRarity: (rarity: Rarity) => void;
+  notice: string | null;
+  onNotice: (notice: string | null) => void;
+  sealing: boolean;
+  wide: boolean;
+  onMint: (request: MintRequest) => void;
+};
+
+export function PourScreen({
+  tierIndex,
+  onTierIndex,
+  phase,
+  onPhase,
+  rarity,
+  onRarity,
+  notice,
+  onNotice,
+  sealing,
+  wide,
+  onMint,
+}: Props) {
+  const tier = tierAt(tierIndex);
+  const { accent } = RARITY_PRESENTATION[rarity];
+  const poured = phase !== "idle";
+  const settled = phase === "settled";
+
+  const rigRef = useRef(createRig(tier));
+  const rendererRef = useRef<Renderer | null>(null);
+  const canvasElRef = useRef<HTMLCanvasElement | null>(null);
+
+  /**
+   * The vessel has no picture, because this context could not give us a GL
+   * context.
+   *
+   * Held apart from the shell's notice on purpose. A standing condition and a
+   * transient message are different things: the shell's notice is cleared every
+   * time the stream opens, and routing this through it meant the warning
+   * vanished the instant the user did the thing it was warning them about.
+   */
+  const [unlit, setUnlit] = useState(false);
+
+  // Everything the loop reads, held in refs so a frame never depends on a render
+  // having happened first.
+  const pouringRef = useRef(false);
+  const leanRef = useRef(0);
   const startedAtRef = useRef<number | null>(null);
-  const rafRef = useRef<number | null>(null);
-  const lastRef = useRef<number>(0);
-  const inputRef = useRef({ pouring: false, tiltDeg: 0 });
+  const liveRef = useRef({
+    tier,
+    tierIndex,
+    phase,
+    rarity,
+    onPhase,
+    onRarity,
+    onNotice,
+  });
+  liveRef.current = {
+    tier,
+    tierIndex,
+    phase,
+    rarity,
+    onPhase,
+    onRarity,
+    onNotice,
+  };
 
-  inputRef.current = { pouring, tiltDeg };
+  // The nodes the loop writes to directly.
+  const elapsedRef = useRef<HTMLSpanElement | null>(null);
+  const dropsRef = useRef<HTMLSpanElement | null>(null);
+  const scoreRef = useRef<HTMLSpanElement | null>(null);
+  const scoreBarRef = useRef<HTMLDivElement | null>(null);
+  const specBarRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const specValRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
-  const [stage, setStage] = useState({ w: 360, h: 420 });
-  const stageRef = useRef(stage);
-  stageRef.current = stage;
-  const shellRef = useRef<HTMLDivElement | null>(null);
-
-  // Measure the space the vessel actually has rather than assuming it.
-  useEffect(() => {
-    const shell = shellRef.current;
-    if (!shell) return;
-
-    const measure = () => {
-      const available = shell.getBoundingClientRect().width;
-      const w = Math.round(Math.max(STAGE_MIN_W, Math.min(STAGE_MAX_W, available)));
-      setStage((prev) => (prev.w === w ? prev : { w, h: Math.round(w * STAGE_ASPECT) }));
-    };
-    measure();
-
-    const observer = new ResizeObserver(measure);
-    observer.observe(shell);
-    return () => observer.disconnect();
+  const openStream = useCallback(() => {
+    const rig = rigRef.current;
+    const { phase: at } = liveRef.current;
+    if (at === "settled" || rig.finished || pouringRef.current) return;
+    if (startedAtRef.current === null) startedAtRef.current = Date.now();
+    pouringRef.current = true;
+    if (at !== "pouring") {
+      liveRef.current.onPhase("pouring");
+      liveRef.current.onNotice(null);
+    }
   }, []);
 
+  const closeStream = useCallback(() => {
+    if (!pouringRef.current) return;
+    pouringRef.current = false;
+    liveRef.current.onPhase("settling");
+  }, []);
+
+  const discard = useCallback(() => {
+    pouringRef.current = false;
+    startedAtRef.current = null;
+    resetRig(rigRef.current);
+    liveRef.current.onPhase("idle");
+    liveRef.current.onRarity("Common");
+    liveRef.current.onNotice(null);
+  }, []);
+
+  /**
+   * The renderer's whole lifecycle, on a callback ref.
+   *
+   * IMPORTANT: this cannot be a mount-keyed effect. The canvas unmounts every
+   * time the user changes view, and an effect that sets GL up on mount leaves a
+   * live context attached to a detached canvas — measured as a leaked frame loop
+   * drawing into nothing.
+   */
+  const attachCanvas = useCallback((el: HTMLCanvasElement | null) => {
+    canvasElRef.current = el;
+    if (!el) {
+      rendererRef.current?.dispose();
+      rendererRef.current = null;
+      return;
+    }
+    const renderer = createRenderer(el);
+    rendererRef.current = renderer;
+    setUnlit(!renderer);
+  }, []);
+
+  /**
+   * The pour loop. Started once, on mount, and deliberately not keyed to the
+   * tier, the phase or the canvas — restarting it mid-pour would drop the frames
+   * the rig is integrating over, and the telemetry would show it.
+   */
   useEffect(() => {
-    const tick = (t: number) => {
-      const dt = lastRef.current ? t - lastRef.current : 16;
-      lastRef.current = t;
-      // Read the size through a ref so a resize does not restart the loop —
-      // cancelling and re-requesting mid-pour would drop frames the sim is
-      // integrating over, and the telemetry would show it.
-      const { w, h } = stageRef.current;
-      setState((s) => stepPour(s, inputRef.current, dt, w, h - FLOOR_INSET));
-      rafRef.current = requestAnimationFrame(tick);
+    let raf = 0;
+    let last = 0;
+    let readoutAcc = 0;
+
+    const frame = (now: number) => {
+      raf = requestAnimationFrame(frame);
+      const dtMs = last ? Math.min(now - last, 100) : 16;
+      last = now;
+
+      const rig = rigRef.current;
+      const canvas = canvasElRef.current;
+      if (!canvas) return;
+      const { width, height } = rendererRef.current ?? backingSize(canvas);
+
+      const wasFinished = rig.finished;
+      stepRig(
+        rig,
+        {
+          pouring: pouringRef.current,
+          lean: leanRef.current,
+          tier: liveRef.current.tier,
+        },
+        dtMs,
+        width,
+        height,
+      );
+      rendererRef.current?.draw(rig);
+
+      // The hard stop closes the stream on the ceremony's behalf. The rig
+      // enforces it too, so this is the announcement rather than the mechanism.
+      if (rig.finished && !wasFinished) {
+        if (pouringRef.current) {
+          pouringRef.current = false;
+          liveRef.current.onPhase("settling");
+        }
+        liveRef.current.onNotice(HARD_STOP_NOTICE);
+      }
+
+      if (
+        liveRef.current.phase === "settling" &&
+        isSettled(rig, pouringRef.current)
+      ) {
+        liveRef.current.onPhase("settled");
+      }
+
+      readoutAcc += dtMs;
+      if (readoutAcc >= READOUT_MS) {
+        readoutAcc = 0;
+        paintReadout();
+      }
     };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      lastRef.current = 0;
+
+    /** Straight to the DOM. Nothing in here may call setState unconditionally. */
+    const paintReadout = () => {
+      const rig = rigRef.current;
+      const telemetry = telemetryOf(rig);
+      const parts = scoreParts(telemetry, liveRef.current.tierIndex);
+
+      const text = (node: HTMLElement | null, value: string) => {
+        if (node && node.textContent !== value) node.textContent = value;
+      };
+      const width = (node: HTMLElement | null, permille: number) => {
+        const value = `${(permille / 10).toFixed(1)}%`;
+        if (node && node.style.width !== value) node.style.width = value;
+      };
+
+      text(elapsedRef.current, `${(rig.holdMs / 1000).toFixed(2)} s`);
+      text(
+        dropsRef.current,
+        `${rig.dropletsLanded} drops · ${rig.alive}/${MAX_BLOBS}`,
+      );
+
+      const values = [
+        String(telemetry.dropletsLanded),
+        String(Math.round(telemetry.peakVelocity)),
+        `${(rig.holdMs / 1000).toFixed(1)}s`,
+        `${(parts.steadiness / 10).toFixed(0)}%`,
+      ];
+      const permilles = [
+        parts.fill,
+        parts.force,
+        parts.commitment,
+        parts.steadiness,
+      ];
+      for (let i = 0; i < SPEC_ROWS.length; i++) {
+        width(specBarRefs.current[i], permilles[i]);
+        text(specValRefs.current[i], values[i]);
+      }
+
+      text(scoreRef.current, `${parts.score} / 1000`);
+      width(scoreBarRef.current, parts.score);
+
+      // The one genuine transition in here: a new band recolours every accent on
+      // the page, so it has to be state.
+      const band = classify(telemetry, liveRef.current.tierIndex);
+      if (band !== liveRef.current.rarity) liveRef.current.onRarity(band);
     };
+
+    raf = requestAnimationFrame(frame);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   // Real device tilt where it exists. No permission prompt on load: iOS gates
@@ -106,348 +331,721 @@ export function PourScreen({ onMinted }: Props) {
   // the kind of thing that reads as a dark pattern.
   useEffect(() => {
     const onOrient = (e: DeviceOrientationEvent) => {
-      if (typeof e.gamma === 'number') setTiltDeg(e.gamma);
+      if (typeof e.gamma === "number")
+        leanRef.current = Math.max(-1, Math.min(1, e.gamma / 45));
     };
-    window.addEventListener('deviceorientation', onOrient);
-    return () => window.removeEventListener('deviceorientation', onOrient);
+    window.addEventListener("deviceorientation", onOrient);
+    return () => window.removeEventListener("deviceorientation", onOrient);
   }, []);
 
-  const startPour = useCallback(() => {
-    if (state.finished || minting) return;
-    if (startedAtRef.current === null) startedAtRef.current = Date.now();
-    setPouring(true);
-  }, [state.finished, minting]);
+  // Traverse the schedule from the keyboard, wrapping, and only while the vessel
+  // is still free to change.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (phase !== "idle" || (e.key !== "ArrowUp" && e.key !== "ArrowDown"))
+        return;
+      e.preventDefault();
+      onTierIndex(
+        (tierIndex + (e.key === "ArrowDown" ? 1 : TIERS.length - 1)) %
+          TIERS.length,
+      );
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [phase, tierIndex, onTierIndex]);
 
-  const stopPour = useCallback(() => setPouring(false), []);
-
-  const reset = useCallback(
-    (nextTier: number) => {
-      setTierIndex(nextTier);
-      setState(createPour(nextTier));
-      setPouring(false);
-      startedAtRef.current = null;
-      setError(null);
-    },
-    [],
-  );
-
-  // The preview. Same three calls, same order, same inputs the server will use.
-  //
-  // Once the pour has settled this stops moving, because telemetryOf(state) stops
-  // moving — which is the point. What is on screen at that moment is what gets
-  // minted, and the button below refuses to mint before then.
-  const preview = useMemo(() => {
-    const timestampMs = startedAtRef.current ?? Date.now();
-    const raw = telemetryOf(state);
-    // The wall clock the server will measure is now-minus-start; using the same
-    // figure here is what keeps the preview from promising a hold the server will
-    // then clamp away.
-    const wallClockMs = startedAtRef.current === null ? 0 : Date.now() - startedAtRef.current;
-    const { telemetry, violations } = clampTelemetry(raw, tierIndex, wallClockMs);
-    const seed = hashSeed({
-      tierIndex,
-      amountCents: tierAt(tierIndex).amountCents,
-      timestampMs,
-      telemetry,
-    });
-    return { seed, telemetry, violations, rarity: classify(telemetry, tierIndex), timestampMs };
-  }, [state, tierIndex]);
-
-  const { accent, secondary, substance } = RARITY_PRESENTATION[preview.rarity];
-  const progress = Math.min(state.holdMs / MAX_POUR_MS, 1);
-  const poured = state.holdMs > 0;
-
-  // Not merely "has poured": the pour must have settled, or the telemetry posted
-  // here is not the telemetry the preview drew.
-  const mintable = state.settled && !minting;
-
-  const mint = useCallback(async () => {
-    if (!mintable) return;
-    setMinting(true);
-    setError(null);
-    try {
-      const record = await mintPour({
-        tierIndex,
-        timestampMs: preview.timestampMs,
-        telemetry: telemetryOf(state),
-      });
-      onMinted(record);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    } finally {
-      setMinting(false);
-    }
-  }, [mintable, tierIndex, preview.timestampMs, state, onMinted]);
+  const stageHeight = wide
+    ? "min(70vh, 720px, (100vw - 720px) * 1.7778)"
+    : "min(58vh, 520px)";
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20, padding: '28px 20px 40px' }}>
-      <header style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 8 }}>
-        <h1
-          style={{
-            margin: 0,
-            fontFamily: FONT.display,
-            fontWeight: 400,
-            fontSize: 28,
-            letterSpacing: '6px',
-            textIndent: '6px',
-            color: COLOR.goldCream,
-          }}
-        >
-          MOLTEN POUR
-        </h1>
-        <span style={{ fontSize: 12, letterSpacing: '3px', textTransform: 'uppercase', color: COLOR.goldLabel }}>
-          Office of Disbursement
-        </span>
-      </header>
-
-      <fieldset
+    <div
+      style={{
+        display: "grid",
+        gap: "clamp(26px, 3vw, 44px)",
+        alignItems: "start",
+        gridTemplateColumns: wide
+          ? "minmax(260px, 1fr) minmax(340px, 440px)"
+          : "minmax(0, 1fr)",
+      }}
+    >
+      {/* ── The vessel ─────────────────────────────────────────────────────── */}
+      <div
         style={{
-          border: `1px solid ${COLOR.rule}`,
-          padding: '14px 16px 16px',
-          margin: 0,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 10,
-          maxWidth: STAGE_MAX_W,
-          width: '100%',
+          position: "relative",
+          justifySelf: "center",
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          maxWidth: "100%",
         }}
       >
-        <legend style={{ fontSize: 12, letterSpacing: '2.4px', textTransform: 'uppercase', color: COLOR.goldLabel, padding: '0 6px' }}>
-          Disbursement
-        </legend>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-          {TIERS.map((tier) => {
-            const selected = tier.index === tierIndex;
-            return (
-              <button
-                key={tier.index}
-                type="button"
-                disabled={poured}
-                onClick={() => reset(tier.index)}
-                style={{
-                  flex: '1 0 auto',
-                  padding: '8px 10px',
-                  background: selected ? 'rgba(201,146,46,.14)' : 'transparent',
-                  border: `1px solid ${selected ? COLOR.ruleStrong : COLOR.ruleRow}`,
-                  color: selected ? COLOR.goldCream : COLOR.goldLabel,
-                  fontFamily: FONT.instrument,
-                  fontSize: 12,
-                  letterSpacing: '1.6px',
-                  textTransform: 'uppercase',
-                  cursor: poured ? 'not-allowed' : 'pointer',
-                  opacity: poured && !selected ? 0.4 : 1,
-                }}
-              >
-                {tier.name}
-                <br />
-                <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatConsideration(tier.amountCents)}</span>
-                <br />
-                {/* What this tier can reach at best. Stated plainly so nobody
-                    pours the free tier repeatedly waiting for a Singular that
-                    the reach curve will never give them. */}
-                <span style={{ fontSize: 12, letterSpacing: '1.2px', opacity: 0.75 }}>
-                  to {reachableRarity(tier.index)}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-        {poured && (
-          <p style={{ margin: 0, fontSize: 12, letterSpacing: '1.4px', color: COLOR.goldLabel }}>
-            The tier is fixed once the stream opens.
-          </p>
-        )}
-      </fieldset>
-
-      <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
-        {/* The shell is what gets measured; the vessel takes the size it reports.
-            Separating them keeps the ResizeObserver off the element whose size it
-            is setting, which would otherwise feed back on itself. */}
         <div
-          ref={shellRef}
+          aria-hidden="true"
           style={{
-            flex: `1 1 ${STAGE_MIN_W}px`,
-            maxWidth: STAGE_MAX_W,
-            // IMPORTANT: a flex item's default min-width is auto, which refuses
-            // to shrink below its content — and its content is the vessel, whose
-            // width comes from measuring this shell. Without this the two pin
-            // each other at whatever size they started, and the vessel never
-            // adapts. Measured: 420px at every viewport until this was set.
-            minWidth: 0,
-            display: 'flex',
-            justifyContent: 'center',
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: stageHeight,
+            padding: "2px 0",
+            fontSize: 11,
+            letterSpacing: "1.6px",
+            color: COLOR.goldFaint,
+            textAlign: "right",
+            fontVariantNumeric: "tabular-nums",
           }}
         >
-        {/* The vessel */}
+          {GRADUATIONS.map((g) => (
+            <span key={g}>{g}</span>
+          ))}
+        </div>
+
         <div
-          onPointerDown={startPour}
-          onPointerUp={stopPour}
-          onPointerLeave={stopPour}
-          onPointerCancel={stopPour}
           role="button"
           tabIndex={0}
           aria-label="Hold to pour"
+          onPointerDown={(e) => {
+            // Captured so a drag that leaves the stage still steers the stream
+            // rather than silently closing it.
+            try {
+              e.currentTarget.setPointerCapture(e.pointerId);
+            } catch {
+              // Not every pointer can be captured; the pour does not depend on it.
+            }
+            openStream();
+          }}
+          onPointerUp={closeStream}
+          onPointerLeave={closeStream}
+          onPointerCancel={closeStream}
+          onPointerMove={(e) => {
+            if (!pouringRef.current) return;
+            const box = e.currentTarget.getBoundingClientRect();
+            leanRef.current = Math.max(
+              -1,
+              Math.min(1, ((e.clientX - box.left) / box.width - 0.5) * 2),
+            );
+          }}
           onKeyDown={(e) => {
-            if (e.key === ' ' || e.key === 'Enter') {
+            if (e.key === " " || e.key === "Enter") {
               e.preventDefault();
-              startPour();
+              openStream();
             }
           }}
           onKeyUp={(e) => {
-            if (e.key === ' ' || e.key === 'Enter') stopPour();
+            if (e.key === " " || e.key === "Enter") closeStream();
           }}
           style={{
-            position: 'relative',
-            width: stage.w,
-            height: stage.h,
-            border: `1px solid ${COLOR.rule}`,
-            background: 'rgba(10,6,13,.4)',
-            touchAction: 'none',
-            cursor: state.finished ? 'default' : 'pointer',
-            overflow: 'hidden',
-            userSelect: 'none',
+            position: "relative",
+            aspectRatio: "9 / 16",
+            height: stageHeight,
+            width: "auto",
+            maxWidth: "100%",
+            background: COLOR.panel,
+            border: `1px solid ${phase === "pouring" ? "rgba(245,214,122,.6)" : COLOR.ruleStage}`,
+            boxShadow:
+              "0 0 120px 10px rgba(201,146,46,.09), inset 0 0 0 1px rgba(12,7,15,.9)",
+            overflow: "hidden",
+            touchAction: "none",
+            userSelect: "none",
+            cursor: settled ? "default" : "pointer",
+            transition: "border-color .4s linear",
           }}
         >
-          <svg width={stage.w} height={stage.h} style={{ display: 'block' }} aria-hidden="true">
-            {state.droplets.map((d, i) => (
-              <circle
-                key={i}
-                cx={d.x}
-                cy={d.y}
-                r={d.r}
-                fill={d.landed ? secondary : accent}
-                fillOpacity={d.landed ? 0.75 : 0.95}
-              />
-            ))}
-          </svg>
+          <canvas
+            ref={attachCanvas}
+            style={{ display: "block", width: "100%", height: "100%" }}
+          />
 
+          {/* Everything below this line is instrument marking, and none of it may
+              take a pointer event away from the vessel. */}
           <div
             style={{
-              position: 'absolute',
-              left: 0,
-              bottom: 0,
-              height: 2,
-              width: `${progress * 100}%`,
-              background: accent,
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              opacity: 0.16,
+              mixBlendMode: "overlay",
+              backgroundImage: GRAIN_URL,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              boxShadow: "inset 0 0 100px 34px rgba(10,6,13,.8)",
             }}
           />
 
-          {!poured && (
+          {/* The spout and pool callouts read their positions from the rig, so a
+              label can never end up naming a line the fluid does not use. */}
+          <Callout label="Spout" top={SPOUT_Y} ruleFirst />
+          <Callout label="Pool line" top={FLOOR_Y} />
+
+          {(["top", "bottom"] as const).map((v) =>
+            (["left", "right"] as const).map((h) => (
+              <div
+                key={`${v}-${h}`}
+                style={{
+                  position: "absolute",
+                  [v]: 9,
+                  [h]: 9,
+                  width: 16,
+                  height: 16,
+                  pointerEvents: "none",
+                  [v === "top" ? "borderTop" : "borderBottom"]:
+                    `1px solid ${COLOR.tickStage}`,
+                  [h === "left" ? "borderLeft" : "borderRight"]:
+                    `1px solid ${COLOR.tickStage}`,
+                }}
+              />
+            )),
+          )}
+
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: "46%",
+              pointerEvents: "none",
+              display: "flex",
+              justifyContent: "center",
+              fontSize: 11,
+              letterSpacing: "3.4px",
+              textTransform: "uppercase",
+              color: COLOR.goldHot,
+              textShadow: "0 0 20px rgba(10,6,13,.9)",
+              opacity: settled ? 0.45 : 1,
+            }}
+          >
+            {PHASE_LABEL[phase]}
+          </div>
+
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              pointerEvents: "none",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 10,
+              padding: "16px 26px 14px",
+              ...LABEL_11,
+              letterSpacing: "1.8px",
+              background:
+                "linear-gradient(to top, rgba(10,6,13,.9), transparent)",
+            }}
+          >
             <span
+              ref={elapsedRef}
               style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 12,
-                letterSpacing: '3px',
-                textTransform: 'uppercase',
-                color: COLOR.goldLabel,
-                pointerEvents: 'none',
+                whiteSpace: "nowrap",
+                fontVariantNumeric: "tabular-nums",
               }}
             >
-              Hold to pour
+              0.00 s
             </span>
-          )}
-        </div>
-        </div>
-
-        {/* The preview */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, flex: '1 1 260px', maxWidth: 300 }}>
-          <div style={{ width: '100%', aspectRatio: '1 / 1', maxHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <SigilSvg seed={preview.seed} accent={accent} secondary={secondary} maxWidthPx={300} />
+            <span
+              ref={dropsRef}
+              style={{
+                whiteSpace: "nowrap",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              0 drops · 0/{MAX_BLOBS}
+            </span>
           </div>
-          <span style={{ fontSize: 12, letterSpacing: '3px', textTransform: 'uppercase', color: secondary, textAlign: 'center' }}>
-            {`${preview.rarity} · ${substance}`}
-          </span>
-
-          <dl
-            style={{
-              margin: 0,
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              fontSize: 12,
-              letterSpacing: '1.6px',
-              textTransform: 'uppercase',
-              color: COLOR.goldLabel,
-            }}
-          >
-            {(
-              [
-                ['Droplets', String(preview.telemetry.dropletsLanded)],
-                ['Hold', `${(preview.telemetry.holdMs / 1000).toFixed(2)} s`],
-                ['Peak', `${Math.round(preview.telemetry.peakVelocity)} px/s`],
-                ['Tilt', preview.telemetry.tiltEnergy.toFixed(2)],
-              ] as const
-            ).map(([k, v]) => (
-              <div key={k} style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '3px 0', borderBottom: `1px solid ${COLOR.ruleRow}` }}>
-                <dt style={{ margin: 0 }}>{k}</dt>
-                <dd style={{ margin: 0, color: accent, fontVariantNumeric: 'tabular-nums' }}>{v}</dd>
-              </div>
-            ))}
-          </dl>
-
-          {preview.violations.length > 0 && (
-            <p style={{ margin: 0, fontSize: 12, letterSpacing: '1.4px', color: COLOR.goldLabel }}>
-              Clamped: {preview.violations.join(', ')}
-            </p>
-          )}
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-        <button
-          type="button"
-          onClick={mint}
-          disabled={!mintable}
+      {/* ── The ledger ─────────────────────────────────────────────────────── */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 24,
+          minWidth: 0,
+        }}
+      >
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              ...LABEL_11,
+              letterSpacing: "3.2px",
+              paddingBottom: 10,
+              borderBottom: `1px solid ${COLOR.ruleMid}`,
+            }}
+          >
+            <span>Tier</span>
+            <span>Consideration</span>
+          </div>
+
+          <div style={{ position: "relative" }}>
+            {/* The marker. Bleeds past the table on both sides so the illuminated
+                edge reads as a rule in the margin rather than a selected cell. */}
+            <div
+              style={{
+                position: "absolute",
+                left: -16,
+                right: -16,
+                top: 0,
+                height: ROW_H,
+                pointerEvents: "none",
+                background:
+                  "linear-gradient(90deg, rgba(201,146,46,.2), rgba(201,146,46,.02) 70%)",
+                borderLeft: `2px solid ${accent}`,
+                boxShadow: "-2px 0 22px rgba(245,214,122,.25)",
+                transform: `translateY(${tierIndex * ROW_H}px)`,
+                transition: "transform .45s cubic-bezier(.22,1,.36,1)",
+              }}
+            />
+
+            {TIERS.map((t) => {
+              const selected = t.index === tierIndex;
+              return (
+                <button
+                  key={t.index}
+                  type="button"
+                  disabled={poured}
+                  onClick={() => onTierIndex(t.index)}
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    width: "100%",
+                    height: ROW_H,
+                    alignItems: "center",
+                    gap: 12,
+                    padding: 0,
+                    background: "transparent",
+                    border: 0,
+                    borderBottom: `1px solid ${COLOR.ruleHair}`,
+                    color: selected ? COLOR.goldCream : COLOR.goldLabel,
+                    fontFamily: FONT.instrument,
+                    textAlign: "left",
+                    // The tier is fixed the moment the stream opens.
+                    cursor: poured ? "not-allowed" : "pointer",
+                    opacity: poured && !selected ? 0.28 : 1,
+                    transition: "color .2s, opacity .3s",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 11,
+                      letterSpacing: "1.6px",
+                      color: COLOR.goldFaint,
+                      fontVariantNumeric: "tabular-nums",
+                    }}
+                  >
+                    {String(t.index + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      letterSpacing: "2.8px",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {t.name}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    style={{
+                      flex: 1,
+                      minWidth: 12,
+                      height: 1,
+                      background: `repeating-linear-gradient(90deg, rgba(201,146,46,.35) 0 1px, transparent 1px 5px)`,
+                    }}
+                  />
+                  {/* What this tier can reach at best, computed from the real
+                      clamp and classifier — so Sample reads as its own ceiling
+                      rather than a broken Full Pour. */}
+                  <span
+                    style={{
+                      fontSize: 11,
+                      letterSpacing: "1.4px",
+                      textTransform: "uppercase",
+                      color: COLOR.goldFaint,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    to {reachableRarity(t.index)}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: FONT.display,
+                      fontSize: 17,
+                      letterSpacing: ".2px",
+                      fontVariantNumeric: "tabular-nums",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {formatConsideration(t.amountCents)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div
           style={{
-            padding: '12px 22px',
-            background: 'transparent',
-            border: `1px solid ${mintable ? COLOR.ruleStrong : COLOR.ruleRow}`,
-            color: mintable ? COLOR.goldCream : COLOR.goldLabel,
-            fontFamily: FONT.instrument,
-            fontSize: 12,
-            letterSpacing: '2.6px',
-            textTransform: 'uppercase',
-            cursor: mintable ? 'pointer' : 'not-allowed',
+            display: "flex",
+            flexDirection: "column",
+            gap: 14,
+            paddingBottom: 22,
+            borderBottom: `1px solid ${COLOR.ruleMid}`,
           }}
         >
-          {minting ? 'Disbursing…' : poured && !state.settled ? 'Settling…' : 'Complete disbursement'}
-        </button>
-        {poured && (
-          <button
-            type="button"
-            onClick={() => reset(tierIndex)}
+          <span style={{ ...LABEL_11, letterSpacing: "3.2px" }}>
+            {NOW_LABEL[phase]}
+          </span>
+          <div
             style={{
-              padding: '12px 18px',
-              background: 'transparent',
-              border: `1px solid ${COLOR.ruleRow}`,
-              color: COLOR.goldLabel,
-              fontFamily: FONT.instrument,
-              fontSize: 12,
-              letterSpacing: '2.2px',
-              textTransform: 'uppercase',
-              cursor: 'pointer',
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "space-between",
+              gap: 16,
             }}
           >
-            Discard
-          </button>
+            <span
+              style={{
+                fontFamily: FONT.display,
+                fontSize: "clamp(30px, 3.4vw, 42px)",
+                lineHeight: 0.92,
+                color: COLOR.goldCream,
+              }}
+            >
+              {tier.name}
+            </span>
+            <span
+              style={{
+                fontFamily: FONT.display,
+                fontSize: "clamp(30px, 3.4vw, 42px)",
+                lineHeight: 0.92,
+                color: COLOR.bronze,
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {formatConsideration(tier.amountCents)}
+            </span>
+          </div>
+          <p
+            style={{
+              margin: 0,
+              fontFamily: FONT.display,
+              fontStyle: "italic",
+              fontSize: 17,
+              lineHeight: 1.45,
+              color: COLOR.goldFaint,
+              textWrap: "pretty",
+            }}
+          >
+            {tier.note}
+          </p>
+        </div>
+
+        {/* The spec sheet: the four components of the score, in weight order.
+            Painted from the loop; never rendered from state. */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+          {SPEC_ROWS.map((label, i) => (
+            <div
+              key={label}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "104px 1fr 62px",
+                alignItems: "center",
+                gap: 12,
+              }}
+            >
+              <span style={{ ...LABEL_11, letterSpacing: "2.2px" }}>
+                {label}
+              </span>
+              <span
+                style={{
+                  position: "relative",
+                  display: "block",
+                  height: 6,
+                  background:
+                    "repeating-linear-gradient(90deg, rgba(201,146,46,.22) 0 1px, transparent 1px 7px)",
+                }}
+              >
+                <span
+                  ref={(el) => {
+                    specBarRefs.current[i] = el;
+                  }}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 2,
+                    bottom: 2,
+                    width: 0,
+                    background: `linear-gradient(90deg, ${COLOR.goldLabel}, ${COLOR.goldHot})`,
+                    boxShadow: "0 0 12px rgba(245,214,122,.45)",
+                  }}
+                />
+              </span>
+              <span
+                ref={(el) => {
+                  specValRefs.current[i] = el;
+                }}
+                style={{
+                  fontSize: 11,
+                  letterSpacing: "1.2px",
+                  color: COLOR.goldLabel,
+                  fontVariantNumeric: "tabular-nums",
+                  textAlign: "right",
+                }}
+              >
+                0
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 11,
+            paddingTop: 4,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              ...LABEL_11,
+              letterSpacing: "2.2px",
+            }}
+          >
+            <span>Classification</span>
+            <span
+              ref={scoreRef}
+              style={{ fontVariantNumeric: "tabular-nums", color: accent }}
+            >
+              0 / 1000
+            </span>
+          </div>
+          <div
+            style={{
+              position: "relative",
+              height: 8,
+              background: COLOR.ruleHair,
+            }}
+          >
+            <div
+              ref={scoreBarRef}
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: 0,
+                background: `linear-gradient(90deg, ${COLOR.goldLabel}, ${accent})`,
+                boxShadow: "0 0 14px rgba(245,214,122,.4)",
+              }}
+            />
+            {/* Derived from the thresholds themselves. A re-tuned band moves its
+                own tick; a hardcoded percentage here would quietly lie. */}
+            {[THRESHOLDS.uncommon, THRESHOLDS.rare, THRESHOLDS.singular].map(
+              (t) => (
+                <span
+                  key={t}
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    top: -3,
+                    bottom: -3,
+                    left: `${t / 10}%`,
+                    width: 1,
+                    background: "rgba(201,146,46,.55)",
+                  }}
+                />
+              ),
+            )}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              fontSize: 11,
+              letterSpacing: "1.4px",
+              textTransform: "uppercase",
+              color: COLOR.goldFaint,
+            }}
+          >
+            <span>Common</span>
+            <span>Uncommon</span>
+            <span>Rare</span>
+            <span>Singular</span>
+          </div>
+        </div>
+
+        {/* One band, two sources. A transient notice — the hard stop, a failed
+            seal — speaks over the standing one, which comes back when it clears. */}
+        {(notice ?? (unlit ? NO_WEBGL_NOTICE : null)) && (
+          <div
+            role="alert"
+            style={{
+              padding: "12px 0",
+              borderTop: `1px solid rgba(245,214,122,.5)`,
+              borderBottom: `1px solid rgba(245,214,122,.5)`,
+              display: "flex",
+              flexDirection: "column",
+              gap: 5,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 11,
+                letterSpacing: "2.8px",
+                textTransform: "uppercase",
+                color: COLOR.goldHot,
+              }}
+            >
+              Notice
+            </span>
+            <span
+              style={{
+                fontSize: 12,
+                letterSpacing: "1.2px",
+                color: COLOR.goldLabel,
+                textWrap: "pretty",
+              }}
+            >
+              {notice ?? NO_WEBGL_NOTICE}
+            </span>
+          </div>
         )}
+
+        <div style={{ display: "flex", gap: 12, paddingBottom: 8 }}>
+          <button
+            type="button"
+            disabled={!settled || sealing}
+            onClick={() => {
+              if (!settled || sealing) return;
+              onMint({
+                tierIndex,
+                // The pour's real start, not the mint time: it feeds the seed
+                // hash, so a later figure would mint a sigil the user never saw.
+                timestampMs: startedAtRef.current ?? Date.now(),
+                telemetry: telemetryOf(rigRef.current),
+              });
+            }}
+            style={{
+              position: "relative",
+              flex: 1,
+              padding: "17px 12px",
+              background: settled ? "rgba(201,146,46,.16)" : "transparent",
+              border: `1px solid ${settled ? COLOR.ruleEnabled : COLOR.ruleDisabled}`,
+              color: settled ? COLOR.goldCream : COLOR.goldFaint,
+              fontFamily: FONT.instrument,
+              fontSize: 11,
+              letterSpacing: "3px",
+              textTransform: "uppercase",
+              cursor: settled && !sealing ? "pointer" : "not-allowed",
+              transition: "background .3s, border-color .3s, color .3s",
+            }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                inset: 3,
+                pointerEvents: "none",
+                border: `1px solid ${settled ? "rgba(201,146,46,.22)" : "transparent"}`,
+              }}
+            />
+            {sealing
+              ? "Disbursing…"
+              : phase === "settling"
+                ? "Settling…"
+                : phase === "pouring"
+                  ? "Stream open"
+                  : settled
+                    ? `Complete disbursement · ${rarity}`
+                    : "Complete disbursement"}
+          </button>
+          {poured && (
+            <button
+              type="button"
+              onClick={discard}
+              style={{
+                padding: "17px 20px",
+                background: "transparent",
+                border: `1px solid ${COLOR.ruleDisabled}`,
+                color: COLOR.goldFaint,
+                fontFamily: FONT.instrument,
+                fontSize: 11,
+                letterSpacing: "2.4px",
+                textTransform: "uppercase",
+                cursor: "pointer",
+              }}
+            >
+              Discard
+            </button>
+          )}
+        </div>
       </div>
+    </div>
+  );
+}
 
-      {state.finished && (
-        <p style={{ margin: 0, fontSize: 12, letterSpacing: '2px', textTransform: 'uppercase', color: COLOR.goldLabel }}>
-          Ceremony hard stop reached at {(SIM.maxPourMs / 1000).toFixed(0)} seconds.
-        </p>
-      )}
-
-      {error && (
-        <p role="alert" style={{ margin: 0, fontSize: 12, letterSpacing: '1.6px', color: COLOR.goldHot, maxWidth: 420, textAlign: 'center' }}>
-          {error}
-        </p>
-      )}
+/** A dashed rule and a label, naming one of the two lines the rig actually uses. */
+function Callout({
+  label,
+  top,
+  ruleFirst = false,
+}: {
+  label: string;
+  top: number;
+  ruleFirst?: boolean;
+}) {
+  const rule = (
+    <span
+      style={{
+        flex: 1,
+        height: 1,
+        background:
+          "repeating-linear-gradient(90deg, rgba(245,214,122,.3) 0 3px, transparent 3px 8px)",
+      }}
+    />
+  );
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: `${top * 100}%`,
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "0 14px",
+      }}
+    >
+      {ruleFirst && rule}
+      <span
+        style={{
+          fontSize: 11,
+          letterSpacing: "2px",
+          textTransform: "uppercase",
+          color: "rgba(245,214,122,.72)",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {label}
+      </span>
+      {!ruleFirst && rule}
     </div>
   );
 }
