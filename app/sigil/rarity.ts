@@ -37,8 +37,12 @@ export type Rarity = (typeof RARITIES)[number];
  * so they must be re-tuned once the ledger has real data. The escalation triggers
  * at the bottom of telemetry.ts are what tells you when: if the Singular share on
  * tiers 3-5 runs above twice the modeled rate, this is the table to look at.
+ *
+ * Exported because the ceremony's classification bar draws a tick at each one.
+ * The bar derives its percentages from these numbers rather than carrying a
+ * second copy — a re-tuned threshold must move the tick with it.
  */
-const THRESHOLDS = {
+export const THRESHOLDS = {
   uncommon: 533,
   rare: 665,
   singular: 771,
@@ -56,6 +60,22 @@ const TIER_REACH_BASE = 55;
 const TIER_REACH_STEP = 9;
 
 /**
+ * The four components behind a score, each in permille, plus the score itself.
+ *
+ * The ceremony's spec sheet paints one bar per component while the pour is
+ * running, which is the only reason these are visible outside this file. Nothing
+ * downstream of the mint reads them: the server stores the score, not the parts,
+ * so there is deliberately no Go counterpart to this shape.
+ */
+export type ScoreParts = {
+  fill: number;
+  force: number;
+  commitment: number;
+  steadiness: number;
+  score: number;
+};
+
+/**
  * IMPORTANT: this function is integer arithmetic on purpose.
  *
  * A score compared against a float threshold can flip rarity on a last-ulp
@@ -67,8 +87,13 @@ const TIER_REACH_STEP = 9;
  *
  * The inputs are the same rounded integers hashSeed consumes, so a value that
  * cannot change the hash cannot change the rarity either.
+ *
+ * It returns the components as well as the total. That is a widened return, not
+ * a changed calculation: the operations and their order are exactly what
+ * pourScore did when it returned a bare number, and api/sigil/rarity.go is still
+ * a line-for-line match of the arithmetic below.
  */
-function pourScore(telemetry: Telemetry, tierIndex: number): number {
+export function scoreParts(telemetry: Telemetry, tierIndex: number): ScoreParts {
   // IMPORTANT: clamp once and use the clamped index for both the flow lookup and
   // the reach multiplier. Falling back to TIER_BOUNDS[0] for the flow while
   // scaling reach by the top tier scores an out-of-range tier *higher* than a
@@ -102,7 +127,11 @@ function pourScore(telemetry: Telemetry, tierIndex: number): number {
   const base = Math.floor((fill * 40 + force * 25 + commitment * 20 + steadiness * 15) / 100);
 
   const reach = TIER_REACH_BASE + TIER_REACH_STEP * clampTierIndex(tierIndex);
-  return Math.floor((base * reach) / 100);
+  return { fill, force, commitment, steadiness, score: Math.floor((base * reach) / 100) };
+}
+
+function pourScore(telemetry: Telemetry, tierIndex: number): number {
+  return scoreParts(telemetry, tierIndex).score;
 }
 
 function clampTierIndex(tierIndex: number): number {

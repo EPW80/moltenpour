@@ -11,8 +11,8 @@
  * client to know them before minting. The client renders what it is given.
  */
 
-import type { Rarity } from '../sigil/rarity';
-import type { Telemetry } from '../sigil/telemetry';
+import type { Rarity } from "../sigil/rarity";
+import type { Telemetry } from "../sigil/telemetry";
 
 export type PourRecord = {
   id: string;
@@ -52,22 +52,23 @@ export type MintRequest = {
 };
 
 async function json<T>(res: Response): Promise<T> {
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText}: ${await res.text()}`);
+  if (!res.ok)
+    throw new Error(`${res.status} ${res.statusText}: ${await res.text()}`);
   return res.json() as Promise<T>;
 }
 
 export async function mintPour(req: MintRequest): Promise<PourRecord> {
   return json<PourRecord>(
-    await fetch('/api/pours', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
+    await fetch("/api/pours", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
       body: JSON.stringify(req),
     }),
   );
 }
 
 export async function listPours(): Promise<PourRecord[]> {
-  return json<PourRecord[]>(await fetch('/api/pours'));
+  return json<PourRecord[]>(await fetch("/api/pours"));
 }
 
 export async function getPour(id: string): Promise<PourRecord> {
@@ -81,10 +82,10 @@ export function formatMass(grams: number): string {
 
 /** `No. 1,284` — thousands separator and the prefix are both part of the copy. */
 export function formatLedgerPosition(position: number): string {
-  return `No. ${position.toLocaleString('en-US')}`;
+  return `No. ${position.toLocaleString("en-US")}`;
 }
 
 /** `№1,284` for the caption and the gallery tile. */
 export function formatOrdinal(position: number): string {
-  return `№${position.toLocaleString('en-US')}`;
+  return `№${position.toLocaleString("en-US")}`;
 }
