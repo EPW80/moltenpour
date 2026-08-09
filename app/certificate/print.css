@@ -24,15 +24,39 @@
     background: #fff;
   }
 
-  /* Everything except the sheet. The app chrome must not print. */
-  body > *:not(.print-root) {
-    display: none !important;
+  /* Hide by visibility rather than display, and re-show the sheet's subtree.
+
+     IMPORTANT: the sheet is nested — #root > the index shell > the scale box —
+     so a rule that hides non-sheet children of <body> hides the sheet along
+     with the chrome. It did, and it printed a blank page; the check in
+     scripts/verify-certificate only counts pages, so nothing caught it. Any
+     replacement rule has to survive the sheet having ancestors. */
+  body * {
+    visibility: hidden;
   }
 
+  .print-root,
+  .print-root * {
+    visibility: visible;
+  }
+
+  /* Pinned to the corner at its true size: on screen this box is deliberately
+     the size of the SCALED sheet, and paper wants the whole 794x1123. */
   .print-root {
+    position: absolute !important;
+    left: 0;
+    top: 0;
     display: block !important;
     margin: 0;
     padding: 0;
+    width: 794px !important;
+    height: 1123px !important;
+    overflow: visible !important;
+  }
+
+  /* The fit-to-column transform is a screen affordance. Paper is 1:1. */
+  .sheet-scale {
+    transform: none !important;
   }
 
   .certificate-page {
@@ -48,9 +72,11 @@
 
 /* On screen the sheet sits on the app's own ground rather than pretending to be
    paper. The handoff forbids fake sheet cards — no drop shadow, no rounded
-   corner, no simulated stack. */
+   corner, no simulated stack.
+
+   No layout here on purpose: CertificateView sizes this box to the scaled sheet
+   and centres it from the parent. A flex rule with its own padding would fight
+   those measurements. */
 .print-root {
-  display: flex;
-  justify-content: center;
-  padding: 24px 0 48px;
+  display: block;
 }
