@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="stylesheet" href="./app/certificate/fonts/bodoni.css">
+<style>
+html,body{margin:0;padding:0;background:#0C070F;color-scheme:dark}
+button{font:inherit}
+button,input,fieldset,select{border-radius:0}
+a{color:#C9922E;text-decoration:none}a:hover{color:#F5D67A}
+:focus-visible{outline:1px solid #F5D67A;outline-offset:3px}
+@keyframes breathe{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.85;transform:scale(1.35)}}
+@keyframes mp-seal{from{width:0}to{width:100%}}
+@keyframes mp-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@page{size:A4 portrait;margin:0}
+@media print{
+  html,body{margin:0;padding:0;background:#fff}
+  .app-chrome{display:none !important}
+  body *{visibility:hidden}
+  .print-root,.print-root *{visibility:visible}
+  .print-root{position:absolute;left:0;top:0;margin:0;padding:0;width:794px !important;height:1123px !important;overflow:visible !important}
+  .sheet-scale{transform:none !important}
+  .certificate-page{print-color-adjust:exact;-webkit-print-color-adjust:exact;break-inside:avoid;page-break-inside:avoid}
+}
+</style>
+</helmet>
+
+<div style="position:relative;min-height:100vh;box-sizing:border-box;background:radial-gradient(115% 75% at 50% -12%, #2A1136 0%, #170D1C 46%, #0A060D 100%);color:#C9A24A;font-family:ui-monospace,'SF Mono',Menlo,monospace;padding:clamp(18px,3vw,30px) clamp(16px,3vw,34px) 0;display:grid;gap:0 clamp(16px,2.4vw,30px);grid-template-columns:{{ rootCols }}">
+
+  <div style="position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:repeating-linear-gradient(90deg,rgba(201,146,46,.055) 0 1px,transparent 1px 96px)"></div>
+
+  <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+    <aside class="app-chrome" style="position:relative;grid-row:1 / span 4;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding-bottom:26px;border-right:1px solid rgba(201,146,46,.14)">
+      <span style="writing-mode:vertical-rl;font-size:11px;letter-spacing:4.5px;text-transform:uppercase;color:#B08A3C;white-space:nowrap">Office of Disbursement · Folio {{ folio }}</span>
+      <span style="writing-mode:vertical-rl;font-family:'Bodoni Moda',serif;font-style:italic;font-size:14px;letter-spacing:1px;color:#8A6A2A;white-space:nowrap">non revertitur</span>
+    </aside>
+  </sc-if>
+
+  <header class="app-chrome" style="position:relative;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;border-bottom:1px solid rgba(201,146,46,.24);padding-bottom:18px">
+    <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+      <span style="font-size:11px;letter-spacing:3.6px;text-transform:uppercase;color:#B08A3C">A schedule of disbursements, rendered in liquid</span>
+      <h1 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(38px,5.2vw,62px);line-height:.92;letter-spacing:-1px;color:#F7E9C2;text-shadow:0 0 44px rgba(201,146,46,.35)">The Molten Pour</h1>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:#B08A3C;white-space:nowrap">
+      <span style="display:flex;align-items:center;gap:9px">
+        <span style="position:relative;display:flex;align-items:center;justify-content:center;width:14px;height:14px;border:1px solid rgba(201,146,46,.35);border-radius:50%">
+          <span style="width:4px;height:4px;border-radius:50%;background:{{ accent }};animation:breathe 2.6s ease-in-out infinite"></span>
+        </span>
+        <span>{{ statusLine }}</span>
+      </span>
+      <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:15px;letter-spacing:.5px;text-transform:none;color:#8A6A2A">rev. vii — mmxxvi</span>
+    </div>
+  </header>
+
+  <nav class="app-chrome" style="position:relative;display:flex;gap:26px;padding:14px 0 0">
+    <button type="button" onClick="{{ goCeremony }}" style="padding:0 0 6px;background:transparent;border:0;border-bottom:1px solid {{ tabARule }};color:{{ tabAColor }};font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer">The ceremony</button>
+    <button type="button" onClick="{{ goCollection }}" style="padding:0 0 6px;background:transparent;border:0;border-bottom:1px solid {{ tabBRule }};color:{{ tabBColor }};font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer">The collection · {{ pourCount }}</button>
+    <sc-if value="{{ hasSheet }}" hint-placeholder-val="{{ false }}">
+      <button type="button" onClick="{{ goCertificate }}" style="padding:0 0 6px;background:transparent;border:0;border-bottom:1px solid {{ tabCRule }};color:{{ tabCColor }};font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer">The certificate</button>
+    </sc-if>
+  </nav>
+
+  <main style="position:relative;padding-top:clamp(20px,2.6vw,32px)">
+
+    <sc-if value="{{ isCeremony }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;gap:clamp(26px,3vw,44px);align-items:start;grid-template-columns:{{ mainCols }}">
+
+        <div style="position:relative;justify-self:center;display:flex;align-items:center;gap:16px;max-width:100%">
+          <div style="display:flex;flex-direction:column;justify-content:space-between;height:{{ stageH }};padding:2px 0;font-size:11px;letter-spacing:1.6px;color:#8A6A2A;text-align:right;font-variant-numeric:tabular-nums">
+            <span>15 s —</span><span>12 s —</span><span>9 s —</span><span>6 s —</span><span>3 s —</span><span>0 —</span>
+          </div>
+          <div onPointerDown="{{ startPour }}" onPointerUp="{{ stopPour }}" onPointerLeave="{{ stopPour }}" onPointerCancel="{{ stopPour }}" onPointerMove="{{ movePour }}" onKeyDown="{{ keyDown }}" onKeyUp="{{ keyUp }}" role="button" tabindex="0" aria-label="Hold to pour" style="position:relative;aspect-ratio:9 / 16;height:{{ stageH }};width:auto;max-width:100%;background:#160B1A;border:1px solid {{ stageBorder }};box-shadow:0 0 120px 10px rgba(201,146,46,.09),inset 0 0 0 1px rgba(12,7,15,.9);overflow:hidden;touch-action:none;user-select:none;cursor:{{ stageCursor }};transition:border-color .4s linear">
+            <canvas ref="{{ canvasRef }}" style="display:block;width:100%;height:100%"></canvas>
+            <sc-if value="{{ grain }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;inset:0;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>&quot;)"></div>
+            </sc-if>
+            <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 100px 34px rgba(10,6,13,.8)"></div>
+            <div style="position:absolute;left:0;right:0;top:20%;pointer-events:none;display:flex;align-items:center;gap:8px;padding:0 14px">
+              <span style="flex:1;height:1px;background:repeating-linear-gradient(90deg,rgba(245,214,122,.3) 0 3px,transparent 3px 8px)"></span>
+              <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,214,122,.72);white-space:nowrap">Spout</span>
+            </div>
+            <div style="position:absolute;left:0;right:0;top:82%;pointer-events:none;display:flex;align-items:center;gap:8px;padding:0 14px">
+              <span style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(245,214,122,.72);white-space:nowrap">Pool line</span>
+              <span style="flex:1;height:1px;background:repeating-linear-gradient(90deg,rgba(245,214,122,.3) 0 3px,transparent 3px 8px)"></span>
+            </div>
+            <div style="position:absolute;top:9px;left:9px;width:16px;height:16px;pointer-events:none;border-top:1px solid rgba(245,214,122,.6);border-left:1px solid rgba(245,214,122,.6)"></div>
+            <div style="position:absolute;top:9px;right:9px;width:16px;height:16px;pointer-events:none;border-top:1px solid rgba(245,214,122,.6);border-right:1px solid rgba(245,214,122,.6)"></div>
+            <div style="position:absolute;bottom:9px;left:9px;width:16px;height:16px;pointer-events:none;border-bottom:1px solid rgba(245,214,122,.6);border-left:1px solid rgba(245,214,122,.6)"></div>
+            <div style="position:absolute;bottom:9px;right:9px;width:16px;height:16px;pointer-events:none;border-bottom:1px solid rgba(245,214,122,.6);border-right:1px solid rgba(245,214,122,.6)"></div>
+            <div ref="{{ hintRef }}" style="position:absolute;left:0;right:0;top:46%;pointer-events:none;display:flex;justify-content:center;font-size:11px;letter-spacing:3.4px;text-transform:uppercase;color:#F5D67A;text-shadow:0 0 20px rgba(10,6,13,.9)">Hold to pour</div>
+            <div style="position:absolute;left:0;right:0;bottom:0;pointer-events:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 26px 14px;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#B08A3C;background:linear-gradient(to top,rgba(10,6,13,.9),transparent)">
+              <span ref="{{ elapsedRef }}" style="min-width:0;white-space:nowrap;font-variant-numeric:tabular-nums">0.00 s</span>
+              <span ref="{{ dropRef }}" style="min-width:0;white-space:nowrap;font-variant-numeric:tabular-nums">0 drops</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:24px;min-width:0">
+
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:3.2px;text-transform:uppercase;color:#B08A3C;padding-bottom:10px;border-bottom:1px solid rgba(201,146,46,.24)">
+              <span>Tier</span><span>Consideration</span>
+            </div>
+            <div style="position:relative">
+              <div style="position:absolute;left:-16px;right:-16px;height:52px;top:0;pointer-events:none;background:linear-gradient(90deg,rgba(201,146,46,.2),rgba(201,146,46,.02) 70%);border-left:2px solid {{ accent }};box-shadow:-2px 0 22px rgba(245,214,122,.25);transition:transform .45s cubic-bezier(.22,1,.36,1);transform:translateY({{ markerY }})"></div>
+              <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="6">
+                <button type="button" onClick="{{ t.select }}" disabled="{{ t.locked }}" style="position:relative;display:flex;width:100%;height:52px;align-items:center;gap:12px;padding:0;background:transparent;border:0;border-bottom:1px solid rgba(201,146,46,.1);color:{{ t.color }};cursor:{{ t.cursor }};font-family:ui-monospace,'SF Mono',Menlo,monospace;text-align:left;opacity:{{ t.opacity }};transition:color .2s,opacity .3s" style-hover="color:#FFF6D8">
+                  <span style="font-size:11px;letter-spacing:1.6px;color:#8A6A2A;font-variant-numeric:tabular-nums">{{ t.num }}</span>
+                  <span style="font-size:12px;letter-spacing:2.8px;text-transform:uppercase;white-space:nowrap">{{ t.name }}</span>
+                  <span style="flex:1;min-width:12px;height:1px;background:repeating-linear-gradient(90deg,rgba(201,146,46,.35) 0 1px,transparent 1px 5px)"></span>
+                  <span style="font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8A6A2A;white-space:nowrap">to {{ t.reach }}</span>
+                  <span style="font-family:'Bodoni Moda',serif;font-size:17px;letter-spacing:.2px;font-variant-numeric:tabular-nums;white-space:nowrap">{{ t.price }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;padding-bottom:22px;border-bottom:1px solid rgba(201,146,46,.24)">
+            <span style="font-size:11px;letter-spacing:3.2px;text-transform:uppercase;color:#B08A3C">{{ nowLabel }}</span>
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px">
+              <span style="font-family:'Bodoni Moda',serif;font-size:clamp(30px,3.4vw,42px);line-height:.92;color:#F7E9C2">{{ activeName }}</span>
+              <span style="font-family:'Bodoni Moda',serif;font-size:clamp(30px,3.4vw,42px);line-height:.92;color:#C9922E;font-variant-numeric:tabular-nums">{{ activePrice }}</span>
+            </div>
+            <p style="margin:0;font-family:'Bodoni Moda',serif;font-style:italic;font-size:17px;line-height:1.45;color:#8A6A2A;text-wrap:pretty">{{ activeNote }}</p>
+          </div>
+
+          <sc-if value="{{ specSheet }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:15px">
+              <sc-for list="{{ specs }}" as="s" hint-placeholder-count="4">
+                <div style="display:grid;grid-template-columns:104px 1fr 62px;align-items:center;gap:12px">
+                  <span style="font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#B08A3C">{{ s.label }}</span>
+                  <span style="position:relative;display:block;height:6px;background:repeating-linear-gradient(90deg,rgba(201,146,46,.22) 0 1px,transparent 1px 7px)">
+                    <span ref="{{ s.barRef }}" style="position:absolute;left:0;top:2px;bottom:2px;width:0;background:linear-gradient(90deg,#B08A3C,#F5D67A);box-shadow:0 0 12px rgba(245,214,122,.45)"></span>
+                  </span>
+                  <span ref="{{ s.valRef }}" style="font-size:11px;letter-spacing:1.2px;color:#B08A3C;font-variant-numeric:tabular-nums;text-align:right">0</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;flex-direction:column;gap:11px;padding-top:4px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;color:#B08A3C">
+              <span>Classification</span>
+              <span ref="{{ scoreRef }}" style="font-variant-numeric:tabular-nums;color:{{ accent }}">0 / 1000</span>
+            </div>
+            <div style="position:relative;height:8px;background:rgba(201,146,46,.1)">
+              <div ref="{{ scoreBarRef }}" style="position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#B08A3C,{{ accent }});box-shadow:0 0 14px rgba(245,214,122,.4)"></div>
+              <span style="position:absolute;top:-3px;bottom:-3px;left:53.3%;width:1px;background:rgba(201,146,46,.55)"></span>
+              <span style="position:absolute;top:-3px;bottom:-3px;left:66.5%;width:1px;background:rgba(201,146,46,.55)"></span>
+              <span style="position:absolute;top:-3px;bottom:-3px;left:77.1%;width:1px;background:rgba(201,146,46,.55)"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8A6A2A">
+              <span>Common</span><span>Uncommon</span><span>Rare</span><span>Singular</span>
+            </div>
+          </div>
+
+          <sc-if value="{{ notice }}" hint-placeholder-val="{{ false }}">
+            <div role="alert" style="padding:12px 0;border-top:1px solid rgba(245,214,122,.5);border-bottom:1px solid rgba(245,214,122,.5);display:flex;flex-direction:column;gap:5px">
+              <span style="font-size:11px;letter-spacing:2.8px;text-transform:uppercase;color:#F5D67A">Notice</span>
+              <span style="font-size:12px;letter-spacing:1.2px;color:#B08A3C;text-wrap:pretty">{{ notice }}</span>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;gap:12px;padding-bottom:8px">
+            <button type="button" onClick="{{ mint }}" disabled="{{ mintDisabled }}" style="position:relative;flex:1;padding:17px 12px;background:{{ mintBg }};border:1px solid {{ mintBorder }};color:{{ mintColor }};font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:{{ mintCursor }};transition:background .3s,border-color .3s,color .3s">
+              <span style="position:absolute;inset:3px;pointer-events:none;border:1px solid {{ mintInner }}"></span>
+              {{ mintLabel }}
+            </button>
+            <sc-if value="{{ poured }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ discard }}" style="padding:17px 20px;background:transparent;border:1px solid rgba(201,146,46,.18);color:#8A6A2A;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;cursor:pointer">Discard</button>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isCollection }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;font-size:11px;letter-spacing:3.2px;text-transform:uppercase;color:#B08A3C;padding-bottom:10px;border-bottom:1px solid rgba(201,146,46,.24)">
+          <span>Disbursements on record</span>
+          <span style="font-variant-numeric:tabular-nums">{{ pourTotal }} rendered irrecoverable</span>
+        </div>
+
+        <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:90px 20px">
+            <span style="width:44px;height:44px;border:1px solid rgba(201,146,46,.3);background:repeating-linear-gradient(135deg,transparent 0 5px,rgba(201,146,46,.14) 5px 6px)"></span>
+            <span style="font-size:11px;letter-spacing:3.2px;text-transform:uppercase;color:#B08A3C;text-align:center">The register is open and empty</span>
+            <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:22px;letter-spacing:.6px;color:#8A6A2A;text-wrap:pretty">nothing has yet been given for nothing</span>
+          </div>
+        </sc-if>
+
+        <div style="display:grid;grid-template-columns:{{ tileCols }};gap:clamp(14px,1.6vw,22px)">
+          <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="6">
+            <button type="button" onClick="{{ t.open }}" style="position:relative;display:flex;flex-direction:column;gap:10px;padding:14px;background:#160B1A;border:1px solid {{ t.border }};cursor:pointer;font-family:ui-monospace,'SF Mono',Menlo,monospace;text-align:left" style-hover="border-color:#F5D67A">
+              <span style="display:flex;justify-content:space-between;align-items:baseline;font-size:11px;letter-spacing:1.8px;color:#8A6A2A;font-variant-numeric:tabular-nums">
+                <span>{{ t.num }}</span><span>{{ t.ordinal }}</span>
+              </span>
+              <span style="display:block;width:100%;aspect-ratio:1 / 1">{{ t.sigil }}</span>
+              <span style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+                <span style="font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:{{ t.secondary }};white-space:nowrap">{{ t.rarity }}</span>
+                <span style="font-family:'Bodoni Moda',serif;font-size:16px;color:#C9922E;font-variant-numeric:tabular-nums">{{ t.price }}</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isCertificate }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:14px;align-items:center">
+        <div class="app-chrome" style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;width:100%;font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:#B08A3C;padding-bottom:10px;border-bottom:1px solid rgba(201,146,46,.24)">
+          <span>A4 · 794 × 1123 · {{ zoomNote }}</span>
+          <span style="display:flex;gap:22px">
+            <button type="button" onClick="{{ toggleZoom }}" style="padding:0;background:transparent;border:0;color:#C9A24A;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:2.6px;text-transform:uppercase;cursor:pointer">{{ zoomLabel }}</button>
+            <button type="button" onClick="{{ printSheet }}" style="padding:0;background:transparent;border:0;color:#C9A24A;font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:2.6px;text-transform:uppercase;cursor:pointer">Print</button>
+          </span>
+        </div>
+
+        <div class="print-root" ref="{{ sheetRef }}" style="width:{{ sheetBoxW }}px;height:{{ sheetBoxH }}px;overflow:{{ sheetOverflow }};margin-bottom:26px">
+          <div class="sheet-scale" style="width:794px;height:1123px;transform:scale({{ sheetScale }});transform-origin:top left">
+            <section class="certificate-page" aria-label="Certificate of Waste" style="position:relative;width:794px;height:1123px;overflow:hidden;background:radial-gradient(115% 70% at 50% -10%, #2A1136 0%, #1A0E1E 48%, #120A15 100%);color:#C9A24A;font-family:ui-monospace,'SF Mono',Menlo,monospace;print-color-adjust:exact;-webkit-print-color-adjust:exact">
+              <sc-if value="{{ grain }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;inset:0;pointer-events:none;opacity:.14;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>&quot;)"></div>
+              </sc-if>
+              <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px 40px rgba(10,6,13,.55)"></div>
+              <div style="position:absolute;inset:26px;pointer-events:none;border:1px solid rgba(201,146,46,.5)"></div>
+              <div style="position:absolute;inset:33px;pointer-events:none;border:1px solid rgba(201,146,46,.24)"></div>
+              <div style="position:absolute;top:40px;left:40px;width:15px;height:15px;pointer-events:none;border-top:1px solid rgba(245,214,122,.7);border-left:1px solid rgba(245,214,122,.7)"></div>
+              <div style="position:absolute;top:40px;right:40px;width:15px;height:15px;pointer-events:none;border-top:1px solid rgba(245,214,122,.7);border-right:1px solid rgba(245,214,122,.7)"></div>
+              <div style="position:absolute;bottom:40px;left:40px;width:15px;height:15px;pointer-events:none;border-bottom:1px solid rgba(245,214,122,.7);border-left:1px solid rgba(245,214,122,.7)"></div>
+              <div style="position:absolute;bottom:40px;right:40px;width:15px;height:15px;pointer-events:none;border-bottom:1px solid rgba(245,214,122,.7);border-right:1px solid rgba(245,214,122,.7)"></div>
+
+              <div style="position:relative;height:100%;box-sizing:border-box;padding:52px 62px 46px;display:flex;flex-direction:column">
+                <header style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;font-size:12px;letter-spacing:2.6px;text-transform:uppercase;color:{{ certSecondary }};padding-bottom:14px;border-bottom:1px solid rgba(201,146,46,.28)">
+                  <span style="min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Molten Pour · Office of Disbursement</span>
+                  <span style="font-variant-numeric:tabular-nums;white-space:nowrap">{{ certSerial }}</span>
+                </header>
+
+                <div style="display:flex;flex-direction:column;align-items:center;gap:9px;padding-top:20px">
+                  <h2 style="margin:0;font-family:'Bodoni Moda',serif;font-weight:400;font-size:34px;line-height:1;letter-spacing:8px;text-indent:8px;color:#F7E9C2;text-shadow:0 0 40px rgba(201,146,46,.3)">CERTIFICATE OF WASTE</h2>
+                  <span style="font-size:12px;letter-spacing:3.4px;text-transform:uppercase;color:#B08A3C;text-align:center">Issued upon irreversible disbursement</span>
+                  <div style="display:flex;align-items:center;gap:14px;width:290px;padding-top:6px">
+                    <span style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,146,46,.55))"></span>
+                    <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:17px;letter-spacing:2px;color:{{ certAccent }};white-space:nowrap">non revertitur</span>
+                    <span style="flex:1;height:1px;background:linear-gradient(90deg,rgba(201,146,46,.55),transparent)"></span>
+                  </div>
+                </div>
+
+                <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:6px 0 2px">{{ certSigil }}</div>
+
+                <div style="display:flex;justify-content:center;padding-bottom:16px">
+                  <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:{{ certSecondary }};font-variant-numeric:tabular-nums">{{ certCaption }}</span>
+                </div>
+
+                <dl style="display:flex;flex-direction:column;margin:0">
+                  <sc-for list="{{ certRows }}" as="r" hint-placeholder-count="8">
+                    <div style="display:flex;align-items:baseline;gap:16px;padding:5px 2px 4px;border-bottom:1px solid rgba(201,146,46,.2)">
+                      <dt style="margin:0;font-size:12px;letter-spacing:2.4px;text-transform:uppercase;white-space:nowrap;color:{{ certSecondary }}">{{ r.label }}</dt>
+                      <span aria-hidden="true" style="flex:1;height:1px;background:repeating-linear-gradient(90deg,rgba(201,146,46,.3) 0 1px,transparent 1px 5px)"></span>
+                      <dd style="margin:0;font-family:'Bodoni Moda',serif;font-size:17px;letter-spacing:.4px;color:{{ certAccent }};font-variant-numeric:tabular-nums;white-space:nowrap">{{ r.value }}</dd>
+                    </div>
+                  </sc-for>
+                </dl>
+
+                <div style="display:flex;justify-content:center;padding:16px 0 14px">
+                  <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:22px;letter-spacing:1.5px;color:#F7E9C2">for nothing</span>
+                </div>
+
+                <footer style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding-top:14px;border-top:1px solid rgba(201,146,46,.28);font-size:12px;letter-spacing:1.9px;text-transform:uppercase;color:#B08A3C">
+                  <span style="max-width:70%">This instrument confers no right, claim, or residual value.</span>
+                  <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:14px;letter-spacing:.5px;text-transform:none;color:{{ certSecondary }};white-space:nowrap">rev. vii — mmxxvi</span>
+                </footer>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+
+  <footer class="app-chrome" style="position:relative;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 20px;margin-top:26px;padding:14px 0 18px;border-top:1px solid rgba(201,146,46,.16);font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:#8A6A2A">
+    <span>All pours final · gratitude non-transferable</span>
+    <span>{{ footerHint }}</span>
+  </footer>
+
+  <sc-if value="{{ isSealing }}" hint-placeholder-val="{{ false }}">
+    <div class="app-chrome" style="position:fixed;inset:0;z-index:20;background:rgba(10,6,13,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+      <span style="font-size:11px;letter-spacing:4.5px;text-transform:uppercase;color:#B08A3C;animation:mp-rise .4s ease-out both">Sealing the record</span>
+      <span style="width:230px;height:1px;background:rgba(201,146,46,.2);display:block;position:relative;overflow:hidden">
+        <span style="position:absolute;left:0;top:0;height:1px;background:#F5D67A;animation:mp-seal 1.3s linear both"></span>
+      </span>
+      <span style="font-family:'Bodoni Moda',serif;font-style:italic;font-size:26px;letter-spacing:1.5px;color:#F7E9C2;animation:mp-rise .6s ease-out both">non revertitur</span>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Vessel&quot;},&quot;specSheet&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ledger&quot;},&quot;startTier&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Vessel&quot;,&quot;options&quot;:[&quot;Sample&quot;,&quot;Measure&quot;,&quot;Draught&quot;,&quot;Vessel&quot;,&quot;Crucible&quot;,&quot;Full Pour&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Ceremony&quot;},&quot;seedCollection&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:6,&quot;min&quot;:0,&quot;max&quot;:10,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Ledger&quot;},&quot;sequence&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Full sequence&quot;,&quot;options&quot;:[&quot;Full sequence&quot;,&quot;Reduced motion&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Ceremony&quot;}}">
+const MAX_BLOBS = 32;
+const SIM = { gravity: 1400, spawnVyMax: 120, spawnVxMax: 45, maxPourMs: 15000, maxTiltRate: 6, dropletTolerance: 1.15 };
+const MASS_PER_DROPLET_G = 3.79;
+const THRESHOLDS = { uncommon: 533, rare: 665, singular: 771 };
+const TIER_REACH_BASE = 55, TIER_REACH_STEP = 9;
+
+const TIERS = [
+  { name: 'Sample', cents: 0, note: 'Free of charge, free of merit. The house pours what it cannot sell.', viscosity: .15, iridescence: 0, roughness: .75, flow: 10, radius: 16 },
+  { name: 'Measure', cents: 299, note: 'The minimum viable genuflection. Thin, but sincere in its way.', viscosity: .45, iridescence: 0, roughness: .40, flow: 16, radius: 22 },
+  { name: 'Draught', cents: 999, note: 'Enough to be noticed by staff. Coats the glass on the way down.', viscosity: .60, iridescence: .10, roughness: .30, flow: 20, radius: 26 },
+  { name: 'Vessel', cents: 2499, note: 'Gold-adjacent, legally distinct from gold. Nobody checks.', viscosity: .72, iridescence: .25, roughness: .12, flow: 24, radius: 30 },
+  { name: 'Crucible', cents: 4999, note: 'Refracts your name in the light, briefly, at certain angles.', viscosity: .82, iridescence: .75, roughness: .06, flow: 28, radius: 34 },
+  { name: 'Full Pour', cents: 9999, note: 'Volume is the only remaining virtue. The vessel is a formality.', viscosity: .92, iridescence: 1, roughness: .03, flow: 34, radius: 40 },
+];
+const RARITY = {
+  Common: { accent: '#D8BC7E', secondary: '#B08A3E', substance: 'Brass' },
+  Uncommon: { accent: '#F5D67A', secondary: '#C9922E', substance: 'Gold' },
+  Rare: { accent: '#FFF6D8', secondary: '#E8C260', substance: 'Alloy' },
+  Singular: { accent: '#E8BCF2', secondary: '#C97AD8', substance: 'Living Metal' },
+};
+
+const VS = 'attribute vec2 a; void main(){ gl_Position = vec4(a,0.0,1.0); }';
+const FS = `
+precision highp float;
+uniform vec2  u_res;
+uniform vec2  u_pos[${MAX_BLOBS}];
+uniform float u_rad[${MAX_BLOBS}];
+uniform float u_iridescence;
+uniform float u_roughness;
+const vec3 VOID_C = vec3(0.086, 0.043, 0.102);
+const vec3 BRONZE_C = vec3(0.239, 0.141, 0.063);
+const vec3 BODY_C = vec3(0.788, 0.573, 0.180);
+const vec3 HOT_C = vec3(0.961, 0.839, 0.478);
+const vec3 SPEC_C = vec3(1.000, 0.965, 0.847);
+float field(vec2 p){
+  float f = 0.0;
+  for (int i = 0; i < ${MAX_BLOBS}; i++){
+    float r = u_rad[i];
+    if (r <= 0.0) continue;
+    vec2 d = p - u_pos[i];
+    f += (r * r) / max(dot(d, d), 1.0);
+  }
+  return f;
+}
+vec3 thinFilm(float ndv){
+  float ph = (1.0 - ndv) * 9.0;
+  return vec3(0.5 + 0.5*sin(ph), 0.5 + 0.5*sin(ph + 2.09), 0.5 + 0.5*sin(ph + 4.19));
+}
+void main(){
+  vec2 p = vec2(gl_FragCoord.x, u_res.y - gl_FragCoord.y);
+  vec2 uv = p / u_res;
+  float f = field(p);
+  float mask = smoothstep(0.85, 1.15, f);
+  float dither = (fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453) - 0.5) / 220.0;
+  float vig = smoothstep(1.15, 0.30, length(vec2((uv.x-0.5)*1.05, uv.y-0.45)) * 1.55);
+  if (mask <= 0.001){
+    float glow = smoothstep(0.10, 0.9, f) * 0.42;
+    vec3 bg = mix(VOID_C, BRONZE_C, glow);
+    bg *= 0.55 + 0.45 * vig;
+    gl_FragColor = vec4(bg + dither, 1.0);
+    return;
+  }
+  float e = 1.5;
+  float dx = field(p + vec2(e,0.0)) - field(p - vec2(e,0.0));
+  float dy = field(p + vec2(0.0,e)) - field(p - vec2(0.0,e));
+  vec3 N = normalize(vec3(-dx, dy, 1.6));
+  vec3 L = normalize(vec3(-0.45, 0.75, 0.55));
+  vec3 V = vec3(0.0, 0.0, 1.0);
+  vec3 H = normalize(L + V);
+  float ndl = clamp(dot(N,L), 0.0, 1.0);
+  float ndv = clamp(dot(N,V), 0.0, 1.0);
+  float ndh = clamp(dot(N,H), 0.0, 1.0);
+  float shininess = mix(12.0, 320.0, 1.0 - u_roughness);
+  float spec = pow(ndh, shininess);
+  float fres = pow(1.0 - ndv, 3.0);
+  vec3 col = mix(BRONZE_C, BODY_C, ndl);
+  col = mix(col, HOT_C, ndl * ndl * 0.7);
+  col = mix(col, SPEC_C, spec);
+  col = mix(col, HOT_C, fres * 0.5);
+  col = mix(col, thinFilm(ndv), u_iridescence * fres * 0.85);
+  col *= 0.72 + 0.28 * vig;
+  gl_FragColor = vec4(mix(VOID_C, col, mask) + dither, 1.0);
+}`;
+
+function clampTierIndex(i) {
+  if (!Number.isFinite(i)) return 0;
+  const n = Math.floor(i);
+  return n < 0 ? 0 : n >= TIERS.length ? TIERS.length - 1 : n;
+}
+function clampTelemetry(raw, tierIndex, wallClockMs) {
+  const tier = TIERS[clampTierIndex(tierIndex)];
+  const violations = [];
+  const take = (key, value, max) => {
+    const safe = Number.isFinite(value) ? Math.max(0, value) : 0;
+    if (safe > max) violations.push(key);
+    return Math.min(safe, max);
+  };
+  const holdMs = take('holdMs', raw.holdMs, Math.min(wallClockMs, SIM.maxPourMs));
+  const holdS = holdMs / 1000;
+  const maxDroplets = Math.ceil(tier.flow * holdS * SIM.dropletTolerance);
+  const dropletsLanded = take('dropletsLanded', raw.dropletsLanded, maxDroplets);
+  const maxFall = SIM.spawnVyMax + SIM.gravity * Math.min(holdS, 1.2);
+  const maxSpeed = Math.sqrt(maxFall * maxFall + SIM.spawnVxMax * SIM.spawnVxMax) * 1.1;
+  const peakVelocity = take('peakVelocity', raw.peakVelocity, maxSpeed);
+  const tiltEnergy = take('tiltEnergy', raw.tiltEnergy, SIM.maxTiltRate * holdS);
+  return { telemetry: { dropletsLanded, peakVelocity, tiltEnergy, holdMs }, violations };
+}
+function hashSeed(seed) {
+  const t = seed.telemetry;
+  const parts = [seed.tierIndex >>> 0, seed.amountCents >>> 0, seed.timestampMs >>> 0,
+    t.dropletsLanded >>> 0, Math.round(t.peakVelocity) >>> 0, Math.round(t.tiltEnergy * 1000) >>> 0, t.holdMs >>> 0];
+  let h = 0x811c9dc5;
+  for (const p of parts) for (let b = 0; b < 4; b++) {
+    h = (h ^ ((p >>> (b * 8)) & 0xff)) >>> 0;
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h >>> 0;
+}
+function scoreParts(telemetry, tierIndex) {
+  const tier = TIERS[clampTierIndex(tierIndex)];
+  const holdMs = Math.floor(telemetry.holdMs);
+  const holdS = holdMs / 1000;
+  const maxDroplets = Math.ceil(tier.flow * holdS * SIM.dropletTolerance);
+  const maxFall = SIM.spawnVyMax + SIM.gravity * Math.min(holdS, 1.2);
+  const maxSpeed = Math.round(Math.sqrt(maxFall * maxFall + SIM.spawnVxMax * SIM.spawnVxMax) * 1.1);
+  const maxTiltMilli = Math.round(SIM.maxTiltRate * holdS * 1000);
+  const permille = (value, max) => {
+    if (max <= 0) return 0;
+    const p = Math.floor((value * 1000) / max);
+    return p < 0 ? 0 : p > 1000 ? 1000 : p;
+  };
+  const fill = permille(Math.floor(telemetry.dropletsLanded), maxDroplets);
+  const force = permille(Math.round(telemetry.peakVelocity), maxSpeed);
+  const commitment = permille(holdMs, SIM.maxPourMs);
+  const steadiness = 1000 - permille(Math.round(telemetry.tiltEnergy * 1000), maxTiltMilli);
+  const base = Math.floor((fill * 40 + force * 25 + commitment * 20 + steadiness * 15) / 100);
+  const reach = TIER_REACH_BASE + TIER_REACH_STEP * clampTierIndex(tierIndex);
+  return { fill, force, commitment, steadiness, score: Math.floor((base * reach) / 100) };
+}
+function classifyScore(s) {
+  if (s >= THRESHOLDS.singular) return 'Singular';
+  if (s >= THRESHOLDS.rare) return 'Rare';
+  if (s >= THRESHOLDS.uncommon) return 'Uncommon';
+  return 'Common';
+}
+function reachableRarity(tierIndex) {
+  const { telemetry } = clampTelemetry({ dropletsLanded: 9e9, peakVelocity: 9e9, tiltEnergy: 0, holdMs: SIM.maxPourMs }, tierIndex, SIM.maxPourMs);
+  return classifyScore(scoreParts(telemetry, tierIndex).score);
+}
+function formatUSD(c) { return '$' + (c / 100).toFixed(2); }
+function formatConsideration(c) { return c <= 0 ? 'Free' : formatUSD(c); }
+function isoDate(ms) { return new Date(ms).toISOString().slice(0, 10); }
+
+function rng(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function poolPath(r, cx, cy, base) {
+  const N = 12, pts = [];
+  for (let i = 0; i < N; i++) {
+    const a = (i / N) * Math.PI * 2;
+    const rad = base * (0.74 + r() * 0.44);
+    pts.push([cx + Math.cos(a) * rad, cy + Math.sin(a) * rad]);
+  }
+  let d = '';
+  for (let i = 0; i < N; i++) {
+    const q = pts[(i + 1) % N];
+    const m = [(pts[i][0] + q[0]) / 2, (pts[i][1] + q[1]) / 2];
+    if (i === 0) d += 'M ' + m[0].toFixed(1) + ' ' + m[1].toFixed(1);
+    const n = pts[(i + 1) % N], nn = pts[(i + 2) % N];
+    const m2 = [(n[0] + nn[0]) / 2, (n[1] + nn[1]) / 2];
+    d += ' Q ' + q[0].toFixed(1) + ' ' + q[1].toFixed(1) + ' ' + m2[0].toFixed(1) + ' ' + m2[1].toFixed(1);
+  }
+  return d + ' Z';
+}
+function sigilEl(seed, accent, secondary, maxWidthPx, key) {
+  const r = rng(seed), CX = 200, CY = 200, BASE = 74, h = React.createElement;
+  const gid = 'pool-' + seed + '-' + key;
+  const kids = [h('defs', { key: 'd' }, h('radialGradient', { id: gid, cx: '50%', cy: '50%', r: '50%' },
+    h('stop', { offset: '0%', stopColor: accent, stopOpacity: '0.95' }),
+    h('stop', { offset: '55%', stopColor: secondary, stopOpacity: '0.42' }),
+    h('stop', { offset: '100%', stopColor: '#160B1A', stopOpacity: '0.05' })))];
+  kids.push(h('path', { key: 'p', d: poolPath(r, CX, CY, BASE), fill: 'url(#' + gid + ')', stroke: accent, strokeOpacity: '0.55', strokeWidth: '0.9' }));
+  for (let i = 0; i < 9; i++) {
+    const a = (i / 9) * Math.PI * 2 + 0.18;
+    const r0 = BASE * 0.94, r1 = Math.min(194, r0 + 32 + r() * 100);
+    kids.push(h('line', {
+      key: 't' + i, x1: (CX + Math.cos(a) * r0).toFixed(1), y1: (CY + Math.sin(a) * r0).toFixed(1),
+      x2: (CX + Math.cos(a) * r1).toFixed(1), y2: (CY + Math.sin(a) * r1).toFixed(1),
+      stroke: secondary, strokeOpacity: (0.5 + r() * 0.4).toFixed(2), strokeWidth: (0.7 + r() * 2.1).toFixed(2),
+    }));
+  }
+  for (let i = 0; i < 26; i++) {
+    const a = (i / 26) * Math.PI * 2 + (r() - 0.5) * 0.08;
+    const rad = BASE + 42 + r() * 74;
+    kids.push(h('circle', {
+      key: 's' + i, cx: (CX + Math.cos(a) * rad).toFixed(1), cy: (CY + Math.sin(a) * rad).toFixed(1),
+      r: (1.9 + r() * 4.6).toFixed(2), fill: secondary, fillOpacity: (0.55 + r() * 0.4).toFixed(2),
+    }));
+  }
+  return h('svg', {
+    key: key, viewBox: '0 0 400 400', 'aria-hidden': 'true',
+    style: { display: 'block', width: '100%', height: '100%', maxWidth: maxWidthPx + 'px', maxHeight: '100%', margin: '0 auto' },
+  }, kids);
+}
+
+const BASE_POSITION = 1284;
+function mintRecord(req, position) {
+  const { telemetry, violations } = clampTelemetry(req.telemetry, req.tierIndex, req.telemetry.holdMs);
+  const amountCents = TIERS[clampTierIndex(req.tierIndex)].cents;
+  const seed = hashSeed({ tierIndex: req.tierIndex, amountCents, timestampMs: req.timestampMs, telemetry });
+  const parts = scoreParts(telemetry, req.tierIndex);
+  return {
+    id: seed.toString(16).padStart(8, '0') + '-' + position,
+    ledgerPosition: position, tierIndex: req.tierIndex, amountCents, seed, violations,
+    rarity: classifyScore(parts.score), rarityScore: parts.score,
+    serial: 'MP-' + String(position).padStart(7, '0') + '-' + (seed & 0xffff).toString(16).toUpperCase().padStart(4, '0'),
+    batch: String(position % 1000).padStart(3, '0') + '-' + String.fromCharCode(65 + (seed % 26)),
+    massGrams: telemetry.dropletsLanded * MASS_PER_DROPLET_G,
+    issued: isoDate(req.timestampMs),
+  };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    const startTier = Math.max(0, TIERS.findIndex((t) => t.name === (this.props.startTier ?? 'Vessel')));
+    this.state = {
+      view: 'ceremony', idx: startTier, phase: 'idle', rarity: 'Common', sealing: false,
+      pours: this.seedLedger(this.props.seedCollection ?? 6), current: null, notice: null,
+      wide: typeof window === 'undefined' || window.innerWidth >= 900,
+      zoom: 'fit', sheetW: 0,
+    };
+    this.cur = Object.assign({}, TIERS[startTier]);
+    this.target = TIERS[startTier];
+    this.pour = { holdMs: 0, dropletsLanded: 0, peakVelocity: 0, tiltEnergy: 0 };
+    this.pouring = false;
+    this.lean = 0;
+    this.startedAt = null;
+    this.elapsedRef = React.createRef();
+    this.dropRef = React.createRef();
+    this.hintRef = React.createRef();
+    this.scoreRef = React.createRef();
+    this.scoreBarRef = React.createRef();
+    this.specRefs = [0, 1, 2, 3].map(() => ({ bar: React.createRef(), val: React.createRef() }));
+    this.canvasRefCb = (el) => { el ? this.initGL(el) : this.teardownGL(); };
+    this.sheetRefCb = (el) => {
+      if (!el) { if (this.sheetRo) { this.sheetRo.disconnect(); this.sheetRo = null; } return; }
+      const host = el.parentElement || el;
+      const read = () => {
+        const w = Math.round(host.clientWidth);
+        if (w > 0 && w !== this.state.sheetW) this.setState({ sheetW: w });
+      };
+      read();
+      if (this.sheetRo) this.sheetRo.disconnect();
+      this.sheetRo = new ResizeObserver(read);
+      this.sheetRo.observe(host);
+    };
+  }
+
+  seedLedger(n) {
+    const out = [], r = rng(0x5eed1284), now = Date.now();
+    for (let i = 0; i < n; i++) {
+      const tierIndex = Math.floor(r() * 6);
+      const holdMs = Math.floor(1800 + r() * 12500);
+      const holdS = holdMs / 1000;
+      const dropletsLanded = Math.floor(TIERS[tierIndex].flow * holdS * (0.72 + r() * 0.42));
+      const maxFall = SIM.spawnVyMax + SIM.gravity * Math.min(holdS, 1.2);
+      out.push(mintRecord({
+        tierIndex, timestampMs: now - (n - i) * 86400000,
+        telemetry: { dropletsLanded, peakVelocity: maxFall * (0.72 + r() * 0.34), tiltEnergy: r() * SIM.maxTiltRate * holdS * 0.45, holdMs },
+      }, BASE_POSITION - n + i));
+    }
+    return out.reverse();
+  }
+
+  componentDidMount() {
+    this.onKey = (e) => {
+      if (this.state.view !== 'ceremony' || this.state.phase !== 'idle') return;
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      this.select((this.state.idx + (e.key === 'ArrowDown' ? 1 : TIERS.length - 1)) % TIERS.length);
+    };
+    this.onWidth = () => {
+      const w = window.innerWidth >= 900;
+      if (w !== this.state.wide) this.setState({ wide: w });
+    };
+    this.onOrient = (e) => { if (typeof e.gamma === 'number') this.lean = Math.max(-1, Math.min(1, e.gamma / 45)); };
+    window.addEventListener('keydown', this.onKey);
+    window.addEventListener('resize', this.onWidth);
+    window.addEventListener('deviceorientation', this.onOrient);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('resize', this.onWidth);
+    window.removeEventListener('deviceorientation', this.onOrient);
+    this.teardownGL();
+    if (this.sheetRo) this.sheetRo.disconnect();
+    if (this.sealTimer) clearTimeout(this.sealTimer);
+  }
+
+  teardownGL() {
+    if (this.raf) { cancelAnimationFrame(this.raf); this.raf = null; }
+    if (this.ro) { this.ro.disconnect(); this.ro = null; }
+    this.gl = null;
+  }
+
+  initGL(cv) {
+    if (this.cv === cv && this.raf) return;
+    this.teardownGL();
+    this.cv = cv;
+    const gl = cv.getContext('webgl', { antialias: false, alpha: false });
+    if (!gl) { this.setState({ notice: 'The vessel could not be lit — WebGL is unavailable in this context.' }); return; }
+    this.gl = gl;
+    const sh = (type, src) => {
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+      return s;
+    };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const aLoc = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(aLoc);
+    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+    const U = {
+      res: gl.getUniformLocation(prog, 'u_res'), pos: gl.getUniformLocation(prog, 'u_pos'),
+      rad: gl.getUniformLocation(prog, 'u_rad'), irid: gl.getUniformLocation(prog, 'u_iridescence'),
+      rough: gl.getUniformLocation(prog, 'u_roughness'),
+    };
+
+    const P = new Float32Array(MAX_BLOBS * 2), R = new Float32Array(MAX_BLOBS);
+    const VXY = new Float32Array(MAX_BLOBS * 2), LANDED = new Uint8Array(MAX_BLOBS);
+    let cursor = 0, spawnAcc = 0, W = 0, H = 0;
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.max(1, Math.round(cv.clientWidth * dpr));
+      H = Math.max(1, Math.round(cv.clientHeight * dpr));
+      cv.width = W; cv.height = H;
+      gl.viewport(0, 0, W, H);
+    };
+    this.ro = new ResizeObserver(resize);
+    this.ro.observe(cv);
+    resize();
+
+    let last = performance.now(), uiAcc = 0;
+    const cur = this.cur;
+
+    const frame = (now) => {
+      this.raf = requestAnimationFrame(frame);
+      const dt = Math.min((now - last) / 1000, 0.033);
+      last = now;
+
+      const k = Math.min(1, dt * 4.5), t = this.target;
+      cur.viscosity += (t.viscosity - cur.viscosity) * k;
+      cur.iridescence += (t.iridescence - cur.iridescence) * k;
+      cur.roughness += (t.roughness - cur.roughness) * k;
+      cur.flow += (t.flow - cur.flow) * k;
+      cur.radius += (t.radius - cur.radius) * k;
+
+      // Telemetry is recorded in SIM units (scale-normalised), so a retina
+      // canvas can't inflate peak velocity past the server-side clamp.
+      const scale = H / 900;
+      const mouthX = W * 0.5, mouthY = H * 0.20, floorY = H * 0.82;
+      const hardStop = this.pour.holdMs >= SIM.maxPourMs;
+      if (hardStop && this.pouring) this.setPouring(false);
+
+      if (this.pouring) {
+        this.pour.holdMs = Math.min(this.pour.holdMs + dt * 1000, SIM.maxPourMs);
+        this.pour.tiltEnergy += Math.min(Math.abs(this.lean), 1) * SIM.maxTiltRate * dt;
+        // Spawn at exactly the tier's flow rate: landings can then never
+        // exceed flow x seconds, so the ledger accepts the pour unclamped.
+        spawnAcc += dt * t.flow;
+        while (spawnAcc >= 1) {
+          spawnAcc -= 1;
+          const i = cursor; cursor = (cursor + 1) % MAX_BLOBS;
+          P[i * 2] = mouthX + (Math.random() - 0.5) * 28 * scale + this.lean * W * 0.16;
+          P[i * 2 + 1] = mouthY;
+          VXY[i * 2] = ((Math.random() - 0.5) * 2 * SIM.spawnVxMax + this.lean * SIM.spawnVxMax) * scale;
+          VXY[i * 2 + 1] = Math.random() * SIM.spawnVyMax * scale;
+          R[i] = cur.radius * scale * (0.7 + Math.random() * 0.6);
+          LANDED[i] = 0;
+        }
+      } else {
+        spawnAcc = 0;
+      }
+
+      const drag = 1 - cur.viscosity * 0.55;
+      let alive = 0, airborne = 0;
+      for (let i = 0; i < MAX_BLOBS; i++) {
+        if (R[i] <= 0) continue;
+        alive++;
+        VXY[i * 2 + 1] += SIM.gravity * scale * dt;
+        VXY[i * 2] *= Math.pow(drag, dt * 8);
+        P[i * 2] += VXY[i * 2] * dt;
+        P[i * 2 + 1] += VXY[i * 2 + 1] * dt;
+        if (!LANDED[i]) {
+          airborne++;
+          const sp = Math.sqrt(VXY[i * 2] * VXY[i * 2] + VXY[i * 2 + 1] * VXY[i * 2 + 1]) / scale;
+          if (this.pouring && sp > this.pour.peakVelocity) this.pour.peakVelocity = sp;
+        }
+        if (P[i * 2 + 1] > floorY) {
+          P[i * 2 + 1] = floorY;
+          VXY[i * 2 + 1] *= -(0.28 * (1 - cur.viscosity));
+          VXY[i * 2] *= 1 - cur.viscosity * 0.7;
+          R[i] *= 1 - 0.12 * cur.viscosity;
+          if (!LANDED[i]) { LANDED[i] = 1; this.pour.dropletsLanded += 1; }
+        }
+        if (P[i * 2] < -80 || P[i * 2] > W + 80 || R[i] < 4 * scale) R[i] = 0;
+      }
+
+      gl.uniform2f(U.res, W, H);
+      gl.uniform2fv(U.pos, P);
+      gl.uniform1fv(U.rad, R);
+      gl.uniform1f(U.irid, cur.iridescence);
+      gl.uniform1f(U.rough, cur.roughness);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      if (!this.pouring && this.pour.holdMs > 0 && airborne === 0 && this.state.phase === 'settling') {
+        this.setState({ phase: 'settled' });
+      }
+      uiAcc += dt;
+      if (uiAcc > 0.1) { uiAcc = 0; this.paintReadout(alive); }
+    };
+    this.raf = requestAnimationFrame(frame);
+  }
+
+  paintReadout(alive) {
+    const p = this.pour;
+    const parts = scoreParts(p, this.state.idx);
+    const set = (ref, text) => { if (ref.current && ref.current.textContent !== text) ref.current.textContent = text; };
+    const bar = (ref, pct) => { if (ref.current) ref.current.style.width = pct.toFixed(1) + '%'; };
+    set(this.elapsedRef, (p.holdMs / 1000).toFixed(2) + ' s');
+    set(this.dropRef, p.dropletsLanded + ' drops · ' + alive + '/' + MAX_BLOBS);
+    const rows = [
+      ['Fill', parts.fill, String(p.dropletsLanded)],
+      ['Force', parts.force, Math.round(p.peakVelocity) + ''],
+      ['Commitment', parts.commitment, (p.holdMs / 1000).toFixed(1) + 's'],
+      ['Steadiness', parts.steadiness, (parts.steadiness / 10).toFixed(0) + '%'],
+    ];
+    rows.forEach((r, i) => {
+      const ref = this.specRefs[i];
+      bar(ref.bar, r[1] / 10);
+      set(ref.val, r[2]);
+    });
+    set(this.scoreRef, parts.score + ' / 1000');
+    bar(this.scoreBarRef, parts.score / 10);
+    const rarity = classifyScore(parts.score);
+    if (rarity !== this.state.rarity) this.setState({ rarity });
+    if (this.hintRef.current) {
+      const phase = this.state.phase;
+      const label = phase === 'idle' ? 'Hold to pour' : phase === 'pouring' ? 'Stream open' : phase === 'settling' ? 'Settling' : 'Stream closed';
+      if (this.hintRef.current.textContent !== label) this.hintRef.current.textContent = label;
+      this.hintRef.current.style.opacity = phase === 'settled' ? '.45' : '1';
+    }
+  }
+
+  select(i) {
+    if (this.state.phase !== 'idle') return;
+    this.target = TIERS[i];
+    this.setState({ idx: i });
+  }
+  setPouring(on) {
+    if (on) {
+      if (this.state.phase === 'settled' || this.state.sealing || this.pour.holdMs >= SIM.maxPourMs) return;
+      if (this.startedAt === null) this.startedAt = Date.now();
+      this.pouring = true;
+      if (this.state.phase !== 'pouring') this.setState({ phase: 'pouring', notice: null });
+    } else {
+      if (!this.pouring) return;
+      this.pouring = false;
+      this.setState({ phase: 'settling' });
+    }
+  }
+  reset() {
+    this.pouring = false;
+    this.pour = { holdMs: 0, dropletsLanded: 0, peakVelocity: 0, tiltEnergy: 0 };
+    this.startedAt = null;
+    this.setState({ phase: 'idle', rarity: 'Common', notice: null });
+  }
+  doMint() {
+    if (this.state.phase !== 'settled' || this.state.sealing) return;
+    const reduced = (this.props.sequence ?? 'Full sequence') === 'Reduced motion';
+    this.setState({ sealing: true, notice: null });
+    this.sealTimer = setTimeout(() => {
+      try {
+        const record = mintRecord({ tierIndex: this.state.idx, timestampMs: this.startedAt ?? Date.now(), telemetry: this.pour }, BASE_POSITION);
+        this.pouring = false;
+        this.pour = { holdMs: 0, dropletsLanded: 0, peakVelocity: 0, tiltEnergy: 0 };
+        this.startedAt = null;
+        this.setState({ sealing: false, phase: 'idle', rarity: 'Common', pours: [record, ...this.state.pours], current: record, view: 'certificate' });
+      } catch (e) {
+        this.setState({ sealing: false, notice: e instanceof Error ? e.message : String(e) });
+      }
+    }, reduced ? 260 : 1400);
+  }
+
+  renderVals() {
+    const st = this.state, wide = st.wide, i = st.idx, tier = TIERS[i];
+    const pres = RARITY[st.rarity] ?? RARITY.Common;
+    const phase = st.phase;
+    const poured = phase !== 'idle';
+    const settled = phase === 'settled';
+    const cur = st.current ?? st.pours[0] ?? null;
+    const curPres = cur ? (RARITY[cur.rarity] ?? RARITY.Common) : RARITY.Common;
+    const sheetW = st.sheetW > 0 ? st.sheetW : 700;
+    const sheetScale = st.zoom === 'fit' ? Math.min(1, sheetW / 794) : 1;
+    const total = st.pours.reduce((s, p) => s + p.amountCents, 0);
+    const parts = scoreParts(this.pour, i);
+
+    return {
+      wide,
+      rootCols: wide ? '36px minmax(0,1fr)' : 'minmax(0,1fr)',
+      mainCols: wide ? 'minmax(260px,1fr) minmax(340px,440px)' : 'minmax(0,1fr)',
+      tileCols: wide ? 'repeat(auto-fill,minmax(210px,1fr))' : 'repeat(auto-fill,minmax(150px,1fr))',
+      stageH: wide ? 'min(70vh,720px,(100vw - 720px) * 1.7778)' : 'min(58vh,520px)',
+      grain: this.props.grain ?? true,
+      specSheet: this.props.specSheet ?? true,
+      folio: String(BASE_POSITION),
+      accent: pres.accent,
+      statusLine: phase === 'pouring' ? 'Live · stream open' : phase === 'settling' ? 'Live · settling' : settled ? 'Live · stream closed' : 'Live · vessel ready',
+
+      isCeremony: st.view === 'ceremony', isCollection: st.view === 'collection', isCertificate: st.view === 'certificate',
+      hasSheet: !!cur,
+      goCeremony: () => this.setState({ view: 'ceremony' }),
+      goCollection: () => this.setState({ view: 'collection' }),
+      goCertificate: () => this.setState({ view: 'certificate' }),
+      tabARule: st.view === 'ceremony' ? '#F5D67A' : 'transparent',
+      tabAColor: st.view === 'ceremony' ? '#F7E9C2' : '#8A6A2A',
+      tabBRule: st.view === 'collection' ? '#F5D67A' : 'transparent',
+      tabBColor: st.view === 'collection' ? '#F7E9C2' : '#8A6A2A',
+      tabCRule: st.view === 'certificate' ? '#F5D67A' : 'transparent',
+      tabCColor: st.view === 'certificate' ? '#F7E9C2' : '#8A6A2A',
+
+      canvasRef: this.canvasRefCb,
+      elapsedRef: this.elapsedRef, dropRef: this.dropRef, hintRef: this.hintRef,
+      scoreRef: this.scoreRef, scoreBarRef: this.scoreBarRef,
+      stageBorder: phase === 'pouring' ? 'rgba(245,214,122,.6)' : 'rgba(201,146,46,.22)',
+      stageCursor: settled ? 'default' : 'pointer',
+      startPour: (e) => { if (e.currentTarget.setPointerCapture && e.pointerId != null) { try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { /* no capture */ } } this.setPouring(true); },
+      stopPour: () => this.setPouring(false),
+      movePour: (e) => {
+        if (!this.pouring) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        this.lean = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
+      },
+      keyDown: (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); this.setPouring(true); } },
+      keyUp: (e) => { if (e.key === ' ' || e.key === 'Enter') this.setPouring(false); },
+
+      markerY: (i * 52) + 'px',
+      tiers: TIERS.map((x, j) => ({
+        name: x.name, price: formatConsideration(x.cents), num: String(j + 1).padStart(2, '0'),
+        reach: reachableRarity(j), locked: poured, cursor: poured ? 'not-allowed' : 'pointer',
+        opacity: poured && j !== i ? 0.28 : 1,
+        color: j === i ? '#F7E9C2' : '#B08A3C',
+        select: () => this.select(j),
+      })),
+      nowLabel: phase === 'idle' ? 'Selected for disbursement' : settled ? 'Poured · awaiting seal' : 'Now pouring',
+      activeName: tier.name,
+      activePrice: formatConsideration(tier.cents),
+      activeNote: tier.note,
+
+      specs: [
+        { label: 'Fill', barRef: this.specRefs[0].bar, valRef: this.specRefs[0].val },
+        { label: 'Force', barRef: this.specRefs[1].bar, valRef: this.specRefs[1].val },
+        { label: 'Commitment', barRef: this.specRefs[2].bar, valRef: this.specRefs[2].val },
+        { label: 'Steadiness', barRef: this.specRefs[3].bar, valRef: this.specRefs[3].val },
+      ],
+      notice: st.notice ?? (this.pour.holdMs >= SIM.maxPourMs ? 'Hard stop reached at fifteen seconds. The vessel accepts no more.' : null),
+
+      poured,
+      mint: () => this.doMint(),
+      discard: () => this.reset(),
+      mintDisabled: !settled || st.sealing,
+      mintLabel: st.sealing ? 'Disbursing…' : phase === 'settling' ? 'Settling…' : phase === 'pouring' ? 'Stream open' : settled ? 'Complete disbursement · ' + st.rarity : 'Complete disbursement',
+      mintBg: settled ? 'rgba(201,146,46,.16)' : 'transparent',
+      mintBorder: settled ? 'rgba(201,146,46,.55)' : 'rgba(201,146,46,.18)',
+      mintInner: settled ? 'rgba(201,146,46,.22)' : 'transparent',
+      mintColor: settled ? '#F7E9C2' : '#8A6A2A',
+      mintCursor: settled && !st.sealing ? 'pointer' : 'not-allowed',
+      isSealing: st.sealing,
+      footerHint: st.view === 'ceremony' ? (poured ? 'Release to settle · discard to begin again' : '↑ ↓ traverse tiers · hold the vessel to pour') : 'All disbursements are irreversible',
+
+      pourCount: st.pours.length,
+      pourTotal: formatUSD(total),
+      isEmpty: st.pours.length === 0,
+      tiles: st.pours.map((p, j) => {
+        const pp = RARITY[p.rarity] ?? RARITY.Common;
+        return {
+          key: p.id, num: String(j + 1).padStart(2, '0'),
+          ordinal: '№' + p.ledgerPosition.toLocaleString('en-US'),
+          rarity: p.rarity, price: formatConsideration(p.amountCents),
+          border: j === 0 && st.current ? pp.accent : 'rgba(201,146,46,.2)', secondary: pp.secondary,
+          sigil: sigilEl(p.seed, pp.accent, pp.secondary, 220, p.id),
+          open: () => this.setState({ current: p, view: 'certificate' }),
+        };
+      }),
+
+      sheetRef: this.sheetRefCb,
+      sheetScale: sheetScale.toFixed(4),
+      sheetBoxW: st.zoom === 'fit' ? Math.floor(794 * sheetScale) : sheetW,
+      sheetBoxH: st.zoom === 'fit' ? Math.floor(1123 * sheetScale) : Math.min(1123, Math.round(sheetW * 1.414)),
+      sheetOverflow: st.zoom === 'fit' ? 'hidden' : 'auto',
+      zoomLabel: st.zoom === 'fit' ? 'View at 100 %' : 'Fit to page',
+      zoomNote: 'shown at ' + Math.round(sheetScale * 100) + ' %',
+      toggleZoom: () => this.setState({ zoom: st.zoom === 'fit' ? 'full' : 'fit' }),
+      printSheet: () => window.print(),
+      certAccent: curPres.accent, certSecondary: curPres.secondary,
+      certSerial: cur ? cur.serial : '',
+      certCaption: cur ? 'Pour №' + cur.ledgerPosition.toLocaleString('en-US') + ' · ' + cur.rarity + ' · ' + curPres.substance : '',
+      certSigil: cur ? sigilEl(cur.seed, curPres.accent, curPres.secondary, 300, 'cert-' + cur.id) : null,
+      certRows: cur ? [
+        { label: 'Serial', value: cur.serial },
+        { label: 'Ledger position', value: 'No. ' + cur.ledgerPosition.toLocaleString('en-US') },
+        { label: 'Substance', value: curPres.substance },
+        { label: 'Classification', value: cur.rarity + ' · ' + cur.rarityScore },
+        { label: 'Mass rendered irrecoverable', value: cur.massGrams.toFixed(2) + ' g' },
+        { label: 'Batch', value: cur.batch },
+        { label: 'Consideration', value: formatConsideration(cur.amountCents) },
+        { label: 'Issued', value: cur.issued },
+      ] : [],
+    };
+  }
+}
+</script>
+</body>
+</html>
