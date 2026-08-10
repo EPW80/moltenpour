@@ -22,8 +22,8 @@ cookie, and the default is a published constant that anyone can forge.
 ```
 app/
   sigil/        hashSeed, generateSigil, clampTelemetry, rarity  ── ported to Go
-  ceremony/     tiers, droplet sim, the pour screen
-  certificate/  the A4 document, self-hosted Bodoni, print CSS
+  ceremony/     tiers, the metaball rig and its telemetry tap, the pour screen
+  certificate/  the A4 document and its on-screen frame, self-hosted Bodoni, print CSS
   collection/   the gallery
   design/       the specimen-ledger palette
 api/
@@ -31,8 +31,23 @@ api/
   pour/         mint, and the ledger — memory and SQLite behind one Store
   session/      the signed anonymous owner cookie
   httpapi/      handlers
-docs/handoffs/  the two design handoffs this is built from
+docs/handoffs/  the three design handoffs this is built from
 ```
+
+## The pour is the instrument
+
+The ceremony is a WebGL metaball rig, not an animation played beside a counter.
+`app/ceremony/rig.ts` integrates the fluid and taps the telemetry from inside
+that same loop — droplets counted on first floor contact, peak velocity sampled
+from live blob speed — while `metaball.ts` only draws it. The exact numbers the
+user watches accumulate are the numbers hashed into the sigil seed: **what you
+watch is what gets certified.**
+
+The chrome around it is an editorial index register — a folio rail, a hairline
+column grid, a ruled tier ledger with a sliding marker — built to the handoff in
+`docs/handoffs/molten-pour-index/`. The certificate keeps its own fixed A4 box
+and never reflows; on screen `CertificateView` is the frame that scales it to
+the column without letting the width touch the sheet.
 
 ## Whose pours are they
 
