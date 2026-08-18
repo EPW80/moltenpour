@@ -36,6 +36,19 @@ export const TIER_BOUNDS: TierBounds[] = [
   { flow: 10 }, { flow: 16 }, { flow: 20 }, { flow: 24 }, { flow: 28 }, { flow: 34 },
 ];
 
+/**
+ * Clamps an arbitrary tierIndex to a valid TIER_BOUNDS index: below the floor
+ * clamps to 0, at or past the ceiling clamps to the top tier. Shared by
+ * clampTelemetry and rarity.ts's scoreParts so a request carrying an
+ * out-of-range tierIndex is bounded the same way everywhere it is read — see
+ * the corresponding clampTierIndex in api/sigil/rarity.go.
+ */
+export function clampTierIndex(tierIndex: number): number {
+  if (!Number.isFinite(tierIndex)) return 0;
+  const i = Math.floor(tierIndex);
+  return i < 0 ? 0 : i >= TIER_BOUNDS.length ? TIER_BOUNDS.length - 1 : i;
+}
+
 export type ClampResult = {
   telemetry: Telemetry;
   /** Fields the client overclaimed. Non-empty is a cheat signal worth logging. */
@@ -52,7 +65,7 @@ export function clampTelemetry(
   tierIndex: number,
   wallClockMs: number,
 ): ClampResult {
-  const tier = TIER_BOUNDS[tierIndex] ?? TIER_BOUNDS[0];
+  const tier = TIER_BOUNDS[clampTierIndex(tierIndex)];
   const violations: (keyof Telemetry)[] = [];
 
   const take = <K extends keyof Telemetry>(key: K, value: number, max: number): number => {

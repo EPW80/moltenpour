@@ -44,10 +44,10 @@ type ClampResult struct {
 // Notably maxSpeed uses an explicit sqrt rather than math.Hypot — Hypot and
 // JS Math.hypot may differ in the last ulp, and this value feeds HashSeed.
 func ClampTelemetry(raw Telemetry, tierIndex int, wallClockMs float64) ClampResult {
-	flow := tierFlow[0]
-	if tierIndex >= 0 && tierIndex < len(tierFlow) {
-		flow = tierFlow[tierIndex]
-	}
+	// clampTierIndex (rarity.go) clamps to the nearest valid boundary rather
+	// than falling back to tier 0, so an out-of-range tierIndex is bounded the
+	// same way here as it is in RarityScore.
+	flow := tierFlow[clampTierIndex(tierIndex)]
 
 	var violations []string
 	take := func(key string, value, max float64) float64 {
