@@ -65,12 +65,14 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Receipt validation is stubbed. A paid tier would be verified against the
-	// store receipt here, before anything is minted — sigils only mint on a
-	// validated receipt, which is what makes the max-legal-claim exploit cost
-	// real money per attempt.
+	// TODO(payment): receipt validation is stubbed — a paid tier would be
+	// verified against the store receipt here, before anything is minted.
+	// Until then every tierIndex>0 request mints for free. Logged at Warn,
+	// not Debug, because this is a standing gap, not routine traffic: sigils
+	// are meant to only mint on a validated receipt, which is what makes the
+	// max-legal-claim exploit cost real money per attempt.
 	if req.TierIndex > 0 {
-		s.log.Debug("receipt validation stubbed", "tierIndex", req.TierIndex)
+		s.log.Warn("minting a paid tier with receipt validation stubbed", "tierIndex", req.TierIndex)
 	}
 
 	now := s.now()
