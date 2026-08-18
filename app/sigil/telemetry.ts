@@ -56,6 +56,35 @@ export type ClampResult = {
 };
 
 /**
+ * The physics ceilings a tier and pour duration allow, unrounded. Shared by
+ * clampTelemetry (which bounds a raw claim against them) and rarity.ts's
+ * scoreParts (which normalizes a score against them) so the formula itself
+ * cannot drift between the two consumers — each still applies its own
+ * rounding afterward, since a bare cap and a permille-safe integer need
+ * different precision. See the corresponding helper in api/sigil/rarity.go.
+ *
+ * IMPORTANT: explicit sqrt, not Math.hypot, for maxSpeed. Go's math.Hypot and
+ * JS's Math.hypot are both allowed to differ in the last ulp, and this value
+ * feeds hashSeed — a one-bit difference mints a different sigil than the
+ * client previewed. Keep the operation order identical in the Go port.
+ */
+export function telemetryCeilings(tierIndex: number, holdS: number) {
+  const tier = TIER_BOUNDS[clampTierIndex(tierIndex)];
+
+  // Droplets are spawned at a fixed rate. Nothing else can create them.
+  const maxDroplets = Math.ceil(tier.flow * holdS * SIM.dropletTolerance);
+
+  // Terminal velocity of the longest possible fall, plus bounce headroom.
+  const maxFall = SIM.spawnVyMax + SIM.gravity * Math.min(holdS, 1.2);
+  const maxSpeed = Math.sqrt(maxFall * maxFall + SIM.spawnVxMax * SIM.spawnVxMax) * 1.1;
+
+  // Tilt is integrated over time and rate-limited by the accelerometer.
+  const maxTilt = SIM.maxTiltRate * holdS;
+
+  return { maxDroplets, maxSpeed, maxTilt };
+}
+
+/**
  * @param raw          what the client reported
  * @param tierIndex    purchased tier, already receipt-validated
  * @param wallClockMs  server-measured duration between pour-start and pour-end
@@ -65,7 +94,6 @@ export function clampTelemetry(
   tierIndex: number,
   wallClockMs: number,
 ): ClampResult {
-  const tier = TIER_BOUNDS[clampTierIndex(tierIndex)];
   const violations: (keyof Telemetry)[] = [];
 
   const take = <K extends keyof Telemetry>(key: K, value: number, max: number): number => {
@@ -78,22 +106,11 @@ export function clampTelemetry(
   const holdMs = take('holdMs', raw.holdMs, Math.min(wallClockMs, SIM.maxPourMs));
   const holdS = holdMs / 1000;
 
-  // Droplets are spawned at a fixed rate. Nothing else can create them.
-  const maxDroplets = Math.ceil(tier.flow * holdS * SIM.dropletTolerance);
+  const { maxDroplets, maxSpeed, maxTilt } = telemetryCeilings(tierIndex, holdS);
+
   const dropletsLanded = take('dropletsLanded', raw.dropletsLanded, maxDroplets);
-
-  // Terminal velocity of the longest possible fall, plus bounce headroom.
-  //
-  // IMPORTANT: explicit sqrt, not Math.hypot. Go's math.Hypot and JS's
-  // Math.hypot are both allowed to differ in the last ulp, and this value
-  // feeds hashSeed — a one-bit difference mints a different sigil than the
-  // client previewed. Keep the operation order identical in the Go port.
-  const maxFall = SIM.spawnVyMax + SIM.gravity * Math.min(holdS, 1.2);
-  const maxSpeed = Math.sqrt(maxFall * maxFall + SIM.spawnVxMax * SIM.spawnVxMax) * 1.1;
   const peakVelocity = take('peakVelocity', raw.peakVelocity, maxSpeed);
-
-  // Tilt is integrated over time and rate-limited by the accelerometer.
-  const tiltEnergy = take('tiltEnergy', raw.tiltEnergy, SIM.maxTiltRate * holdS);
+  const tiltEnergy = take('tiltEnergy', raw.tiltEnergy, maxTilt);
 
   return {
     telemetry: { dropletsLanded, peakVelocity, tiltEnergy, holdMs },
