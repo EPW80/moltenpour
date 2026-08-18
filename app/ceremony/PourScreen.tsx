@@ -441,7 +441,7 @@ export function PourScreen({
             width: "auto",
             maxWidth: "100%",
             background: COLOR.panel,
-            border: `1px solid ${phase === "pouring" ? "rgba(245,214,122,.6)" : COLOR.ruleStage}`,
+            border: `1px solid ${phase === "pouring" ? COLOR.tickStage : COLOR.ruleStage}`,
             boxShadow:
               "0 0 120px 10px rgba(201,146,46,.09), inset 0 0 0 1px rgba(12,7,15,.9)",
             overflow: "hidden",
@@ -515,7 +515,7 @@ export function PourScreen({
               letterSpacing: "3.4px",
               textTransform: "uppercase",
               color: COLOR.goldHot,
-              textShadow: "0 0 20px rgba(10,6,13,.9)",
+              textShadow: `0 0 20px ${COLOR.shadeStrong}`,
               opacity: settled ? 0.45 : 1,
             }}
           >
@@ -536,8 +536,7 @@ export function PourScreen({
               padding: "16px 26px 14px",
               ...LABEL_11,
               letterSpacing: "1.8px",
-              background:
-                "linear-gradient(to top, rgba(10,6,13,.9), transparent)",
+              background: `linear-gradient(to top, ${COLOR.shadeStrong}, transparent)`,
             }}
           >
             <span
@@ -598,8 +597,7 @@ export function PourScreen({
                 top: 0,
                 height: ROW_H,
                 pointerEvents: "none",
-                background:
-                  "linear-gradient(90deg, rgba(201,146,46,.2), rgba(201,146,46,.02) 70%)",
+                background: `linear-gradient(90deg, ${COLOR.ruleRow}, rgba(201,146,46,.02) 70%)`,
                 borderLeft: `2px solid ${accent}`,
                 boxShadow: "-2px 0 22px rgba(245,214,122,.25)",
                 transform: `translateY(${tierIndex * ROW_H}px)`,
@@ -661,7 +659,7 @@ export function PourScreen({
                       flex: 1,
                       minWidth: 12,
                       height: 1,
-                      background: `repeating-linear-gradient(90deg, rgba(201,146,46,.35) 0 1px, transparent 1px 5px)`,
+                      background: `repeating-linear-gradient(90deg, ${COLOR.ruleActive} 0 1px, transparent 1px 5px)`,
                     }}
                   />
                   {/* What this tier can reach at best, computed from the real
@@ -773,8 +771,7 @@ export function PourScreen({
                   position: "relative",
                   display: "block",
                   height: 6,
-                  background:
-                    "repeating-linear-gradient(90deg, rgba(201,146,46,.22) 0 1px, transparent 1px 7px)",
+                  background: `repeating-linear-gradient(90deg, ${COLOR.ruleStage} 0 1px, transparent 1px 7px)`,
                 }}
               >
                 <span
@@ -867,7 +864,7 @@ export function PourScreen({
                     bottom: -3,
                     left: `${t / 10}%`,
                     width: 1,
-                    background: "rgba(201,146,46,.55)",
+                    background: COLOR.ruleEnabled,
                   }}
                 />
               ),
@@ -897,8 +894,8 @@ export function PourScreen({
             role="alert"
             style={{
               padding: "12px 0",
-              borderTop: `1px solid rgba(245,214,122,.5)`,
-              borderBottom: `1px solid rgba(245,214,122,.5)`,
+              borderTop: `1px solid ${COLOR.tickMid}`,
+              borderBottom: `1px solid ${COLOR.tickMid}`,
               display: "flex",
               flexDirection: "column",
               gap: 5,
@@ -945,7 +942,7 @@ export function PourScreen({
               position: "relative",
               flex: 1,
               padding: "17px 12px",
-              background: settled ? "rgba(201,146,46,.16)" : "transparent",
+              background: settled ? COLOR.ruleFooter : "transparent",
               border: `1px solid ${settled ? COLOR.ruleEnabled : COLOR.ruleDisabled}`,
               color: settled ? COLOR.goldCream : COLOR.goldFaint,
               fontFamily: FONT.instrument,
@@ -961,7 +958,7 @@ export function PourScreen({
                 position: "absolute",
                 inset: 3,
                 pointerEvents: "none",
-                border: `1px solid ${settled ? "rgba(201,146,46,.22)" : "transparent"}`,
+                border: `1px solid ${settled ? COLOR.ruleStage : "transparent"}`,
               }}
             />
             {sealing
