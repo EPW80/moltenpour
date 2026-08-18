@@ -35,7 +35,15 @@ func main() {
 	defer store.Close()
 	log.Info("ledger open", "path", *dbPath)
 
-	sessions := session.New(os.Getenv("MOLTENPOUR_SECRET"), log)
+	secret := os.Getenv("MOLTENPOUR_SECRET")
+	if secret == "" && os.Getenv("MOLTENPOUR_ENV") == "production" {
+		// session.New would fall back to the published dev secret and only warn —
+		// fine for local development, not acceptable for a deployment that has
+		// declared itself production. Refuse to hand out forgeable cookies.
+		log.Error("MOLTENPOUR_SECRET is unset with MOLTENPOUR_ENV=production — refusing to start with a forgeable signing secret")
+		os.Exit(1)
+	}
+	sessions := session.New(secret, log)
 
 	srv := &http.Server{
 		Addr:              *addr,

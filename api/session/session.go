@@ -68,6 +68,7 @@ func (m *Manager) parse(value string) string {
 	// Constant time: a timing oracle here would leak the signature a byte at a
 	// time, and the signature is the whole access control.
 	if !hmac.Equal([]byte(sig), []byte(m.sign(id))) {
+		m.log.Debug("cookie signature did not verify", "id", id)
 		return ""
 	}
 	return id
@@ -106,9 +107,10 @@ func (m *Manager) OwnerID(w http.ResponseWriter, r *http.Request) (string, error
 		// a visitor's whole collection.
 		HttpOnly: true,
 		SameSite: http.SameSiteLaxMode,
-		// Only over TLS when the request itself arrived over TLS, so this still
-		// works on a plain-HTTP localhost.
-		Secure:  r.TLS != nil,
+		// Only over TLS when the request arrived over TLS — either directly, or
+		// (the deployed case) forwarded by a TLS-terminating proxy that marks it
+		// with X-Forwarded-Proto. Plain-HTTP localhost still works either way.
+		Secure:  r.TLS != nil || r.Header.Get("X-Forwarded-Proto") == "https",
 		Expires: time.Now().Add(cookieMaxAge),
 		MaxAge:  int(cookieMaxAge.Seconds()),
 	})

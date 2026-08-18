@@ -15,7 +15,9 @@ npm run dev      # app on :5173, proxying /api
 The ledger is a SQLite file. `npm run api -- -db :memory:` for an ephemeral one.
 
 Set `MOLTENPOUR_SECRET` in anything but local development — it signs the owner
-cookie, and the default is a published constant that anyone can forge.
+cookie, and the default is a published constant that anyone can forge. Setting
+`MOLTENPOUR_ENV=production` without `MOLTENPOUR_SECRET` refuses to start
+rather than silently falling back to that default.
 
 ## Layout
 
