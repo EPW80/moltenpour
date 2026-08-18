@@ -96,6 +96,7 @@ func (m *Manager) parse(value string) string {
 	// Constant time: a timing oracle here would leak the signature a byte at a
 	// time, and the signature is the whole access control.
 	if !hmac.Equal([]byte(sig), []byte(m.sign(id))) {
+		m.log.Debug("cookie signature did not verify", "id", id)
 		return ""
 	}
 	return id
