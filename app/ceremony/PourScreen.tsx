@@ -179,6 +179,11 @@ export function PourScreen({
   const specBarRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const specValRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
+  // openStream/closeStream/discard read liveRef.current rather than closing
+  // over onPhase/onNotice/onRarity directly, so the empty dependency array
+  // below is correct as written — the ref, not these props, is what makes
+  // each call see the latest callbacks. Don't add the props as deps; that
+  // would just make the identity churn the ref exists to avoid.
   const openStream = useCallback(() => {
     const rig = rigRef.current;
     const { phase: at } = liveRef.current;
