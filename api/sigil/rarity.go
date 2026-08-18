@@ -74,16 +74,14 @@ func clampTierIndex(tierIndex int) int {
 // rarity is a pure function of the clamped telemetry and the purchased tier,
 // because the product brief forbids any suggestion of a randomized outcome.
 func RarityScore(t Telemetry, tierIndex int) float64 {
-	flow := tierFlow[clampTierIndex(tierIndex)]
-
 	holdMs := math.Floor(t.HoldMs)
 	holdS := holdMs / 1000
 
-	// Ceilings, recomputed exactly as ClampTelemetry derived them.
-	maxDroplets := math.Ceil(flow * holdS * simDropletTolerar)
-	maxFall := simSpawnVyMax + simGravity*math.Min(holdS, 1.2)
-	maxSpeed := jsRound(math.Sqrt(maxFall*maxFall+simSpawnVxMax*simSpawnVxMax) * 1.1)
-	maxTiltMilli := jsRound(simMaxTiltRate * holdS * 1000)
+	// Same ceiling formula ClampTelemetry bounds a claim against — rounded
+	// here to the permille-safe precision this function needs.
+	maxDroplets, maxSpeedRaw, maxTilt := telemetryCeilings(tierIndex, holdS)
+	maxSpeed := jsRound(maxSpeedRaw)
+	maxTiltMilli := jsRound(maxTilt * 1000)
 
 	fill := permille(math.Floor(t.DropletsLanded), maxDroplets)
 	force := permille(jsRound(t.PeakVelocity), maxSpeed)

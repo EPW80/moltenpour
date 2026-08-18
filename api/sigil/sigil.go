@@ -38,17 +38,27 @@ type ClampResult struct {
 	Violations []string
 }
 
-// ClampTelemetry bounds what a client may claim about a pour.
+// telemetryCeilings mirrors telemetryCeilings() in telemetry.ts — the same
+// physics ceiling formula shared by ClampTelemetry (which bounds a raw claim
+// against them) and RarityScore (which normalizes a score against them), so
+// the formula itself cannot drift between the two.
 //
 // IMPORTANT: the arithmetic must match telemetry.ts operation for operation.
 // Notably maxSpeed uses an explicit sqrt rather than math.Hypot — Hypot and
 // JS Math.hypot may differ in the last ulp, and this value feeds HashSeed.
-func ClampTelemetry(raw Telemetry, tierIndex int, wallClockMs float64) ClampResult {
-	// clampTierIndex (rarity.go) clamps to the nearest valid boundary rather
-	// than falling back to tier 0, so an out-of-range tierIndex is bounded the
-	// same way here as it is in RarityScore.
+func telemetryCeilings(tierIndex int, holdS float64) (maxDroplets, maxSpeed, maxTilt float64) {
 	flow := tierFlow[clampTierIndex(tierIndex)]
+	maxDroplets = math.Ceil(flow * holdS * simDropletTolerar)
 
+	maxFall := simSpawnVyMax + simGravity*math.Min(holdS, 1.2)
+	maxSpeed = math.Sqrt(maxFall*maxFall+simSpawnVxMax*simSpawnVxMax) * 1.1
+
+	maxTilt = simMaxTiltRate * holdS
+	return maxDroplets, maxSpeed, maxTilt
+}
+
+// ClampTelemetry bounds what a client may claim about a pour.
+func ClampTelemetry(raw Telemetry, tierIndex int, wallClockMs float64) ClampResult {
 	var violations []string
 	take := func(key string, value, max float64) float64 {
 		safe := value
@@ -67,14 +77,11 @@ func ClampTelemetry(raw Telemetry, tierIndex int, wallClockMs float64) ClampResu
 	holdMs := take("holdMs", raw.HoldMs, math.Min(wallClockMs, simMaxPourMs))
 	holdS := holdMs / 1000
 
-	maxDroplets := math.Ceil(flow * holdS * simDropletTolerar)
+	maxDroplets, maxSpeed, maxTilt := telemetryCeilings(tierIndex, holdS)
+
 	dropletsLanded := take("dropletsLanded", raw.DropletsLanded, maxDroplets)
-
-	maxFall := simSpawnVyMax + simGravity*math.Min(holdS, 1.2)
-	maxSpeed := math.Sqrt(maxFall*maxFall+simSpawnVxMax*simSpawnVxMax) * 1.1
 	peakVelocity := take("peakVelocity", raw.PeakVelocity, maxSpeed)
-
-	tiltEnergy := take("tiltEnergy", raw.TiltEnergy, simMaxTiltRate*holdS)
+	tiltEnergy := take("tiltEnergy", raw.TiltEnergy, maxTilt)
 
 	return ClampResult{
 		Telemetry: Telemetry{
