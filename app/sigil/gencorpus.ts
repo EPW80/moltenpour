@@ -2,8 +2,8 @@ import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { hashSeed, sigilDigest, type BurnSeed } from "./sigil";
-import { clampTelemetry } from "./telemetry";
-import { classify, rarityScore } from "./rarity";
+import { clampTelemetry, type Telemetry } from "./telemetry";
+import { classify, rarityScore, type Rarity } from "./rarity";
 // The generator is a dev script, not part of the ported core, so it may reach up
 // into the app layer for the prices rather than keeping a second copy of them.
 import { tierAt } from "../ceremony/tiers";
@@ -69,7 +69,22 @@ const next = () => {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
 
-const rows: any[] = [];
+// Mirrors the Row type app/sigil/sigil.test.ts reads this file back as.
+type Row = {
+  tierIndex: number;
+  wallClockMs: number;
+  raw: Telemetry;
+  timestampMs: number;
+  amountCents: number;
+  clamped: Telemetry;
+  violations: string[];
+  hash: number;
+  rarityScore: number;
+  rarity: Rarity;
+  sigilDigest: number;
+};
+
+const rows: Row[] = [];
 for (let i = 0; i < 300; i++) {
   const tierIndex = i % 6;
   // Deliberately include overclaims, zeros, and boundary values.
