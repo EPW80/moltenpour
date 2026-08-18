@@ -7,11 +7,18 @@
 package pour
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
 	"moltenpour/api/sigil"
 )
+
+// ErrValidation marks a Mint failure as the client's fault — a malformed or
+// out-of-window request — as opposed to a store failure underneath it. The
+// HTTP layer uses errors.Is against this to decide 400 vs. 500 without
+// parsing error strings.
+var ErrValidation = errors.New("invalid pour request")
 
 // Record is the pour, as stored and as the certificate renders it.
 //
@@ -79,13 +86,13 @@ const maxClockSkew = 5 * time.Minute
 // own owner could mint into someone else's collection.
 func Mint(req Request, ledgerPosition int, ownerID string, now time.Time) (Record, error) {
 	if req.TierIndex < 0 || req.TierIndex >= len(amountCents) {
-		return Record{}, fmt.Errorf("tierIndex %d out of range", req.TierIndex)
+		return Record{}, fmt.Errorf("%w: tierIndex %d out of range", ErrValidation, req.TierIndex)
 	}
 
 	nowMs := now.UnixMilli()
 	skewMs := maxClockSkew.Milliseconds()
 	if req.TimestampMs < nowMs-skewMs || req.TimestampMs > nowMs+skewMs {
-		return Record{}, fmt.Errorf("timestampMs %d outside the accepted window", req.TimestampMs)
+		return Record{}, fmt.Errorf("%w: timestampMs %d outside the accepted window", ErrValidation, req.TimestampMs)
 	}
 
 	// The wall clock the client had available: pour-start to now. A pour cannot

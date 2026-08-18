@@ -80,7 +80,7 @@ func (s *sqliteStore) Close() error { return s.db.Close() }
 func (s *sqliteStore) Append(mint func(ledgerPosition int) (Record, error)) (Record, error) {
 	tx, err := s.db.Begin()
 	if err != nil {
-		return Record{}, err
+		return Record{}, fmt.Errorf("begin pour transaction: %w", err)
 	}
 	defer tx.Rollback() //nolint:errcheck // no-op once committed
 
@@ -90,9 +90,11 @@ func (s *sqliteStore) Append(mint func(ledgerPosition int) (Record, error)) (Rec
 	// exists to catch.
 	var position int
 	if err := tx.QueryRow(`SELECT COALESCE(MAX(ledger_position), 0) + 1 FROM pours`).Scan(&position); err != nil {
-		return Record{}, err
+		return Record{}, fmt.Errorf("read ledger position: %w", err)
 	}
 
+	// mint's own error (typically pour.ErrValidation) is returned as-is — it
+	// is not a store failure, and the HTTP layer distinguishes it by identity.
 	rec, err := mint(position)
 	if err != nil {
 		return Record{}, err
@@ -100,7 +102,7 @@ func (s *sqliteStore) Append(mint func(ledgerPosition int) (Record, error)) (Rec
 
 	violations, err := json.Marshal(rec.Violations)
 	if err != nil {
-		return Record{}, err
+		return Record{}, fmt.Errorf("marshal violations: %w", err)
 	}
 
 	if _, err := tx.Exec(`
@@ -114,10 +116,13 @@ func (s *sqliteStore) Append(mint func(ledgerPosition int) (Record, error)) (Rec
 		string(violations), int64(rec.Seed), string(rec.Rarity), rec.RarityScore,
 		rec.Serial, rec.Batch, rec.MassGrams, rec.Issued,
 	); err != nil {
-		return Record{}, err
+		return Record{}, fmt.Errorf("insert pour: %w", err)
 	}
 
-	return rec, tx.Commit()
+	if err := tx.Commit(); err != nil {
+		return Record{}, fmt.Errorf("commit pour: %w", err)
+	}
+	return rec, nil
 }
 
 const selectColumns = `
