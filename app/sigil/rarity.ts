@@ -24,7 +24,7 @@
  * component, because the brief forbids any suggestion of a randomized outcome.
  */
 
-import { SIM, TIER_BOUNDS, type Telemetry } from './telemetry';
+import { SIM, TIER_BOUNDS, clampTierIndex, type Telemetry } from './telemetry';
 
 export const RARITIES = ['Common', 'Uncommon', 'Rare', 'Singular'] as const;
 export type Rarity = (typeof RARITIES)[number];
@@ -132,12 +132,6 @@ export function scoreParts(telemetry: Telemetry, tierIndex: number): ScoreParts 
 
 function pourScore(telemetry: Telemetry, tierIndex: number): number {
   return scoreParts(telemetry, tierIndex).score;
-}
-
-function clampTierIndex(tierIndex: number): number {
-  if (!Number.isFinite(tierIndex)) return 0;
-  const i = Math.floor(tierIndex);
-  return i < 0 ? 0 : i >= TIER_BOUNDS.length ? TIER_BOUNDS.length - 1 : i;
 }
 
 /** The score behind a rarity, exposed for tuning and for the drift corpus. */
