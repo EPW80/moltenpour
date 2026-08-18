@@ -30,22 +30,22 @@ func (s *Server) Routes() http.Handler {
 	mux.HandleFunc("GET /api/pours", s.handleList)
 	mux.HandleFunc("GET /api/pours/{id}", s.handleGet)
 	mux.HandleFunc("GET /api/health", func(w http.ResponseWriter, r *http.Request) {
-		writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
+		s.writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
 	})
 	return mux
 }
 
-func writeJSON(w http.ResponseWriter, code int, v any) {
+func (s *Server) writeJSON(w http.ResponseWriter, code int, v any) {
 	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(code)
 	if err := json.NewEncoder(w).Encode(v); err != nil {
 		// The status line is already sent, so this can only be logged.
-		slog.Error("encoding response", "err", err)
+		s.log.Error("encoding response", "err", err)
 	}
 }
 
-func writeErr(w http.ResponseWriter, code int, msg string) {
-	writeJSON(w, code, map[string]string{"error": msg})
+func (s *Server) writeErr(w http.ResponseWriter, code int, msg string) {
+	s.writeJSON(w, code, map[string]string{"error": msg})
 }
 
 func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
@@ -53,7 +53,7 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	// because SetCookie has to happen before the response body is committed.
 	ownerID, err := s.sessions.OwnerID(w, r)
 	if err != nil {
-		writeErr(w, http.StatusInternalServerError, "could not establish a session")
+		s.writeErr(w, http.StatusInternalServerError, "could not establish a session")
 		return
 	}
 
@@ -61,7 +61,7 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	dec := json.NewDecoder(http.MaxBytesReader(w, r.Body, 1<<16))
 	dec.DisallowUnknownFields()
 	if err := dec.Decode(&req); err != nil {
-		writeErr(w, http.StatusBadRequest, "malformed request: "+err.Error())
+		s.writeErr(w, http.StatusBadRequest, "malformed request: "+err.Error())
 		return
 	}
 
@@ -79,7 +79,15 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 		return pour.Mint(req, position, ownerID, now)
 	})
 	if err != nil {
-		writeErr(w, http.StatusBadRequest, err.Error())
+		// pour.ErrValidation means the request itself was bad — safe to echo.
+		// Anything else is a store failure (disk, transaction, driver) and its
+		// raw message must not reach the client.
+		if errors.Is(err, pour.ErrValidation) {
+			s.writeErr(w, http.StatusBadRequest, err.Error())
+			return
+		}
+		s.log.Error("minting a pour", "err", err)
+		s.writeErr(w, http.StatusInternalServerError, "could not mint the pour")
 		return
 	}
 
@@ -104,28 +112,28 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 		"score", rec.RarityScore,
 	)
 
-	writeJSON(w, http.StatusCreated, rec)
+	s.writeJSON(w, http.StatusCreated, rec)
 }
 
 func (s *Server) handleList(w http.ResponseWriter, r *http.Request) {
 	ownerID, err := s.sessions.OwnerID(w, r)
 	if err != nil {
-		writeErr(w, http.StatusInternalServerError, "could not establish a session")
+		s.writeErr(w, http.StatusInternalServerError, "could not establish a session")
 		return
 	}
 	records, err := s.store.List(ownerID)
 	if err != nil {
 		s.log.Error("listing the ledger", "err", err)
-		writeErr(w, http.StatusInternalServerError, "could not read the ledger")
+		s.writeErr(w, http.StatusInternalServerError, "could not read the ledger")
 		return
 	}
-	writeJSON(w, http.StatusOK, records)
+	s.writeJSON(w, http.StatusOK, records)
 }
 
 func (s *Server) handleGet(w http.ResponseWriter, r *http.Request) {
 	ownerID, err := s.sessions.OwnerID(w, r)
 	if err != nil {
-		writeErr(w, http.StatusInternalServerError, "could not establish a session")
+		s.writeErr(w, http.StatusInternalServerError, "could not establish a session")
 		return
 	}
 
@@ -133,13 +141,13 @@ func (s *Server) handleGet(w http.ResponseWriter, r *http.Request) {
 	// A 403 here would confirm the serial is real to anyone who guessed it.
 	rec, err := s.store.Get(r.PathValue("id"), ownerID)
 	if errors.Is(err, pour.ErrNotFound) {
-		writeErr(w, http.StatusNotFound, "no such pour")
+		s.writeErr(w, http.StatusNotFound, "no such pour")
 		return
 	}
 	if err != nil {
 		s.log.Error("reading a pour", "err", err)
-		writeErr(w, http.StatusInternalServerError, "could not read the ledger")
+		s.writeErr(w, http.StatusInternalServerError, "could not read the ledger")
 		return
 	}
-	writeJSON(w, http.StatusOK, rec)
+	s.writeJSON(w, http.StatusOK, rec)
 }
