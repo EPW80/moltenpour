@@ -44,6 +44,8 @@ export const COLOR = {
 
   ruleStrong: "rgba(201,146,46,.5)",
   ruleEnabled: "rgba(201,146,46,.55)",
+  /** The pouring-phase glow ring and its rule variants. */
+  ruleActive: "rgba(201,146,46,.35)",
   rule: "rgba(201,146,46,.28)",
   ruleMid: "rgba(201,146,46,.24)",
   ruleStage: "rgba(201,146,46,.22)",
@@ -57,7 +59,12 @@ export const COLOR = {
   leader: "rgba(201,146,46,.3)",
   tick: "rgba(245,214,122,.7)",
   tickStage: "rgba(245,214,122,.6)",
+  tickMid: "rgba(245,214,122,.5)",
   shade: "rgba(10,6,13,.55)",
+  /** The pour stage's floor vignette and result-band text shadow. */
+  shadeStrong: "rgba(10,6,13,.9)",
+  /** The sealing overlay's near-opaque ground. */
+  shadeDeep: "rgba(10,6,13,.94)",
 } as const;
 
 /**

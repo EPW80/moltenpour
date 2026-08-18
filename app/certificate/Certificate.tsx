@@ -273,8 +273,7 @@ export function Certificate({ pour, grain = true }: Props) {
               style={{
                 flex: 1,
                 height: 1,
-                background:
-                  "linear-gradient(90deg,transparent,rgba(201,146,46,.55))",
+                background: `linear-gradient(90deg,transparent,${COLOR.ruleEnabled})`,
               }}
             />
             <span
@@ -293,8 +292,7 @@ export function Certificate({ pour, grain = true }: Props) {
               style={{
                 flex: 1,
                 height: 1,
-                background:
-                  "linear-gradient(90deg,rgba(201,146,46,.55),transparent)",
+                background: `linear-gradient(90deg,${COLOR.ruleEnabled},transparent)`,
               }}
             />
           </div>
