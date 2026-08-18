@@ -12,3 +12,9 @@ artifacts/
 *.db
 *.db-wal
 *.db-shm
+
+# Local Claude Code tooling: installed skills and machine-local settings, not
+# project source.
+.agents/
+.claude/
+skills-lock.json
