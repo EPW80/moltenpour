@@ -50,6 +50,7 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
 
       {pours.length === 0 ? (
         <div
+          role="status"
           style={{
             display: "flex",
             flexDirection: "column",
