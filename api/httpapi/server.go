@@ -113,8 +113,10 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 		s.writeErr(w, http.StatusBadRequest, "that tier is not available")
 		return
 	}
+	// A tier the ceiling admits above 0 still mints for free. Logged at Warn, not
+	// Debug, because that is a standing gap, not routine traffic.
 	if req.TierIndex > 0 {
-		s.log.Debug("receipt validation stubbed", "tierIndex", req.TierIndex)
+		s.log.Warn("minting a paid tier with receipt validation stubbed", "tierIndex", req.TierIndex)
 	}
 
 	now := s.now()
