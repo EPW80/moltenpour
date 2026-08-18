@@ -404,6 +404,7 @@ export function PourScreen({
           role="button"
           tabIndex={0}
           aria-label="Hold to pour"
+          aria-pressed={phase === "pouring"}
           onPointerDown={(e) => {
             // Captured so a drag that leaves the stage still steers the stream
             // rather than silently closing it.
@@ -486,6 +487,7 @@ export function PourScreen({
             (["left", "right"] as const).map((h) => (
               <div
                 key={`${v}-${h}`}
+                aria-hidden="true"
                 style={{
                   position: "absolute",
                   [v]: 9,
@@ -1018,6 +1020,7 @@ function Callout({
   );
   return (
     <div
+      aria-hidden="true"
       style={{
         position: "absolute",
         left: 0,
