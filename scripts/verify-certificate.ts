@@ -18,27 +18,14 @@
  * Usage: npm run verify:certificate
  */
 
-import { existsSync } from 'node:fs';
-import { mkdir, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { createServer } from 'vite';
 import puppeteer from 'puppeteer-core';
+import { findChrome } from './chrome';
 
 const PAGE_W = 794;
 const PAGE_H = 1123;
 const OUT_DIR = 'artifacts/certificate';
-
-async function findChrome(): Promise<string> {
-  if (process.env.CHROME_PATH) return process.env.CHROME_PATH;
-  const base = `${process.env.HOME}/.cache/puppeteer/chrome`;
-  if (existsSync(base)) {
-    const versions = (await readdir(base)).sort().reverse();
-    for (const v of versions) {
-      const p = `${base}/${v}/chrome-linux64/chrome`;
-      if (existsSync(p)) return p;
-    }
-  }
-  throw new Error('no Chrome found; set CHROME_PATH');
-}
 
 const problems: string[] = [];
 const fail = (msg: string) => {
@@ -48,14 +35,19 @@ const fail = (msg: string) => {
 const pass = (msg: string) => console.log(`  ✓ ${msg}`);
 
 const server = await createServer({ server: { port: 5199 }, logLevel: 'error' });
-await server.listen();
 
-const browser = await puppeteer.launch({
-  executablePath: await findChrome(),
-  args: ['--no-sandbox', '--font-render-hinting=none'],
-});
-
+// listen() and puppeteer.launch() both happen inside the try so a failure in
+// either (port in use, Chrome missing or crashed) still reaches the finally
+// below and closes the dev server — previously a launch failure after a
+// successful listen() leaked it, listening forever.
+let browser: Awaited<ReturnType<typeof puppeteer.launch>> | undefined;
 try {
+  await server.listen();
+  browser = await puppeteer.launch({
+    executablePath: await findChrome(),
+    args: ['--no-sandbox', '--font-render-hinting=none'],
+  });
+
   const page = await browser.newPage();
   await page.setViewport({ width: 1400, height: 1400, deviceScaleFactor: 2 });
   await page.goto('http://localhost:5199/proof.html', { waitUntil: 'networkidle0' });
@@ -241,7 +233,7 @@ try {
     ? pass(`prints to exactly 1 page (${(pdf.length / 1024).toFixed(0)} kB)`)
     : fail(`printed ${pageCount} pages; the certificate is a single fixed sheet`);
 } finally {
-  await browser.close();
+  await browser?.close();
   await server.close();
 }
 
