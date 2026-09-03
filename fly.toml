@@ -1,0 +1,62 @@
+# MoltenPour on Fly.io.
+#
+# The single most important line in this file is max_machines_running = 1. The
+# ledger is a SQLite file on one volume, and Append assigns the global ledger
+# position inside one critical section. A second machine means a second file,
+# a second sequence, and two certificates printing "No. 1".
+
+app = "moltenpour"
+primary_region = "sjc"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  # Fly terminates TLS at its edge and forwards plain HTTP, so without this the
+  # owner cookie would ship without Secure — on the one value that is the whole
+  # access control. See session.overTLS.
+  MOLTENPOUR_TRUST_PROXY = "1"
+
+  # Receipt validation is a stub, so every tier above 0 would mint for free.
+  # Raise this only once pours are actually charged for.
+  MOLTENPOUR_MAX_TIER = "0"
+
+# MOLTENPOUR_SECRET is a secret, never an env line:
+#   fly secrets set MOLTENPOUR_SECRET=$(openssl rand -hex 32)
+# Unset, the server signs with a published constant and says so in the log.
+# Rotating it invalidates every owner cookie — every visitor silently becomes a
+# new owner with an empty collection. It is not a routine rotation.
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+
+  # The ledger is the product. A machine that stopped between pours would still
+  # be correct, but the first visitor after an idle spell would wait on a cold
+  # start in the middle of a ceremony.
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  max_machines_running = 1
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/api/health"
+    protocol = "http"
+    timeout = "5s"
+
+[mounts]
+  source = "moltenpour_data"
+  destination = "/data"
+
+[deploy]
+  # Not "rolling": a rolling deploy would need two machines at once, and the
+  # volume can only be attached to one. Immediate accepts a few seconds of
+  # downtime instead of risking the ledger.
+  strategy = "immediate"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

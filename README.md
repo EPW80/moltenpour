@@ -152,15 +152,62 @@ The script measures the rendered stack against the 794×1123 page box, checks th
 ground survives print, checks the serial is on one line, and prints one PDF page.
 Proofs land in `artifacts/certificate/`.
 
+## Deploying
+
+One image, one machine, one volume. The Go binary serves the built app and the
+API on a single origin — `server -static ./dist` — because the owner cookie is
+the whole access control and the client fetches `/api/pours` with no base URL.
+A second origin would mean CORS, `SameSite=None` and credentialed fetches, which
+is three new ways for a visitor's collection to silently become nobody's.
+
+```bash
+fly launch --no-deploy                 # or `fly apps create` if fly.toml is enough
+fly volumes create moltenpour_data --size 1
+fly secrets set MOLTENPOUR_SECRET=$(openssl rand -hex 32)
+fly deploy
+```
+
+Locally, the same image:
+
+```bash
+docker build -t moltenpour .
+docker run --rm -p 8080:8080 -v moltenpour-dev:/data -e MOLTENPOUR_SECRET=local moltenpour
+```
+
+| Variable | Default | What it is |
+| --- | --- | --- |
+| `MOLTENPOUR_SECRET` | the published dev constant | Signs the owner cookie. Rotating it makes every visitor a new owner with an empty collection — it is not a routine rotation. |
+| `MOLTENPOUR_TRUST_PROXY` | unset | Set to `1` only behind a proxy that terminates TLS and sets `X-Forwarded-Proto` itself. Without it the cookie ships without `Secure` behind Fly; with it in front of nothing, a visitor picks their own cookie's flags. |
+| `MOLTENPOUR_MAX_TIER` | `0` | Highest tier the deployment will mint. Receipt validation is a stub, so anything above 0 mints for free. The picker reads it from `GET /api/config` and shows the rest of the schedule withdrawn. |
+| `PORT` | `8787` | Listen port. `-addr` still wins. |
+
+**This must stay one machine.** `Append` assigns the global ledger position
+inside a single critical section over one SQLite file. A second instance is a
+second file, a second sequence, and two certificates printing No. 1 — which is
+why `fly.toml` pins `max_machines_running = 1` and deploys `immediate` rather
+than rolling. `fly status` showing two machines is an incident, not a scale-up.
+
+Worth checking on every deploy, because it fails silently:
+
+```bash
+curl -si -X POST https://<app>/api/pours -d '{...}' | grep -i set-cookie
+# mp_owner=...; HttpOnly; Secure; SameSite=Lax
+fly logs | grep MOLTENPOUR_SECRET   # nothing, or the secret never landed
+```
+
 ## Not done
 
 - **Payments.** Receipt validation is a stub, so nothing charges for a tier.
+  Deployments therefore run with `MOLTENPOUR_MAX_TIER=0` and offer the free tier
+  alone; the paid rows stay on the schedule marked Withdrawn, because a register
+  keeps the lines it has ruled out.
 - **Accounts.** Ownership is a cookie: clear it and the collection is gone, and
   it does not follow you to another device. Real accounts can adopt these owner
   ids later by claiming them, so nothing minted anonymously is orphaned.
 - **A server-rendered PDF endpoint** for email delivery. `certificate:pdf` does
   it from the command line; putting it behind a route means running a headless
-  browser in the deployment, which is an infrastructure decision.
+  browser in the deployment — the image is `distroless/static` today, so that is
+  a different base image and a much larger one.
 - Server-side sigil rendering (OG images). Needs the geometry pipeline ported and
   the corpus extended to cover trait output, not just the hash.
 - Fuzzing `ClampTelemetry` against a TypeScript oracle.

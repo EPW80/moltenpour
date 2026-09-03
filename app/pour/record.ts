@@ -75,6 +75,22 @@ export async function getPour(id: string): Promise<PourRecord> {
   return json<PourRecord>(await fetch(`/api/pours/${encodeURIComponent(id)}`));
 }
 
+/**
+ * What the deployment will accept, as opposed to what the ceremony can draw.
+ *
+ * Receipt validation is stubbed server-side, so a deployment that cannot charge
+ * refuses the paid tiers. The picker has to know that up front: discovering it
+ * from a 400 would mean pouring for fifteen seconds to be told no.
+ */
+export type ServerConfig = {
+  /** Highest tier this deployment will mint. */
+  maxTierIndex: number;
+};
+
+export async function getConfig(): Promise<ServerConfig> {
+  return json<ServerConfig>(await fetch("/api/config"));
+}
+
 /** `310.97 g` — two decimals and a space, per the certificate spec. */
 export function formatMass(grams: number): string {
   return `${grams.toFixed(2)} g`;

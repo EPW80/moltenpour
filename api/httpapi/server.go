@@ -13,15 +13,30 @@ import (
 	"moltenpour/api/session"
 )
 
+// Config is what the deployment decides, as opposed to what the ledger decides.
+type Config struct {
+	// MaxTierIndex is the highest tier this deployment will mint.
+	//
+	// Receipt validation is a stub (see handleMint), so every tier above 0 would
+	// otherwise mint for free. A deployment that cannot charge says so here
+	// rather than quietly giving away the paid ones.
+	MaxTierIndex int
+
+	// StaticDir is the built SPA. Empty serves the API alone, which is what the
+	// Vite dev proxy expects.
+	StaticDir string
+}
+
 type Server struct {
 	store    pour.Store
 	sessions *session.Manager
 	log      *slog.Logger
+	cfg      Config
 	now      func() time.Time
 }
 
-func New(store pour.Store, sessions *session.Manager, log *slog.Logger) *Server {
-	return &Server{store: store, sessions: sessions, log: log, now: time.Now}
+func New(store pour.Store, sessions *session.Manager, log *slog.Logger, cfg Config) *Server {
+	return &Server{store: store, sessions: sessions, log: log, cfg: cfg, now: time.Now}
 }
 
 func (s *Server) Routes() http.Handler {
@@ -29,10 +44,30 @@ func (s *Server) Routes() http.Handler {
 	mux.HandleFunc("POST /api/pours", s.handleMint)
 	mux.HandleFunc("GET /api/pours", s.handleList)
 	mux.HandleFunc("GET /api/pours/{id}", s.handleGet)
+	mux.HandleFunc("GET /api/config", s.handleConfig)
 	mux.HandleFunc("GET /api/health", func(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
 	})
+
+	// An unknown path under /api is a client bug, and the client parses every
+	// response as JSON. Without this it would fall through to the SPA and fail
+	// on a page of HTML instead of reading the status it was given.
+	mux.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
+		writeErr(w, http.StatusNotFound, "no such endpoint")
+	})
+
+	if s.cfg.StaticDir != "" {
+		// Least specific pattern, so every /api route above still wins.
+		mux.Handle("/", staticHandler(s.cfg.StaticDir))
+	}
 	return mux
+}
+
+// handleConfig tells the client what this deployment will accept, so the tier
+// picker can grey out what it cannot sell instead of letting someone pour for
+// fifteen seconds and receive a 400.
+func (s *Server) handleConfig(w http.ResponseWriter, _ *http.Request) {
+	writeJSON(w, http.StatusOK, map[string]int{"maxTierIndex": s.cfg.MaxTierIndex})
 }
 
 func writeJSON(w http.ResponseWriter, code int, v any) {
@@ -69,6 +104,15 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	// store receipt here, before anything is minted — sigils only mint on a
 	// validated receipt, which is what makes the max-legal-claim exploit cost
 	// real money per attempt.
+	//
+	// Until that exists, the ceiling stands in for it: the check is before
+	// Append, so a rejected tier never takes a ledger position. Advancing the
+	// sequence for a pour that was refused would put a gap in a register whose
+	// whole claim is that it is continuous.
+	if req.TierIndex > s.cfg.MaxTierIndex {
+		writeErr(w, http.StatusBadRequest, "that tier is not available")
+		return
+	}
 	if req.TierIndex > 0 {
 		s.log.Debug("receipt validation stubbed", "tierIndex", req.TierIndex)
 	}

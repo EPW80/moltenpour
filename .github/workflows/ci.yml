@@ -70,3 +70,20 @@ jobs:
         env:
           CHROME_PATH: /usr/bin/google-chrome
         run: npm run verify:certificate
+
+  image:
+    name: the deployable image builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Dockerfile is the only place the SPA build and the Go build meet,
+      # and the only place the app is served from the API's origin. A break
+      # there is invisible to both jobs above — they never build the image.
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

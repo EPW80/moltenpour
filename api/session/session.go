@@ -40,17 +40,45 @@ const devSecret = "moltenpour-development-secret-do-not-use-in-production"
 type Manager struct {
 	secret []byte
 	log    *slog.Logger
+	// trustProxy makes X-Forwarded-Proto decide whether the cookie is Secure.
+	// Off by default: the header is caller-controlled, so honouring it in front
+	// of anything but a proxy that overwrites it lets a visitor decide their own
+	// cookie's flags. On, only where the deployment guarantees a proxy.
+	trustProxy bool
 }
 
 // New returns a Manager. An empty secret falls back to a known development value
 // and says so loudly, because a deployment running on the default secret has
 // cookies anyone can forge.
-func New(secret string, log *slog.Logger) *Manager {
+//
+// trustProxy belongs to the deployment, not to the request: set it only when
+// every request reaches this process through a proxy that terminates TLS and
+// sets X-Forwarded-Proto itself.
+func New(secret string, trustProxy bool, log *slog.Logger) *Manager {
 	if secret == "" {
 		log.Warn("MOLTENPOUR_SECRET is unset — using the development signing secret; owner cookies are forgeable")
 		secret = devSecret
 	}
-	return &Manager{secret: []byte(secret), log: log}
+	return &Manager{secret: []byte(secret), log: log, trustProxy: trustProxy}
+}
+
+// overTLS reports whether the visitor's connection is HTTPS.
+//
+// Behind a TLS-terminating proxy the request arrives here over plain HTTP, so
+// r.TLS is nil on exactly the deployments where the cookie most needs Secure.
+// The forwarded header is the only evidence available, and it is evidence only
+// where a proxy is known to set it.
+func (m *Manager) overTLS(r *http.Request) bool {
+	if r.TLS != nil {
+		return true
+	}
+	if !m.trustProxy {
+		return false
+	}
+	// A proxy chain sends a comma-separated list; the first entry is the scheme
+	// the visitor used.
+	proto, _, _ := strings.Cut(r.Header.Get("X-Forwarded-Proto"), ",")
+	return strings.EqualFold(strings.TrimSpace(proto), "https")
 }
 
 func (m *Manager) sign(id string) string {
@@ -106,9 +134,9 @@ func (m *Manager) OwnerID(w http.ResponseWriter, r *http.Request) (string, error
 		// a visitor's whole collection.
 		HttpOnly: true,
 		SameSite: http.SameSiteLaxMode,
-		// Only over TLS when the request itself arrived over TLS, so this still
-		// works on a plain-HTTP localhost.
-		Secure:  r.TLS != nil,
+		// Only over TLS when the visitor's connection was TLS, so this still works
+		// on a plain-HTTP localhost.
+		Secure:  m.overTLS(r),
 		Expires: time.Now().Add(cookieMaxAge),
 		MaxAge:  int(cookieMaxAge.Seconds()),
 	})

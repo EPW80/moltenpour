@@ -20,6 +20,13 @@ var now = time.Date(2026, 8, 2, 12, 0, 0, 0, time.UTC)
 
 func newTestServer(t *testing.T) http.Handler {
 	t.Helper()
+	// The full tier range: these tests are about the ledger and the session, not
+	// about what the deployment is willing to sell. The ceiling has its own test.
+	return newTestServerWith(t, Config{MaxTierIndex: pour.MaxTierIndex})
+}
+
+func newTestServerWith(t *testing.T, cfg Config) http.Handler {
+	t.Helper()
 	store, err := pour.NewSQLiteStore(":memory:")
 	if err != nil {
 		t.Fatal(err)
@@ -27,7 +34,7 @@ func newTestServer(t *testing.T) http.Handler {
 	t.Cleanup(func() { store.Close() })
 
 	log := slog.New(slog.NewTextHandler(io.Discard, nil))
-	s := New(store, session.New("test-secret", log), log)
+	s := New(store, session.New("test-secret", false, log), log, cfg)
 	s.now = func() time.Time { return now }
 	return s.Routes()
 }

@@ -95,6 +95,13 @@ const LABEL_11: React.CSSProperties = {
 type Props = {
   tierIndex: number;
   onTierIndex: (index: number) => void;
+  /**
+   * The highest tier this deployment will mint. Receipt validation is stubbed
+   * server-side, so a deployment that cannot charge refuses the paid tiers —
+   * and the schedule shows them withdrawn rather than letting someone pour the
+   * whole ceremony to be told no at the seal.
+   */
+  maxTierIndex: number;
   phase: Phase;
   onPhase: (phase: Phase) => void;
   rarity: Rarity;
@@ -109,6 +116,7 @@ type Props = {
 export function PourScreen({
   tierIndex,
   onTierIndex,
+  maxTierIndex,
   phase,
   onPhase,
   rarity,
@@ -338,6 +346,12 @@ export function PourScreen({
     return () => window.removeEventListener("deviceorientation", onOrient);
   }, []);
 
+  // The rows that can actually be poured. Wrapping over the offered count
+  // rather than TIERS.length is what keeps the keyboard from landing on a
+  // withdrawn row — a disabled button the arrow keys still select would be a
+  // dead end with no way to tell you why.
+  const offered = Math.min(maxTierIndex + 1, TIERS.length);
+
   // Traverse the schedule from the keyboard, wrapping, and only while the vessel
   // is still free to change.
   useEffect(() => {
@@ -345,14 +359,11 @@ export function PourScreen({
       if (phase !== "idle" || (e.key !== "ArrowUp" && e.key !== "ArrowDown"))
         return;
       e.preventDefault();
-      onTierIndex(
-        (tierIndex + (e.key === "ArrowDown" ? 1 : TIERS.length - 1)) %
-          TIERS.length,
-      );
+      onTierIndex((tierIndex + (e.key === "ArrowDown" ? 1 : offered - 1)) % offered);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [phase, tierIndex, onTierIndex]);
+  }, [phase, tierIndex, onTierIndex, offered]);
 
   const stageHeight = wide
     ? "min(70vh, 720px, (100vw - 720px) * 1.7778)"
@@ -609,11 +620,13 @@ export function PourScreen({
 
             {TIERS.map((t) => {
               const selected = t.index === tierIndex;
+              const withdrawn = t.index > maxTierIndex;
               return (
                 <button
                   key={t.index}
                   type="button"
-                  disabled={poured}
+                  disabled={poured || withdrawn}
+                  aria-disabled={withdrawn || undefined}
                   onClick={() => onTierIndex(t.index)}
                   style={{
                     position: "relative",
@@ -630,8 +643,8 @@ export function PourScreen({
                     fontFamily: FONT.instrument,
                     textAlign: "left",
                     // The tier is fixed the moment the stream opens.
-                    cursor: poured ? "not-allowed" : "pointer",
-                    opacity: poured && !selected ? 0.28 : 1,
+                    cursor: poured || withdrawn ? "not-allowed" : "pointer",
+                    opacity: withdrawn ? 0.3 : poured && !selected ? 0.28 : 1,
                     transition: "color .2s, opacity .3s",
                   }}
                 >
@@ -687,7 +700,10 @@ export function PourScreen({
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {formatConsideration(t.amountCents)}
+                    {/* A withdrawn tier keeps its row and loses its price: the
+                        schedule is a register, and a line ruled out still
+                        belongs on it. */}
+                    {withdrawn ? "Withdrawn" : formatConsideration(t.amountCents)}
                   </span>
                 </button>
               );

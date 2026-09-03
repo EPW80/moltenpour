@@ -55,6 +55,10 @@ type Request struct {
 // Prices, index-aligned with the tier table in app/ceremony/tiers.ts.
 var amountCents = [6]int{0, 299, 999, 2499, 4999, 9999}
 
+// MaxTierIndex is the highest tier the ledger can mint. A deployment may cap
+// itself lower — see the tier ceiling in httpapi — but never higher.
+const MaxTierIndex = len(amountCents) - 1
+
 // Each landed droplet is this much metal. The certificate prints the total as
 // MASS RENDERED IRRECOVERABLE.
 const massPerDropletG = 3.79
