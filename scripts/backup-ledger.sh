@@ -52,11 +52,12 @@ done
 
 # This copy is taken from a running server, so it is a hot copy: consistent
 # enough for SQLite to recover from on open, not a guaranteed quiesced point.
-# Verify it before you need it, by opening it rather than by trusting the sizes:
-#
-#   go run ./api/cmd/server -db "$DEST/moltenpour.db" -addr :8788
-#   curl -s localhost:8788/api/pours
-#
 # For a point-in-time copy with no writer at all, use a volume snapshot
 # (fly volumes snapshots list) instead.
-echo "done. verify with: go run ./api/cmd/server -db $DEST/moltenpour.db -addr :8788"
+#
+# Verify it by opening it, not by trusting the sizes above — and not by listing
+# pours, which is owner-scoped and answers [] for a good ledger and an empty one
+# alike. Mint into the copy and read the position back; see the README.
+echo "done. $DEST"
+echo "verify: go run ./api/cmd/server -db $DEST/moltenpour.db -addr :8788, then POST a pour"
+echo "        and check ledgerPosition continues the backup rather than reading 1."

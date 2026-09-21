@@ -226,12 +226,21 @@ served by Fly's init rather than by anything in the image; `fly ssh console`
 finds no shell to run.
 
 Verify a backup by opening it, not by reading its size, and do it once now
-rather than the first time it matters:
+rather than the first time it matters. Listing pours proves nothing — the list
+is owner-scoped, so a caller without the cookie that minted them gets `[]` from
+a perfectly good ledger and from an empty one alike. Mint into the copy instead
+and read the position back: continuity is the property worth checking, and a
+ledger that restored empty answers No. 1.
 
 ```bash
 go run ./api/cmd/server -db backups/<stamp>/moltenpour.db -addr :8788
-curl -s localhost:8788/api/pours      # the ledger, positions intact
+curl -s -X POST localhost:8788/api/pours -H 'content-type: application/json' \
+  -d "{\"tierIndex\":0,\"timestampMs\":$(($(date +%s)*1000-3000)),\
+\"telemetry\":{\"dropletsLanded\":40,\"peakVelocity\":1200,\"tiltEnergy\":6,\"holdMs\":2000}}"
+# ledgerPosition is one past the last pour in the backup, not 1
 ```
+
+Do that against a copy, never against `/data`: it appends a real row.
 
 Restoring in production is `fly volumes fork <snapshot-id>`, then pointing the
 mount at the fork and deploying. Never restore by writing into the volume of a
