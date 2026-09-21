@@ -162,7 +162,7 @@ is three new ways for a visitor's collection to silently become nobody's.
 
 ```bash
 fly launch --no-deploy                 # or `fly apps create` if fly.toml is enough
-fly volumes create moltenpour_data --size 1
+fly volumes create moltenpour_data --size 1 --region sjc   # must match primary_region
 fly secrets set MOLTENPOUR_SECRET=$(openssl rand -hex 32)
 fly deploy
 ```
@@ -194,6 +194,49 @@ curl -si -X POST https://<app>/api/pours -d '{...}' | grep -i set-cookie
 # mp_owner=...; HttpOnly; Secure; SameSite=Lax
 fly logs | grep MOLTENPOUR_SECRET   # nothing, or the secret never landed
 ```
+
+### Backing up the ledger
+
+Everything else here is rebuildable. A sigil re-mints from its seed, the app
+rebuilds from source, the image rebuilds from the Dockerfile — but a pour's
+ledger position and serial exist in exactly one place, and there is no way to
+re-derive them. Losing `/data/moltenpour.db` issues No. 1 to somebody for the
+second time.
+
+Two layers, because they fail differently:
+
+```bash
+fly volumes snapshots list <volume-id>   # the automatic floor: daily, 14 days
+./scripts/backup-ledger.sh               # the copy that outlives the account
+```
+
+Snapshots are Fly's, taken with no writer running, and retained for the
+`snapshot_retention` set in `fly.toml` — fourteen days rather than the default
+five, because five days is a long weekend and a loss noticed the following
+Wednesday would be inside the window only by luck. They are also Fly's to lose
+along with the volume, the region, or the account, which is what the script is
+for: it pulls the files to somewhere you control.
+
+It pulls three of them. SQLite runs in WAL mode, so commits live in
+`moltenpour.db-wal` until a checkpoint folds them in, and a `.db` copied alone
+is a valid database silently missing the most recent pours — a failure that
+restores cleanly and is therefore the worst shape available. The script fetches
+them over `fly ssh sftp`, which works against the distroless image because it is
+served by Fly's init rather than by anything in the image; `fly ssh console`
+finds no shell to run.
+
+Verify a backup by opening it, not by reading its size, and do it once now
+rather than the first time it matters:
+
+```bash
+go run ./api/cmd/server -db backups/<stamp>/moltenpour.db -addr :8788
+curl -s localhost:8788/api/pours      # the ledger, positions intact
+```
+
+Restoring in production is `fly volumes fork <snapshot-id>`, then pointing the
+mount at the fork and deploying. Never restore by writing into the volume of a
+running machine: the server holds the file open, and a half-replaced database
+under a live writer is how a recoverable incident becomes an unrecoverable one.
 
 ## Not done
 

@@ -51,6 +51,14 @@ primary_region = "sjc"
   source = "moltenpour_data"
   destination = "/data"
 
+  # Fly snapshots the volume daily and keeps them for five days by default.
+  # Five days is a long weekend: a ledger lost on Friday and noticed the
+  # following Wednesday would be inside the window only by luck. The ledger is
+  # the product — a serial and a position that cannot be re-derived from
+  # anything else -- so buy the longer window. This is the automatic floor;
+  # scripts/backup-ledger.sh is the copy that survives losing the Fly account.
+  snapshot_retention = 14
+
 [deploy]
   # Not "rolling": a rolling deploy would need two machines at once, and the
   # volume can only be attached to one. Immediate accepts a few seconds of
