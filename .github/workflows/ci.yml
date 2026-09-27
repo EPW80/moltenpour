@@ -87,3 +87,88 @@ jobs:
           push: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  # ── deploy ────────────────────────────────────────────────────────────────────
+  # Only from main, only after the three jobs above are green, and never more
+  # than one at a time. Everything unusual in this job comes from the same fact:
+  # there is one machine on one volume, and `fly deploy` replaces it in place.
+  deploy:
+    name: deploy to Fly
+    needs: [sigil-pipeline, certificate, image]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    # Serialised, and deliberately NOT cancel-in-progress. Cancelling a deploy
+    # partway through is the one thing worse than deploying twice in a row: the
+    # volume detaches from a machine that is being replaced, and the run that
+    # would have finished the job is the one that got killed. Two pushes in
+    # quick succession queue instead.
+    concurrency:
+      group: fly-deploy
+      cancel-in-progress: false
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+
+      # A missing token otherwise surfaces as an authentication error several
+      # steps later, which reads like a Fly outage rather than an unset secret.
+      - name: The deploy token is set
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "$FLY_API_TOKEN" ]; then
+            echo "::error::FLY_API_TOKEN is not set. Create one with 'fly tokens create deploy' and add it as a repository secret."
+            exit 1
+          fi
+
+      # --remote-only builds on Fly's builder rather than here. The `image` job
+      # above already proved the Dockerfile builds; this build is the one that
+      # ships, and keeping it on Fly means no registry credentials in this job.
+      #
+      # strategy = "immediate" in fly.toml means a few seconds of downtime. That
+      # is not a bug to work around: a rolling deploy needs two machines and the
+      # ledger volume attaches to one.
+      - name: fly deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: flyctl deploy --remote-only
+
+      # The invariant the whole design rests on. A second machine is a second
+      # SQLite file and a second ledger sequence — two certificates printing
+      # No. 1 — and nothing about a successful deploy rules it out, because a
+      # machine can be created by hand or left behind by a failed replacement.
+      - name: Exactly one machine
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          count="$(flyctl machines list --json | jq 'length')"
+          echo "machines: $count"
+          flyctl machines list
+          if [ "$count" -ne 1 ]; then
+            echo "::error::$count machines running, expected exactly 1 — the ledger assumes a single writer. This is an incident, not a scale-up."
+            exit 1
+          fi
+
+      # fly deploy waits on the health check, so this is not that. It is the
+      # cookie: MOLTENPOUR_TRUST_PROXY makes the owner cookie Secure behind
+      # Fly's edge, and the owner cookie is the entire access control. Losing
+      # the flag breaks nothing visibly and would ship unnoticed.
+      - name: The owner cookie is Secure
+        run: |
+          app="$(sed -n 's/^app = "\(.*\)"$/\1/p' fly.toml)"
+          # A GET, not a POST. Listing issues the cookie through the same
+          # session.OwnerID path a mint does, and writes nothing. Minting here
+          # would take a real ledger position and burn a serial on every deploy
+          # — CI leaving its own pours in a register whose entire claim is that
+          # it is a continuous record of real ones.
+          cookie="$(curl -fsS -D - -o /dev/null "https://$app.fly.dev/api/pours" \
+            | tr -d '\r' | grep -i '^set-cookie:')"
+          echo "$cookie" | sed 's/mp_owner=[^;]*/mp_owner=<redacted>/'
+          for flag in HttpOnly Secure SameSite=Lax; do
+            case "$cookie" in
+              *"$flag"*) ;;
+              *) echo "::error::the owner cookie is missing $flag — check MOLTENPOUR_TRUST_PROXY=1 in fly.toml"; exit 1 ;;
+            esac
+          done

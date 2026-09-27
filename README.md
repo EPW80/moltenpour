@@ -167,6 +167,24 @@ fly secrets set MOLTENPOUR_SECRET=$(openssl rand -hex 32)
 fly deploy
 ```
 
+After that first deploy, pushes to `main` deploy themselves: the `deploy` job in
+`.github/workflows/ci.yml` runs `flyctl deploy` once the sigil pipeline, the
+certificate measurement and the image build are all green. It needs one
+repository secret:
+
+```bash
+fly tokens create deploy      # -> settings/secrets/actions as FLY_API_TOKEN
+```
+
+Standing up the app, the volume and `MOLTENPOUR_SECRET` stays manual, because
+each is done once and one of them cannot be redone. The job serialises itself and
+does not cancel a deploy in flight — killing `fly deploy` partway through leaves
+the volume detached from a machine mid-replacement, which is worse than deploying
+twice. It also asserts the two things a green deploy does not: that exactly one
+machine is running, and that the owner cookie still comes back `Secure`. It
+checks the cookie with a `GET`, since minting would take a real ledger position
+on every push.
+
 Locally, the same image:
 
 ```bash
