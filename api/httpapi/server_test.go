@@ -284,7 +284,7 @@ func TestReplayIsNotLoggedAsAMint(t *testing.T) {
 	}
 	t.Cleanup(func() { store.Close() })
 	log := slog.New(slog.NewTextHandler(&buf, nil))
-	s := New(store, session.New("test-secret", log), log)
+	s := New(store, session.New("test-secret", false, log), log, Config{MaxTierIndex: 5})
 	s.now = func() time.Time { return now }
 	v := newVisitor(t, s.Routes())
 

@@ -53,7 +53,7 @@ func (s *Server) Routes() http.Handler {
 	// response as JSON. Without this it would fall through to the SPA and fail
 	// on a page of HTML instead of reading the status it was given.
 	mux.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
-		writeErr(w, http.StatusNotFound, "no such endpoint")
+		s.writeErr(w, http.StatusNotFound, "no such endpoint")
 	})
 
 	if s.cfg.StaticDir != "" {
@@ -67,10 +67,10 @@ func (s *Server) Routes() http.Handler {
 // picker can grey out what it cannot sell instead of letting someone pour for
 // fifteen seconds and receive a 400.
 func (s *Server) handleConfig(w http.ResponseWriter, _ *http.Request) {
-	writeJSON(w, http.StatusOK, map[string]int{"maxTierIndex": s.cfg.MaxTierIndex})
+	s.writeJSON(w, http.StatusOK, map[string]int{"maxTierIndex": s.cfg.MaxTierIndex})
 }
 
-func writeJSON(w http.ResponseWriter, code int, v any) {
+func (s *Server) writeJSON(w http.ResponseWriter, code int, v any) {
 	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(code)
 	if err := json.NewEncoder(w).Encode(v); err != nil {
@@ -110,7 +110,7 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	// sequence for a pour that was refused would put a gap in a register whose
 	// whole claim is that it is continuous.
 	if req.TierIndex > s.cfg.MaxTierIndex {
-		writeErr(w, http.StatusBadRequest, "that tier is not available")
+		s.writeErr(w, http.StatusBadRequest, "that tier is not available")
 		return
 	}
 	if req.TierIndex > 0 {
