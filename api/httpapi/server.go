@@ -120,8 +120,10 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	now := s.now()
-	rec, err := s.store.Append(func(position int) (pour.Record, error) {
-		// ownerID comes from the signed cookie, never from the request body.
+	// ownerID comes from the signed cookie, never from the request body — in the
+	// key as much as in the mint, or a client could replay into someone else's.
+	key := pour.MintKey{OwnerID: ownerID, TimestampMs: req.TimestampMs, TierIndex: req.TierIndex}
+	rec, replayed, err := s.store.Append(r.Context(), key, func(position int) (pour.Record, error) {
 		return pour.Mint(req, position, ownerID, now)
 	})
 	if err != nil {
@@ -132,8 +134,22 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 			s.writeErr(w, http.StatusBadRequest, err.Error())
 			return
 		}
+		if errors.Is(err, pour.ErrConflict) {
+			s.writeErr(w, http.StatusConflict, err.Error())
+			return
+		}
 		s.log.Error("minting a pour", "err", err)
 		s.writeErr(w, http.StatusInternalServerError, "could not mint the pour")
+		return
+	}
+
+	// A retry of a pour already on the ledger — the first response was lost.
+	// The stored record is canonical; this request's telemetry is ignored. It
+	// gets its own line and skips the two below, because those feed the rate
+	// escalations and a retried pour counted twice would skew both.
+	if replayed {
+		s.log.Info("mint replayed", "pour", rec.ID, "position", rec.LedgerPosition)
+		s.writeJSON(w, http.StatusOK, rec)
 		return
 	}
 
@@ -167,7 +183,7 @@ func (s *Server) handleList(w http.ResponseWriter, r *http.Request) {
 		s.writeErr(w, http.StatusInternalServerError, "could not establish a session")
 		return
 	}
-	records, err := s.store.List(ownerID)
+	records, err := s.store.List(r.Context(), ownerID)
 	if err != nil {
 		s.log.Error("listing the ledger", "err", err)
 		s.writeErr(w, http.StatusInternalServerError, "could not read the ledger")
@@ -185,7 +201,7 @@ func (s *Server) handleGet(w http.ResponseWriter, r *http.Request) {
 
 	// Someone else's pour is indistinguishable from one that does not exist.
 	// A 403 here would confirm the serial is real to anyone who guessed it.
-	rec, err := s.store.Get(r.PathValue("id"), ownerID)
+	rec, err := s.store.Get(r.Context(), r.PathValue("id"), ownerID)
 	if errors.Is(err, pour.ErrNotFound) {
 		s.writeErr(w, http.StatusNotFound, "no such pour")
 		return
