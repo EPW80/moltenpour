@@ -17,3 +17,9 @@ artifacts/
 # themselves are already ignored above; this keeps the timestamped directories
 # out too. A backup belongs somewhere backed up, not in the source tree.
 backups/
+
+# Local Claude Code tooling: installed skills and machine-local settings, not
+# project source.
+.agents/
+.claude/
+skills-lock.json
