@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -66,13 +67,23 @@ func (v *visitor) do(method, path, body string) *httptest.ResponseRecorder {
 	return w
 }
 
+// starts hands out distinct pour-start times: (owner, timestampMs) is the
+// idempotency key, so a visitor minting twice at one start would replay.
+var starts atomic.Int64
+
+func mintBody(tier int, startMs int64) string {
+	return fmt.Sprintf(
+		`{"tierIndex":%d,"timestampMs":%d,"telemetry":{"dropletsLanded":40,"peakVelocity":1200,"tiltEnergy":6,"holdMs":2000}}`,
+		tier, startMs)
+}
+
+func freshStart() int64 {
+	return now.Add(-3*time.Second).UnixMilli() - starts.Add(1)
+}
+
 func (v *visitor) mint(tier int) pour.Record {
 	v.t.Helper()
-	body := fmt.Sprintf(
-		`{"tierIndex":%d,"timestampMs":%d,"telemetry":{"dropletsLanded":40,"peakVelocity":1200,"tiltEnergy":6,"holdMs":2000}}`,
-		tier, now.Add(-3*time.Second).UnixMilli())
-
-	w := v.do(http.MethodPost, "/api/pours", body)
+	w := v.do(http.MethodPost, "/api/pours", mintBody(tier, freshStart()))
 	if w.Code != http.StatusCreated {
 		v.t.Fatalf("mint: got %d, body %s", w.Code, w.Body.String())
 	}
@@ -212,5 +223,74 @@ func TestHealthNeedsNoSession(t *testing.T) {
 	h.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/api/health", nil))
 	if w.Code != http.StatusOK {
 		t.Fatalf("health: got %d", w.Code)
+	}
+}
+
+// The lost response: the pour committed, the client never heard, and it resends
+// the same body. It must get its pour back — 200, not 201, same id, same
+// position — and the ledger must not move.
+func TestRetriedMintReturnsTheOriginal(t *testing.T) {
+	h := newTestServer(t)
+	v := newVisitor(t, h)
+	body := mintBody(3, freshStart())
+
+	first := v.do(http.MethodPost, "/api/pours", body)
+	if first.Code != http.StatusCreated {
+		t.Fatalf("first mint: got %d, body %s", first.Code, first.Body.String())
+	}
+	retry := v.do(http.MethodPost, "/api/pours", body)
+	if retry.Code != http.StatusOK {
+		t.Fatalf("retry: got %d, want 200 (body %s)", retry.Code, retry.Body.String())
+	}
+	if first.Body.String() != retry.Body.String() {
+		t.Fatalf("retry returned a different pour:\n first %s\n retry %s", first.Body.String(), retry.Body.String())
+	}
+	if got := v.list(); len(got) != 1 {
+		t.Fatalf("a retry used a second ledger position: %d pours", len(got))
+	}
+}
+
+// The same start under a different tier is a different pour, not a retry.
+func TestMintAtATakenStartWithAnotherTierIsAConflict(t *testing.T) {
+	h := newTestServer(t)
+	v := newVisitor(t, h)
+	start := freshStart()
+
+	if w := v.do(http.MethodPost, "/api/pours", mintBody(1, start)); w.Code != http.StatusCreated {
+		t.Fatalf("first mint: got %d", w.Code)
+	}
+	if w := v.do(http.MethodPost, "/api/pours", mintBody(4, start)); w.Code != http.StatusConflict {
+		t.Fatalf("got %d, want 409 (body %s)", w.Code, w.Body.String())
+	}
+	if got := v.list(); len(got) != 1 {
+		t.Fatalf("a conflicting mint was recorded: %d pours", len(got))
+	}
+}
+
+// Replays must not double-count in the logs the rate escalations are computed
+// from: one "minted" line per pour, however many times it is retried.
+func TestReplayIsNotLoggedAsAMint(t *testing.T) {
+	var buf strings.Builder
+	store, err := pour.NewSQLiteStore(":memory:")
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { store.Close() })
+	log := slog.New(slog.NewTextHandler(&buf, nil))
+	s := New(store, session.New("test-secret", log), log)
+	s.now = func() time.Time { return now }
+	v := newVisitor(t, s.Routes())
+
+	body := mintBody(2, freshStart())
+	for i := 0; i < 3; i++ {
+		v.do(http.MethodPost, "/api/pours", body)
+	}
+
+	logged := buf.String()
+	if n := strings.Count(logged, "msg=minted"); n != 1 {
+		t.Fatalf("one pour retried twice logged %d mints, want 1:\n%s", n, logged)
+	}
+	if n := strings.Count(logged, `msg="mint replayed"`); n != 2 {
+		t.Fatalf("want 2 replay lines, got %d:\n%s", n, logged)
 	}
 }

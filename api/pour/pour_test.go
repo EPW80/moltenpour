@@ -1,16 +1,22 @@
 package pour
 
 import (
+	"context"
+	"database/sql"
 	"errors"
+	"fmt"
 	"path/filepath"
 	"reflect"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 
 	"moltenpour/api/sigil"
 )
+
+var ctx = context.Background()
 
 var when = time.Date(2026, 8, 2, 12, 0, 0, 0, time.UTC)
 
@@ -36,6 +42,27 @@ func stores(t *testing.T) map[string]Store {
 
 func req(tier int, t sigil.Telemetry) Request {
 	return Request{TierIndex: tier, TimestampMs: when.UnixMilli(), Telemetry: t}
+}
+
+// starts hands out distinct pour-start times. (owner, timestampMs) is the
+// idempotency key, so tests that mean to mint several pours must start each one
+// at its own millisecond — reusing req's fixed one would replay the first.
+var starts atomic.Int64
+
+// fresh is req at a pour-start no other call has used.
+func fresh(tier int, t sigil.Telemetry) Request {
+	r := req(tier, t)
+	r.TimestampMs -= starts.Add(1)
+	return r
+}
+
+// appendPour is the mint call the HTTP handler makes: the key comes from the
+// same owner and request the mint does.
+func appendPour(store Store, owner string, r Request, now time.Time) (Record, bool, error) {
+	key := MintKey{OwnerID: owner, TimestampMs: r.TimestampMs, TierIndex: r.TierIndex}
+	return store.Append(ctx, key, func(pos int) (Record, error) {
+		return Mint(r, pos, owner, now)
+	})
 }
 
 func honest() sigil.Telemetry {
@@ -155,9 +182,7 @@ func TestConcurrentAppendsGetUniqueSerials(t *testing.T) {
 				wg.Add(1)
 				go func() {
 					defer wg.Done()
-					_, err := store.Append(func(pos int) (Record, error) {
-						return Mint(req(1, honest()), pos, ownerA, when)
-					})
+					_, _, err := appendPour(store, ownerA, fresh(1, honest()), when)
 					if err != nil {
 						t.Error(err)
 					}
@@ -165,7 +190,7 @@ func TestConcurrentAppendsGetUniqueSerials(t *testing.T) {
 			}
 			wg.Wait()
 
-			records, err := store.List(ownerA)
+			records, err := store.List(ctx, ownerA)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -185,6 +210,45 @@ func TestConcurrentAppendsGetUniqueSerials(t *testing.T) {
 			if len(serials) != n {
 				t.Fatalf("expected %d records, got %d", n, len(serials))
 			}
+
+			// And the other half: n concurrent retries of ONE pour — a client
+			// hammering resend after a lost response — must land on one row. If
+			// the replay lookup sat outside the lock, several would miss and mint.
+			same := fresh(2, honest())
+			var minted atomic.Int64
+			ids := make([]string, n)
+			for i := 0; i < n; i++ {
+				wg.Add(1)
+				go func() {
+					defer wg.Done()
+					rec, replayed, err := appendPour(store, ownerA, same, when)
+					if err != nil {
+						t.Error(err)
+						return
+					}
+					if !replayed {
+						minted.Add(1)
+					}
+					ids[i] = rec.ID
+				}()
+			}
+			wg.Wait()
+
+			if got := minted.Load(); got != 1 {
+				t.Fatalf("%d concurrent retries of one pour minted %d times, want 1", n, got)
+			}
+			for _, id := range ids {
+				if id != ids[0] {
+					t.Fatalf("retries of one pour came back as different pours: %q and %q", ids[0], id)
+				}
+			}
+			records, err = store.List(ctx, ownerA)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if len(records) != n+1 {
+				t.Fatalf("expected %d records after the retries, got %d", n+1, len(records))
+			}
 		})
 	}
 }
@@ -193,13 +257,11 @@ func TestListIsNewestFirst(t *testing.T) {
 	for name, store := range stores(t) {
 		t.Run(name, func(t *testing.T) {
 			for i := 0; i < 3; i++ {
-				if _, err := store.Append(func(pos int) (Record, error) {
-					return Mint(req(0, honest()), pos, ownerA, when)
-				}); err != nil {
+				if _, _, err := appendPour(store, ownerA, fresh(0, honest()), when); err != nil {
 					t.Fatal(err)
 				}
 			}
-			got, err := store.List(ownerA)
+			got, err := store.List(ctx, ownerA)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -217,19 +279,15 @@ func TestListIsNewestFirst(t *testing.T) {
 func TestOneOwnerCannotSeeAnother(t *testing.T) {
 	for name, store := range stores(t) {
 		t.Run(name, func(t *testing.T) {
-			mine, err := store.Append(func(pos int) (Record, error) {
-				return Mint(req(3, honest()), pos, ownerA, when)
-			})
+			mine, _, err := appendPour(store, ownerA, fresh(3, honest()), when)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if _, err := store.Append(func(pos int) (Record, error) {
-				return Mint(req(1, honest()), pos, ownerB, when)
-			}); err != nil {
+			if _, _, err := appendPour(store, ownerB, fresh(1, honest()), when); err != nil {
 				t.Fatal(err)
 			}
 
-			listA, err := store.List(ownerA)
+			listA, err := store.List(ctx, ownerA)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -239,15 +297,15 @@ func TestOneOwnerCannotSeeAnother(t *testing.T) {
 
 			// Not a permission error: whether a serial exists at all is not public
 			// information, and a 403 would confirm it to anyone who guessed.
-			if _, err := store.Get(mine.ID, ownerB); !errors.Is(err, ErrNotFound) {
+			if _, err := store.Get(ctx, mine.ID, ownerB); !errors.Is(err, ErrNotFound) {
 				t.Fatalf("owner B reading owner A's pour: got %v, want ErrNotFound", err)
 			}
-			if _, err := store.Get(mine.ID, ownerA); err != nil {
+			if _, err := store.Get(ctx, mine.ID, ownerA); err != nil {
 				t.Fatalf("owner A cannot read their own pour: %v", err)
 			}
 
 			// An unknown owner has an empty collection, not everyone's.
-			listC, err := store.List("owner-who-has-never-poured")
+			listC, err := store.List(ctx, "owner-who-has-never-poured")
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -265,9 +323,7 @@ func TestLedgerPositionIsGlobalNotPerOwner(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			owners := []string{ownerA, ownerB, ownerA, ownerB}
 			for i, owner := range owners {
-				rec, err := store.Append(func(pos int) (Record, error) {
-					return Mint(req(2, honest()), pos, owner, when)
-				})
+				rec, _, err := appendPour(store, owner, fresh(2, honest()), when)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -289,9 +345,7 @@ func TestLedgerSurvivesReopening(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	original, err := first.Append(func(pos int) (Record, error) {
-		return Mint(req(4, honest()), pos, ownerA, when)
-	})
+	original, _, err := appendPour(first, ownerA, fresh(4, honest()), when)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -305,7 +359,7 @@ func TestLedgerSurvivesReopening(t *testing.T) {
 	}
 	defer reopened.Close()
 
-	got, err := reopened.Get(original.ID, ownerA)
+	got, err := reopened.Get(ctx, original.ID, ownerA)
 	if err != nil {
 		t.Fatalf("the pour did not survive the restart: %v", err)
 	}
@@ -317,9 +371,7 @@ func TestLedgerSurvivesReopening(t *testing.T) {
 		t.Fatalf("record changed across a restart:\n got %+v\nwant %+v", got, original)
 	}
 
-	next, err := reopened.Append(func(pos int) (Record, error) {
-		return Mint(req(0, honest()), pos, ownerB, when)
-	})
+	next, _, err := appendPour(reopened, ownerB, fresh(0, honest()), when)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -335,9 +387,7 @@ func TestViolationsSurviveStorage(t *testing.T) {
 	for name, store := range stores(t) {
 		t.Run(name, func(t *testing.T) {
 			overclaim := sigil.Telemetry{DropletsLanded: 9e9, PeakVelocity: 9e9, TiltEnergy: 9e9, HoldMs: 9e9}
-			rec, err := store.Append(func(pos int) (Record, error) {
-				return Mint(req(3, overclaim), pos, ownerA, when.Add(2*time.Second))
-			})
+			rec, _, err := appendPour(store, ownerA, fresh(3, overclaim), when.Add(2*time.Second))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -345,7 +395,7 @@ func TestViolationsSurviveStorage(t *testing.T) {
 				t.Fatal("an overclaim on every field should have been flagged")
 			}
 
-			got, err := store.Get(rec.ID, ownerA)
+			got, err := store.Get(ctx, rec.ID, ownerA)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -353,13 +403,11 @@ func TestViolationsSurviveStorage(t *testing.T) {
 				t.Fatalf("violations changed in storage: got %v, want %v", got.Violations, rec.Violations)
 			}
 
-			clean, err := store.Append(func(pos int) (Record, error) {
-				return Mint(req(1, honest()), pos, ownerA, when)
-			})
+			clean, _, err := appendPour(store, ownerA, fresh(1, honest()), when)
 			if err != nil {
 				t.Fatal(err)
 			}
-			stored, err := store.Get(clean.ID, ownerA)
+			stored, err := store.Get(ctx, clean.ID, ownerA)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -367,5 +415,179 @@ func TestViolationsSurviveStorage(t *testing.T) {
 				t.Fatal("an honest pour should store [], not null")
 			}
 		})
+	}
+}
+
+// The lost-response retry: the client resends the same pour-start, and must get
+// back the pour it already has rather than a second ledger position. The retry's
+// telemetry is ignored — the first write is canonical — and mint is not called.
+func TestReplayReturnsTheOriginal(t *testing.T) {
+	for name, store := range stores(t) {
+		t.Run(name, func(t *testing.T) {
+			first := fresh(3, honest())
+			original, replayed, err := appendPour(store, ownerA, first, when)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if replayed {
+				t.Fatal("a first mint reported itself as a replay")
+			}
+
+			retry := first
+			retry.Telemetry = sigil.Telemetry{DropletsLanded: 1, PeakVelocity: 1, TiltEnergy: 1, HoldMs: 1}
+			key := MintKey{OwnerID: ownerA, TimestampMs: retry.TimestampMs, TierIndex: retry.TierIndex}
+			got, replayed, err := store.Append(ctx, key, func(int) (Record, error) {
+				t.Fatal("mint ran for a pour already on the ledger")
+				return Record{}, nil
+			})
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !replayed {
+				t.Fatal("a retry was not reported as a replay")
+			}
+			if !reflect.DeepEqual(got, original) {
+				t.Fatalf("replay returned a different record:\n got %+v\nwant %+v", got, original)
+			}
+
+			if list, err := store.List(ctx, ownerA); err != nil || len(list) != 1 {
+				t.Fatalf("a retry should leave one pour on the ledger, got %d (err %v)", len(list), err)
+			}
+		})
+	}
+}
+
+// Same owner and pour-start under a different tier is not a retry — it is a
+// different pour claiming the same start, and answering it with the stored one
+// would hand back a certificate for a tier that was not asked for.
+func TestReplayWithADifferentTierConflicts(t *testing.T) {
+	for name, store := range stores(t) {
+		t.Run(name, func(t *testing.T) {
+			r := fresh(2, honest())
+			if _, _, err := appendPour(store, ownerA, r, when); err != nil {
+				t.Fatal(err)
+			}
+			r.TierIndex = 4
+			if _, _, err := appendPour(store, ownerA, r, when); !errors.Is(err, ErrConflict) {
+				t.Fatalf("got %v, want ErrConflict", err)
+			}
+			if list, _ := store.List(ctx, ownerA); len(list) != 1 {
+				t.Fatalf("a conflicting mint was recorded: %d pours", len(list))
+			}
+		})
+	}
+}
+
+// A retry can arrive long after the pour — the server was down, the client kept
+// the pour for another attempt. The lookup precedes Mint, so the skew window
+// that would reject a fresh request at this time does not reject a replay.
+func TestReplayAfterTheSkewWindowStillSucceeds(t *testing.T) {
+	for name, store := range stores(t) {
+		t.Run(name, func(t *testing.T) {
+			r := fresh(1, honest())
+			original, _, err := appendPour(store, ownerA, r, when)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			late := when.Add(2 * maxClockSkew)
+			if _, err := Mint(r, 2, ownerA, late); !errors.Is(err, ErrValidation) {
+				t.Fatal("the retry time is inside the window; test proves nothing")
+			}
+
+			got, replayed, err := appendPour(store, ownerA, r, late)
+			if err != nil {
+				t.Fatalf("a late replay was refused: %v", err)
+			}
+			if !replayed || got.ID != original.ID {
+				t.Fatalf("late replay: replayed=%v id=%q, want the original %q", replayed, got.ID, original.ID)
+			}
+		})
+	}
+}
+
+// The key includes the owner. Two visitors starting in the same millisecond are
+// two pours, and one must never be answered with the other's.
+func TestSameStartForDifferentOwnersIsTwoPours(t *testing.T) {
+	for name, store := range stores(t) {
+		t.Run(name, func(t *testing.T) {
+			r := fresh(2, honest())
+			a, _, err := appendPour(store, ownerA, r, when)
+			if err != nil {
+				t.Fatal(err)
+			}
+			b, replayed, err := appendPour(store, ownerB, r, when)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if replayed || a.LedgerPosition == b.LedgerPosition {
+				t.Fatalf("owner B's pour was treated as a replay of owner A's")
+			}
+		})
+	}
+}
+
+// writeLegacyLedger creates a ledger as it was before the start index existed:
+// the same table, no pours_owner_start.
+func writeLegacyLedger(t *testing.T, path string, rows ...[2]any) {
+	t.Helper()
+	db, err := sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer db.Close()
+	if _, err := db.Exec(schema); err != nil {
+		t.Fatal(err)
+	}
+	for i, row := range rows {
+		if _, err := db.Exec(`
+			INSERT INTO pours (
+				id, owner_id, ledger_position, tier_index, amount_cents, timestamp_ms,
+				droplets_landed, peak_velocity, tilt_energy, hold_ms,
+				violations, seed, rarity, rarity_score, serial, batch, mass_grams, issued
+			) VALUES (?, ?, ?, 0, 0, ?, 0, 0, 0, 0, '[]', 0, 'Common', 0, ?, '001-A', 0, '2026-08-02')`,
+			fmt.Sprintf("legacy-%d", i), row[0], i+1, row[1], fmt.Sprintf("MP-%07d-0000", i+1),
+		); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+// A ledger that predates idempotency picks up the index on its next open —
+// CREATE ... IF NOT EXISTS, no migration step for an operator to forget.
+func TestExistingLedgerGetsTheStartIndexOnOpen(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "ledger.db")
+	writeLegacyLedger(t, path, [2]any{ownerA, when.UnixMilli()}, [2]any{ownerA, when.UnixMilli() + 1})
+
+	store, err := NewSQLiteStore(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer store.Close()
+
+	var unique int
+	if err := store.(*sqliteStore).db.QueryRow(
+		`SELECT "unique" FROM pragma_index_list('pours') WHERE name = 'pours_owner_start'`,
+	).Scan(&unique); err != nil {
+		t.Fatalf("pours_owner_start missing after reopening a legacy ledger: %v", err)
+	}
+	if unique != 1 {
+		t.Fatal("pours_owner_start exists but is not UNIQUE")
+	}
+}
+
+// The ledger this index is fixing can already hold the duplicates it forbids.
+// Opening one must fail, and say why, rather than hand over a bare constraint
+// error or — worse — start without the guarantee.
+func TestDuplicateStartsInAnExistingLedgerAreNamed(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "ledger.db")
+	writeLegacyLedger(t, path, [2]any{ownerA, when.UnixMilli()}, [2]any{ownerA, when.UnixMilli()})
+
+	_, err := NewSQLiteStore(path)
+	if err == nil {
+		t.Fatal("opened a ledger holding duplicate pour-starts")
+	}
+	if !strings.Contains(err.Error(), "minted more than once") {
+		t.Fatalf("error does not name the duplicates: %v", err)
 	}
 }
