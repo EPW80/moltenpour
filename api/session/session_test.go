@@ -1,6 +1,7 @@
 package session
 
 import (
+	"crypto/tls"
 	"io"
 	"log/slog"
 	"net/http"
@@ -13,7 +14,7 @@ func quiet() *slog.Logger {
 	return slog.New(slog.NewTextHandler(io.Discard, nil))
 }
 
-func manager() *Manager { return New("test-secret", quiet()) }
+func manager() *Manager { return New("test-secret", false, quiet()) }
 
 // The id in the cookie is the only thing separating one collection from another,
 // so it has to be minted, signed, and returned.
@@ -117,17 +118,66 @@ func TestForgedCookieIsRejected(t *testing.T) {
 // the secret would not actually invalidate anything.
 func TestCookieDoesNotVerifyUnderADifferentSecret(t *testing.T) {
 	w := httptest.NewRecorder()
-	if _, err := New("secret-one", quiet()).OwnerID(w, httptest.NewRequest(http.MethodGet, "/", nil)); err != nil {
+	if _, err := New("secret-one", false, quiet()).OwnerID(w, httptest.NewRequest(http.MethodGet, "/", nil)); err != nil {
 		t.Fatal(err)
 	}
 
 	r := httptest.NewRequest(http.MethodGet, "/", nil)
 	r.AddCookie(w.Result().Cookies()[0])
 	rec := httptest.NewRecorder()
-	if _, err := New("secret-two", quiet()).OwnerID(rec, r); err != nil {
+	if _, err := New("secret-two", false, quiet()).OwnerID(rec, r); err != nil {
 		t.Fatal(err)
 	}
 	if len(rec.Result().Cookies()) != 1 {
 		t.Fatal("a cookie from another secret should have been rejected and replaced")
+	}
+}
+
+// Behind Fly, Render or any other TLS-terminating proxy the request reaches this
+// process over plain HTTP, so r.TLS is nil on exactly the deployments where the
+// cookie most needs Secure. The forwarded header is the only evidence there is —
+// and it is evidence only where a proxy is known to be overwriting it.
+func TestSecureFlagFollowsTheVisitorsScheme(t *testing.T) {
+	for _, tc := range []struct {
+		name       string
+		trustProxy bool
+		forwarded  string
+		tls        bool
+		wantSecure bool
+	}{
+		{name: "plain localhost", wantSecure: false},
+		{name: "direct TLS", tls: true, wantSecure: true},
+		{
+			name: "untrusted forwarded header is not evidence",
+			// A visitor can send this header themselves. Honouring it without a
+			// proxy in front would let them choose their own cookie's flags.
+			forwarded: "https", trustProxy: false, wantSecure: false,
+		},
+		{name: "trusted proxy, https", trustProxy: true, forwarded: "https", wantSecure: true},
+		{name: "trusted proxy, proxy chain", trustProxy: true, forwarded: "https, http", wantSecure: true},
+		{name: "trusted proxy, plain http", trustProxy: true, forwarded: "http", wantSecure: false},
+		{name: "trusted proxy, no header", trustProxy: true, wantSecure: false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			r := httptest.NewRequest(http.MethodGet, "/", nil)
+			if tc.forwarded != "" {
+				r.Header.Set("X-Forwarded-Proto", tc.forwarded)
+			}
+			if tc.tls {
+				r.TLS = &tls.ConnectionState{}
+			}
+
+			w := httptest.NewRecorder()
+			if _, err := New("test-secret", tc.trustProxy, quiet()).OwnerID(w, r); err != nil {
+				t.Fatal(err)
+			}
+			cookies := w.Result().Cookies()
+			if len(cookies) != 1 {
+				t.Fatalf("expected one cookie, got %d", len(cookies))
+			}
+			if got := cookies[0].Secure; got != tc.wantSecure {
+				t.Errorf("Secure = %v, want %v", got, tc.wantSecure)
+			}
+		})
 	}
 }

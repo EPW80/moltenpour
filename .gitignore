@@ -13,8 +13,7 @@ artifacts/
 *.db-wal
 *.db-shm
 
-# Local Claude Code tooling: installed skills and machine-local settings, not
-# project source.
-.agents/
-.claude/
-skills-lock.json
+# Copies of the live ledger pulled by scripts/backup-ledger.sh. The files
+# themselves are already ignored above; this keeps the timestamped directories
+# out too. A backup belongs somewhere backed up, not in the source tree.
+backups/

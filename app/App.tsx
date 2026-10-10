@@ -19,12 +19,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { PourScreen, type Phase } from './ceremony/PourScreen';
+import { TIERS } from './ceremony/tiers';
 import { Gallery } from './collection/Gallery';
 import { CertificateView } from './certificate/CertificateView';
 import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION } from './design/tokens';
 import { useIsWide } from './design/viewport';
 import type { Rarity } from './sigil/rarity';
-import { listPours, mintPour, type MintRequest, type PourRecord } from './pour/record';
+import { getConfig, listPours, mintPour, type MintRequest, type PourRecord } from './pour/record';
 
 import './certificate/fonts/bodoni.css';
 import './certificate/print.css';
@@ -59,6 +60,12 @@ export function App() {
   const [sealing, setSealing] = useState(false);
 
   const [tierIndex, setTierIndex] = useState(3);
+  /**
+   * The highest tier this deployment will mint. Optimistic until the server
+   * answers: the whole tier table is what the ceremony has always shown, and
+   * blanking it for one round trip would flash the ledger empty.
+   */
+  const [maxTierIndex, setMaxTierIndex] = useState(TIERS.length - 1);
   const [phase, setPhase] = useState<Phase>('idle');
   const [rarity, setRarity] = useState<Rarity>('Common');
 
@@ -76,6 +83,24 @@ export function App() {
   useEffect(() => {
     void refresh();
   }, [refresh]);
+
+  // The ceiling, not the ledger: a deployment that cannot charge refuses the
+  // paid tiers, and the picker greys them out rather than letting someone pour
+  // for fifteen seconds to be told no. A failure here leaves the optimistic
+  // default — the server still refuses, and says so in the notice band.
+  useEffect(() => {
+    void (async () => {
+      try {
+        const { maxTierIndex: max } = await getConfig();
+        setMaxTierIndex(max);
+        // The default selection may sit above the ceiling.
+        setTierIndex((current) => Math.min(current, max));
+      } catch {
+        // Deliberately silent. The tier picker is not where a config fetch
+        // failure should be announced.
+      }
+    })();
+  }, []);
 
   useEffect(() => () => {
     if (sealTimer.current !== null) window.clearTimeout(sealTimer.current);
@@ -246,6 +271,7 @@ export function App() {
           <PourScreen
             tierIndex={tierIndex}
             onTierIndex={setTierIndex}
+            maxTierIndex={maxTierIndex}
             phase={phase}
             onPhase={setPhase}
             rarity={rarity}

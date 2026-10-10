@@ -1,0 +1,17 @@
+.git
+.github
+node_modules
+dist
+artifacts
+docs
+
+# A local ledger baked into the image would publish real pours.
+*.db
+*.db-wal
+*.db-shm
+
+*.log
+*:Zone.Identifier
+Dockerfile
+.dockerignore
+fly.toml
