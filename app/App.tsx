@@ -230,7 +230,7 @@ export function App() {
               lineHeight: 0.92,
               letterSpacing: '-1px',
               color: COLOR.goldCream,
-              textShadow: '0 0 44px rgba(201,146,46,.35)',
+              textShadow: `0 0 44px ${COLOR.ruleActive}`,
             }}
           >
             The Molten Pour
@@ -241,7 +241,7 @@ export function App() {
           <span style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
             {/* The only continuous motion on the page, and the only circle in a
                 document system that otherwise has no radius at all. */}
-            <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 14, height: 14, border: '1px solid rgba(201,146,46,.35)', borderRadius: '50%' }}>
+            <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 14, height: 14, border: `1px solid ${COLOR.ruleActive}`, borderRadius: '50%' }}>
               <span className="mp-breathe" style={{ width: 4, height: 4, borderRadius: '50%', background: accent }} />
             </span>
             <span>{view === 'ceremony' ? STATUS_LINE[phase] : 'Live · register open'}</span>
@@ -329,7 +329,7 @@ export function App() {
             position: 'fixed',
             inset: 0,
             zIndex: 20,
-            background: 'rgba(10,6,13,.94)',
+            background: COLOR.shadeDeep,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

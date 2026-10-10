@@ -174,6 +174,26 @@ func TestClassifyHandlesOutOfRangeTier(t *testing.T) {
 	}
 }
 
+// ClampTelemetry and RarityScore must clamp an out-of-range tierIndex to the
+// same boundary — both go through clampTierIndex now, but this pins the
+// behavior rather than relying on that being an implementation detail.
+func TestClampTelemetryHandlesOutOfRangeTierLikeRarityScore(t *testing.T) {
+	raw := Telemetry{DropletsLanded: 50, PeakVelocity: 900, TiltEnergy: 8, HoldMs: 4000}
+	const wallClockMs = 5000
+
+	below := ClampTelemetry(raw, -1, wallClockMs)
+	floor := ClampTelemetry(raw, 0, wallClockMs)
+	if below.Telemetry != floor.Telemetry {
+		t.Fatalf("tier -1 clamped to %+v, want tier 0's %+v", below.Telemetry, floor.Telemetry)
+	}
+
+	above := ClampTelemetry(raw, len(tierFlow)+4, wallClockMs)
+	ceiling := ClampTelemetry(raw, len(tierFlow)-1, wallClockMs)
+	if above.Telemetry != ceiling.Telemetry {
+		t.Fatalf("oversized tier clamped to %+v, want top tier's %+v", above.Telemetry, ceiling.Telemetry)
+	}
+}
+
 // Go's float->int conversion is implementation-specific for NaN/Inf; JS
 // ToUint32 yields 0. Hashing must never be platform-dependent.
 func TestToUint32HandlesNonFinite(t *testing.T) {

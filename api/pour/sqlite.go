@@ -1,6 +1,7 @@
 package pour
 
 import (
+	"context"
 	"database/sql"
 	"encoding/json"
 	"errors"
@@ -46,6 +47,13 @@ CREATE TABLE IF NOT EXISTS pours (
 CREATE INDEX IF NOT EXISTS pours_owner ON pours (owner_id, ledger_position DESC);
 `
 
+// The idempotency key: one owner, one pour-start, one pour. See MintKey.
+//
+// Kept apart from schema so a ledger that predates it gets the index on its
+// next open, and so a failure here can be told apart from a failure creating
+// the table. It also serves the lookup every Append makes before minting.
+const startIndex = `CREATE UNIQUE INDEX IF NOT EXISTS pours_owner_start ON pours (owner_id, timestamp_ms);`
+
 type sqliteStore struct {
 	db *sql.DB
 }
@@ -72,38 +80,76 @@ func NewSQLiteStore(path string) (Store, error) {
 		db.Close()
 		return nil, fmt.Errorf("create ledger schema: %w", err)
 	}
+	if _, err := db.Exec(startIndex); err != nil {
+		err = explainStartIndexFailure(db, err)
+		db.Close()
+		return nil, err
+	}
 	return &sqliteStore{db: db}, nil
+}
+
+// explainStartIndexFailure names the likely cause when the unique index will
+// not build. A ledger written before the index existed can hold the very
+// duplicates it forbids — a retry after a lost response minted a second
+// position for the same pour — and an operator needs to be told that rather
+// than handed a bare constraint error.
+func explainStartIndexFailure(db *sql.DB, err error) error {
+	var dupes int
+	if qerr := db.QueryRow(`SELECT COUNT(*) FROM (
+		SELECT 1 FROM pours GROUP BY owner_id, timestamp_ms HAVING COUNT(*) > 1
+	)`).Scan(&dupes); qerr == nil && dupes > 0 {
+		return fmt.Errorf("create pours_owner_start index: the ledger holds %d (owner_id, timestamp_ms) pairs minted more than once, "+
+			"left by retries before minting was idempotent; resolve them before starting: %w", dupes, err)
+	}
+	return fmt.Errorf("create pours_owner_start index: %w", err)
 }
 
 func (s *sqliteStore) Close() error { return s.db.Close() }
 
-func (s *sqliteStore) Append(mint func(ledgerPosition int) (Record, error)) (Record, error) {
-	tx, err := s.db.Begin()
+func (s *sqliteStore) Append(ctx context.Context, key MintKey, mint func(ledgerPosition int) (Record, error)) (Record, bool, error) {
+	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
-		return Record{}, err
+		return Record{}, false, fmt.Errorf("begin pour transaction: %w", err)
 	}
 	defer tx.Rollback() //nolint:errcheck // no-op once committed
+
+	// The replay lookup is inside the transaction for the same reason the
+	// position read is: two concurrent retries of one pour must not both miss.
+	existing, err := scanRecord(tx.QueryRowContext(ctx,
+		`SELECT `+selectColumns+` WHERE owner_id = ? AND timestamp_ms = ?`,
+		key.OwnerID, key.TimestampMs).Scan)
+	switch {
+	case err == nil:
+		if existing.TierIndex != key.TierIndex {
+			return Record{}, false, ErrConflict
+		}
+		return existing, true, nil
+	case !errors.Is(err, sql.ErrNoRows):
+		return Record{}, false, fmt.Errorf("look up pour by start: %w", err)
+	}
 
 	// Read the position and insert inside one transaction. The position feeds
 	// the serial and the batch, so reading it outside would let two concurrent
 	// pours print the same serial — the thing TestConcurrentAppendsGetUniqueSerials
 	// exists to catch.
 	var position int
-	if err := tx.QueryRow(`SELECT COALESCE(MAX(ledger_position), 0) + 1 FROM pours`).Scan(&position); err != nil {
-		return Record{}, err
+	if err := tx.QueryRowContext(ctx, `SELECT COALESCE(MAX(ledger_position), 0) + 1 FROM pours`).Scan(&position); err != nil {
+		return Record{}, false, fmt.Errorf("read ledger position: %w", err)
 	}
 
+	// mint's own error (typically pour.ErrValidation) is returned as-is — it
+	// is not a store failure, and the HTTP layer distinguishes it by identity.
 	rec, err := mint(position)
 	if err != nil {
-		return Record{}, err
+		return Record{}, false, err
 	}
 
 	violations, err := json.Marshal(rec.Violations)
 	if err != nil {
-		return Record{}, err
+		return Record{}, false, fmt.Errorf("marshal violations: %w", err)
 	}
 
-	if _, err := tx.Exec(`
+	if _, err := tx.ExecContext(ctx, `
 		INSERT INTO pours (
 			id, owner_id, ledger_position, tier_index, amount_cents, timestamp_ms,
 			droplets_landed, peak_velocity, tilt_energy, hold_ms,
@@ -114,10 +160,13 @@ func (s *sqliteStore) Append(mint func(ledgerPosition int) (Record, error)) (Rec
 		string(violations), int64(rec.Seed), string(rec.Rarity), rec.RarityScore,
 		rec.Serial, rec.Batch, rec.MassGrams, rec.Issued,
 	); err != nil {
-		return Record{}, err
+		return Record{}, false, fmt.Errorf("insert pour: %w", err)
 	}
 
-	return rec, tx.Commit()
+	if err := tx.Commit(); err != nil {
+		return Record{}, false, fmt.Errorf("commit pour: %w", err)
+	}
+	return rec, false, nil
 }
 
 const selectColumns = `
@@ -153,10 +202,10 @@ func scanRecord(scan func(...any) error) (Record, error) {
 	return r, nil
 }
 
-func (s *sqliteStore) Get(id, ownerID string) (Record, error) {
+func (s *sqliteStore) Get(ctx context.Context, id, ownerID string) (Record, error) {
 	// Owner is part of the WHERE, not a check afterwards. Someone else's pour is
 	// ErrNotFound: whether a serial exists is not public information.
-	row := s.db.QueryRow(`SELECT `+selectColumns+` WHERE id = ? AND owner_id = ?`, id, ownerID)
+	row := s.db.QueryRowContext(ctx, `SELECT `+selectColumns+` WHERE id = ? AND owner_id = ?`, id, ownerID)
 	rec, err := scanRecord(row.Scan)
 	if errors.Is(err, sql.ErrNoRows) {
 		return Record{}, ErrNotFound
@@ -164,8 +213,8 @@ func (s *sqliteStore) Get(id, ownerID string) (Record, error) {
 	return rec, err
 }
 
-func (s *sqliteStore) List(ownerID string) ([]Record, error) {
-	rows, err := s.db.Query(`SELECT `+selectColumns+` WHERE owner_id = ? ORDER BY ledger_position DESC`, ownerID)
+func (s *sqliteStore) List(ctx context.Context, ownerID string) ([]Record, error) {
+	rows, err := s.db.QueryContext(ctx, `SELECT `+selectColumns+` WHERE owner_id = ? ORDER BY ledger_position DESC`, ownerID)
 	if err != nil {
 		return nil, err
 	}

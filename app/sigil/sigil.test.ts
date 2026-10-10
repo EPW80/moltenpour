@@ -110,6 +110,23 @@ describe('clampTelemetry', () => {
       expect([...got.violations].sort(), `row ${i}`).toEqual([...r.violations].sort());
     }
   });
+
+  // An out-of-range tierIndex never reaches this in production — pour.go
+  // rejects it before either function runs — but clampTelemetry and rarity.ts
+  // both read TIER_BOUNDS via the same clampTierIndex, and they should stay
+  // provably in agreement rather than merely coincidentally so.
+  it('clamps an out-of-range tierIndex the same way rarityScore does', () => {
+    const raw: Telemetry = { dropletsLanded: 50, peakVelocity: 900, tiltEnergy: 8, holdMs: 4000 };
+    const wallClockMs = 5000;
+
+    const below = clampTelemetry(raw, -1, wallClockMs);
+    const floor = clampTelemetry(raw, 0, wallClockMs);
+    expect(below.telemetry).toEqual(floor.telemetry);
+
+    const above = clampTelemetry(raw, TIER_BOUNDS.length + 4, wallClockMs);
+    const ceiling = clampTelemetry(raw, TIER_BOUNDS.length - 1, wallClockMs);
+    expect(above.telemetry).toEqual(ceiling.telemetry);
+  });
 });
 
 describe('rarity', () => {

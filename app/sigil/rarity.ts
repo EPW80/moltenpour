@@ -24,7 +24,7 @@
  * component, because the brief forbids any suggestion of a randomized outcome.
  */
 
-import { SIM, TIER_BOUNDS, type Telemetry } from './telemetry';
+import { SIM, clampTierIndex, telemetryCeilings, type Telemetry } from './telemetry';
 
 export const RARITIES = ['Common', 'Uncommon', 'Rare', 'Singular'] as const;
 export type Rarity = (typeof RARITIES)[number];
@@ -94,19 +94,18 @@ export type ScoreParts = {
  * a line-for-line match of the arithmetic below.
  */
 export function scoreParts(telemetry: Telemetry, tierIndex: number): ScoreParts {
-  // IMPORTANT: clamp once and use the clamped index for both the flow lookup and
-  // the reach multiplier. Falling back to TIER_BOUNDS[0] for the flow while
-  // scaling reach by the top tier scores an out-of-range tier *higher* than a
-  // legitimate one, and disagrees with the Go port, which clamps consistently.
-  const tier = TIER_BOUNDS[clampTierIndex(tierIndex)];
+  // IMPORTANT: clamp once and use the clamped index for both the flow lookup
+  // (inside telemetryCeilings) and the reach multiplier below. Using two
+  // different strategies for the two would score an out-of-range tier
+  // *higher* than a legitimate one, and disagree with the Go port.
   const holdMs = Math.floor(telemetry.holdMs);
   const holdS = holdMs / 1000;
 
-  // Ceilings, recomputed exactly as clampTelemetry derived them.
-  const maxDroplets = Math.ceil(tier.flow * holdS * SIM.dropletTolerance);
-  const maxFall = SIM.spawnVyMax + SIM.gravity * Math.min(holdS, 1.2);
-  const maxSpeed = Math.round(Math.sqrt(maxFall * maxFall + SIM.spawnVxMax * SIM.spawnVxMax) * 1.1);
-  const maxTiltMilli = Math.round(SIM.maxTiltRate * holdS * 1000);
+  // Same ceiling formula clampTelemetry bounds a claim against — rounded here
+  // to the permille-safe precision this function needs.
+  const { maxDroplets, maxSpeed: maxSpeedRaw, maxTilt } = telemetryCeilings(tierIndex, holdS);
+  const maxSpeed = Math.round(maxSpeedRaw);
+  const maxTiltMilli = Math.round(maxTilt * 1000);
 
   const permille = (value: number, max: number): number => {
     if (max <= 0) return 0;
@@ -132,12 +131,6 @@ export function scoreParts(telemetry: Telemetry, tierIndex: number): ScoreParts 
 
 function pourScore(telemetry: Telemetry, tierIndex: number): number {
   return scoreParts(telemetry, tierIndex).score;
-}
-
-function clampTierIndex(tierIndex: number): number {
-  if (!Number.isFinite(tierIndex)) return 0;
-  const i = Math.floor(tierIndex);
-  return i < 0 ? 0 : i >= TIER_BOUNDS.length ? TIER_BOUNDS.length - 1 : i;
 }
 
 /** The score behind a rarity, exposed for tuning and for the drift corpus. */

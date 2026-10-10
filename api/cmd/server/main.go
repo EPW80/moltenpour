@@ -46,7 +46,11 @@ func main() {
 		log.Error("opening the ledger", "path", *dbPath, "err", err)
 		os.Exit(1)
 	}
-	defer store.Close()
+	defer func() {
+		if err := store.Close(); err != nil {
+			log.Error("closing the ledger", "err", err)
+		}
+	}()
 	log.Info("ledger open", "path", *dbPath)
 
 	sessions := session.New(os.Getenv("MOLTENPOUR_SECRET"), trustProxy, log)
