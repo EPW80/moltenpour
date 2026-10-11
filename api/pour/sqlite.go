@@ -64,8 +64,11 @@ type sqliteStore struct {
 // implementation rather than only the in-memory map.
 func NewSQLiteStore(path string) (Store, error) {
 	// WAL so a reader is never blocked by the writer; busy_timeout so a
-	// contended write waits rather than failing outright.
-	dsn := fmt.Sprintf("file:%s?_pragma=busy_timeout(10000)&_pragma=journal_mode(WAL)&_pragma=foreign_keys(1)", path)
+	// contended write waits rather than failing outright. _txlock=immediate is
+	// what lets that wait happen: Append reads before it writes, and a deferred
+	// transaction that has read cannot wait for another process's write lock —
+	// SQLite fails its upgrade with SQLITE_BUSY at once, ignoring the timeout.
+	dsn := fmt.Sprintf("file:%s?_txlock=immediate&_pragma=busy_timeout(10000)&_pragma=journal_mode(WAL)&_pragma=foreign_keys(1)", path)
 	db, err := sql.Open("sqlite", dsn)
 	if err != nil {
 		return nil, fmt.Errorf("open ledger: %w", err)
