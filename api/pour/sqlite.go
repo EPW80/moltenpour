@@ -107,6 +107,20 @@ func explainStartIndexFailure(db *sql.DB, err error) error {
 	return fmt.Errorf("create pours_owner_start index: %w", err)
 }
 
+// Ping proves the connection is open and the pours table is readable, which a
+// bare PingContext does not: it would pass against a file that lost its schema.
+func (s *sqliteStore) Ping(ctx context.Context) error {
+	if err := s.db.PingContext(ctx); err != nil {
+		return err
+	}
+	var one int
+	err := s.db.QueryRowContext(ctx, `SELECT 1 FROM pours LIMIT 1`).Scan(&one)
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil // an empty ledger is a healthy one
+	}
+	return err
+}
+
 func (s *sqliteStore) Close() error { return s.db.Close() }
 
 func (s *sqliteStore) Append(ctx context.Context, key MintKey, mint func(ledgerPosition int) (Record, error)) (Record, bool, error) {

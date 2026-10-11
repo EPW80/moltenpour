@@ -44,6 +44,9 @@ type Store interface {
 	Append(ctx context.Context, key MintKey, mint func(ledgerPosition int) (Record, error)) (rec Record, replayed bool, err error)
 	Get(ctx context.Context, id, ownerID string) (Record, error)
 	List(ctx context.Context, ownerID string) ([]Record, error)
+	// Ping reports whether the ledger can be read. Liveness says the process is
+	// up; this says it can still do its one job.
+	Ping(ctx context.Context) error
 	Close() error
 }
 
@@ -118,5 +121,7 @@ func (s *memoryStore) List(_ context.Context, ownerID string) ([]Record, error) 
 	}
 	return out, nil
 }
+
+func (s *memoryStore) Ping(context.Context) error { return nil }
 
 func (s *memoryStore) Close() error { return nil }
