@@ -51,6 +51,22 @@ export type MintRequest = {
   telemetry: Telemetry;
 };
 
+/**
+ * Mint outlasts the server's 10s SQLite busy_timeout with slack, so a slow
+ * ledger answers before the client gives up. Retrying after a timeout is safe:
+ * the server mints idempotently on (owner, timestampMs).
+ */
+const MINT_TIMEOUT_MS = 20_000;
+const READ_TIMEOUT_MS = 10_000;
+
+/** True for an aborted or timed-out fetch, as opposed to a server answer. */
+export function isTimeout(e: unknown): boolean {
+  return (
+    e instanceof DOMException &&
+    (e.name === "TimeoutError" || e.name === "AbortError")
+  );
+}
+
 async function json<T>(res: Response): Promise<T> {
   if (!res.ok)
     throw new Error(`${res.status} ${res.statusText}: ${await res.text()}`);
@@ -63,16 +79,23 @@ export async function mintPour(req: MintRequest): Promise<PourRecord> {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(req),
+      signal: AbortSignal.timeout(MINT_TIMEOUT_MS),
     }),
   );
 }
 
 export async function listPours(): Promise<PourRecord[]> {
-  return json<PourRecord[]>(await fetch("/api/pours"));
+  return json<PourRecord[]>(
+    await fetch("/api/pours", { signal: AbortSignal.timeout(READ_TIMEOUT_MS) }),
+  );
 }
 
 export async function getPour(id: string): Promise<PourRecord> {
-  return json<PourRecord>(await fetch(`/api/pours/${encodeURIComponent(id)}`));
+  return json<PourRecord>(
+    await fetch(`/api/pours/${encodeURIComponent(id)}`, {
+      signal: AbortSignal.timeout(READ_TIMEOUT_MS),
+    }),
+  );
 }
 
 /**
@@ -88,7 +111,11 @@ export type ServerConfig = {
 };
 
 export async function getConfig(): Promise<ServerConfig> {
-  return json<ServerConfig>(await fetch("/api/config"));
+  return json<ServerConfig>(
+    await fetch("/api/config", {
+      signal: AbortSignal.timeout(READ_TIMEOUT_MS),
+    }),
+  );
 }
 
 /** `310.97 g` — two decimals and a space, per the certificate spec. */

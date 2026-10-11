@@ -25,7 +25,7 @@ import { CertificateView } from './certificate/CertificateView';
 import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION } from './design/tokens';
 import { useIsWide } from './design/viewport';
 import type { Rarity } from './sigil/rarity';
-import { getConfig, listPours, mintPour, type MintRequest, type PourRecord } from './pour/record';
+import { getConfig, isTimeout, listPours, mintPour, type MintRequest, type PourRecord } from './pour/record';
 
 import './certificate/fonts/bodoni.css';
 import './certificate/print.css';
@@ -138,7 +138,11 @@ export function App() {
         } catch (e) {
           await held;
           setSealing(false);
-          setNotice(`The record could not be sealed: ${e instanceof Error ? e.message : String(e)}`);
+          setNotice(
+            isTimeout(e)
+              ? 'The ledger did not answer. The pour has been kept; seal it again.'
+              : `The record could not be sealed: ${e instanceof Error ? e.message : String(e)}`,
+          );
         }
       })();
     },
