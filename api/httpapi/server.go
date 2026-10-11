@@ -60,7 +60,7 @@ func (s *Server) Routes() http.Handler {
 		// Least specific pattern, so every /api route above still wins.
 		mux.Handle("/", staticHandler(s.cfg.StaticDir))
 	}
-	return mux
+	return s.middleware(mux)
 }
 
 // handleConfig tells the client what this deployment will accept, so the tier
@@ -114,7 +114,7 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if req.TierIndex > 0 {
-		s.log.Warn("minting a paid tier with receipt validation stubbed", "tierIndex", req.TierIndex)
+		s.logFor(r).Warn("minting a paid tier with receipt validation stubbed", "tierIndex", req.TierIndex)
 	}
 
 	now := s.now()
@@ -136,7 +136,7 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 			s.writeErr(w, http.StatusConflict, err.Error())
 			return
 		}
-		s.log.Error("minting a pour", "err", err)
+		s.logFor(r).Error("minting a pour", "err", err)
 		s.writeErr(w, http.StatusInternalServerError, "could not mint the pour")
 		return
 	}
@@ -146,7 +146,7 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	// gets its own line and skips the two below, because those feed the rate
 	// escalations and a retried pour counted twice would skew both.
 	if replayed {
-		s.log.Info("mint replayed", "pour", rec.ID, "position", rec.LedgerPosition)
+		s.logFor(r).Info("mint replayed", "pour", rec.ID, "position", rec.LedgerPosition)
 		s.writeJSON(w, http.StatusOK, rec)
 		return
 	}
@@ -157,14 +157,14 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	// logged, so this line is what makes the accepted risk reviewable rather than
 	// merely accepted.
 	if len(rec.Violations) > 0 {
-		s.log.Warn("telemetry overclaim",
+		s.logFor(r).Warn("telemetry overclaim",
 			"pour", rec.ID,
 			"tierIndex", rec.TierIndex,
 			"violations", strings.Join(rec.Violations, ","),
 			"rarity", rec.Rarity,
 		)
 	}
-	s.log.Info("minted",
+	s.logFor(r).Info("minted",
 		"pour", rec.ID,
 		"position", rec.LedgerPosition,
 		"tierIndex", rec.TierIndex,
@@ -183,7 +183,7 @@ func (s *Server) handleList(w http.ResponseWriter, r *http.Request) {
 	}
 	records, err := s.store.List(r.Context(), ownerID)
 	if err != nil {
-		s.log.Error("listing the ledger", "err", err)
+		s.logFor(r).Error("listing the ledger", "err", err)
 		s.writeErr(w, http.StatusInternalServerError, "could not read the ledger")
 		return
 	}
@@ -205,7 +205,7 @@ func (s *Server) handleGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err != nil {
-		s.log.Error("reading a pour", "err", err)
+		s.logFor(r).Error("reading a pour", "err", err)
 		s.writeErr(w, http.StatusInternalServerError, "could not read the ledger")
 		return
 	}
