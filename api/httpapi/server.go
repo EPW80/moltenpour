@@ -2,6 +2,7 @@
 package httpapi
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"log/slog"
@@ -46,6 +47,19 @@ func (s *Server) Routes() http.Handler {
 	mux.HandleFunc("GET /api/pours/{id}", s.handleGet)
 	mux.HandleFunc("GET /api/config", s.handleConfig)
 	mux.HandleFunc("GET /api/health", func(w http.ResponseWriter, r *http.Request) {
+		s.writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
+	})
+
+	// Readiness, unlike liveness above, asks the ledger. A deploy platform should
+	// route on this and restart on /api/health.
+	mux.HandleFunc("GET /api/ready", func(w http.ResponseWriter, r *http.Request) {
+		ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
+		defer cancel()
+		if err := s.store.Ping(ctx); err != nil {
+			s.log.Error("ledger not ready", "err", err)
+			s.writeJSON(w, http.StatusServiceUnavailable, map[string]string{"status": "ledger unavailable"})
+			return
+		}
 		s.writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
 	})
 

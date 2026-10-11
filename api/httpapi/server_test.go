@@ -233,6 +233,40 @@ func TestHealthNeedsNoSession(t *testing.T) {
 	}
 }
 
+func TestReadyReportsTheLedger(t *testing.T) {
+	store, err := pour.NewSQLiteStore(":memory:")
+	if err != nil {
+		t.Fatal(err)
+	}
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	h := New(store, session.New("test-secret", false, log), log, Config{}).Routes()
+
+	get := func() *httptest.ResponseRecorder {
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/api/ready", nil))
+		return w
+	}
+	if w := get(); w.Code != http.StatusOK {
+		t.Fatalf("ready with an open ledger: got %d", w.Code)
+	}
+
+	store.Close()
+	w := get()
+	if w.Code != http.StatusServiceUnavailable {
+		t.Fatalf("ready with a closed ledger: got %d, want 503", w.Code)
+	}
+	if !strings.Contains(w.Body.String(), "ledger unavailable") {
+		t.Fatalf("unexpected body %s", w.Body.String())
+	}
+
+	// Liveness must not follow the ledger down.
+	hw := httptest.NewRecorder()
+	h.ServeHTTP(hw, httptest.NewRequest(http.MethodGet, "/api/health", nil))
+	if hw.Code != http.StatusOK {
+		t.Fatalf("health with a closed ledger: got %d, want 200", hw.Code)
+	}
+}
+
 // The lost response: the pour committed, the client never heard, and it resends
 // the same body. It must get its pour back — 200, not 201, same id, same
 // position — and the ledger must not move.
