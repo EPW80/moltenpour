@@ -381,6 +381,52 @@ func TestLedgerSurvivesReopening(t *testing.T) {
 	}
 }
 
+// Another process writing the ledger — a second instance overlapping a deploy,
+// an operator's script — must make a mint wait out busy_timeout, not fail it.
+// A deferred transaction reads first and then cannot upgrade past a held write
+// lock, and SQLite answers that with an immediate SQLITE_BUSY: no wait at all.
+func TestMintWaitsForAnotherWriter(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "ledger.db")
+	store, err := NewSQLiteStore(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer store.Close()
+
+	other, err := sql.Open("sqlite", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer other.Close()
+	conn, err := other.Conn(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer conn.Close()
+	if _, err := conn.ExecContext(ctx, `BEGIN IMMEDIATE`); err != nil {
+		t.Fatal(err)
+	}
+	const held = 300 * time.Millisecond
+	released := make(chan error, 1)
+	go func() {
+		time.Sleep(held)
+		_, err := conn.ExecContext(ctx, `COMMIT`)
+		released <- err
+	}()
+
+	start := time.Now()
+	_, _, err = appendPour(store, ownerA, fresh(0, honest()), when)
+	if err := <-released; err != nil {
+		t.Fatal(err)
+	}
+	if err != nil {
+		t.Fatalf("mint failed instead of waiting for the other writer: %v", err)
+	}
+	if waited := time.Since(start); waited < held/2 {
+		t.Fatalf("mint finished in %v while the write lock was held for %v", waited, held)
+	}
+}
+
 // Violations round-trip through the database as JSON, and the client iterates
 // them. A null there is the nil-vs-empty distinction all over again.
 func TestViolationsSurviveStorage(t *testing.T) {
