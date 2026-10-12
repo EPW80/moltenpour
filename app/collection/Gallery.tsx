@@ -115,6 +115,7 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
               <li key={p.id}>
                 <button
                   type="button"
+                  className="mp-tile"
                   onClick={() => onSelect(p)}
                   style={{
                     position: "relative",
