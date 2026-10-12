@@ -71,6 +71,24 @@ jobs:
           CHROME_PATH: /usr/bin/google-chrome
         run: npm run verify:certificate
 
+  smoke:
+    name: live smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+          cache-dependency-path: api/go.sum
+
+      # The suites above test the API in-process. This runs the built binary
+      # over HTTP with a cookie jar: ready, mint, a replayed mint returning the
+      # same record, list, get, and a stranger getting 404. The script is the
+      # same one `./scripts/smoke.sh` runs locally.
+      - name: Smoke test the server binary
+        run: ./scripts/smoke.sh
+
   image:
     name: the deployable image builds
     runs-on: ubuntu-latest
@@ -89,12 +107,12 @@ jobs:
           cache-to: type=gha,mode=max
 
   # ── deploy ────────────────────────────────────────────────────────────────────
-  # Only from main, only after the three jobs above are green, and never more
+  # Only from main, only after the jobs above are green, and never more
   # than one at a time. Everything unusual in this job comes from the same fact:
   # there is one machine on one volume, and `fly deploy` replaces it in place.
   deploy:
     name: deploy to Fly
-    needs: [sigil-pipeline, certificate, image]
+    needs: [sigil-pipeline, certificate, smoke, image]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
