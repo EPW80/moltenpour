@@ -7,6 +7,7 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -23,6 +24,13 @@ type Config struct {
 	// rather than quietly giving away the paid ones.
 	MaxTierIndex int
 
+	// MintBurst and MintEvery rate-limit POST /api/pours per client address: a
+	// bucket of MintBurst, refilled one every MintEvery. Zero disables it. A
+	// replay of an already-minted pour spends a token like any other request,
+	// so the burst must cover the client's retries (api.ts retries twice).
+	MintBurst int
+	MintEvery time.Duration
+
 	// StaticDir is the built SPA. Empty serves the API alone, which is what the
 	// Vite dev proxy expects.
 	StaticDir string
@@ -34,10 +42,17 @@ type Server struct {
 	log      *slog.Logger
 	cfg      Config
 	now      func() time.Time
+
+	// mintLimit is nil when the deployment has not asked for a rate limit.
+	mintLimit *limiter
 }
 
 func New(store pour.Store, sessions *session.Manager, log *slog.Logger, cfg Config) *Server {
-	return &Server{store: store, sessions: sessions, log: log, cfg: cfg, now: time.Now}
+	s := &Server{store: store, sessions: sessions, log: log, cfg: cfg, now: time.Now}
+	if cfg.MintBurst > 0 && cfg.MintEvery > 0 {
+		s.mintLimit = newLimiter(cfg.MintBurst, cfg.MintEvery)
+	}
+	return s
 }
 
 func (s *Server) Routes() http.Handler {
@@ -98,6 +113,16 @@ func (s *Server) writeErr(w http.ResponseWriter, code int, msg string) {
 }
 
 func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
+	if s.mintLimit != nil {
+		ip := s.sessions.ClientIP(r)
+		if ok, wait := s.mintLimit.allow(ip, s.now()); !ok {
+			s.logFor(r).Warn("mint rate limited", "clientIp", ip)
+			w.Header().Set("Retry-After", strconv.Itoa(int(wait.Seconds())+1))
+			s.writeErr(w, http.StatusTooManyRequests, "too many pours in a short time; try again shortly")
+			return
+		}
+	}
+
 	// Before anything is read or written: the owner must be resolved first,
 	// because SetCookie has to happen before the response body is committed.
 	ownerID, err := s.sessions.OwnerID(w, r)

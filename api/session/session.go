@@ -21,6 +21,7 @@ import (
 	"encoding/hex"
 	"log/slog"
 	"net/http"
+	"net/netip"
 	"strings"
 	"time"
 )
@@ -45,6 +46,9 @@ type Manager struct {
 	// of anything but a proxy that overwrites it lets a visitor decide their own
 	// cookie's flags. On, only where the deployment guarantees a proxy.
 	trustProxy bool
+	// proxies is the precise alternative: forwarded headers are believed only
+	// from a peer inside one of these. See SetTrustedProxies.
+	proxies []netip.Prefix
 }
 
 // New returns a Manager. An empty secret falls back to a known development value
@@ -72,7 +76,7 @@ func (m *Manager) overTLS(r *http.Request) bool {
 	if r.TLS != nil {
 		return true
 	}
-	if !m.trustProxy {
+	if !m.fromProxy(r) {
 		return false
 	}
 	// A proxy chain sends a comma-separated list; the first entry is the scheme

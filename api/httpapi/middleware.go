@@ -78,6 +78,11 @@ func (s *Server) accessLog(next http.Handler) http.Handler {
 			s.logFor(r).Info("request",
 				"method", r.Method,
 				"path", r.URL.Path,
+				// The peer is the proxy when there is one; clientIp is the
+				// visitor. Logging both is how a deployment learns which
+				// addresses to list in MOLTENPOUR_TRUSTED_PROXIES.
+				"peer", s.sessions.Peer(r),
+				"clientIp", s.sessions.ClientIP(r),
 				"status", rec.status(),
 				"durationMs", time.Since(start).Milliseconds(),
 			)
