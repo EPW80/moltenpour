@@ -1,5 +1,7 @@
 /**
- * record.ts — the pour record, and the client's view of the API
+ * record.ts — the pour record, its request and config types, and the formatters
+ *
+ * The calls themselves live in api.ts.
  *
  * The certificate is a render target: pour record in, sheet out. Every value it
  * prints comes from here.
@@ -52,53 +54,6 @@ export type MintRequest = {
 };
 
 /**
- * Mint outlasts the server's 10s SQLite busy_timeout with slack, so a slow
- * ledger answers before the client gives up. Retrying after a timeout is safe:
- * the server mints idempotently on (owner, timestampMs).
- */
-const MINT_TIMEOUT_MS = 20_000;
-const READ_TIMEOUT_MS = 10_000;
-
-/** True for an aborted or timed-out fetch, as opposed to a server answer. */
-export function isTimeout(e: unknown): boolean {
-  return (
-    e instanceof DOMException &&
-    (e.name === "TimeoutError" || e.name === "AbortError")
-  );
-}
-
-async function json<T>(res: Response): Promise<T> {
-  if (!res.ok)
-    throw new Error(`${res.status} ${res.statusText}: ${await res.text()}`);
-  return res.json() as Promise<T>;
-}
-
-export async function mintPour(req: MintRequest): Promise<PourRecord> {
-  return json<PourRecord>(
-    await fetch("/api/pours", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(req),
-      signal: AbortSignal.timeout(MINT_TIMEOUT_MS),
-    }),
-  );
-}
-
-export async function listPours(): Promise<PourRecord[]> {
-  return json<PourRecord[]>(
-    await fetch("/api/pours", { signal: AbortSignal.timeout(READ_TIMEOUT_MS) }),
-  );
-}
-
-export async function getPour(id: string): Promise<PourRecord> {
-  return json<PourRecord>(
-    await fetch(`/api/pours/${encodeURIComponent(id)}`, {
-      signal: AbortSignal.timeout(READ_TIMEOUT_MS),
-    }),
-  );
-}
-
-/**
  * What the deployment will accept, as opposed to what the ceremony can draw.
  *
  * Receipt validation is stubbed server-side, so a deployment that cannot charge
@@ -109,14 +64,6 @@ export type ServerConfig = {
   /** Highest tier this deployment will mint. */
   maxTierIndex: number;
 };
-
-export async function getConfig(): Promise<ServerConfig> {
-  return json<ServerConfig>(
-    await fetch("/api/config", {
-      signal: AbortSignal.timeout(READ_TIMEOUT_MS),
-    }),
-  );
-}
 
 /** `310.97 g` — two decimals and a space, per the certificate spec. */
 export function formatMass(grams: number): string {

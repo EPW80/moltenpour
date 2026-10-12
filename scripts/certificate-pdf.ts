@@ -24,6 +24,8 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { createServer } from 'vite';
 import puppeteer from 'puppeteer-core';
+import { ApiError, getPour } from '../app/pour/api';
+import type { PourRecord } from '../app/pour/record';
 import { findChrome } from './chrome';
 
 const API = process.env.MOLTENPOUR_API ?? 'http://localhost:8787';
@@ -36,23 +38,24 @@ if (!pourId) {
   process.exit(2);
 }
 
-const res = await fetch(`${API}/api/pours/${encodeURIComponent(pourId)}`, {
-  headers: process.env.MOLTENPOUR_COOKIE ? { cookie: process.env.MOLTENPOUR_COOKIE } : {},
-});
-
-if (res.status === 404) {
-  console.error(
-    `No pour ${pourId} visible to this session.\n` +
-      `The ledger is owner-scoped — set MOLTENPOUR_COOKIE to the owner's mp_owner cookie.`,
-  );
+let record: PourRecord;
+try {
+  record = await getPour(pourId, {
+    base: API,
+    headers: process.env.MOLTENPOUR_COOKIE ? { cookie: process.env.MOLTENPOUR_COOKIE } : {},
+  });
+} catch (e) {
+  if (e instanceof ApiError && e.status === 404) {
+    console.error(
+      `No pour ${pourId} visible to this session.\n` +
+        `The ledger is owner-scoped — set MOLTENPOUR_COOKIE to the owner's mp_owner cookie.`,
+    );
+  } else {
+    console.error(`${API}: ${e instanceof Error ? e.message : String(e)}`);
+  }
   process.exit(1);
 }
-if (!res.ok) {
-  console.error(`${API} returned ${res.status}: ${await res.text()}`);
-  process.exit(1);
-}
 
-const record = await res.json();
 console.log(`${record.serial} · ${record.rarity} · No. ${record.ledgerPosition}`);
 
 await mkdir(OUT_DIR, { recursive: true });
