@@ -63,7 +63,32 @@ func main() {
 	}
 	sessions := session.New(secret, trustProxy, log)
 
-	cfg := httpapi.Config{MaxTierIndex: maxTier, StaticDir: *staticDir}
+	// The precise form of MOLTENPOUR_TRUST_PROXY: forwarded headers are believed
+	// only from a peer inside one of these CIDRs. The access log's `peer` field
+	// shows what to list.
+	proxies, err := session.ParseProxies(os.Getenv("MOLTENPOUR_TRUSTED_PROXIES"))
+	if err != nil {
+		log.Error("MOLTENPOUR_TRUSTED_PROXIES", "err", err)
+		os.Exit(1)
+	}
+	sessions.SetTrustedProxies(proxies)
+	switch {
+	case trustProxy && len(proxies) > 0:
+		log.Warn("MOLTENPOUR_TRUST_PROXY=1 trusts every peer and makes MOLTENPOUR_TRUSTED_PROXIES moot; unset it")
+	case trustProxy:
+		log.Warn("MOLTENPOUR_TRUST_PROXY=1 trusts every peer; prefer MOLTENPOUR_TRUSTED_PROXIES")
+	case len(proxies) > 0:
+		log.Info("trusting forwarded headers from", "proxies", proxies)
+	}
+
+	// Ten pours a minute from one address, in bursts of five. The burst has to
+	// cover the client's two retries of a single mint, which count against it.
+	cfg := httpapi.Config{
+		MaxTierIndex: maxTier,
+		StaticDir:    *staticDir,
+		MintBurst:    5,
+		MintEvery:    6 * time.Second,
+	}
 	if cfg.StaticDir != "" {
 		log.Info("serving the app", "dir", cfg.StaticDir)
 	}

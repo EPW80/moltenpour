@@ -14,8 +14,9 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // The Go API. Proxied so the app talks to a same-origin path in dev and in
-      // production alike, and never needs a base-URL branch.
+      // The Go API. Proxied in dev only. In production nothing proxies: the one
+      // image serves the SPA and /api from the same Go process (see the
+      // Dockerfile), which is what keeps the app free of a base-URL branch.
       '/api': {
         target: 'http://localhost:8787',
         changeOrigin: true,
