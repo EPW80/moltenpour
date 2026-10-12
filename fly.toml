@@ -12,10 +12,14 @@ primary_region = "sjc"
   dockerfile = "Dockerfile"
 
 [env]
-  # Fly terminates TLS at its edge and forwards plain HTTP, so without this the
-  # owner cookie would ship without Secure — on the one value that is the whole
-  # access control. See session.overTLS.
-  MOLTENPOUR_TRUST_PROXY = "1"
+  # Fly terminates TLS and forwards plain HTTP, so without this the owner cookie
+  # would ship without Secure — on the one value that is the whole access
+  # control. See session.overTLS. The range is where fly-proxy connects from,
+  # read off the access log's `peer` field (172.16.x.x for requests, 172.19.x.x
+  # for health checks). Forwarded headers are believed from there and nowhere
+  # else, which MOLTENPOUR_TRUST_PROXY=1 did not guarantee. If the Secure-cookie
+  # check in CI ever fails after a deploy, look at `peer` in `fly logs` first.
+  MOLTENPOUR_TRUSTED_PROXIES = "172.16.0.0/12"
 
   # Receipt validation is a stub, so every tier above 0 would mint for free.
   # Raise this only once pours are actually charged for.

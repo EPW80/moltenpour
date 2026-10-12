@@ -170,7 +170,7 @@ jobs:
           fi
 
       # fly deploy waits on the health check, so this is not that. It is the
-      # cookie: MOLTENPOUR_TRUST_PROXY makes the owner cookie Secure behind
+      # cookie: MOLTENPOUR_TRUSTED_PROXIES makes the owner cookie Secure behind
       # Fly's edge, and the owner cookie is the entire access control. Losing
       # the flag breaks nothing visibly and would ship unnoticed.
       - name: The owner cookie is Secure
@@ -187,6 +187,6 @@ jobs:
           for flag in HttpOnly Secure SameSite=Lax; do
             case "$cookie" in
               *"$flag"*) ;;
-              *) echo "::error::the owner cookie is missing $flag — check MOLTENPOUR_TRUST_PROXY=1 in fly.toml"; exit 1 ;;
+              *) echo "::error::the owner cookie is missing $flag — check MOLTENPOUR_TRUSTED_PROXIES in fly.toml against the peer field in fly logs"; exit 1 ;;
             esac
           done
