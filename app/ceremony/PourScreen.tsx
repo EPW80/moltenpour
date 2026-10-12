@@ -630,6 +630,7 @@ export function PourScreen({
                 <button
                   key={t.index}
                   type="button"
+                  className="mp-tier-row"
                   disabled={poured || withdrawn}
                   aria-disabled={withdrawn || undefined}
                   onClick={() => onTierIndex(t.index)}
@@ -679,6 +680,7 @@ export function PourScreen({
                       flex: 1,
                       minWidth: 12,
                       height: 1,
+                      pointerEvents: "none",
                       background: `repeating-linear-gradient(90deg, ${COLOR.ruleActive} 0 1px, transparent 1px 5px)`,
                     }}
                   />
@@ -731,7 +733,7 @@ export function PourScreen({
           <div
             style={{
               display: "flex",
-              alignItems: "flex-end",
+              alignItems: "baseline",
               justifyContent: "space-between",
               gap: 16,
             }}

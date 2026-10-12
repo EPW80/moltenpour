@@ -34,6 +34,7 @@ import {
   COLOR,
   FONT,
   GRAIN_URL,
+  LEADER_RULE,
   PAGE_GROUND,
   RARITY_PRESENTATION,
 } from "../design/tokens";
@@ -360,7 +361,7 @@ export function Certificate({ pour, grain = true }: Props) {
                 style={{
                   flex: 1,
                   height: 1,
-                  background: `repeating-linear-gradient(90deg, ${COLOR.leader} 0 1px, transparent 1px 5px)`,
+                  background: LEADER_RULE,
                 }}
               />
               <dd
