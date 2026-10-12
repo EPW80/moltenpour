@@ -25,7 +25,8 @@ import { CertificateView } from './certificate/CertificateView';
 import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION } from './design/tokens';
 import { useIsWide } from './design/viewport';
 import type { Rarity } from './sigil/rarity';
-import { getConfig, isTimeout, listPours, mintPour, type MintRequest, type PourRecord } from './pour/record';
+import { ApiError, getConfig, listPours, mintPour } from './pour/api';
+import type { MintRequest, PourRecord } from './pour/record';
 
 import './certificate/fonts/bodoni.css';
 import './certificate/print.css';
@@ -52,6 +53,29 @@ function prefersReducedMotion(): boolean {
   return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+
+/**
+ * What the notice band says about a failed call, chosen by ApiError.code. A raw
+ * error string never reaches the UI: the server's own sentence is shown only
+ * for a refusal, where it is the explanation.
+ */
+function mintNotice(e: unknown): string {
+  if (e instanceof ApiError) {
+    if (e.retryable)
+      return 'The ledger could not be reached. The pour has been kept; seal it again.';
+    if (e.code === 'conflict')
+      return `The ledger already holds a different record for this pour. ${e.message}`;
+    return `The record could not be sealed. ${e.message}`;
+  }
+  return 'The record could not be sealed.';
+}
+
+function readNotice(e: unknown): string {
+  return e instanceof ApiError && !e.retryable
+    ? `The ledger refused the listing. ${e.message}`
+    : 'The ledger could not be reached. The collection may be out of date.';
+}
+
 export function App() {
   const [view, setView] = useState<View>('ceremony');
   const [pours, setPours] = useState<PourRecord[]>([]);
@@ -76,7 +100,7 @@ export function App() {
     try {
       setPours(await listPours());
     } catch (e) {
-      setNotice(`The ledger is unavailable: ${e instanceof Error ? e.message : String(e)}`);
+      setNotice(readNotice(e));
     }
   }, []);
 
@@ -138,11 +162,7 @@ export function App() {
         } catch (e) {
           await held;
           setSealing(false);
-          setNotice(
-            isTimeout(e)
-              ? 'The ledger did not answer. The pour has been kept; seal it again.'
-              : `The record could not be sealed: ${e instanceof Error ? e.message : String(e)}`,
-          );
+          setNotice(mintNotice(e));
         }
       })();
     },
