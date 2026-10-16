@@ -83,6 +83,9 @@ export const COLUMN_RULE = `repeating-linear-gradient(90deg, ${COLOR.ruleColumn}
 /** The dashed leader that runs between a label and its value. */
 export const LEADER_RULE = `repeating-linear-gradient(90deg, ${COLOR.leader} 0 1px, transparent 1px 5px)`;
 
+/** Subdued cooling-metal ground; app chrome only. */
+export const BACKGROUND = { intensity: 0.65, dimWhilePouring: 0.45, maxAlpha: 0.32, fps: 30, pixelRatio: 0.5 } as const;
+
 /** Procedural, so there is no image asset to ship or fail to load. */
 export const GRAIN_URL =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>\")";

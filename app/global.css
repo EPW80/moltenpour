@@ -109,6 +109,7 @@ a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .mp-bg { opacity: .6; }
   /* The lamp stills rather than disappearing — it is a status indicator, and an
      absent one reads as "not live". The seal keeps its fill because it is the
      progress of a real operation, but App.tsx shortens the hold it accompanies. */
