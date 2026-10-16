@@ -114,6 +114,7 @@ a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .mp-bg { opacity: .6; }
   .mp-tile { transition: none !important; }
   .mp-tile:hover { transform: none; }
   /* The lamp stills rather than disappearing — it is a status indicator, and an
