@@ -23,6 +23,7 @@ import { TIERS } from './ceremony/tiers';
 import { Gallery } from './collection/Gallery';
 import { CertificateView } from './certificate/CertificateView';
 import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION } from './design/tokens';
+import { MoltenBackground } from './design/MoltenBackground';
 import { useIsWide } from './design/viewport';
 import type { Rarity } from './sigil/rarity';
 import { ApiError, getConfig, listPours, mintPour } from './pour/api';
@@ -201,6 +202,7 @@ export function App() {
         alignContent: 'start',
       }}
     >
+      {view !== 'certificate' && <MoltenBackground dimmed={phase === 'pouring'} />}
       {/* The ledger-paper ground. Decorative, and never in the way of a pointer. */}
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.5, backgroundImage: COLUMN_RULE }} />
 
