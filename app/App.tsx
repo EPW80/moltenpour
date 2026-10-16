@@ -22,7 +22,7 @@ import { PourScreen, type Phase } from './ceremony/PourScreen';
 import { TIERS } from './ceremony/tiers';
 import { Gallery } from './collection/Gallery';
 import { CertificateView } from './certificate/CertificateView';
-import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION } from './design/tokens';
+import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION, RADIUS } from './design/tokens';
 import { MoltenBackground } from './design/MoltenBackground';
 import { useIsWide } from './design/viewport';
 import type { Rarity } from './sigil/rarity';
@@ -189,22 +189,35 @@ export function App() {
         background: APP_GROUND,
         color: COLOR.goldBody,
         fontFamily: FONT.instrument,
-        padding: 'clamp(18px, 3vw, 30px) clamp(16px, 3vw, 34px) 0',
-        display: 'grid',
-        gap: '0 clamp(16px, 2.4vw, 30px)',
-        // The 36px track is the folio rail, which spans every row.
-        gridTemplateColumns: wide ? '36px minmax(0, 1fr)' : 'minmax(0, 1fr)',
-        // IMPORTANT: rows are content-sized, and must stay that way. The default
-        // align-content stretches auto rows to fill a grid taller than its
-        // content, which this one is whenever a view is short — the collection
-        // with a couple of tiles. That pulled the header down the page and left
-        // the active tab's rule floating an inch under its own label.
-        alignContent: 'start',
       }}
     >
       {view !== 'certificate' && <MoltenBackground dimmed={phase === 'pouring'} />}
-      {/* The ledger-paper ground. Decorative, and never in the way of a pointer. */}
+      {/* The ledger-paper ground, full-bleed. Decorative, and never in the way
+          of a pointer. */}
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.5, backgroundImage: COLUMN_RULE }} />
+
+      {/* The centred sheet. The ground above is full-bleed; everything ruled
+          lives inside this container so an ultra-wide screen cannot push the
+          vessel and the ledger to opposite edges. */}
+      <div
+        style={{
+          maxWidth: 1360,
+          margin: '0 auto',
+          width: '100%',
+          boxSizing: 'border-box',
+          padding: 'clamp(18px, 3vw, 30px) clamp(16px, 3vw, 34px) 0',
+          display: 'grid',
+          gap: '0 clamp(16px, 2.4vw, 30px)',
+          // The 36px track is the folio rail, which spans every row.
+          gridTemplateColumns: wide ? '36px minmax(0, 1fr)' : 'minmax(0, 1fr)',
+          // IMPORTANT: rows are content-sized, and must stay that way. The default
+          // align-content stretches auto rows to fill a grid taller than its
+          // content, which this one is whenever a view is short — the collection
+          // with a couple of tiles. That pulled the header down the page and left
+          // the active tab's rule floating an inch under its own label.
+          alignContent: 'start',
+        }}
+      >
 
       {wide && (
         <aside
@@ -264,9 +277,8 @@ export function App() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 10, fontSize: 11, letterSpacing: '2.6px', textTransform: 'uppercase', color: COLOR.goldLabel, whiteSpace: 'nowrap' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-            {/* The only continuous motion on the page, and the only circle in a
-                document system that otherwise has no radius at all. */}
+          <span style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '6px 12px 6px 8px', border: `1px solid ${COLOR.ruleStage}`, borderRadius: RADIUS.pill, background: 'rgba(22,11,26,.6)' }}>
+            {/* The live status indicator. */}
             <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 14, height: 14, border: `1px solid ${COLOR.ruleActive}`, borderRadius: '50%' }}>
               <span className="mp-breathe" style={{ width: 4, height: 4, borderRadius: '50%', background: accent }} />
             </span>
@@ -278,7 +290,7 @@ export function App() {
         </div>
       </header>
 
-      <nav className="app-chrome" style={{ position: 'relative', display: 'flex', gap: 26, padding: '14px 0 0' }}>
+      <nav className="app-chrome" style={{ position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 6, padding: '16px 0 0' }}>
         <Tab active={view === 'ceremony'} onClick={() => setView('ceremony')}>
           The ceremony
         </Tab>
@@ -334,7 +346,7 @@ export function App() {
           justifyContent: 'space-between',
           alignItems: 'center',
           gap: '10px 20px',
-          marginTop: 26,
+          marginTop: 30,
           padding: '14px 0 18px',
           borderTop: `1px solid ${COLOR.ruleFooter}`,
           fontSize: 11,
@@ -346,6 +358,7 @@ export function App() {
         <span>All pours final · gratitude non-transferable</span>
         <span>{footerHint}</span>
       </footer>
+      </div>
 
       {sealing && (
         <div
@@ -385,16 +398,17 @@ function Tab({ active, onClick, children }: { active: boolean; onClick: () => vo
       onClick={onClick}
       aria-current={active ? 'page' : undefined}
       style={{
-        padding: '0 0 6px',
-        background: 'transparent',
-        border: 0,
-        borderBottom: `1px solid ${active ? COLOR.goldHot : 'transparent'}`,
-        color: active ? COLOR.goldCream : COLOR.goldFaint,
+        padding: '9px 16px',
+        borderRadius: RADIUS.tab,
+        border: `1px solid ${active ? 'rgba(245,214,122,.4)' : 'rgba(201,146,46,.14)'}`,
+        background: active ? 'rgba(201,146,46,.12)' : 'transparent',
+        color: active ? COLOR.goldCream : COLOR.goldLabel,
         fontFamily: FONT.instrument,
         fontSize: 11,
         letterSpacing: '3px',
         textTransform: 'uppercase',
         cursor: 'pointer',
+        transition: 'background .2s, color .2s, border-color .2s',
       }}
     >
       {children}

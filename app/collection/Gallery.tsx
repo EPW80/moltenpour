@@ -9,7 +9,7 @@
  * same stored seed, so the tile and the sheet cannot disagree.
  */
 
-import { COLOR, FONT, RARITY_PRESENTATION } from "../design/tokens";
+import { CARD_BORDER, COLOR, FONT, RARITY_PRESENTATION, RADIUS } from "../design/tokens";
 import { SigilSvg } from "../sigil/SigilSvg";
 import { formatConsideration, formatUSD } from "../ceremony/tiers";
 import { formatOrdinal, type PourRecord } from "../pour/record";
@@ -30,14 +30,15 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
       <div
         style={{
           display: "flex",
+          flexWrap: "wrap",
           justifyContent: "space-between",
           alignItems: "baseline",
-          gap: 20,
+          gap: "10px 20px",
           fontSize: 11,
           letterSpacing: "3.2px",
           textTransform: "uppercase",
           color: COLOR.goldLabel,
-          paddingBottom: 10,
+          paddingBottom: 12,
           borderBottom: `1px solid ${COLOR.ruleMid}`,
         }}
       >
@@ -56,7 +57,10 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
             flexDirection: "column",
             alignItems: "center",
             gap: 16,
-            padding: "90px 20px",
+            padding: "80px 20px",
+            border: `1px dashed rgba(201,146,46,.24)`,
+            borderRadius: RADIUS.panel,
+            background: "rgba(22,11,26,.4)",
           }}
         >
           <span
@@ -65,6 +69,7 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
               width: 44,
               height: 44,
               border: `1px solid ${COLOR.leader}`,
+              borderRadius: 8,
               background:
                 "repeating-linear-gradient(135deg, transparent 0 5px, rgba(201,146,46,.14) 5px 6px)",
             }}
@@ -87,6 +92,7 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
               fontSize: 22,
               letterSpacing: ".6px",
               color: COLOR.goldFaint,
+              textAlign: "center",
               textWrap: "pretty",
             }}
           >
@@ -100,7 +106,7 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
             margin: 0,
             padding: 0,
             display: "grid",
-            gridTemplateColumns: `repeat(auto-fill, minmax(${wide ? 210 : 150}px, 1fr))`,
+            gridTemplateColumns: `repeat(auto-fill, minmax(${wide ? 220 : 150}px, 1fr))`,
             gap: "clamp(14px, 1.6vw, 22px)",
           }}
         >
@@ -126,11 +132,16 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
                     // text and their space-between did nothing. Asserted, not
                     // inherited.
                     alignItems: "stretch",
-                    gap: 10,
+                    gap: 12,
                     width: "100%",
-                    padding: 14,
-                    background: COLOR.panel,
-                    border: `1px solid ${open ? presentation.accent : COLOR.ruleRow}`,
+                    padding: 12,
+                    background:
+                      "linear-gradient(180deg, rgba(36,18,42,.7), rgba(18,10,22,.7))",
+                    border: `1px solid ${open ? presentation.accent : CARD_BORDER}`,
+                    borderRadius: RADIUS.panel,
+                    boxShadow: "0 24px 50px -28px rgba(0,0,0,.8)",
+                    transition:
+                      "border-color .2s, transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s",
                     cursor: "pointer",
                     fontFamily: FONT.instrument,
                     textAlign: "left",
@@ -145,6 +156,7 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
                       letterSpacing: "1.8px",
                       color: COLOR.goldFaint,
                       fontVariantNumeric: "tabular-nums",
+                      padding: "2px 4px 0",
                     }}
                   >
                     <span>{String(i + 1).padStart(2, "0")}</span>
@@ -155,6 +167,13 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
                       display: "block",
                       width: "100%",
                       aspectRatio: "1 / 1",
+                      borderRadius: RADIUS.well,
+                      background:
+                        "radial-gradient(70% 70% at 50% 45%, rgba(42,17,54,.9), rgba(12,7,15,.95))",
+                      boxShadow: "inset 0 0 0 1px rgba(201,146,46,.12)",
+                      padding: 8,
+                      overflow: "hidden",
+                      boxSizing: "border-box",
                     }}
                   >
                     <SigilSvg
@@ -170,6 +189,8 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
                       justifyContent: "space-between",
                       alignItems: "baseline",
                       gap: 10,
+                      flexWrap: "wrap",
+                      padding: "0 4px 2px",
                     }}
                   >
                     <span

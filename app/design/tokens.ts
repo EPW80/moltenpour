@@ -83,6 +83,19 @@ export const COLUMN_RULE = `repeating-linear-gradient(90deg, ${COLOR.ruleColumn}
 /** The dashed leader that runs between a label and its value. */
 export const LEADER_RULE = `repeating-linear-gradient(90deg, ${COLOR.leader} 0 1px, transparent 1px 5px)`;
 
+/**
+ * The radius scale, in one place so the panels, rows, tabs and pills of the
+ * app agree. Panels 14, stage and primary buttons 10, rows and tabs 8, sigil
+ * wells 9, chips 5, pills 999.
+ *
+ * App chrome only: the certificate keeps square corners whatever this says —
+ * see the guard in app/global.css.
+ */
+export const RADIUS = { panel: 14, stage: 10, button: 10, row: 8, tab: 8, well: 9, chip: 5, pill: 999 } as const;
+/** Raised card surface used by the vessel frame, ledger panels and tiles. */
+export const CARD_GROUND = "linear-gradient(180deg, rgba(32,16,38,.55), rgba(14,8,18,.55))";
+export const CARD_BORDER = "rgba(201,146,46,.16)";
+export const CARD_SHADOW = "0 30px 80px -30px rgba(0,0,0,.7)";
 /** Subdued cooling-metal ground; app chrome only. */
 export const BACKGROUND = { intensity: 0.65, dimWhilePouring: 0.45, maxAlpha: 0.32, fps: 30, pixelRatio: 0.5 } as const;
 
