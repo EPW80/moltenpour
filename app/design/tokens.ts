@@ -11,12 +11,11 @@
  * is ~5.7:1 and the Singular secondary ~6.3:1, the two closest to the line. The
  * certificate holds that floor absolutely: nothing below #A07E3A prints as text.
  *
- * GOLD_FAINT (#8A6A2A) is the exception and is app-chrome only. It measures
- * ~3.8:1 on the mid plum stop and ~4.0:1 on the outer, so it is under AA for
- * small text. It comes from the index handoff, where it carries the tertiary
- * register — footer, graduations, tier index and reach, inactive tabs. It is a
- * known, accepted departure rather than an oversight; raising it to #A07E3A is a
- * one-line change here if the register can afford it. Never use it on the sheet.
+ * GOLD_FAINT (#A07E3A) is the same floor the certificate itself holds — nothing
+ * below #A07E3A prints as text — so the tertiary register now clears 4.5:1 on
+ * both plum stops and the old departure is closed. It carries the app-chrome
+ * tertiary register: footer, graduations, tier index and reach, disabled
+ * buttons. It is still app chrome only, and never prints on the sheet.
  */
 
 export const COLOR = {
@@ -38,7 +37,7 @@ export const COLOR = {
   /** Prices and links. */
   bronze: "#C9922E",
   /** Tertiary. App chrome only — see the contrast note above. */
-  goldFaint: "#8A6A2A",
+  goldFaint: "#A07E3A",
   /** Hover, and the Rare accent. */
   specWhite: "#FFF6D8",
 
