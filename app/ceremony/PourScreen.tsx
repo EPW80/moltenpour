@@ -41,7 +41,7 @@ import {
 } from "./rig";
 import { formatConsideration, reachableRarity, TIERS, tierAt } from "./tiers";
 import { classify, scoreParts, THRESHOLDS, type Rarity } from "../sigil/rarity";
-import { COLOR, FONT, GRAIN_URL, RARITY_PRESENTATION } from "../design/tokens";
+import { CARD_BORDER, CARD_GROUND, CARD_SHADOW, COLOR, FONT, GRAIN_URL, RARITY_PRESENTATION, RADIUS } from "../design/tokens";
 import type { MintRequest } from "../pour/record";
 
 export type Phase = "idle" | "pouring" | "settling" | "settled";
@@ -53,7 +53,7 @@ export type Phase = "idle" | "pouring" | "settling" | "settled";
  * than the rows are tall drifts a row out of register by the bottom of the
  * table, and it drifts silently.
  */
-const ROW_H = 52;
+const ROW_H = 50;
 
 /** How often the readout is repainted. Ten times a second reads as continuous. */
 const READOUT_MS = 100;
@@ -370,9 +370,7 @@ export function PourScreen({
     return () => window.removeEventListener("keydown", onKey);
   }, [phase, tierIndex, onTierIndex, offered]);
 
-  const stageHeight = wide
-    ? "min(70vh, 720px, (100vw - 720px) * 1.7778)"
-    : "min(58vh, 520px)";
+  const stageHeight = wide ? "min(68vh, 700px)" : "min(58vh, 520px)";
 
   return (
     <div
@@ -380,8 +378,9 @@ export function PourScreen({
         display: "grid",
         gap: "clamp(26px, 3vw, 44px)",
         alignItems: "start",
+        justifyContent: "center",
         gridTemplateColumns: wide
-          ? "minmax(260px, 1fr) minmax(340px, 440px)"
+          ? "minmax(0, auto) minmax(380px, 480px)"
           : "minmax(0, 1fr)",
       }}
     >
@@ -391,9 +390,16 @@ export function PourScreen({
           position: "relative",
           justifySelf: "center",
           display: "flex",
-          alignItems: "center",
-          gap: 16,
+          alignItems: "stretch",
+          gap: 14,
+          minWidth: 0,
           maxWidth: "100%",
+          boxSizing: "border-box",
+          padding: "18px 18px 18px 14px",
+          border: `1px solid ${CARD_BORDER}`,
+          borderRadius: RADIUS.panel,
+          background: CARD_GROUND,
+          boxShadow: `${CARD_SHADOW}, 0 0 140px 0 rgba(201,146,46,.06)`,
         }}
       >
         <div
@@ -456,11 +462,13 @@ export function PourScreen({
             aspectRatio: "9 / 16",
             height: stageHeight,
             width: "auto",
+            minWidth: 0,
             maxWidth: "100%",
             background: COLOR.panel,
             border: `1px solid ${phase === "pouring" ? COLOR.tickStage : COLOR.ruleStage}`,
-            boxShadow:
-              "0 0 120px 10px rgba(201,146,46,.09), inset 0 0 0 1px rgba(12,7,15,.9)",
+            borderRadius: RADIUS.stage,
+            // The card carries the bloom now; the stage keeps only its rim.
+            boxShadow: "inset 0 0 0 1px rgba(12,7,15,.9)",
             overflow: "hidden",
             touchAction: "none",
             userSelect: "none",
@@ -500,24 +508,37 @@ export function PourScreen({
           <Callout label="Pool line" top={FLOOR_Y} />
 
           {(["top", "bottom"] as const).map((v) =>
-            (["left", "right"] as const).map((h) => (
-              <div
-                key={`${v}-${h}`}
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  [v]: 9,
-                  [h]: 9,
-                  width: 16,
-                  height: 16,
-                  pointerEvents: "none",
-                  [v === "top" ? "borderTop" : "borderBottom"]:
-                    `1px solid ${COLOR.tickStage}`,
-                  [h === "left" ? "borderLeft" : "borderRight"]:
-                    `1px solid ${COLOR.tickStage}`,
-                }}
-              />
-            )),
+            (["left", "right"] as const).map((h) => {
+              // The outer corner — the one facing the stage's own corner —
+              // rounds with the stage's radius.
+              const outerCorner =
+                v === "top"
+                  ? h === "left"
+                    ? "borderTopLeftRadius"
+                    : "borderTopRightRadius"
+                  : h === "left"
+                    ? "borderBottomLeftRadius"
+                    : "borderBottomRightRadius";
+              return (
+                <div
+                  key={`${v}-${h}`}
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    [v]: 10,
+                    [h]: 10,
+                    width: 14,
+                    height: 14,
+                    pointerEvents: "none",
+                    [v === "top" ? "borderTop" : "borderBottom"]:
+                      `1px solid ${COLOR.tickStage}`,
+                    [h === "left" ? "borderLeft" : "borderRight"]:
+                      `1px solid ${COLOR.tickStage}`,
+                    [outerCorner]: 4,
+                  }}
+                />
+              );
+            }),
           )}
 
           <div
@@ -529,15 +550,25 @@ export function PourScreen({
               pointerEvents: "none",
               display: "flex",
               justifyContent: "center",
-              fontSize: 11,
-              letterSpacing: "3.4px",
-              textTransform: "uppercase",
-              color: COLOR.goldHot,
-              textShadow: `0 0 20px ${COLOR.shadeStrong}`,
-              opacity: settled ? 0.45 : 1,
+              opacity: settled ? 0.5 : 1,
             }}
           >
-            {PHASE_LABEL[phase]}
+            <span
+              style={{
+                padding: "8px 16px",
+                borderRadius: RADIUS.pill,
+                border: "1px solid rgba(245,214,122,.28)",
+                background: "rgba(10,6,13,.55)",
+                fontSize: 11,
+                letterSpacing: "3.4px",
+                textTransform: "uppercase",
+                color: COLOR.goldHot,
+                textShadow: `0 0 20px ${COLOR.shadeStrong}`,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {PHASE_LABEL[phase]}
+            </span>
           </div>
 
           <div
@@ -551,7 +582,8 @@ export function PourScreen({
               justifyContent: "space-between",
               alignItems: "center",
               gap: 10,
-              padding: "16px 26px 14px",
+              padding: "16px 28px 14px",
+              flexWrap: "wrap",
               ...LABEL_11,
               letterSpacing: "1.8px",
               background: `linear-gradient(to top, ${COLOR.shadeStrong}, transparent)`,
@@ -586,9 +618,19 @@ export function PourScreen({
           flexDirection: "column",
           gap: 24,
           minWidth: 0,
+          containerType: "inline-size",
+          containerName: "ledger",
         }}
       >
-        <div>
+        <div
+          style={{
+            padding: "16px 16px 10px",
+            border: `1px solid ${CARD_BORDER}`,
+            borderRadius: RADIUS.panel,
+            background: CARD_GROUND,
+            boxShadow: CARD_SHADOW,
+          }}
+        >
           <div
             style={{
               display: "flex",
@@ -596,28 +638,30 @@ export function PourScreen({
               alignItems: "baseline",
               ...LABEL_11,
               letterSpacing: "3.2px",
-              paddingBottom: 10,
-              borderBottom: `1px solid ${COLOR.ruleMid}`,
+              padding: "0 12px 12px",
+              borderBottom: `1px solid ${COLOR.ruleDisabled}`,
             }}
           >
             <span>Tier</span>
             <span>Consideration</span>
           </div>
 
-          <div style={{ position: "relative" }}>
-            {/* The marker. Bleeds past the table on both sides so the illuminated
-                edge reads as a rule in the margin rather than a selected cell. */}
+          <div style={{ position: "relative", paddingTop: 6 }}>
+            {/* The marker. Contained by the card, so the illuminated row reads
+                as a highlight in the register rather than a rule in the margin. */}
             <div
               style={{
                 position: "absolute",
-                left: -16,
-                right: -16,
-                top: 0,
+                left: 0,
+                right: 0,
+                top: 6,
                 height: ROW_H,
                 pointerEvents: "none",
-                background: `linear-gradient(90deg, ${COLOR.ruleRow}, rgba(201,146,46,.02) 70%)`,
-                borderLeft: `2px solid ${accent}`,
-                boxShadow: "-2px 0 22px rgba(245,214,122,.25)",
+                borderRadius: RADIUS.row,
+                background:
+                  "linear-gradient(90deg, rgba(201,146,46,.2), rgba(201,146,46,.04) 75%)",
+                boxShadow:
+                  "inset 0 0 0 1px rgba(245,214,122,.28), 0 0 26px -6px rgba(245,214,122,.3)",
                 transform: `translateY(${tierIndex * ROW_H}px)`,
                 transition: "transform .45s cubic-bezier(.22,1,.36,1)",
               }}
@@ -641,16 +685,16 @@ export function PourScreen({
                     height: ROW_H,
                     alignItems: "center",
                     gap: 12,
-                    padding: 0,
+                    padding: "0 12px",
                     background: "transparent",
                     border: 0,
-                    borderBottom: `1px solid ${COLOR.ruleHair}`,
+                    borderRadius: RADIUS.row,
                     color: selected ? COLOR.goldCream : COLOR.goldLabel,
                     fontFamily: FONT.instrument,
                     textAlign: "left",
                     // The tier is fixed the moment the stream opens.
                     cursor: poured || withdrawn ? "not-allowed" : "pointer",
-                    opacity: withdrawn ? 0.3 : poured && !selected ? 0.28 : 1,
+                    opacity: withdrawn ? 0.3 : poured && !selected ? 0.35 : 1,
                     transition: "color .2s, opacity .3s",
                   }}
                 >
@@ -689,11 +733,14 @@ export function PourScreen({
                       rather than a broken Full Pour. */}
                   <span
                     style={{
-                      fontSize: 11,
+                      fontSize: 10.5,
                       letterSpacing: "1.4px",
                       textTransform: "uppercase",
                       color: COLOR.goldFaint,
                       whiteSpace: "nowrap",
+                      padding: "3px 7px",
+                      border: `1px solid ${COLOR.ruleRow}`,
+                      borderRadius: RADIUS.chip,
                     }}
                   >
                     to {reachableRarity(t.index)}
@@ -705,6 +752,8 @@ export function PourScreen({
                       letterSpacing: ".2px",
                       fontVariantNumeric: "tabular-nums",
                       whiteSpace: "nowrap",
+                      minWidth: 76,
+                      textAlign: "right",
                     }}
                   >
                     {/* A withdrawn tier keeps its row and loses its price: the
@@ -722,68 +771,82 @@ export function PourScreen({
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 14,
-            paddingBottom: 22,
-            borderBottom: `1px solid ${COLOR.ruleMid}`,
+            gap: 18,
+            padding: "20px 22px 22px",
+            border: `1px solid ${CARD_BORDER}`,
+            borderRadius: RADIUS.panel,
+            background: CARD_GROUND,
           }}
         >
-          <span style={{ ...LABEL_11, letterSpacing: "3.2px" }}>
-            {NOW_LABEL[phase]}
-          </span>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-              gap: 16,
-            }}
-          >
-            <span
+          {/* The card's head: now pouring, the tier, the note. The sections
+              below it are separated from it and from each other by rules. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <span style={{ ...LABEL_11, letterSpacing: "3.2px" }}>
+              {NOW_LABEL[phase]}
+            </span>
+            <div
               style={{
-                fontFamily: FONT.display,
-                fontSize: "clamp(30px, 3.4vw, 42px)",
-                lineHeight: 0.92,
-                color: COLOR.goldCream,
+                display: "flex",
+                alignItems: "baseline",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                gap: 16,
               }}
             >
-              {tier.name}
-            </span>
-            <span
+              <span
+                style={{
+                  fontFamily: FONT.display,
+                  fontSize: "clamp(30px, 3.4vw, 42px)",
+                  lineHeight: 0.92,
+                  color: COLOR.goldCream,
+                }}
+              >
+                {tier.name}
+              </span>
+              <span
+                style={{
+                  fontFamily: FONT.display,
+                  fontSize: "clamp(30px, 3.4vw, 42px)",
+                  lineHeight: 0.92,
+                  color: COLOR.bronze,
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                {formatConsideration(tier.amountCents)}
+              </span>
+            </div>
+            <p
               style={{
+                margin: 0,
                 fontFamily: FONT.display,
-                fontSize: "clamp(30px, 3.4vw, 42px)",
-                lineHeight: 0.92,
-                color: COLOR.bronze,
-                fontVariantNumeric: "tabular-nums",
+                fontStyle: "italic",
+                fontSize: 17,
+                lineHeight: 1.45,
+                color: COLOR.goldLabel,
+                textWrap: "pretty",
               }}
             >
-              {formatConsideration(tier.amountCents)}
-            </span>
+              {tier.note}
+            </p>
           </div>
-          <p
-            style={{
-              margin: 0,
-              fontFamily: FONT.display,
-              fontStyle: "italic",
-              fontSize: 17,
-              lineHeight: 1.45,
-              color: COLOR.goldFaint,
-              textWrap: "pretty",
-            }}
-          >
-            {tier.note}
-          </p>
-        </div>
 
         {/* The spec sheet: the four components of the score, in weight order.
             Painted from the loop; never rendered from state. */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 13,
+            borderTop: `1px solid ${COLOR.ruleFooter}`,
+            paddingTop: 18,
+          }}
+        >
           {SPEC_ROWS.map((label, i) => (
             <div
               key={label}
               style={{
                 display: "grid",
-                gridTemplateColumns: "104px 1fr 62px",
+                gridTemplateColumns: "104px 1fr 56px",
                 alignItems: "center",
                 gap: 12,
               }}
@@ -796,7 +859,9 @@ export function PourScreen({
                   position: "relative",
                   display: "block",
                   height: 6,
-                  background: `repeating-linear-gradient(90deg, ${COLOR.ruleStage} 0 1px, transparent 1px 7px)`,
+                  borderRadius: 3,
+                  background: "rgba(201,146,46,.1)",
+                  overflow: "hidden",
                 }}
               >
                 <span
@@ -806,9 +871,10 @@ export function PourScreen({
                   style={{
                     position: "absolute",
                     left: 0,
-                    top: 2,
-                    bottom: 2,
+                    top: 0,
+                    bottom: 0,
                     width: 0,
+                    borderRadius: 3,
                     background: `linear-gradient(90deg, ${COLOR.goldLabel}, ${COLOR.goldHot})`,
                     boxShadow: "0 0 12px rgba(245,214,122,.45)",
                   }}
@@ -821,7 +887,7 @@ export function PourScreen({
                 style={{
                   fontSize: 11,
                   letterSpacing: "1.2px",
-                  color: COLOR.goldLabel,
+                  color: COLOR.goldBody,
                   fontVariantNumeric: "tabular-nums",
                   textAlign: "right",
                 }}
@@ -837,7 +903,8 @@ export function PourScreen({
             display: "flex",
             flexDirection: "column",
             gap: 11,
-            paddingTop: 4,
+            borderTop: `1px solid ${COLOR.ruleFooter}`,
+            paddingTop: 18,
           }}
         >
           <div
@@ -852,7 +919,7 @@ export function PourScreen({
             <span>Classification</span>
             <span
               ref={scoreRef}
-              style={{ fontVariantNumeric: "tabular-nums", color: accent }}
+              style={{ fontVariantNumeric: "tabular-nums", color: COLOR.goldCream }}
             >
               0 / 1000
             </span>
@@ -861,7 +928,8 @@ export function PourScreen({
             style={{
               position: "relative",
               height: 8,
-              background: COLOR.ruleHair,
+              borderRadius: 4,
+              background: "rgba(201,146,46,.1)",
             }}
           >
             <div
@@ -872,6 +940,7 @@ export function PourScreen({
                 top: 0,
                 bottom: 0,
                 width: 0,
+                borderRadius: 4,
                 background: `linear-gradient(90deg, ${COLOR.goldLabel}, ${accent})`,
                 boxShadow: "0 0 14px rgba(245,214,122,.4)",
               }}
@@ -895,20 +964,44 @@ export function PourScreen({
               ),
             )}
           </div>
+          {/* Each label sits under its own threshold tick rather than sharing
+              the row's edges — space-between drifts the moment a threshold
+              moves. */}
           <div
+            className="mp-classification-labels"
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              fontSize: 11,
+              position: "relative",
+              height: 14,
+              fontSize: 10.5,
               letterSpacing: "1.4px",
               textTransform: "uppercase",
               color: COLOR.goldFaint,
             }}
           >
-            <span>Common</span>
-            <span>Uncommon</span>
-            <span>Rare</span>
-            <span>Singular</span>
+            <span style={{ position: "absolute", left: 0, top: 0, whiteSpace: "nowrap" }}>Common</span>
+            <span
+              style={{
+                position: "absolute",
+                left: `${THRESHOLDS.uncommon / 10}%`,
+                top: 0,
+                transform: "translateX(-50%)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Uncommon
+            </span>
+            <span
+              style={{
+                position: "absolute",
+                left: `${((THRESHOLDS.rare + THRESHOLDS.singular) / 2) / 10}%`,
+                top: 0,
+                transform: "translateX(-50%)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Rare
+            </span>
+            <span style={{ position: "absolute", right: 0, top: 0, whiteSpace: "nowrap" }}>Singular</span>
           </div>
         </div>
 
@@ -918,9 +1011,9 @@ export function PourScreen({
           <div
             role="alert"
             style={{
-              padding: "12px 0",
-              borderTop: `1px solid ${COLOR.tickMid}`,
-              borderBottom: `1px solid ${COLOR.tickMid}`,
+              padding: "12px 14px",
+              border: `1px solid ${COLOR.tickMid}`,
+              borderRadius: RADIUS.row,
               display: "flex",
               flexDirection: "column",
               gap: 5,
@@ -949,7 +1042,16 @@ export function PourScreen({
           </div>
         )}
 
-        <div style={{ display: "flex", gap: 12, paddingBottom: 8 }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            paddingBottom: 8,
+            flexWrap: "wrap",
+            borderTop: `1px solid ${COLOR.ruleFooter}`,
+            paddingTop: 18,
+          }}
+        >
           <button
             type="button"
             disabled={!settled || sealing}
@@ -965,27 +1067,24 @@ export function PourScreen({
             }}
             style={{
               position: "relative",
-              flex: 1,
-              padding: "17px 12px",
-              background: settled ? COLOR.ruleFooter : "transparent",
-              border: `1px solid ${settled ? COLOR.ruleEnabled : COLOR.ruleDisabled}`,
+              flex: "1 1 200px",
+              minWidth: 0,
+              padding: "16px 12px",
+              background: settled
+                ? "linear-gradient(180deg, rgba(245,214,122,.18), rgba(201,146,46,.08))"
+                : "transparent",
+              border: `1px solid ${settled ? accent : COLOR.ruleRow}`,
+              borderRadius: RADIUS.button,
+              boxShadow: settled ? "0 0 30px -8px rgba(245,214,122,.45)" : "none",
               color: settled ? COLOR.goldCream : COLOR.goldFaint,
               fontFamily: FONT.instrument,
               fontSize: 11,
               letterSpacing: "3px",
               textTransform: "uppercase",
               cursor: settled && !sealing ? "pointer" : "not-allowed",
-              transition: "background .3s, border-color .3s, color .3s",
+              transition: "background .3s, border-color .3s, color .3s, box-shadow .3s",
             }}
           >
-            <span
-              style={{
-                position: "absolute",
-                inset: 3,
-                pointerEvents: "none",
-                border: `1px solid ${settled ? COLOR.ruleStage : "transparent"}`,
-              }}
-            />
             {sealing
               ? "Disbursing…"
               : phase === "settling"
@@ -1003,8 +1102,9 @@ export function PourScreen({
               style={{
                 padding: "17px 20px",
                 background: "transparent",
-                border: `1px solid ${COLOR.ruleDisabled}`,
-                color: COLOR.goldFaint,
+                border: `1px solid ${COLOR.ruleStage}`,
+                borderRadius: RADIUS.button,
+                color: COLOR.goldLabel,
                 fontFamily: FONT.instrument,
                 fontSize: 11,
                 letterSpacing: "2.4px",
@@ -1015,6 +1115,7 @@ export function PourScreen({
               Discard
             </button>
           )}
+        </div>
         </div>
       </div>
     </div>

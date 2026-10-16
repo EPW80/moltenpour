@@ -84,6 +84,20 @@ export const COLUMN_RULE = `repeating-linear-gradient(90deg, ${COLOR.ruleColumn}
 /** The dashed leader that runs between a label and its value. */
 export const LEADER_RULE = `repeating-linear-gradient(90deg, ${COLOR.leader} 0 1px, transparent 1px 5px)`;
 
+/**
+ * The radius scale, in one place so the panels, rows, tabs and pills of the
+ * app agree. Panels 14, stage and primary buttons 10, rows and tabs 8, sigil
+ * wells 9, chips 5, pills 999.
+ *
+ * App chrome only: the certificate keeps square corners whatever this says —
+ * see the guard in app/global.css.
+ */
+export const RADIUS = { panel: 14, stage: 10, button: 10, row: 8, tab: 8, well: 9, chip: 5, pill: 999 } as const;
+/** Raised card surface used by the vessel frame, ledger panels and tiles. */
+export const CARD_GROUND = "linear-gradient(180deg, rgba(32,16,38,.55), rgba(14,8,18,.55))";
+export const CARD_BORDER = "rgba(201,146,46,.16)";
+export const CARD_SHADOW = "0 30px 80px -30px rgba(0,0,0,.7)";
+
 /** Procedural, so there is no image asset to ship or fail to load. */
 export const GRAIN_URL =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>\")";
