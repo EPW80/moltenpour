@@ -118,13 +118,25 @@ Because reach scales with price, the cheap tiers genuinely cannot mint the rare
 classifications. The ceremony says so on every tier button rather than letting
 someone pour the free tier repeatedly wondering why:
 
-| Sample      | Measure     | Draught | Vessel      | Crucible    | Full Pour   |
-| ----------- | ----------- | ------- | ----------- | ----------- | ----------- |
-| to Uncommon | to Uncommon | to Rare | to Singular | to Singular | to Singular |
+|       | Sample    | Measure     | Draught   | Vessel      | Crucible    | Full Pour   |
+| ----- | --------- | ----------- | --------- | ----------- | ----------- | ----------- |
+| Price | Free      | USD 2.99    | USD 12.99 | USD 29.99   | USD 59.99   | USD 149.00  |
+| Reach | to Common | to Uncommon | to Rare   | to Singular | to Singular | to Singular |
 
-`reachableRarity()` computes that from the real clamp and the real classifier, so
-it cannot drift when the thresholds move. Stating a ceiling is not implying a
-random outcome — the brief forbids the latter, not the former.
+The schedule, what each rung buys, and the payments work it depends on are in
+[docs/monetization.md](docs/monetization.md).
+
+`reachableRarity()` computes the reach row from the real clamp and the real
+classifier, so it cannot drift when the thresholds move. Stating a ceiling is not
+implying a random outcome — the brief forbids the latter, not the former.
+
+Tier 0's 0.50 reach sits below the Uncommon threshold on purpose: the sample is a
+Common in every case, which leaves four distinct ceilings across the first four
+rungs instead of two rungs selling the same one.
+
+A price is hashed into the sigil seed, so a reprice is a corpus change. Edit
+`AMOUNT_CENTS` in `app/ceremony/tiers.ts`, regenerate under Node 22, then make Go
+agree. `api/pour/prices_test.go` pins the two tables to each other.
 
 ## Verifying
 
@@ -273,7 +285,10 @@ under a live writer is how a recoverable incident becomes an unrecoverable one.
 - **Payments.** Receipt validation is a stub, so nothing charges for a tier.
   Deployments therefore run with `MOLTENPOUR_MAX_TIER=0` and offer the free tier
   alone; the paid rows stay on the schedule marked Withdrawn, because a register
-  keeps the lines it has ruled out.
+  keeps the lines it has ruled out. The price schedule, the unit economics and
+  the order/receipt design are in [docs/monetization.md](docs/monetization.md).
+  The free tier is also unlimited today; charging requires capping it at one
+  pour per owner, or the sample remains a perfect substitute for the entry tier.
 - **Accounts.** Ownership is a cookie: clear it and the collection is gone, and
   it does not follow you to another device. Real accounts can adopt these owner
   ids later by claiming them, so nothing minted anonymously is orphaned.

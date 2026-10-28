@@ -153,8 +153,8 @@ func TestDerivedStringsMatchTheCertificateFormat(t *testing.T) {
 	if len(rec.Batch) != 5 || rec.Batch[3] != '-' {
 		t.Fatalf("batch %q does not match NNN-X", rec.Batch)
 	}
-	if rec.AmountCents != 2499 {
-		t.Fatalf("tier 3 should cost 2499, got %d", rec.AmountCents)
+	if rec.AmountCents != 2999 {
+		t.Fatalf("tier 3 should cost 2999, got %d", rec.AmountCents)
 	}
 }
 

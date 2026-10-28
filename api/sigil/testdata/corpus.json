@@ -31,7 +31,7 @@
     "tiltEnergy"
    ],
    "hash": 2918889803,
-   "rarityScore": 409,
+   "rarityScore": 372,
    "rarity": "Common",
    "sigilDigest": 902735386
   },
@@ -57,7 +57,7 @@
     "tiltEnergy"
    ],
    "hash": 2844013910,
-   "rarityScore": 400,
+   "rarityScore": 375,
    "rarity": "Common",
    "sigilDigest": 2714359426
   },
@@ -71,7 +71,7 @@
     "holdMs": 6013
    },
    "timestampMs": 1750000194006,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 11,
     "peakVelocity": 1817.0263091102242,
@@ -79,10 +79,10 @@
     "holdMs": 6013
    },
    "violations": [],
-   "hash": 3513436309,
-   "rarityScore": 345,
+   "hash": 3627663099,
+   "rarityScore": 331,
    "rarity": "Common",
-   "sigilDigest": 3352640182
+   "sigilDigest": 1697609031
   },
   {
    "tierIndex": 3,
@@ -94,7 +94,7 @@
     "holdMs": 6060
    },
    "timestampMs": 1750000291009,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 29,
     "peakVelocity": 1059.5294300932437,
@@ -102,10 +102,10 @@
     "holdMs": 6060
    },
    "violations": [],
-   "hash": 3954601951,
-   "rarityScore": 351,
+   "hash": 3683267765,
+   "rarityScore": 343,
    "rarity": "Common",
-   "sigilDigest": 2377531814
+   "sigilDigest": 1003297070
   },
   {
    "tierIndex": 4,
@@ -117,7 +117,7 @@
     "holdMs": 8240
    },
    "timestampMs": 1750000388012,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 36,
     "peakVelocity": 514.4707596395165,
@@ -125,10 +125,10 @@
     "holdMs": 8240
    },
    "violations": [],
-   "hash": 1949482305,
-   "rarityScore": 336,
+   "hash": 3474203669,
+   "rarityScore": 333,
    "rarity": "Common",
-   "sigilDigest": 4013121497
+   "sigilDigest": 95194245
   },
   {
    "tierIndex": 5,
@@ -140,7 +140,7 @@
     "holdMs": 15337
    },
    "timestampMs": 1750000485015,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 37,
     "peakVelocity": 1980.6186533505133,
@@ -151,10 +151,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 3411774506,
+   "hash": 3422941478,
    "rarityScore": 586,
    "rarity": "Uncommon",
-   "sigilDigest": 428202362
+   "sigilDigest": 1048059130
   },
   {
    "tierIndex": 0,
@@ -178,7 +178,7 @@
     "holdMs"
    ],
    "hash": 4159305397,
-   "rarityScore": 304,
+   "rarityScore": 276,
    "rarity": "Common",
    "sigilDigest": 3856537352
   },
@@ -206,7 +206,7 @@
     "tiltEnergy"
    ],
    "hash": 1079259424,
-   "rarityScore": 495,
+   "rarityScore": 464,
    "rarity": "Common",
    "sigilDigest": 2444392460
   },
@@ -220,7 +220,7 @@
     "holdMs": 10717
    },
    "timestampMs": 1750000776024,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 102,
     "peakVelocity": 1833.010155102238,
@@ -230,10 +230,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2568724607,
-   "rarityScore": 556,
+   "hash": 203241541,
+   "rarityScore": 534,
    "rarity": "Uncommon",
-   "sigilDigest": 482558593
+   "sigilDigest": 3546285887
   },
   {
    "tierIndex": 3,
@@ -245,7 +245,7 @@
     "holdMs": 11363
    },
    "timestampMs": 1750000873027,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 55,
     "peakVelocity": 1251.2451509479433,
@@ -253,10 +253,10 @@
     "holdMs": 11363
    },
    "violations": [],
-   "hash": 1628971394,
-   "rarityScore": 429,
+   "hash": 2179182736,
+   "rarityScore": 419,
    "rarity": "Common",
-   "sigilDigest": 3304541658
+   "sigilDigest": 1601376306
   },
   {
    "tierIndex": 4,
@@ -268,7 +268,7 @@
     "holdMs": 4280
    },
    "timestampMs": 1750000970030,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 44,
     "peakVelocity": 1320.0705262366682,
@@ -279,10 +279,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 1773794564,
-   "rarityScore": 629,
+   "hash": 2503347984,
+   "rarityScore": 622,
    "rarity": "Uncommon",
-   "sigilDigest": 619955501
+   "sigilDigest": 4086408625
   },
   {
    "tierIndex": 5,
@@ -294,7 +294,7 @@
     "holdMs": 6326
    },
    "timestampMs": 1750001067033,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 97,
     "peakVelocity": 959.8138661123812,
@@ -305,10 +305,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 2227583266,
+   "hash": 2944697342,
    "rarityScore": 677,
    "rarity": "Rare",
-   "sigilDigest": 573169954
+   "sigilDigest": 1036903827
   },
   {
    "tierIndex": 0,
@@ -329,7 +329,7 @@
    },
    "violations": [],
    "hash": 2224193005,
-   "rarityScore": 352,
+   "rarityScore": 320,
    "rarity": "Common",
    "sigilDigest": 681805523
   },
@@ -356,7 +356,7 @@
     "tiltEnergy"
    ],
    "hash": 3628828820,
-   "rarityScore": 419,
+   "rarityScore": 393,
    "rarity": "Common",
    "sigilDigest": 1622577718
   },
@@ -370,7 +370,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750001358042,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 271,
     "peakVelocity": 1980.6186533505133,
@@ -383,10 +383,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 1045546939,
-   "rarityScore": 588,
+   "hash": 4102355073,
+   "rarityScore": 564,
    "rarity": "Uncommon",
-   "sigilDigest": 979246319
+   "sigilDigest": 187271859
   },
   {
    "tierIndex": 3,
@@ -398,7 +398,7 @@
     "holdMs": 5604
    },
    "timestampMs": 1750001455045,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 66,
     "peakVelocity": 182.49096502549946,
@@ -406,10 +406,10 @@
     "holdMs": 5604
    },
    "violations": [],
-   "hash": 1751835019,
-   "rarityScore": 331,
+   "hash": 1116049093,
+   "rarityScore": 323,
    "rarity": "Common",
-   "sigilDigest": 3089399668
+   "sigilDigest": 804130497
   },
   {
    "tierIndex": 4,
@@ -421,7 +421,7 @@
     "holdMs": 13072
    },
    "timestampMs": 1750001552048,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 1,
     "peakVelocity": 107.31432191096246,
@@ -431,10 +431,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 271056150,
-   "rarityScore": 206,
+   "hash": 2348273778,
+   "rarityScore": 204,
    "rarity": "Common",
-   "sigilDigest": 1244986183
+   "sigilDigest": 2410443018
   },
   {
    "tierIndex": 5,
@@ -446,7 +446,7 @@
     "holdMs": 12162
    },
    "timestampMs": 1750001649051,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 113,
     "peakVelocity": 1319.2838310729712,
@@ -456,10 +456,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3490096966,
+   "hash": 3472129010,
    "rarityScore": 562,
    "rarity": "Uncommon",
-   "sigilDigest": 3412263455
+   "sigilDigest": 4155784422
   },
   {
    "tierIndex": 0,
@@ -480,7 +480,7 @@
    },
    "violations": [],
    "hash": 2943927672,
-   "rarityScore": 168,
+   "rarityScore": 153,
    "rarity": "Common",
    "sigilDigest": 1656956912
   },
@@ -505,7 +505,7 @@
     "holdMs"
    ],
    "hash": 3530632470,
-   "rarityScore": 279,
+   "rarityScore": 262,
    "rarity": "Common",
    "sigilDigest": 367620883
   },
@@ -519,7 +519,7 @@
     "holdMs": 15574
    },
    "timestampMs": 1750001940060,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 100,
     "peakVelocity": 70.85085366852582,
@@ -529,10 +529,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 753343921,
-   "rarityScore": 340,
+   "hash": 4027999943,
+   "rarityScore": 326,
    "rarity": "Common",
-   "sigilDigest": 3698208968
+   "sigilDigest": 727385408
   },
   {
    "tierIndex": 3,
@@ -544,7 +544,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750002037063,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 180,
     "peakVelocity": 1980.6186533505133,
@@ -557,10 +557,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 455561778,
-   "rarityScore": 603,
+   "hash": 2703881988,
+   "rarityScore": 588,
    "rarity": "Uncommon",
-   "sigilDigest": 3639465934
+   "sigilDigest": 4002041485
   },
   {
    "tierIndex": 4,
@@ -572,7 +572,7 @@
     "holdMs": 14542
    },
    "timestampMs": 1750002134066,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 65,
     "peakVelocity": 1252.8790693730116,
@@ -583,10 +583,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 632676954,
-   "rarityScore": 667,
-   "rarity": "Rare",
-   "sigilDigest": 363928440
+   "hash": 559641718,
+   "rarityScore": 659,
+   "rarity": "Uncommon",
+   "sigilDigest": 90792187
   },
   {
    "tierIndex": 5,
@@ -598,7 +598,7 @@
     "holdMs": 13089
    },
    "timestampMs": 1750002231069,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 47,
     "peakVelocity": 1980.6186533505133,
@@ -609,10 +609,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 263725621,
+   "hash": 475364937,
    "rarityScore": 709,
    "rarity": "Rare",
-   "sigilDigest": 1090656174
+   "sigilDigest": 2235132226
   },
   {
    "tierIndex": 0,
@@ -635,7 +635,7 @@
     "dropletsLanded"
    ],
    "hash": 207863845,
-   "rarityScore": 458,
+   "rarityScore": 417,
    "rarity": "Common",
    "sigilDigest": 1647920580
   },
@@ -658,7 +658,7 @@
    },
    "violations": [],
    "hash": 2823599920,
-   "rarityScore": 419,
+   "rarityScore": 393,
    "rarity": "Common",
    "sigilDigest": 2665491332
   },
@@ -672,7 +672,7 @@
     "holdMs": 2552
    },
    "timestampMs": 1750002522078,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 59,
     "peakVelocity": 553.8697610143572,
@@ -682,10 +682,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 952935415,
-   "rarityScore": 470,
+   "hash": 3335103209,
+   "rarityScore": 451,
    "rarity": "Common",
-   "sigilDigest": 1168702302
+   "sigilDigest": 2598456021
   },
   {
    "tierIndex": 3,
@@ -697,7 +697,7 @@
     "holdMs": 6189
    },
    "timestampMs": 1750002619081,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 14,
     "peakVelocity": 1980.6186533505133,
@@ -708,10 +708,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 1425599230,
-   "rarityScore": 408,
+   "hash": 2958136940,
+   "rarityScore": 398,
    "rarity": "Common",
-   "sigilDigest": 3006749174
+   "sigilDigest": 1749266606
   },
   {
    "tierIndex": 4,
@@ -723,7 +723,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750002716084,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 80,
     "peakVelocity": 1980.6186533505133,
@@ -736,10 +736,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 3454015486,
-   "rarityScore": 620,
+   "hash": 4108469906,
+   "rarityScore": 613,
    "rarity": "Uncommon",
-   "sigilDigest": 1951233228
+   "sigilDigest": 691009841
   },
   {
    "tierIndex": 5,
@@ -751,7 +751,7 @@
     "holdMs": 3596
    },
    "timestampMs": 1750002813087,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 37,
     "peakVelocity": 487.80402676202357,
@@ -759,10 +759,10 @@
     "holdMs": 3596
    },
    "violations": [],
-   "hash": 2046533592,
+   "hash": 1597933292,
    "rarityScore": 334,
    "rarity": "Common",
-   "sigilDigest": 1904693054
+   "sigilDigest": 3466382813
   },
   {
    "tierIndex": 0,
@@ -783,7 +783,7 @@
    },
    "violations": [],
    "hash": 2548590561,
-   "rarityScore": 192,
+   "rarityScore": 175,
    "rarity": "Common",
    "sigilDigest": 2677828380
   },
@@ -806,7 +806,7 @@
    },
    "violations": [],
    "hash": 1647677151,
-   "rarityScore": 396,
+   "rarityScore": 372,
    "rarity": "Common",
    "sigilDigest": 4242826165
   },
@@ -820,7 +820,7 @@
     "holdMs": 6379
    },
    "timestampMs": 1750003104096,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 68,
     "peakVelocity": 1339.66263551265,
@@ -828,10 +828,10 @@
     "holdMs": 6379
    },
    "violations": [],
-   "hash": 3876212821,
-   "rarityScore": 418,
+   "hash": 1843904891,
+   "rarityScore": 401,
    "rarity": "Common",
-   "sigilDigest": 211409718
+   "sigilDigest": 1423982118
   },
   {
    "tierIndex": 3,
@@ -843,7 +843,7 @@
     "holdMs": 1153
    },
    "timestampMs": 1750003201099,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 28,
     "peakVelocity": 729.4083524029702,
@@ -851,10 +851,10 @@
     "holdMs": 1153
    },
    "violations": [],
-   "hash": 2611218891,
-   "rarityScore": 498,
+   "hash": 1813936425,
+   "rarityScore": 486,
    "rarity": "Common",
-   "sigilDigest": 1115943867
+   "sigilDigest": 585255139
   },
   {
    "tierIndex": 4,
@@ -866,7 +866,7 @@
     "holdMs": 207
    },
    "timestampMs": 1750003298102,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 7,
     "peakVelocity": 453.4896453062628,
@@ -878,10 +878,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 1179177131,
-   "rarityScore": 593,
+   "hash": 2753746871,
+   "rarityScore": 586,
    "rarity": "Uncommon",
-   "sigilDigest": 572185752
+   "sigilDigest": 2719770155
   },
   {
    "tierIndex": 5,
@@ -893,7 +893,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750003395105,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 153,
     "peakVelocity": 1980.6186533505133,
@@ -906,10 +906,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 2228437729,
+   "hash": 301098853,
    "rarityScore": 702,
    "rarity": "Rare",
-   "sigilDigest": 2596207743
+   "sigilDigest": 1913469256
   },
   {
    "tierIndex": 0,
@@ -933,7 +933,7 @@
     "holdMs"
    ],
    "hash": 4286625925,
-   "rarityScore": 450,
+   "rarityScore": 409,
    "rarity": "Common",
    "sigilDigest": 2501873364
   },
@@ -959,7 +959,7 @@
     "holdMs"
    ],
    "hash": 2537225447,
-   "rarityScore": 392,
+   "rarityScore": 368,
    "rarity": "Common",
    "sigilDigest": 3733493698
   },
@@ -973,7 +973,7 @@
     "holdMs": 6616
    },
    "timestampMs": 1750003686114,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 72,
     "peakVelocity": 395.8074233494699,
@@ -983,10 +983,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 809109499,
-   "rarityScore": 437,
+   "hash": 1846623985,
+   "rarityScore": 419,
    "rarity": "Common",
-   "sigilDigest": 512145121
+   "sigilDigest": 1147801260
   },
   {
    "tierIndex": 3,
@@ -998,7 +998,7 @@
     "holdMs": 2053
    },
    "timestampMs": 1750003783117,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 25,
     "peakVelocity": 922.0310485456139,
@@ -1006,10 +1006,10 @@
     "holdMs": 2053
    },
    "violations": [],
-   "hash": 664460144,
-   "rarityScore": 350,
+   "hash": 1384982722,
+   "rarityScore": 342,
    "rarity": "Common",
-   "sigilDigest": 1106801899
+   "sigilDigest": 584227972
   },
   {
    "tierIndex": 4,
@@ -1021,7 +1021,7 @@
     "holdMs": 2682
    },
    "timestampMs": 1750003880120,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 87,
     "peakVelocity": 1980.6186533505133,
@@ -1032,10 +1032,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 1282379008,
-   "rarityScore": 740,
+   "hash": 478077436,
+   "rarityScore": 732,
    "rarity": "Rare",
-   "sigilDigest": 4224600419
+   "sigilDigest": 3406317531
   },
   {
    "tierIndex": 5,
@@ -1047,7 +1047,7 @@
     "holdMs": 8310
    },
    "timestampMs": 1750003977123,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 64,
     "peakVelocity": 1200.5922220647335,
@@ -1057,10 +1057,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3049049692,
+   "hash": 3177059224,
    "rarityScore": 500,
    "rarity": "Common",
-   "sigilDigest": 4095479177
+   "sigilDigest": 88590591
   },
   {
    "tierIndex": 0,
@@ -1086,7 +1086,7 @@
     "tiltEnergy"
    ],
    "hash": 3776720482,
-   "rarityScore": 442,
+   "rarityScore": 402,
    "rarity": "Common",
    "sigilDigest": 1056692372
   },
@@ -1109,7 +1109,7 @@
    },
    "violations": [],
    "hash": 215442100,
-   "rarityScore": 186,
+   "rarityScore": 174,
    "rarity": "Common",
    "sigilDigest": 3295790320
   },
@@ -1123,7 +1123,7 @@
     "holdMs": 9338
    },
    "timestampMs": 1750004268132,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 60,
     "peakVelocity": 375.50374888814986,
@@ -1133,10 +1133,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1138289784,
-   "rarityScore": 440,
+   "hash": 1636988234,
+   "rarityScore": 422,
    "rarity": "Common",
-   "sigilDigest": 1586721132
+   "sigilDigest": 3247830153
   },
   {
    "tierIndex": 3,
@@ -1148,7 +1148,7 @@
     "holdMs": 9165
    },
    "timestampMs": 1750004365135,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 87,
     "peakVelocity": 1277.5359276216477,
@@ -1158,10 +1158,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2366671800,
-   "rarityScore": 596,
+   "hash": 1868804450,
+   "rarityScore": 581,
    "rarity": "Uncommon",
-   "sigilDigest": 3386289792
+   "sigilDigest": 891312441
   },
   {
    "tierIndex": 4,
@@ -1173,7 +1173,7 @@
     "holdMs": 6009
    },
    "timestampMs": 1750004462138,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 30,
     "peakVelocity": 1924.3752951268107,
@@ -1183,10 +1183,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1438758168,
-   "rarityScore": 474,
+   "hash": 1124318012,
+   "rarityScore": 468,
    "rarity": "Common",
-   "sigilDigest": 3259919914
+   "sigilDigest": 3188567477
   },
   {
    "tierIndex": 5,
@@ -1198,7 +1198,7 @@
     "holdMs": 7110
    },
    "timestampMs": 1750004559141,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 20,
     "peakVelocity": 1272.3161006346345,
@@ -1206,10 +1206,10 @@
     "holdMs": 7110
    },
    "violations": [],
-   "hash": 321187717,
+   "hash": 3652592361,
    "rarityScore": 422,
    "rarity": "Common",
-   "sigilDigest": 1405261303
+   "sigilDigest": 3234853090
   },
   {
    "tierIndex": 0,
@@ -1233,7 +1233,7 @@
     "holdMs"
    ],
    "hash": 2871660454,
-   "rarityScore": 388,
+   "rarityScore": 353,
    "rarity": "Common",
    "sigilDigest": 2073151455
   },
@@ -1261,7 +1261,7 @@
     "tiltEnergy"
    ],
    "hash": 1231599633,
-   "rarityScore": 496,
+   "rarityScore": 465,
    "rarity": "Common",
    "sigilDigest": 1984491699
   },
@@ -1275,7 +1275,7 @@
     "holdMs": 11936
    },
    "timestampMs": 1750004850150,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 30,
     "peakVelocity": 170.06210279650986,
@@ -1286,10 +1286,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 631107751,
-   "rarityScore": 416,
+   "hash": 4109067037,
+   "rarityScore": 399,
    "rarity": "Common",
-   "sigilDigest": 2062847665
+   "sigilDigest": 2881804955
   },
   {
    "tierIndex": 3,
@@ -1301,7 +1301,7 @@
     "holdMs": 3132
    },
    "timestampMs": 1750004947153,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 33,
     "peakVelocity": 1959.065461795496,
@@ -1313,10 +1313,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 3898944843,
-   "rarityScore": 596,
+   "hash": 118767517,
+   "rarityScore": 581,
    "rarity": "Uncommon",
-   "sigilDigest": 3072173238
+   "sigilDigest": 3070310772
   },
   {
    "tierIndex": 4,
@@ -1328,7 +1328,7 @@
     "holdMs": 13861
    },
    "timestampMs": 1750005044156,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 64,
     "peakVelocity": 1484.0946899261326,
@@ -1336,10 +1336,10 @@
     "holdMs": 13861
    },
    "violations": [],
-   "hash": 1780210279,
-   "rarityScore": 519,
+   "hash": 47831691,
+   "rarityScore": 513,
    "rarity": "Common",
-   "sigilDigest": 2832168488
+   "sigilDigest": 2316321596
   },
   {
    "tierIndex": 5,
@@ -1351,7 +1351,7 @@
     "holdMs": 9438
    },
    "timestampMs": 1750005141159,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 61,
     "peakVelocity": 1038.4970424231142,
@@ -1359,10 +1359,10 @@
     "holdMs": 9438
    },
    "violations": [],
-   "hash": 1115591445,
+   "hash": 3042347625,
    "rarityScore": 460,
    "rarity": "Common",
-   "sigilDigest": 636838544
+   "sigilDigest": 3858270221
   },
   {
    "tierIndex": 0,
@@ -1385,7 +1385,7 @@
     "holdMs"
    ],
    "hash": 1851630916,
-   "rarityScore": 164,
+   "rarityScore": 149,
    "rarity": "Common",
    "sigilDigest": 1200473543
   },
@@ -1410,7 +1410,7 @@
     "dropletsLanded"
    ],
    "hash": 287245152,
-   "rarityScore": 510,
+   "rarityScore": 478,
    "rarity": "Common",
    "sigilDigest": 467845403
   },
@@ -1424,7 +1424,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750005432168,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 152,
     "peakVelocity": 1980.6186533505133,
@@ -1437,10 +1437,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 2204016189,
-   "rarityScore": 538,
-   "rarity": "Uncommon",
-   "sigilDigest": 1508421600
+   "hash": 3312168543,
+   "rarityScore": 515,
+   "rarity": "Common",
+   "sigilDigest": 971567272
   },
   {
    "tierIndex": 3,
@@ -1452,7 +1452,7 @@
     "holdMs": 6102
    },
    "timestampMs": 1750005529171,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 16,
     "peakVelocity": 1102.6897442061454,
@@ -1462,10 +1462,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3955064512,
-   "rarityScore": 312,
+   "hash": 2126677102,
+   "rarityScore": 304,
    "rarity": "Common",
-   "sigilDigest": 3125621868
+   "sigilDigest": 1308247401
   },
   {
    "tierIndex": 4,
@@ -1477,7 +1477,7 @@
     "holdMs": 5065
    },
    "timestampMs": 1750005626174,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 109,
     "peakVelocity": 1537.152084428817,
@@ -1487,10 +1487,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 4249270932,
-   "rarityScore": 657,
+   "hash": 2687078040,
+   "rarityScore": 650,
    "rarity": "Uncommon",
-   "sigilDigest": 1911382185
+   "sigilDigest": 365407369
   },
   {
    "tierIndex": 5,
@@ -1502,7 +1502,7 @@
     "holdMs": 6665
    },
    "timestampMs": 1750005723177,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 115,
     "peakVelocity": 1267.187085468322,
@@ -1510,10 +1510,10 @@
     "holdMs": 6665
    },
    "violations": [],
-   "hash": 4002535603,
+   "hash": 3978340815,
    "rarityScore": 556,
    "rarity": "Uncommon",
-   "sigilDigest": 3354465167
+   "sigilDigest": 2869195752
   },
   {
    "tierIndex": 0,
@@ -1537,7 +1537,7 @@
     "holdMs"
    ],
    "hash": 2091344756,
-   "rarityScore": 393,
+   "rarityScore": 358,
    "rarity": "Common",
    "sigilDigest": 2557437692
   },
@@ -1560,7 +1560,7 @@
    },
    "violations": [],
    "hash": 4104017588,
-   "rarityScore": 355,
+   "rarityScore": 333,
    "rarity": "Common",
    "sigilDigest": 1545835551
   },
@@ -1574,7 +1574,7 @@
     "holdMs": 12198
    },
    "timestampMs": 1750006014186,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 20,
     "peakVelocity": 1799.4305022992194,
@@ -1582,10 +1582,10 @@
     "holdMs": 12198
    },
    "violations": [],
-   "hash": 4270217170,
-   "rarityScore": 412,
+   "hash": 3591721456,
+   "rarityScore": 395,
    "rarity": "Common",
-   "sigilDigest": 1662826523
+   "sigilDigest": 318218966
   },
   {
    "tierIndex": 3,
@@ -1597,7 +1597,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750006111189,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 355,
     "peakVelocity": 1980.6186533505133,
@@ -1610,10 +1610,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 602679678,
-   "rarityScore": 673,
-   "rarity": "Rare",
-   "sigilDigest": 1108840064
+   "hash": 684484396,
+   "rarityScore": 656,
+   "rarity": "Uncommon",
+   "sigilDigest": 2064036270
   },
   {
    "tierIndex": 4,
@@ -1625,7 +1625,7 @@
     "holdMs": 9353
    },
    "timestampMs": 1750006208192,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 102,
     "peakVelocity": 905.1190669182688,
@@ -1635,10 +1635,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 955237219,
-   "rarityScore": 561,
+   "hash": 1925628575,
+   "rarityScore": 555,
    "rarity": "Uncommon",
-   "sigilDigest": 1441950291
+   "sigilDigest": 1199477274
   },
   {
    "tierIndex": 5,
@@ -1650,7 +1650,7 @@
     "holdMs": 15138
    },
    "timestampMs": 1750006305195,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 125,
     "peakVelocity": 97.96320754103363,
@@ -1660,10 +1660,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3041235300,
+   "hash": 1014473440,
    "rarityScore": 424,
    "rarity": "Common",
-   "sigilDigest": 1261753121
+   "sigilDigest": 2400554081
   },
   {
    "tierIndex": 0,
@@ -1686,7 +1686,7 @@
     "holdMs"
    ],
    "hash": 2351091417,
-   "rarityScore": 349,
+   "rarityScore": 318,
    "rarity": "Common",
    "sigilDigest": 3949501899
   },
@@ -1711,7 +1711,7 @@
     "holdMs"
    ],
    "hash": 3980198375,
-   "rarityScore": 286,
+   "rarityScore": 268,
    "rarity": "Common",
    "sigilDigest": 2481606549
   },
@@ -1725,7 +1725,7 @@
     "holdMs": 3266
    },
    "timestampMs": 1750006596204,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 22,
     "peakVelocity": 1475.8069600444287,
@@ -1733,10 +1733,10 @@
     "holdMs": 3266
    },
    "violations": [],
-   "hash": 1236686943,
-   "rarityScore": 335,
+   "hash": 44926889,
+   "rarityScore": 321,
    "rarity": "Common",
-   "sigilDigest": 1491826096
+   "sigilDigest": 253808046
   },
   {
    "tierIndex": 3,
@@ -1748,7 +1748,7 @@
     "holdMs": 7879
    },
    "timestampMs": 1750006693207,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 95,
     "peakVelocity": 51.4493927359581,
@@ -1758,10 +1758,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2751526372,
-   "rarityScore": 444,
+   "hash": 488823118,
+   "rarityScore": 433,
    "rarity": "Common",
-   "sigilDigest": 1322671098
+   "sigilDigest": 327923831
   },
   {
    "tierIndex": 4,
@@ -1773,7 +1773,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750006790210,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 319,
     "peakVelocity": 1980.6186533505133,
@@ -1786,10 +1786,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 3293382293,
-   "rarityScore": 711,
+   "hash": 2591058665,
+   "rarityScore": 703,
    "rarity": "Rare",
-   "sigilDigest": 4226370030
+   "sigilDigest": 1022497905
   },
   {
    "tierIndex": 5,
@@ -1801,7 +1801,7 @@
     "holdMs": 2547
    },
    "timestampMs": 1750006887213,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 29,
     "peakVelocity": 645.3945791814476,
@@ -1811,10 +1811,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 14128925,
+   "hash": 1322294409,
    "rarityScore": 454,
    "rarity": "Common",
-   "sigilDigest": 2332650263
+   "sigilDigest": 818236990
   },
   {
    "tierIndex": 0,
@@ -1837,7 +1837,7 @@
     "peakVelocity"
    ],
    "hash": 1423527975,
-   "rarityScore": 452,
+   "rarityScore": 411,
    "rarity": "Common",
    "sigilDigest": 1768961667
   },
@@ -1864,7 +1864,7 @@
     "tiltEnergy"
    ],
    "hash": 2953906046,
-   "rarityScore": 419,
+   "rarityScore": 393,
    "rarity": "Common",
    "sigilDigest": 1565248754
   },
@@ -1878,7 +1878,7 @@
     "holdMs": 1078
    },
    "timestampMs": 1750007178222,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 25,
     "peakVelocity": 158.96841883659363,
@@ -1888,10 +1888,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 3760604412,
-   "rarityScore": 386,
+   "hash": 1970630454,
+   "rarityScore": 371,
    "rarity": "Common",
-   "sigilDigest": 1413564580
+   "sigilDigest": 3175563452
   },
   {
    "tierIndex": 3,
@@ -1903,7 +1903,7 @@
     "holdMs": 11717
    },
    "timestampMs": 1750007275225,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 138,
     "peakVelocity": 1026.185305789113,
@@ -1911,10 +1911,10 @@
     "holdMs": 11717
    },
    "violations": [],
-   "hash": 763588197,
-   "rarityScore": 496,
+   "hash": 2009169895,
+   "rarityScore": 484,
    "rarity": "Common",
-   "sigilDigest": 549183832
+   "sigilDigest": 3438179673
   },
   {
    "tierIndex": 4,
@@ -1926,7 +1926,7 @@
     "holdMs": 4543
    },
    "timestampMs": 1750007372228,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 110,
     "peakVelocity": 78.1716134864837,
@@ -1934,10 +1934,10 @@
     "holdMs": 4543
    },
    "violations": [],
-   "hash": 2308545908,
-   "rarityScore": 464,
+   "hash": 3085642376,
+   "rarityScore": 459,
    "rarity": "Common",
-   "sigilDigest": 2425492225
+   "sigilDigest": 3360299701
   },
   {
    "tierIndex": 5,
@@ -1949,7 +1949,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750007469231,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 96,
     "peakVelocity": 1980.6186533505133,
@@ -1962,10 +1962,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 2001131797,
+   "hash": 3087155257,
    "rarityScore": 682,
    "rarity": "Rare",
-   "sigilDigest": 3043024254
+   "sigilDigest": 4163777154
   },
   {
    "tierIndex": 0,
@@ -1989,7 +1989,7 @@
     "holdMs"
    ],
    "hash": 2837462597,
-   "rarityScore": 463,
+   "rarityScore": 421,
    "rarity": "Common",
    "sigilDigest": 982415336
   },
@@ -2014,7 +2014,7 @@
     "holdMs"
    ],
    "hash": 304998081,
-   "rarityScore": 302,
+   "rarityScore": 283,
    "rarity": "Common",
    "sigilDigest": 308079671
   },
@@ -2028,7 +2028,7 @@
     "holdMs": 2481
    },
    "timestampMs": 1750007760240,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 51,
     "peakVelocity": 1053.820191603154,
@@ -2036,10 +2036,10 @@
     "holdMs": 2481
    },
    "violations": [],
-   "hash": 2092922302,
-   "rarityScore": 462,
+   "hash": 4085355496,
+   "rarityScore": 443,
    "rarity": "Common",
-   "sigilDigest": 3838158281
+   "sigilDigest": 958293050
   },
   {
    "tierIndex": 3,
@@ -2051,7 +2051,7 @@
     "holdMs": 6223
    },
    "timestampMs": 1750007857243,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 54,
     "peakVelocity": 1428.3696418162435,
@@ -2059,10 +2059,10 @@
     "holdMs": 6223
    },
    "violations": [],
-   "hash": 3203117945,
-   "rarityScore": 426,
+   "hash": 3657884147,
+   "rarityScore": 416,
    "rarity": "Common",
-   "sigilDigest": 720518224
+   "sigilDigest": 1578810070
   },
   {
    "tierIndex": 4,
@@ -2074,7 +2074,7 @@
     "holdMs": 704
    },
    "timestampMs": 1750007954246,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 23,
     "peakVelocity": 109.86880715936422,
@@ -2084,10 +2084,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 1568335098,
-   "rarityScore": 434,
+   "hash": 3300605318,
+   "rarityScore": 429,
    "rarity": "Common",
-   "sigilDigest": 2228916683
+   "sigilDigest": 670300733
   },
   {
    "tierIndex": 5,
@@ -2099,7 +2099,7 @@
     "holdMs": 1911
    },
    "timestampMs": 1750008051249,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 75,
     "peakVelocity": 1166.259518172592,
@@ -2109,10 +2109,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 3172798928,
+   "hash": 200036916,
    "rarityScore": 685,
    "rarity": "Rare",
-   "sigilDigest": 3941327451
+   "sigilDigest": 2723811667
   },
   {
    "tierIndex": 0,
@@ -2138,7 +2138,7 @@
     "tiltEnergy"
    ],
    "hash": 1531169134,
-   "rarityScore": 424,
+   "rarityScore": 385,
    "rarity": "Common",
    "sigilDigest": 2092413847
   },
@@ -2164,7 +2164,7 @@
     "peakVelocity"
    ],
    "hash": 2689933931,
-   "rarityScore": 530,
+   "rarityScore": 497,
    "rarity": "Common",
    "sigilDigest": 296741538
   },
@@ -2178,7 +2178,7 @@
     "holdMs": 8520
    },
    "timestampMs": 1750008342258,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 25,
     "peakVelocity": 668.3249492198229,
@@ -2189,10 +2189,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 2925648984,
-   "rarityScore": 443,
+   "hash": 3777833018,
+   "rarityScore": 424,
    "rarity": "Common",
-   "sigilDigest": 305573692
+   "sigilDigest": 1569423203
   },
   {
    "tierIndex": 3,
@@ -2204,7 +2204,7 @@
     "holdMs": 13401
    },
    "timestampMs": 1750008439261,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 31,
     "peakVelocity": 1895.1080291066319,
@@ -2214,10 +2214,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1110717335,
-   "rarityScore": 440,
+   "hash": 1979074421,
+   "rarityScore": 429,
    "rarity": "Common",
-   "sigilDigest": 1957883345
+   "sigilDigest": 1892255885
   },
   {
    "tierIndex": 4,
@@ -2229,7 +2229,7 @@
     "holdMs": 12498
    },
    "timestampMs": 1750008536264,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 55,
     "peakVelocity": 281.8013611715287,
@@ -2239,10 +2239,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1883583572,
-   "rarityScore": 379,
+   "hash": 188272584,
+   "rarityScore": 375,
    "rarity": "Common",
-   "sigilDigest": 3270100455
+   "sigilDigest": 1220334165
   },
   {
    "tierIndex": 5,
@@ -2254,7 +2254,7 @@
     "holdMs": 2992
    },
    "timestampMs": 1750008633267,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 37,
     "peakVelocity": 500.52714282646775,
@@ -2262,10 +2262,10 @@
     "holdMs": 2992
    },
    "violations": [],
-   "hash": 1969457280,
+   "hash": 1912048036,
    "rarityScore": 350,
    "rarity": "Common",
-   "sigilDigest": 1960404251
+   "sigilDigest": 2309053769
   },
   {
    "tierIndex": 0,
@@ -2289,7 +2289,7 @@
     "holdMs"
    ],
    "hash": 1251563918,
-   "rarityScore": 319,
+   "rarityScore": 290,
    "rarity": "Common",
    "sigilDigest": 2914043676
   },
@@ -2317,8 +2317,8 @@
     "tiltEnergy"
    ],
    "hash": 1705890844,
-   "rarityScore": 544,
-   "rarity": "Uncommon",
+   "rarityScore": 510,
+   "rarity": "Common",
    "sigilDigest": 4276712088
   },
   {
@@ -2331,7 +2331,7 @@
     "holdMs": 252
    },
    "timestampMs": 1750008924276,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 6,
     "peakVelocity": 108.20968034677207,
@@ -2342,10 +2342,10 @@
     "dropletsLanded",
     "tiltEnergy"
    ],
-   "hash": 3207382445,
-   "rarityScore": 331,
+   "hash": 3126691299,
+   "rarityScore": 317,
    "rarity": "Common",
-   "sigilDigest": 3438355399
+   "sigilDigest": 3030048422
   },
   {
    "tierIndex": 3,
@@ -2357,7 +2357,7 @@
     "holdMs": 2339
    },
    "timestampMs": 1750009021279,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 31,
     "peakVelocity": 1962.4821829143912,
@@ -2365,10 +2365,10 @@
     "holdMs": 2339
    },
    "violations": [],
-   "hash": 513407038,
-   "rarityScore": 471,
+   "hash": 3934829724,
+   "rarityScore": 460,
    "rarity": "Common",
-   "sigilDigest": 657098541
+   "sigilDigest": 2314296766
   },
   {
    "tierIndex": 4,
@@ -2380,7 +2380,7 @@
     "holdMs": 15965
    },
    "timestampMs": 1750009118282,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 126,
     "peakVelocity": 1411.158372182399,
@@ -2390,10 +2390,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1460602385,
-   "rarityScore": 566,
+   "hash": 1813439077,
+   "rarityScore": 560,
    "rarity": "Uncommon",
-   "sigilDigest": 657133314
+   "sigilDigest": 3133235711
   },
   {
    "tierIndex": 5,
@@ -2405,7 +2405,7 @@
     "holdMs": 12308
    },
    "timestampMs": 1750009215285,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 57,
     "peakVelocity": 172.02043710276484,
@@ -2413,10 +2413,10 @@
     "holdMs": 12308
    },
    "violations": [],
-   "hash": 261241940,
+   "hash": 1441503560,
    "rarityScore": 378,
    "rarity": "Common",
-   "sigilDigest": 349828289
+   "sigilDigest": 3852732210
   },
   {
    "tierIndex": 0,
@@ -2439,7 +2439,7 @@
     "peakVelocity"
    ],
    "hash": 907622411,
-   "rarityScore": 419,
+   "rarityScore": 381,
    "rarity": "Common",
    "sigilDigest": 3210918384
   },
@@ -2465,7 +2465,7 @@
     "holdMs"
    ],
    "hash": 2889083034,
-   "rarityScore": 371,
+   "rarityScore": 348,
    "rarity": "Common",
    "sigilDigest": 186443030
   },
@@ -2479,7 +2479,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750009506294,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 175,
     "peakVelocity": 1980.6186533505133,
@@ -2492,10 +2492,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 4228638786,
-   "rarityScore": 548,
-   "rarity": "Uncommon",
-   "sigilDigest": 1503132049
+   "hash": 1120587520,
+   "rarityScore": 525,
+   "rarity": "Common",
+   "sigilDigest": 2740612119
   },
   {
    "tierIndex": 3,
@@ -2507,7 +2507,7 @@
     "holdMs": 2502
    },
    "timestampMs": 1750009603297,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 56,
     "peakVelocity": 1980.6186533505133,
@@ -2517,10 +2517,10 @@
    "violations": [
     "peakVelocity"
    ],
-   "hash": 2967015634,
-   "rarityScore": 610,
+   "hash": 3925702244,
+   "rarityScore": 596,
    "rarity": "Uncommon",
-   "sigilDigest": 996405611
+   "sigilDigest": 3475469009
   },
   {
    "tierIndex": 4,
@@ -2532,7 +2532,7 @@
     "holdMs": 5764
    },
    "timestampMs": 1750009700300,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 6,
     "peakVelocity": 889.8582146968693,
@@ -2540,10 +2540,10 @@
     "holdMs": 5764
    },
    "violations": [],
-   "hash": 1977520617,
-   "rarityScore": 313,
+   "hash": 228210941,
+   "rarityScore": 309,
    "rarity": "Common",
-   "sigilDigest": 15061953
+   "sigilDigest": 1555388004
   },
   {
    "tierIndex": 5,
@@ -2555,7 +2555,7 @@
     "holdMs": 14519
    },
    "timestampMs": 1750009797303,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 139,
     "peakVelocity": 1682.2087205015123,
@@ -2565,10 +2565,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2201436128,
+   "hash": 1288865964,
    "rarityScore": 637,
    "rarity": "Uncommon",
-   "sigilDigest": 1064825654
+   "sigilDigest": 1088813557
   },
   {
    "tierIndex": 0,
@@ -2593,7 +2593,7 @@
     "peakVelocity"
    ],
    "hash": 81407728,
-   "rarityScore": 440,
+   "rarityScore": 400,
    "rarity": "Common",
    "sigilDigest": 3794923872
   },
@@ -2616,7 +2616,7 @@
    },
    "violations": [],
    "hash": 1520805861,
-   "rarityScore": 291,
+   "rarityScore": 273,
    "rarity": "Common",
    "sigilDigest": 2339775837
   },
@@ -2630,7 +2630,7 @@
     "holdMs": 195
    },
    "timestampMs": 1750010088312,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 5,
     "peakVelocity": 435.1247407353436,
@@ -2641,10 +2641,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 4155822940,
-   "rarityScore": 540,
-   "rarity": "Uncommon",
-   "sigilDigest": 3118309457
+   "hash": 1088992074,
+   "rarityScore": 518,
+   "rarity": "Common",
+   "sigilDigest": 3129796253
   },
   {
    "tierIndex": 3,
@@ -2656,7 +2656,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750010185315,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 373,
     "peakVelocity": 1980.6186533505133,
@@ -2669,10 +2669,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 4081596843,
-   "rarityScore": 680,
-   "rarity": "Rare",
-   "sigilDigest": 446455717
+   "hash": 1138602345,
+   "rarityScore": 664,
+   "rarity": "Uncommon",
+   "sigilDigest": 483317450
   },
   {
    "tierIndex": 4,
@@ -2684,7 +2684,7 @@
     "holdMs": 7483
    },
    "timestampMs": 1750010282318,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 68,
     "peakVelocity": 1393.0206697899848,
@@ -2695,10 +2695,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 170791673,
-   "rarityScore": 647,
+   "hash": 2815554077,
+   "rarityScore": 639,
    "rarity": "Uncommon",
-   "sigilDigest": 2275574835
+   "sigilDigest": 769037237
   },
   {
    "tierIndex": 5,
@@ -2710,7 +2710,7 @@
     "holdMs": 7766
    },
    "timestampMs": 1750010379321,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 116,
     "peakVelocity": 1980.6186533505133,
@@ -2721,10 +2721,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 3049587852,
+   "hash": 2156399824,
    "rarityScore": 680,
    "rarity": "Rare",
-   "sigilDigest": 2250740805
+   "sigilDigest": 837697871
   },
   {
    "tierIndex": 0,
@@ -2745,7 +2745,7 @@
    },
    "violations": [],
    "hash": 194003649,
-   "rarityScore": 389,
+   "rarityScore": 354,
    "rarity": "Common",
    "sigilDigest": 589030881
   },
@@ -2770,7 +2770,7 @@
     "holdMs"
    ],
    "hash": 3301911697,
-   "rarityScore": 182,
+   "rarityScore": 171,
    "rarity": "Common",
    "sigilDigest": 441965769
   },
@@ -2784,7 +2784,7 @@
     "holdMs": 7091
    },
    "timestampMs": 1750010670330,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 111,
     "peakVelocity": 1980.6186533505133,
@@ -2795,10 +2795,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 3864806326,
-   "rarityScore": 617,
+   "hash": 4159800148,
+   "rarityScore": 592,
    "rarity": "Uncommon",
-   "sigilDigest": 1651389325
+   "sigilDigest": 401048834
   },
   {
    "tierIndex": 3,
@@ -2810,7 +2810,7 @@
     "holdMs": 7462
    },
    "timestampMs": 1750010767333,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 27,
     "peakVelocity": 1528.5882560536265,
@@ -2821,10 +2821,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 3737269315,
-   "rarityScore": 583,
+   "hash": 3091475485,
+   "rarityScore": 569,
    "rarity": "Uncommon",
-   "sigilDigest": 116519065
+   "sigilDigest": 2087998300
   },
   {
    "tierIndex": 4,
@@ -2836,7 +2836,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750010864336,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 28,
     "peakVelocity": 1461.8583003834538,
@@ -2849,10 +2849,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 2265680614,
-   "rarityScore": 601,
+   "hash": 115515778,
+   "rarityScore": 594,
    "rarity": "Uncommon",
-   "sigilDigest": 238619899
+   "sigilDigest": 2615074612
   },
   {
    "tierIndex": 5,
@@ -2864,7 +2864,7 @@
     "holdMs": 14161
    },
    "timestampMs": 1750010961339,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 5,
     "peakVelocity": 797.07359704189,
@@ -2874,10 +2874,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2101888266,
+   "hash": 3295343646,
    "rarityScore": 298,
    "rarity": "Common",
-   "sigilDigest": 2261422435
+   "sigilDigest": 351841184
   },
   {
    "tierIndex": 0,
@@ -2901,7 +2901,7 @@
     "peakVelocity"
    ],
    "hash": 2280189533,
-   "rarityScore": 424,
+   "rarityScore": 385,
    "rarity": "Common",
    "sigilDigest": 933835294
   },
@@ -2924,7 +2924,7 @@
    },
    "violations": [],
    "hash": 1762724510,
-   "rarityScore": 371,
+   "rarityScore": 348,
    "rarity": "Common",
    "sigilDigest": 4000990826
   },
@@ -2938,7 +2938,7 @@
     "holdMs": 1774
    },
    "timestampMs": 1750011252348,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 5,
     "peakVelocity": 1980.6186533505133,
@@ -2948,10 +2948,10 @@
    "violations": [
     "peakVelocity"
    ],
-   "hash": 1690476937,
-   "rarityScore": 300,
+   "hash": 1491912239,
+   "rarityScore": 288,
    "rarity": "Common",
-   "sigilDigest": 3153308060
+   "sigilDigest": 1531437126
   },
   {
    "tierIndex": 3,
@@ -2963,7 +2963,7 @@
     "holdMs": 1098
    },
    "timestampMs": 1750011349351,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 31,
     "peakVelocity": 1823.5919435005192,
@@ -2974,10 +2974,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 238356891,
-   "rarityScore": 637,
+   "hash": 1183579025,
+   "rarityScore": 622,
    "rarity": "Uncommon",
-   "sigilDigest": 339627776
+   "sigilDigest": 1648962371
   },
   {
    "tierIndex": 4,
@@ -2989,7 +2989,7 @@
     "holdMs": 53
    },
    "timestampMs": 1750011446354,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 2,
     "peakVelocity": 219.28008208681428,
@@ -3001,10 +3001,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 1546349715,
-   "rarityScore": 591,
+   "hash": 448230175,
+   "rarityScore": 585,
    "rarity": "Uncommon",
-   "sigilDigest": 185125277
+   "sigilDigest": 873711159
   },
   {
    "tierIndex": 5,
@@ -3016,7 +3016,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750011543357,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 128,
     "peakVelocity": 1980.6186533505133,
@@ -3029,10 +3029,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 4034866729,
+   "hash": 3471552229,
    "rarityScore": 693,
    "rarity": "Rare",
-   "sigilDigest": 3815997154
+   "sigilDigest": 546013140
   },
   {
    "tierIndex": 0,
@@ -3056,7 +3056,7 @@
     "holdMs"
    ],
    "hash": 1400920534,
-   "rarityScore": 375,
+   "rarityScore": 341,
    "rarity": "Common",
    "sigilDigest": 933549236
   },
@@ -3082,7 +3082,7 @@
     "peakVelocity"
    ],
    "hash": 1244158856,
-   "rarityScore": 522,
+   "rarityScore": 489,
    "rarity": "Common",
    "sigilDigest": 280316180
   },
@@ -3096,7 +3096,7 @@
     "holdMs": 12232
    },
    "timestampMs": 1750011834366,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 32,
     "peakVelocity": 1361.296490393579,
@@ -3107,10 +3107,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 2522317386,
-   "rarityScore": 486,
+   "hash": 3993554264,
+   "rarityScore": 466,
    "rarity": "Common",
-   "sigilDigest": 3430975546
+   "sigilDigest": 1087501791
   },
   {
    "tierIndex": 3,
@@ -3122,7 +3122,7 @@
     "holdMs": 4724
    },
    "timestampMs": 1750011931369,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 20,
     "peakVelocity": 617.0384648256004,
@@ -3133,10 +3133,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 3184459374,
-   "rarityScore": 555,
+   "hash": 2269598276,
+   "rarityScore": 542,
    "rarity": "Uncommon",
-   "sigilDigest": 659555587
+   "sigilDigest": 995480454
   },
   {
    "tierIndex": 4,
@@ -3148,7 +3148,7 @@
     "holdMs": 14957
    },
    "timestampMs": 1750012028372,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 73,
     "peakVelocity": 570.5608493182808,
@@ -3158,10 +3158,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2765348454,
-   "rarityScore": 414,
+   "hash": 2074354666,
+   "rarityScore": 410,
    "rarity": "Common",
-   "sigilDigest": 57603432
+   "sigilDigest": 1812339018
   },
   {
    "tierIndex": 5,
@@ -3173,7 +3173,7 @@
     "holdMs": 14577
    },
    "timestampMs": 1750012125375,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 9,
     "peakVelocity": 1082.1661819238216,
@@ -3183,10 +3183,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1778224562,
+   "hash": 2843771670,
    "rarityScore": 398,
    "rarity": "Common",
-   "sigilDigest": 1742445748
+   "sigilDigest": 2903915851
   },
   {
    "tierIndex": 0,
@@ -3212,7 +3212,7 @@
     "tiltEnergy"
    ],
    "hash": 370701039,
-   "rarityScore": 404,
+   "rarityScore": 367,
    "rarity": "Common",
    "sigilDigest": 1248335862
   },
@@ -3235,7 +3235,7 @@
    },
    "violations": [],
    "hash": 2273582469,
-   "rarityScore": 300,
+   "rarityScore": 282,
    "rarity": "Common",
    "sigilDigest": 1221633262
   },
@@ -3249,7 +3249,7 @@
     "holdMs": 9929
    },
    "timestampMs": 1750012416384,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 105,
     "peakVelocity": 1056.1081926804036,
@@ -3259,10 +3259,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2012650890,
-   "rarityScore": 432,
+   "hash": 1345222520,
+   "rarityScore": 415,
    "rarity": "Common",
-   "sigilDigest": 3318680181
+   "sigilDigest": 3944795325
   },
   {
    "tierIndex": 3,
@@ -3274,7 +3274,7 @@
     "holdMs": 5869
    },
    "timestampMs": 1750012513387,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 70,
     "peakVelocity": 1055.9915265534073,
@@ -3284,10 +3284,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1086170747,
-   "rarityScore": 435,
+   "hash": 3743833029,
+   "rarityScore": 424,
    "rarity": "Common",
-   "sigilDigest": 3707895776
+   "sigilDigest": 3914370471
   },
   {
    "tierIndex": 4,
@@ -3299,7 +3299,7 @@
     "holdMs": 13791
    },
    "timestampMs": 1750012610390,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 85,
     "peakVelocity": 379.12675933912396,
@@ -3309,10 +3309,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1595955984,
-   "rarityScore": 389,
+   "hash": 2679669876,
+   "rarityScore": 385,
    "rarity": "Common",
-   "sigilDigest": 2124020723
+   "sigilDigest": 1414642397
   },
   {
    "tierIndex": 5,
@@ -3324,7 +3324,7 @@
     "holdMs": 2577
    },
    "timestampMs": 1750012707393,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 72,
     "peakVelocity": 1274.8068124521524,
@@ -3332,10 +3332,10 @@
     "holdMs": 2577
    },
    "violations": [],
-   "hash": 671924481,
+   "hash": 2908080813,
    "rarityScore": 617,
    "rarity": "Uncommon",
-   "sigilDigest": 3122808356
+   "sigilDigest": 3881084226
   },
   {
    "tierIndex": 0,
@@ -3358,7 +3358,7 @@
     "holdMs"
    ],
    "hash": 2301254862,
-   "rarityScore": 211,
+   "rarityScore": 192,
    "rarity": "Common",
    "sigilDigest": 1673488484
   },
@@ -3386,7 +3386,7 @@
     "tiltEnergy"
    ],
    "hash": 670390177,
-   "rarityScore": 420,
+   "rarityScore": 394,
    "rarity": "Common",
    "sigilDigest": 2787323256
   },
@@ -3400,7 +3400,7 @@
     "holdMs": 12804
    },
    "timestampMs": 1750012998402,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 47,
     "peakVelocity": 246.0139501374215,
@@ -3410,10 +3410,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 631514171,
-   "rarityScore": 274,
+   "hash": 1340420165,
+   "rarityScore": 263,
    "rarity": "Common",
-   "sigilDigest": 2996968689
+   "sigilDigest": 1475042169
   },
   {
    "tierIndex": 3,
@@ -3425,7 +3425,7 @@
     "holdMs": 10831
    },
    "timestampMs": 1750013095405,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 109,
     "peakVelocity": 723.2367426156998,
@@ -3433,10 +3433,10 @@
     "holdMs": 10831
    },
    "violations": [],
-   "hash": 2120483269,
-   "rarityScore": 433,
+   "hash": 1751952443,
+   "rarityScore": 423,
    "rarity": "Common",
-   "sigilDigest": 3541765170
+   "sigilDigest": 1442010053
   },
   {
    "tierIndex": 4,
@@ -3448,7 +3448,7 @@
     "holdMs": 2528
    },
    "timestampMs": 1750013192408,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 82,
     "peakVelocity": 1582.2749110404402,
@@ -3458,10 +3458,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 449874810,
-   "rarityScore": 689,
+   "hash": 3277590302,
+   "rarityScore": 682,
    "rarity": "Rare",
-   "sigilDigest": 3669437054
+   "sigilDigest": 3173120155
   },
   {
    "tierIndex": 5,
@@ -3473,7 +3473,7 @@
     "holdMs": 9579
    },
    "timestampMs": 1750013289411,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 121,
     "peakVelocity": 1980.6186533505133,
@@ -3484,10 +3484,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 420074895,
+   "hash": 3607173435,
    "rarityScore": 720,
    "rarity": "Rare",
-   "sigilDigest": 3676100451
+   "sigilDigest": 1200227888
   },
   {
    "tierIndex": 0,
@@ -3511,7 +3511,7 @@
     "holdMs"
    ],
    "hash": 4278264167,
-   "rarityScore": 410,
+   "rarityScore": 373,
    "rarity": "Common",
    "sigilDigest": 488514164
   },
@@ -3536,7 +3536,7 @@
     "holdMs"
    ],
    "hash": 1566083976,
-   "rarityScore": 458,
+   "rarityScore": 430,
    "rarity": "Common",
    "sigilDigest": 2790267444
   },
@@ -3550,7 +3550,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750013580420,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 105,
     "peakVelocity": 1980.6186533505133,
@@ -3563,10 +3563,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 1880009031,
-   "rarityScore": 518,
+   "hash": 881565317,
+   "rarityScore": 497,
    "rarity": "Common",
-   "sigilDigest": 2446466526
+   "sigilDigest": 2135809975
   },
   {
    "tierIndex": 3,
@@ -3578,7 +3578,7 @@
     "holdMs": 3024
    },
    "timestampMs": 1750013677423,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 66,
     "peakVelocity": 704.2027210816741,
@@ -3586,10 +3586,10 @@
     "holdMs": 3024
    },
    "violations": [],
-   "hash": 367383978,
-   "rarityScore": 469,
+   "hash": 1192780796,
+   "rarityScore": 458,
    "rarity": "Common",
-   "sigilDigest": 3087165766
+   "sigilDigest": 2553068433
   },
   {
    "tierIndex": 4,
@@ -3601,7 +3601,7 @@
     "holdMs": 9913
    },
    "timestampMs": 1750013774426,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 25,
     "peakVelocity": 1980.6186533505133,
@@ -3612,10 +3612,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 195008593,
-   "rarityScore": 487,
+   "hash": 1123040269,
+   "rarityScore": 482,
    "rarity": "Common",
-   "sigilDigest": 1761341622
+   "sigilDigest": 2888417143
   },
   {
    "tierIndex": 5,
@@ -3627,7 +3627,7 @@
     "holdMs": 12354
    },
    "timestampMs": 1750013871429,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 62,
     "peakVelocity": 1646.918785572052,
@@ -3637,10 +3637,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3515270797,
+   "hash": 1335122449,
    "rarityScore": 562,
    "rarity": "Uncommon",
-   "sigilDigest": 1408290758
+   "sigilDigest": 2683622455
   },
   {
    "tierIndex": 0,
@@ -3665,7 +3665,7 @@
     "tiltEnergy"
    ],
    "hash": 441360918,
-   "rarityScore": 358,
+   "rarityScore": 326,
    "rarity": "Common",
    "sigilDigest": 559830498
   },
@@ -3691,8 +3691,8 @@
     "peakVelocity"
    ],
    "hash": 1007146354,
-   "rarityScore": 535,
-   "rarity": "Uncommon",
+   "rarityScore": 501,
+   "rarity": "Common",
    "sigilDigest": 4110970549
   },
   {
@@ -3705,7 +3705,7 @@
     "holdMs": 13299
    },
    "timestampMs": 1750014162438,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 61,
     "peakVelocity": 1980.6186533505133,
@@ -3717,10 +3717,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 2060872897,
-   "rarityScore": 605,
+   "hash": 713610067,
+   "rarityScore": 581,
    "rarity": "Uncommon",
-   "sigilDigest": 1963855659
+   "sigilDigest": 658843367
   },
   {
    "tierIndex": 3,
@@ -3732,7 +3732,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750014259441,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 70,
     "peakVelocity": 1980.6186533505133,
@@ -3745,10 +3745,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 4235466843,
-   "rarityScore": 560,
+   "hash": 2846056453,
+   "rarityScore": 546,
    "rarity": "Uncommon",
-   "sigilDigest": 3486774633
+   "sigilDigest": 903995239
   },
   {
    "tierIndex": 4,
@@ -3760,7 +3760,7 @@
     "holdMs": 11015
    },
    "timestampMs": 1750014356444,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 66,
     "peakVelocity": 1980.6186533505133,
@@ -3771,10 +3771,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 1747735188,
-   "rarityScore": 546,
+   "hash": 3373182912,
+   "rarityScore": 540,
    "rarity": "Uncommon",
-   "sigilDigest": 1079705221
+   "sigilDigest": 3214063393
   },
   {
    "tierIndex": 5,
@@ -3786,7 +3786,7 @@
     "holdMs": 2131
    },
    "timestampMs": 1750014453447,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 84,
     "peakVelocity": 1747.7053918410093,
@@ -3796,10 +3796,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 3208617105,
+   "hash": 3322763093,
    "rarityScore": 774,
    "rarity": "Singular",
-   "sigilDigest": 226277917
+   "sigilDigest": 1682606963
   },
   {
    "tierIndex": 0,
@@ -3822,7 +3822,7 @@
     "holdMs"
    ],
    "hash": 1505916277,
-   "rarityScore": 275,
+   "rarityScore": 250,
    "rarity": "Common",
    "sigilDigest": 2099650375
   },
@@ -3847,7 +3847,7 @@
     "peakVelocity"
    ],
    "hash": 573761996,
-   "rarityScore": 418,
+   "rarityScore": 392,
    "rarity": "Common",
    "sigilDigest": 3870212031
   },
@@ -3861,7 +3861,7 @@
     "holdMs": 12303
    },
    "timestampMs": 1750014744456,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 121,
     "peakVelocity": 257.8399800695479,
@@ -3871,10 +3871,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1448378936,
-   "rarityScore": 376,
+   "hash": 3945442334,
+   "rarityScore": 361,
    "rarity": "Common",
-   "sigilDigest": 2131282975
+   "sigilDigest": 1236446758
   },
   {
    "tierIndex": 3,
@@ -3886,7 +3886,7 @@
     "holdMs": 6611
    },
    "timestampMs": 1750014841459,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 35,
     "peakVelocity": 1150.5425637587905,
@@ -3894,10 +3894,10 @@
     "holdMs": 6611
    },
    "violations": [],
-   "hash": 223862050,
-   "rarityScore": 374,
+   "hash": 1375658056,
+   "rarityScore": 365,
    "rarity": "Common",
-   "sigilDigest": 4169096184
+   "sigilDigest": 3830116051
   },
   {
    "tierIndex": 4,
@@ -3909,7 +3909,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750014938462,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 202,
     "peakVelocity": 1980.6186533505133,
@@ -3922,10 +3922,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 77512404,
-   "rarityScore": 667,
-   "rarity": "Rare",
-   "sigilDigest": 3916700554
+   "hash": 1321450296,
+   "rarityScore": 659,
+   "rarity": "Uncommon",
+   "sigilDigest": 917875860
   },
   {
    "tierIndex": 5,
@@ -3937,7 +3937,7 @@
     "holdMs": 4305
    },
    "timestampMs": 1750015035465,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 61,
     "peakVelocity": 889.6274873055518,
@@ -3945,10 +3945,10 @@
     "holdMs": 4305
    },
    "violations": [],
-   "hash": 1398581992,
+   "hash": 3416200204,
    "rarityScore": 458,
    "rarity": "Common",
-   "sigilDigest": 1550185736
+   "sigilDigest": 2530045635
   },
   {
    "tierIndex": 0,
@@ -3972,7 +3972,7 @@
     "peakVelocity"
    ],
    "hash": 1557045283,
-   "rarityScore": 357,
+   "rarityScore": 325,
    "rarity": "Common",
    "sigilDigest": 488323522
   },
@@ -3995,7 +3995,7 @@
    },
    "violations": [],
    "hash": 39369452,
-   "rarityScore": 422,
+   "rarityScore": 396,
    "rarity": "Common",
    "sigilDigest": 244880664
   },
@@ -4009,7 +4009,7 @@
     "holdMs": 710
    },
    "timestampMs": 1750015326474,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 17,
     "peakVelocity": 998.4995915554464,
@@ -4019,10 +4019,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 3222561729,
-   "rarityScore": 524,
+   "hash": 3183703223,
+   "rarityScore": 502,
    "rarity": "Common",
-   "sigilDigest": 517070719
+   "sigilDigest": 3186772773
   },
   {
    "tierIndex": 3,
@@ -4034,7 +4034,7 @@
     "holdMs": 7847
    },
    "timestampMs": 1750015423477,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 102,
     "peakVelocity": 1980.6186533505133,
@@ -4044,10 +4044,10 @@
    "violations": [
     "peakVelocity"
    ],
-   "hash": 665754248,
-   "rarityScore": 555,
+   "hash": 1074485186,
+   "rarityScore": 542,
    "rarity": "Uncommon",
-   "sigilDigest": 1586923574
+   "sigilDigest": 1335598150
   },
   {
    "tierIndex": 4,
@@ -4059,7 +4059,7 @@
     "holdMs": 1267
    },
    "timestampMs": 1750015520480,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 41,
     "peakVelocity": 1475.1392446924,
@@ -4069,10 +4069,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 3586766141,
-   "rarityScore": 596,
+   "hash": 2617262377,
+   "rarityScore": 590,
    "rarity": "Uncommon",
-   "sigilDigest": 2696571842
+   "sigilDigest": 1610844737
   },
   {
    "tierIndex": 5,
@@ -4084,7 +4084,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750015617483,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 132,
     "peakVelocity": 1980.6186533505133,
@@ -4097,10 +4097,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 3103193034,
+   "hash": 2731399950,
    "rarityScore": 694,
    "rarity": "Rare",
-   "sigilDigest": 2520171156
+   "sigilDigest": 4042159617
   },
   {
    "tierIndex": 0,
@@ -4126,7 +4126,7 @@
     "tiltEnergy"
    ],
    "hash": 1363708738,
-   "rarityScore": 361,
+   "rarityScore": 328,
    "rarity": "Common",
    "sigilDigest": 164923933
   },
@@ -4152,8 +4152,8 @@
     "peakVelocity"
    ],
    "hash": 2652678031,
-   "rarityScore": 560,
-   "rarity": "Uncommon",
+   "rarityScore": 525,
+   "rarity": "Common",
    "sigilDigest": 1413550459
   },
   {
@@ -4166,7 +4166,7 @@
     "holdMs": 12736
    },
    "timestampMs": 1750015908492,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 123,
     "peakVelocity": 1941.440077405423,
@@ -4176,10 +4176,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 238995780,
-   "rarityScore": 532,
+   "hash": 1107783234,
+   "rarityScore": 511,
    "rarity": "Common",
-   "sigilDigest": 347092139
+   "sigilDigest": 1437703642
   },
   {
    "tierIndex": 3,
@@ -4191,7 +4191,7 @@
     "holdMs": 15714
    },
    "timestampMs": 1750016005495,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 83,
     "peakVelocity": 1980.6186533505133,
@@ -4202,10 +4202,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 62165905,
-   "rarityScore": 525,
+   "hash": 2476147083,
+   "rarityScore": 512,
    "rarity": "Common",
-   "sigilDigest": 3697326058
+   "sigilDigest": 1897752277
   },
   {
    "tierIndex": 4,
@@ -4217,7 +4217,7 @@
     "holdMs": 11003
    },
    "timestampMs": 1750016102498,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 122,
     "peakVelocity": 1980.6186533505133,
@@ -4228,10 +4228,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 343842609,
-   "rarityScore": 712,
+   "hash": 2927541661,
+   "rarityScore": 704,
    "rarity": "Rare",
-   "sigilDigest": 1557912719
+   "sigilDigest": 100926016
   },
   {
    "tierIndex": 5,
@@ -4243,7 +4243,7 @@
     "holdMs": 11952
    },
    "timestampMs": 1750016199501,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 62,
     "peakVelocity": 1114.3270011991262,
@@ -4253,10 +4253,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1439678118,
+   "hash": 3289107922,
    "rarityScore": 500,
    "rarity": "Common",
-   "sigilDigest": 1992015187
+   "sigilDigest": 4026102794
   },
   {
    "tierIndex": 0,
@@ -4282,7 +4282,7 @@
     "tiltEnergy"
    ],
    "hash": 258121168,
-   "rarityScore": 427,
+   "rarityScore": 389,
    "rarity": "Common",
    "sigilDigest": 52571662
   },
@@ -4307,7 +4307,7 @@
     "peakVelocity"
    ],
    "hash": 1533659281,
-   "rarityScore": 496,
+   "rarityScore": 465,
    "rarity": "Common",
    "sigilDigest": 538738014
   },
@@ -4321,7 +4321,7 @@
     "holdMs": 6137
    },
    "timestampMs": 1750016490510,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 43,
     "peakVelocity": 392.190456809476,
@@ -4332,10 +4332,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 2925655867,
-   "rarityScore": 434,
+   "hash": 1259971557,
+   "rarityScore": 416,
    "rarity": "Common",
-   "sigilDigest": 1140856271
+   "sigilDigest": 3653943952
   },
   {
    "tierIndex": 3,
@@ -4347,7 +4347,7 @@
     "holdMs": 14551
    },
    "timestampMs": 1750016587513,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 34,
     "peakVelocity": 466.8935851659626,
@@ -4355,10 +4355,10 @@
     "holdMs": 14551
    },
    "violations": [],
-   "hash": 3564410663,
-   "rarityScore": 351,
+   "hash": 4284624041,
+   "rarityScore": 343,
    "rarity": "Common",
-   "sigilDigest": 4050336607
+   "sigilDigest": 2383830246
   },
   {
    "tierIndex": 4,
@@ -4370,7 +4370,7 @@
     "holdMs": 14318
    },
    "timestampMs": 1750016684516,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 60,
     "peakVelocity": 795.3305480070412,
@@ -4380,10 +4380,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 316532796,
-   "rarityScore": 438,
+   "hash": 500736184,
+   "rarityScore": 433,
    "rarity": "Common",
-   "sigilDigest": 2035980055
+   "sigilDigest": 1425648678
   },
   {
    "tierIndex": 5,
@@ -4395,7 +4395,7 @@
     "holdMs": 5101
    },
    "timestampMs": 1750016781519,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 58,
     "peakVelocity": 971.1485165171325,
@@ -4403,10 +4403,10 @@
     "holdMs": 5101
    },
    "violations": [],
-   "hash": 4065898031,
+   "hash": 2337293419,
    "rarityScore": 432,
    "rarity": "Common",
-   "sigilDigest": 476413268
+   "sigilDigest": 1922788816
   },
   {
    "tierIndex": 0,
@@ -4429,7 +4429,7 @@
     "holdMs"
    ],
    "hash": 326121576,
-   "rarityScore": 380,
+   "rarityScore": 345,
    "rarity": "Common",
    "sigilDigest": 536580171
   },
@@ -4457,7 +4457,7 @@
     "tiltEnergy"
    ],
    "hash": 1737748711,
-   "rarityScore": 523,
+   "rarityScore": 490,
    "rarity": "Common",
    "sigilDigest": 963323828
   },
@@ -4471,7 +4471,7 @@
     "holdMs": 8210
    },
    "timestampMs": 1750017072528,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 39,
     "peakVelocity": 299.84753862954676,
@@ -4481,10 +4481,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 772243423,
-   "rarityScore": 271,
+   "hash": 1892179585,
+   "rarityScore": 260,
    "rarity": "Common",
-   "sigilDigest": 1525864488
+   "sigilDigest": 2904899093
   },
   {
    "tierIndex": 3,
@@ -4496,7 +4496,7 @@
     "holdMs": 8548
    },
    "timestampMs": 1750017169531,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 65,
     "peakVelocity": 359.6740886103362,
@@ -4504,10 +4504,10 @@
     "holdMs": 8548
    },
    "violations": [],
-   "hash": 3556731888,
-   "rarityScore": 333,
+   "hash": 3126064802,
+   "rarityScore": 325,
    "rarity": "Common",
-   "sigilDigest": 2555320559
+   "sigilDigest": 3054627673
   },
   {
    "tierIndex": 4,
@@ -4519,7 +4519,7 @@
     "holdMs": 13788
    },
    "timestampMs": 1750017266534,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 13,
     "peakVelocity": 1849.1669160313904,
@@ -4529,10 +4529,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2493155456,
-   "rarityScore": 455,
+   "hash": 2105439452,
+   "rarityScore": 450,
    "rarity": "Common",
-   "sigilDigest": 3309321592
+   "sigilDigest": 1272564130
   },
   {
    "tierIndex": 5,
@@ -4544,7 +4544,7 @@
     "holdMs": 385
    },
    "timestampMs": 1750017363537,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 16,
     "peakVelocity": 726.5880951405686,
@@ -4556,10 +4556,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 3410316229,
+   "hash": 2056379353,
    "rarityScore": 655,
    "rarity": "Uncommon",
-   "sigilDigest": 1420791989
+   "sigilDigest": 3931677727
   },
   {
    "tierIndex": 0,
@@ -4584,7 +4584,7 @@
     "tiltEnergy"
    ],
    "hash": 3601149768,
-   "rarityScore": 358,
+   "rarityScore": 326,
    "rarity": "Common",
    "sigilDigest": 2759278033
   },
@@ -4609,7 +4609,7 @@
     "holdMs"
    ],
    "hash": 1574878381,
-   "rarityScore": 346,
+   "rarityScore": 325,
    "rarity": "Common",
    "sigilDigest": 3543950961
   },
@@ -4623,7 +4623,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750017654546,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 21,
     "peakVelocity": 1508.0326184801177,
@@ -4636,10 +4636,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 1358373267,
-   "rarityScore": 482,
+   "hash": 1928560553,
+   "rarityScore": 462,
    "rarity": "Common",
-   "sigilDigest": 3742989371
+   "sigilDigest": 777053323
   },
   {
    "tierIndex": 3,
@@ -4651,7 +4651,7 @@
     "holdMs": 14564
    },
    "timestampMs": 1750017751549,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 60,
     "peakVelocity": 1318.412157939747,
@@ -4661,10 +4661,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3822294314,
-   "rarityScore": 474,
+   "hash": 1299997884,
+   "rarityScore": 463,
    "rarity": "Common",
-   "sigilDigest": 3332660186
+   "sigilDigest": 741442527
   },
   {
    "tierIndex": 4,
@@ -4676,7 +4676,7 @@
     "holdMs": 14821
    },
    "timestampMs": 1750017848552,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 76,
     "peakVelocity": 53.31639037467539,
@@ -4687,10 +4687,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 3174089504,
-   "rarityScore": 497,
+   "hash": 3925477228,
+   "rarityScore": 492,
    "rarity": "Common",
-   "sigilDigest": 3990361257
+   "sigilDigest": 1159443349
   },
   {
    "tierIndex": 5,
@@ -4702,7 +4702,7 @@
     "holdMs": 865
    },
    "timestampMs": 1750017945555,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 34,
     "peakVelocity": 939.888301724568,
@@ -4712,10 +4712,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 3230217958,
+   "hash": 1544418994,
    "rarityScore": 719,
    "rarity": "Rare",
-   "sigilDigest": 988299512
+   "sigilDigest": 3182788501
   },
   {
    "tierIndex": 0,
@@ -4738,7 +4738,7 @@
     "dropletsLanded"
    ],
    "hash": 3142630494,
-   "rarityScore": 407,
+   "rarityScore": 370,
    "rarity": "Common",
    "sigilDigest": 1940438794
   },
@@ -4763,7 +4763,7 @@
     "holdMs"
    ],
    "hash": 619521956,
-   "rarityScore": 390,
+   "rarityScore": 366,
    "rarity": "Common",
    "sigilDigest": 1676693755
   },
@@ -4777,7 +4777,7 @@
     "holdMs": 11530
    },
    "timestampMs": 1750018236564,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 6,
     "peakVelocity": 999.9146821442991,
@@ -4787,10 +4787,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2421115641,
-   "rarityScore": 266,
+   "hash": 3428236395,
+   "rarityScore": 255,
    "rarity": "Common",
-   "sigilDigest": 2423842646
+   "sigilDigest": 468060261
   },
   {
    "tierIndex": 3,
@@ -4802,7 +4802,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750018333567,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 167,
     "peakVelocity": 1980.6186533505133,
@@ -4815,10 +4815,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 4276184052,
-   "rarityScore": 598,
+   "hash": 1701390418,
+   "rarityScore": 584,
    "rarity": "Uncommon",
-   "sigilDigest": 1030970924
+   "sigilDigest": 2541858130
   },
   {
    "tierIndex": 4,
@@ -4830,7 +4830,7 @@
     "holdMs": 6314
    },
    "timestampMs": 1750018430570,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 125,
     "peakVelocity": 1980.6186533505133,
@@ -4840,10 +4840,10 @@
    "violations": [
     "peakVelocity"
    ],
-   "hash": 2066451152,
-   "rarityScore": 662,
+   "hash": 2248510116,
+   "rarityScore": 655,
    "rarity": "Uncommon",
-   "sigilDigest": 3906140864
+   "sigilDigest": 3277664234
   },
   {
    "tierIndex": 5,
@@ -4855,7 +4855,7 @@
     "holdMs": 14045
    },
    "timestampMs": 1750018527573,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 68,
     "peakVelocity": 1465.161584271118,
@@ -4865,10 +4865,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1724712759,
+   "hash": 548191371,
    "rarityScore": 529,
    "rarity": "Common",
-   "sigilDigest": 803859695
+   "sigilDigest": 2336066803
   },
   {
    "tierIndex": 0,
@@ -4892,7 +4892,7 @@
     "holdMs"
    ],
    "hash": 2679277262,
-   "rarityScore": 363,
+   "rarityScore": 330,
    "rarity": "Common",
    "sigilDigest": 834111022
   },
@@ -4915,7 +4915,7 @@
    },
    "violations": [],
    "hash": 117469608,
-   "rarityScore": 295,
+   "rarityScore": 276,
    "rarity": "Common",
    "sigilDigest": 1668324029
   },
@@ -4929,7 +4929,7 @@
     "holdMs": 9206
    },
    "timestampMs": 1750018818582,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 23,
     "peakVelocity": 1980.6186533505133,
@@ -4940,10 +4940,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 3340835559,
-   "rarityScore": 392,
+   "hash": 2864264425,
+   "rarityScore": 376,
    "rarity": "Common",
-   "sigilDigest": 3280542855
+   "sigilDigest": 1854372617
   },
   {
    "tierIndex": 3,
@@ -4955,7 +4955,7 @@
     "holdMs": 2202
    },
    "timestampMs": 1750018915585,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 61,
     "peakVelocity": 1469.4086969364434,
@@ -4965,10 +4965,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 527089412,
-   "rarityScore": 586,
+   "hash": 1062146282,
+   "rarityScore": 572,
    "rarity": "Uncommon",
-   "sigilDigest": 3371144095
+   "sigilDigest": 2110028061
   },
   {
    "tierIndex": 4,
@@ -4980,7 +4980,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750019012588,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 368,
     "peakVelocity": 1980.6186533505133,
@@ -4993,10 +4993,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 2281913330,
-   "rarityScore": 729,
+   "hash": 1808470126,
+   "rarityScore": 721,
    "rarity": "Rare",
-   "sigilDigest": 1274646331
+   "sigilDigest": 2379625517
   },
   {
    "tierIndex": 5,
@@ -5008,7 +5008,7 @@
     "holdMs": 7539
    },
    "timestampMs": 1750019109591,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 57,
     "peakVelocity": 448.1231178622693,
@@ -5018,10 +5018,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3278263687,
+   "hash": 4156466899,
    "rarityScore": 366,
    "rarity": "Common",
-   "sigilDigest": 2460685879
+   "sigilDigest": 1587770774
   },
   {
    "tierIndex": 0,
@@ -5044,7 +5044,7 @@
     "dropletsLanded"
    ],
    "hash": 2320536435,
-   "rarityScore": 464,
+   "rarityScore": 422,
    "rarity": "Common",
    "sigilDigest": 3999613182
   },
@@ -5069,7 +5069,7 @@
     "holdMs"
    ],
    "hash": 4292497758,
-   "rarityScore": 353,
+   "rarityScore": 331,
    "rarity": "Common",
    "sigilDigest": 811694161
   },
@@ -5083,7 +5083,7 @@
     "holdMs": 15433
    },
    "timestampMs": 1750019400600,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 84,
     "peakVelocity": 482.40943062119186,
@@ -5093,10 +5093,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3248199516,
-   "rarityScore": 372,
+   "hash": 2469866402,
+   "rarityScore": 357,
    "rarity": "Common",
-   "sigilDigest": 792801036
+   "sigilDigest": 957648496
   },
   {
    "tierIndex": 3,
@@ -5108,7 +5108,7 @@
     "holdMs": 1532
    },
    "timestampMs": 1750019497603,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 43,
     "peakVelocity": 338.46620293334126,
@@ -5118,10 +5118,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 1882873988,
-   "rarityScore": 484,
+   "hash": 2376971942,
+   "rarityScore": 472,
    "rarity": "Common",
-   "sigilDigest": 1553477339
+   "sigilDigest": 117188551
   },
   {
    "tierIndex": 4,
@@ -5133,7 +5133,7 @@
     "holdMs": 7438
    },
    "timestampMs": 1750019594606,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 129,
     "peakVelocity": 1733.0543940886855,
@@ -5141,10 +5141,10 @@
     "holdMs": 7438
    },
    "violations": [],
-   "hash": 521144208,
-   "rarityScore": 618,
+   "hash": 2400090300,
+   "rarityScore": 612,
    "rarity": "Uncommon",
-   "sigilDigest": 3896089718
+   "sigilDigest": 1321559410
   },
   {
    "tierIndex": 5,
@@ -5156,7 +5156,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750019691609,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 482,
     "peakVelocity": 1980.6186533505133,
@@ -5169,10 +5169,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 1646734474,
+   "hash": 2596302622,
    "rarityScore": 814,
    "rarity": "Singular",
-   "sigilDigest": 3539270180
+   "sigilDigest": 108348344
   },
   {
    "tierIndex": 0,
@@ -5196,7 +5196,7 @@
     "holdMs"
    ],
    "hash": 9555582,
-   "rarityScore": 403,
+   "rarityScore": 367,
    "rarity": "Common",
    "sigilDigest": 315784283
   },
@@ -5219,7 +5219,7 @@
    },
    "violations": [],
    "hash": 2605790303,
-   "rarityScore": 236,
+   "rarityScore": 222,
    "rarity": "Common",
    "sigilDigest": 803135183
   },
@@ -5233,7 +5233,7 @@
     "holdMs": 4251
    },
    "timestampMs": 1750019982618,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 36,
     "peakVelocity": 1980.6186533505133,
@@ -5243,10 +5243,10 @@
    "violations": [
     "peakVelocity"
    ],
-   "hash": 3080809066,
-   "rarityScore": 421,
+   "hash": 525950588,
+   "rarityScore": 404,
    "rarity": "Common",
-   "sigilDigest": 1868257516
+   "sigilDigest": 1938203868
   },
   {
    "tierIndex": 3,
@@ -5258,7 +5258,7 @@
     "holdMs": 113
    },
    "timestampMs": 1750020079621,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 4,
     "peakVelocity": 309.9975651517283,
@@ -5270,10 +5270,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 3231601607,
-   "rarityScore": 533,
-   "rarity": "Uncommon",
-   "sigilDigest": 2786025112
+   "hash": 3906156197,
+   "rarityScore": 520,
+   "rarity": "Common",
+   "sigilDigest": 3438906035
   },
   {
    "tierIndex": 4,
@@ -5285,7 +5285,7 @@
     "holdMs": 3540
    },
    "timestampMs": 1750020176624,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 43,
     "peakVelocity": 1175.297815958038,
@@ -5293,10 +5293,10 @@
     "holdMs": 3540
    },
    "violations": [],
-   "hash": 2645135752,
-   "rarityScore": 420,
+   "hash": 3233680916,
+   "rarityScore": 415,
    "rarity": "Common",
-   "sigilDigest": 3471638722
+   "sigilDigest": 1025309786
   },
   {
    "tierIndex": 5,
@@ -5308,7 +5308,7 @@
     "holdMs": 9707
    },
    "timestampMs": 1750020273627,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 136,
     "peakVelocity": 1980.6186533505133,
@@ -5319,10 +5319,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 3558609958,
+   "hash": 697059202,
    "rarityScore": 687,
    "rarity": "Rare",
-   "sigilDigest": 516405937
+   "sigilDigest": 1043144410
   },
   {
    "tierIndex": 0,
@@ -5348,7 +5348,7 @@
     "tiltEnergy"
    ],
    "hash": 1504393845,
-   "rarityScore": 384,
+   "rarityScore": 349,
    "rarity": "Common",
    "sigilDigest": 3955890075
   },
@@ -5373,7 +5373,7 @@
     "holdMs"
    ],
    "hash": 1580234932,
-   "rarityScore": 476,
+   "rarityScore": 446,
    "rarity": "Common",
    "sigilDigest": 1148293143
   },
@@ -5387,7 +5387,7 @@
     "holdMs": 15268
    },
    "timestampMs": 1750020564636,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 99,
     "peakVelocity": 1729.5681507326663,
@@ -5397,10 +5397,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3418543411,
-   "rarityScore": 568,
+   "hash": 1378066057,
+   "rarityScore": 545,
    "rarity": "Uncommon",
-   "sigilDigest": 716726833
+   "sigilDigest": 3155060536
   },
   {
    "tierIndex": 3,
@@ -5412,7 +5412,7 @@
     "holdMs": 12516
    },
    "timestampMs": 1750020661639,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 84,
     "peakVelocity": 390.9868649672717,
@@ -5420,10 +5420,10 @@
     "holdMs": 12516
    },
    "violations": [],
-   "hash": 1814659299,
-   "rarityScore": 373,
+   "hash": 940327053,
+   "rarityScore": 364,
    "rarity": "Common",
-   "sigilDigest": 3577308312
+   "sigilDigest": 2114231972
   },
   {
    "tierIndex": 4,
@@ -5435,7 +5435,7 @@
     "holdMs": 7225
    },
    "timestampMs": 1750020758642,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 102,
     "peakVelocity": 1980.6186533505133,
@@ -5446,10 +5446,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 4294700465,
-   "rarityScore": 608,
+   "hash": 2493988213,
+   "rarityScore": 602,
    "rarity": "Uncommon",
-   "sigilDigest": 3393865718
+   "sigilDigest": 733089131
   },
   {
    "tierIndex": 5,
@@ -5461,7 +5461,7 @@
     "holdMs": 11539
    },
    "timestampMs": 1750020855645,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 27,
     "peakVelocity": 1166.3908288391162,
@@ -5473,10 +5473,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 3717708082,
+   "hash": 1279319198,
    "rarityScore": 660,
    "rarity": "Uncommon",
-   "sigilDigest": 195110778
+   "sigilDigest": 3605729582
   },
   {
    "tierIndex": 0,
@@ -5499,7 +5499,7 @@
     "dropletsLanded"
    ],
    "hash": 2398400084,
-   "rarityScore": 412,
+   "rarityScore": 375,
    "rarity": "Common",
    "sigilDigest": 356163426
   },
@@ -5527,7 +5527,7 @@
     "tiltEnergy"
    ],
    "hash": 1481264071,
-   "rarityScore": 464,
+   "rarityScore": 435,
    "rarity": "Common",
    "sigilDigest": 960107245
   },
@@ -5541,7 +5541,7 @@
     "holdMs": 7987
    },
    "timestampMs": 1750021146654,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 78,
     "peakVelocity": 1248.6299747601151,
@@ -5549,10 +5549,10 @@
     "holdMs": 7987
    },
    "violations": [],
-   "hash": 3618937939,
-   "rarityScore": 424,
+   "hash": 2570078241,
+   "rarityScore": 406,
    "rarity": "Common",
-   "sigilDigest": 2556040443
+   "sigilDigest": 3325494057
   },
   {
    "tierIndex": 3,
@@ -5564,7 +5564,7 @@
     "holdMs": 14269
    },
    "timestampMs": 1750021243657,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 15,
     "peakVelocity": 1358.1660895608366,
@@ -5574,10 +5574,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1111852096,
-   "rarityScore": 342,
+   "hash": 3236816698,
+   "rarityScore": 334,
    "rarity": "Common",
-   "sigilDigest": 343221855
+   "sigilDigest": 1371419203
   },
   {
    "tierIndex": 4,
@@ -5589,7 +5589,7 @@
     "holdMs": 13377
    },
    "timestampMs": 1750021340660,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 79,
     "peakVelocity": 161.0503476113081,
@@ -5599,10 +5599,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 50685182,
-   "rarityScore": 353,
+   "hash": 404470386,
+   "rarityScore": 350,
    "rarity": "Common",
-   "sigilDigest": 2693780478
+   "sigilDigest": 517478099
   },
   {
    "tierIndex": 5,
@@ -5614,7 +5614,7 @@
     "holdMs": 13802
    },
    "timestampMs": 1750021437663,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 85,
     "peakVelocity": 1174.4394940324128,
@@ -5624,10 +5624,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2786542562,
+   "hash": 3750731174,
    "rarityScore": 525,
    "rarity": "Common",
-   "sigilDigest": 448506791
+   "sigilDigest": 4260813109
   },
   {
    "tierIndex": 0,
@@ -5651,7 +5651,7 @@
     "holdMs"
    ],
    "hash": 3114661435,
-   "rarityScore": 410,
+   "rarityScore": 373,
    "rarity": "Common",
    "sigilDigest": 613324318
   },
@@ -5678,8 +5678,8 @@
     "peakVelocity"
    ],
    "hash": 274011874,
-   "rarityScore": 534,
-   "rarity": "Uncommon",
+   "rarityScore": 501,
+   "rarity": "Common",
    "sigilDigest": 3212121740
   },
   {
@@ -5692,7 +5692,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750021728672,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 205,
     "peakVelocity": 1980.6186533505133,
@@ -5705,10 +5705,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 1765294081,
-   "rarityScore": 560,
+   "hash": 530173647,
+   "rarityScore": 537,
    "rarity": "Uncommon",
-   "sigilDigest": 1043426375
+   "sigilDigest": 2229215064
   },
   {
    "tierIndex": 3,
@@ -5720,7 +5720,7 @@
     "holdMs": 7552
    },
    "timestampMs": 1750021825675,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 38,
     "peakVelocity": 210.73800870217383,
@@ -5728,10 +5728,10 @@
     "holdMs": 7552
    },
    "violations": [],
-   "hash": 326634940,
-   "rarityScore": 281,
+   "hash": 3091520994,
+   "rarityScore": 274,
    "rarity": "Common",
-   "sigilDigest": 4290502185
+   "sigilDigest": 2117734129
   },
   {
    "tierIndex": 4,
@@ -5743,7 +5743,7 @@
     "holdMs": 10639
    },
    "timestampMs": 1750021922678,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 129,
     "peakVelocity": 1818.726647598669,
@@ -5753,10 +5753,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 4186732661,
-   "rarityScore": 713,
+   "hash": 3108123281,
+   "rarityScore": 705,
    "rarity": "Rare",
-   "sigilDigest": 3520053492
+   "sigilDigest": 3673749069
   },
   {
    "tierIndex": 5,
@@ -5768,7 +5768,7 @@
     "holdMs": 8754
    },
    "timestampMs": 1750022019681,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 59,
     "peakVelocity": 1980.6186533505133,
@@ -5780,10 +5780,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 1106513911,
+   "hash": 2834807627,
    "rarityScore": 780,
    "rarity": "Singular",
-   "sigilDigest": 3489932563
+   "sigilDigest": 3987833533
   },
   {
    "tierIndex": 0,
@@ -5808,7 +5808,7 @@
     "peakVelocity"
    ],
    "hash": 2475812282,
-   "rarityScore": 477,
+   "rarityScore": 434,
    "rarity": "Common",
    "sigilDigest": 2982577694
   },
@@ -5831,7 +5831,7 @@
    },
    "violations": [],
    "hash": 3956593441,
-   "rarityScore": 318,
+   "rarityScore": 298,
    "rarity": "Common",
    "sigilDigest": 2016440524
   },
@@ -5845,7 +5845,7 @@
     "holdMs": 7520
    },
    "timestampMs": 1750022310690,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 71,
     "peakVelocity": 1980.6186533505133,
@@ -5855,10 +5855,10 @@
    "violations": [
     "peakVelocity"
    ],
-   "hash": 2015338183,
-   "rarityScore": 475,
+   "hash": 102831017,
+   "rarityScore": 455,
    "rarity": "Common",
-   "sigilDigest": 4266140579
+   "sigilDigest": 2407752506
   },
   {
    "tierIndex": 3,
@@ -5870,7 +5870,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750022407693,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 105,
     "peakVelocity": 1980.6186533505133,
@@ -5883,10 +5883,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 272516776,
-   "rarityScore": 574,
+   "hash": 3483720170,
+   "rarityScore": 560,
    "rarity": "Uncommon",
-   "sigilDigest": 2325298261
+   "sigilDigest": 3665414733
   },
   {
    "tierIndex": 4,
@@ -5898,7 +5898,7 @@
     "holdMs": 709
    },
    "timestampMs": 1750022504696,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 23,
     "peakVelocity": 1224.8606245610151,
@@ -5909,10 +5909,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 2403396083,
-   "rarityScore": 731,
+   "hash": 3718776951,
+   "rarityScore": 723,
    "rarity": "Rare",
-   "sigilDigest": 4263180749
+   "sigilDigest": 2756452074
   },
   {
    "tierIndex": 5,
@@ -5924,7 +5924,7 @@
     "holdMs": 5488
    },
    "timestampMs": 1750022601699,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 73,
     "peakVelocity": 715.4757852200419,
@@ -5932,10 +5932,10 @@
     "holdMs": 5488
    },
    "violations": [],
-   "hash": 777964628,
+   "hash": 3025181544,
    "rarityScore": 441,
    "rarity": "Common",
-   "sigilDigest": 944623122
+   "sigilDigest": 3953251068
   },
   {
    "tierIndex": 0,
@@ -5956,7 +5956,7 @@
    },
    "violations": [],
    "hash": 3562282891,
-   "rarityScore": 342,
+   "rarityScore": 311,
    "rarity": "Common",
    "sigilDigest": 394099934
   },
@@ -5982,7 +5982,7 @@
     "peakVelocity"
    ],
    "hash": 3615616830,
-   "rarityScore": 367,
+   "rarityScore": 344,
    "rarity": "Common",
    "sigilDigest": 2649898434
   },
@@ -5996,7 +5996,7 @@
     "holdMs": 1520
    },
    "timestampMs": 1750022892708,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 4,
     "peakVelocity": 1980.6186533505133,
@@ -6006,10 +6006,10 @@
    "violations": [
     "peakVelocity"
    ],
-   "hash": 4071561078,
-   "rarityScore": 305,
+   "hash": 4135409460,
+   "rarityScore": 292,
    "rarity": "Common",
-   "sigilDigest": 3623902016
+   "sigilDigest": 4185698919
   },
   {
    "tierIndex": 3,
@@ -6021,7 +6021,7 @@
     "holdMs": 15628
    },
    "timestampMs": 1750022989711,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 16,
     "peakVelocity": 189.85253819264472,
@@ -6031,10 +6031,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 2299207159,
-   "rarityScore": 274,
+   "hash": 2608242837,
+   "rarityScore": 268,
    "rarity": "Common",
-   "sigilDigest": 3548839688
+   "sigilDigest": 421010670
   },
   {
    "tierIndex": 4,
@@ -6046,7 +6046,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750023086714,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 387,
     "peakVelocity": 1980.6186533505133,
@@ -6059,10 +6059,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 896382810,
-   "rarityScore": 737,
+   "hash": 2972161638,
+   "rarityScore": 729,
    "rarity": "Rare",
-   "sigilDigest": 3125795353
+   "sigilDigest": 2284263399
   },
   {
    "tierIndex": 5,
@@ -6074,7 +6074,7 @@
     "holdMs": 8683
    },
    "timestampMs": 1750023183717,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 112,
     "peakVelocity": 1257.9770404845476,
@@ -6082,10 +6082,10 @@
     "holdMs": 8683
    },
    "violations": [],
-   "hash": 2342249819,
+   "hash": 3947447983,
    "rarityScore": 543,
    "rarity": "Uncommon",
-   "sigilDigest": 2638748754
+   "sigilDigest": 3997546212
   },
   {
    "tierIndex": 0,
@@ -6109,7 +6109,7 @@
     "holdMs"
    ],
    "hash": 2489271430,
-   "rarityScore": 360,
+   "rarityScore": 328,
    "rarity": "Common",
    "sigilDigest": 4261313848
   },
@@ -6134,7 +6134,7 @@
     "dropletsLanded"
    ],
    "hash": 3168824430,
-   "rarityScore": 416,
+   "rarityScore": 390,
    "rarity": "Common",
    "sigilDigest": 1925650264
   },
@@ -6148,7 +6148,7 @@
     "holdMs": 5191
    },
    "timestampMs": 1750023474726,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 28,
     "peakVelocity": 1749.2802544031292,
@@ -6156,10 +6156,10 @@
     "holdMs": 5191
    },
    "violations": [],
-   "hash": 1893248165,
-   "rarityScore": 378,
+   "hash": 3948481759,
+   "rarityScore": 362,
    "rarity": "Common",
-   "sigilDigest": 2538265868
+   "sigilDigest": 1189996092
   },
   {
    "tierIndex": 3,
@@ -6171,7 +6171,7 @@
     "holdMs": 5878
    },
    "timestampMs": 1750023571729,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 53,
     "peakVelocity": 981.885885167867,
@@ -6182,10 +6182,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 3353468570,
-   "rarityScore": 527,
+   "hash": 1153257848,
+   "rarityScore": 514,
    "rarity": "Common",
-   "sigilDigest": 417096989
+   "sigilDigest": 1254338714
   },
   {
    "tierIndex": 4,
@@ -6197,7 +6197,7 @@
     "holdMs": 6787
    },
    "timestampMs": 1750023668732,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 89,
     "peakVelocity": 149.6382178273052,
@@ -6205,10 +6205,10 @@
     "holdMs": 6787
    },
    "violations": [],
-   "hash": 2271445328,
-   "rarityScore": 382,
+   "hash": 3851271516,
+   "rarityScore": 378,
    "rarity": "Common",
-   "sigilDigest": 856788497
+   "sigilDigest": 2096188901
   },
   {
    "tierIndex": 5,
@@ -6220,7 +6220,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750023765735,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 587,
     "peakVelocity": 1980.6186533505133,
@@ -6233,10 +6233,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 3836922212,
+   "hash": 332069928,
    "rarityScore": 850,
    "rarity": "Singular",
-   "sigilDigest": 1392378342
+   "sigilDigest": 3981048120
   },
   {
    "tierIndex": 0,
@@ -6259,7 +6259,7 @@
     "dropletsLanded"
    ],
    "hash": 1537052114,
-   "rarityScore": 358,
+   "rarityScore": 326,
    "rarity": "Common",
    "sigilDigest": 3071280906
   },
@@ -6284,7 +6284,7 @@
     "holdMs"
    ],
    "hash": 1313175076,
-   "rarityScore": 373,
+   "rarityScore": 349,
    "rarity": "Common",
    "sigilDigest": 2196858037
   },
@@ -6298,7 +6298,7 @@
     "holdMs": 2316
    },
    "timestampMs": 1750024056744,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 54,
     "peakVelocity": 1980.6186533505133,
@@ -6309,10 +6309,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 3251063329,
-   "rarityScore": 589,
+   "hash": 3289580907,
+   "rarityScore": 565,
    "rarity": "Uncommon",
-   "sigilDigest": 2115006947
+   "sigilDigest": 2957493591
   },
   {
    "tierIndex": 3,
@@ -6324,7 +6324,7 @@
     "holdMs": 4247
    },
    "timestampMs": 1750024153747,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 47,
     "peakVelocity": 1503.097335062921,
@@ -6335,10 +6335,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 606460615,
-   "rarityScore": 582,
+   "hash": 1668527425,
+   "rarityScore": 568,
    "rarity": "Uncommon",
-   "sigilDigest": 4124515897
+   "sigilDigest": 2527050271
   },
   {
    "tierIndex": 4,
@@ -6350,7 +6350,7 @@
     "holdMs": 13065
    },
    "timestampMs": 1750024250750,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 29,
     "peakVelocity": 835.7058934401721,
@@ -6360,10 +6360,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1827055503,
-   "rarityScore": 352,
+   "hash": 1776002811,
+   "rarityScore": 348,
    "rarity": "Common",
-   "sigilDigest": 1577026416
+   "sigilDigest": 3066076256
   },
   {
    "tierIndex": 5,
@@ -6375,7 +6375,7 @@
     "holdMs": 6532
    },
    "timestampMs": 1750024347753,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 34,
     "peakVelocity": 872.9195488151163,
@@ -6383,10 +6383,10 @@
     "holdMs": 6532
    },
    "violations": [],
-   "hash": 555738011,
+   "hash": 2505838879,
    "rarityScore": 387,
    "rarity": "Common",
-   "sigilDigest": 1567614726
+   "sigilDigest": 1779897479
   },
   {
    "tierIndex": 0,
@@ -6412,7 +6412,7 @@
     "tiltEnergy"
    ],
    "hash": 3279989601,
-   "rarityScore": 444,
+   "rarityScore": 404,
    "rarity": "Common",
    "sigilDigest": 841595300
   },
@@ -6437,7 +6437,7 @@
     "dropletsLanded"
    ],
    "hash": 3637431362,
-   "rarityScore": 382,
+   "rarityScore": 358,
    "rarity": "Common",
    "sigilDigest": 3826967946
   },
@@ -6451,7 +6451,7 @@
     "holdMs": 3426
    },
    "timestampMs": 1750024638762,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 79,
     "peakVelocity": 1980.6186533505133,
@@ -6462,10 +6462,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 169255477,
-   "rarityScore": 597,
+   "hash": 2617069835,
+   "rarityScore": 573,
    "rarity": "Uncommon",
-   "sigilDigest": 3495372371
+   "sigilDigest": 3990069778
   },
   {
    "tierIndex": 3,
@@ -6477,7 +6477,7 @@
     "holdMs": 595
    },
    "timestampMs": 1750024735765,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 17,
     "peakVelocity": 772.2288987133652,
@@ -6487,10 +6487,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 4031911966,
-   "rarityScore": 536,
-   "rarity": "Uncommon",
-   "sigilDigest": 856306919
+   "hash": 4187520412,
+   "rarityScore": 523,
+   "rarity": "Common",
+   "sigilDigest": 3577869145
   },
   {
    "tierIndex": 4,
@@ -6502,7 +6502,7 @@
     "holdMs": 2032
    },
    "timestampMs": 1750024832768,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 30,
     "peakVelocity": 1770.6744479946792,
@@ -6510,10 +6510,10 @@
     "holdMs": 2032
    },
    "violations": [],
-   "hash": 1673083030,
-   "rarityScore": 507,
+   "hash": 1970389458,
+   "rarityScore": 502,
    "rarity": "Common",
-   "sigilDigest": 1405450676
+   "sigilDigest": 580650391
   },
   {
    "tierIndex": 5,
@@ -6525,7 +6525,7 @@
     "holdMs": 4394
    },
    "timestampMs": 1750024929771,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 132,
     "peakVelocity": 1254.559983080253,
@@ -6533,10 +6533,10 @@
     "holdMs": 4394
    },
    "violations": [],
-   "hash": 935670308,
+   "hash": 2341129040,
    "rarityScore": 649,
    "rarity": "Uncommon",
-   "sigilDigest": 704299909
+   "sigilDigest": 1231967653
   },
   {
    "tierIndex": 0,
@@ -6559,7 +6559,7 @@
     "dropletsLanded"
    ],
    "hash": 3067492872,
-   "rarityScore": 417,
+   "rarityScore": 379,
    "rarity": "Common",
    "sigilDigest": 2096118233
   },
@@ -6587,7 +6587,7 @@
     "tiltEnergy"
    ],
    "hash": 2675935658,
-   "rarityScore": 439,
+   "rarityScore": 412,
    "rarity": "Common",
    "sigilDigest": 847010023
   },
@@ -6601,7 +6601,7 @@
     "holdMs": 14678
    },
    "timestampMs": 1750025220780,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 19,
     "peakVelocity": 1101.325008040294,
@@ -6611,10 +6611,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 798161718,
-   "rarityScore": 326,
+   "hash": 1758378804,
+   "rarityScore": 312,
    "rarity": "Common",
-   "sigilDigest": 2506243500
+   "sigilDigest": 2118113875
   },
   {
    "tierIndex": 3,
@@ -6626,7 +6626,7 @@
     "holdMs": 15653
    },
    "timestampMs": 1750025317783,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 21,
     "peakVelocity": 921.8005487695336,
@@ -6636,10 +6636,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 4142655262,
-   "rarityScore": 396,
+   "hash": 3616007828,
+   "rarityScore": 386,
    "rarity": "Common",
-   "sigilDigest": 857282986
+   "sigilDigest": 1237514493
   },
   {
    "tierIndex": 4,
@@ -6651,7 +6651,7 @@
     "holdMs": 12825
    },
    "timestampMs": 1750025414786,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 29,
     "peakVelocity": 175.31502721831203,
@@ -6661,10 +6661,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3040893925,
-   "rarityScore": 322,
+   "hash": 2523993601,
+   "rarityScore": 318,
    "rarity": "Common",
-   "sigilDigest": 2406244565
+   "sigilDigest": 1979990558
   },
   {
    "tierIndex": 5,
@@ -6676,7 +6676,7 @@
     "holdMs": 12812
    },
    "timestampMs": 1750025511789,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 32,
     "peakVelocity": 450.71875364519656,
@@ -6687,10 +6687,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 1989169229,
+   "hash": 1064442937,
    "rarityScore": 610,
    "rarity": "Uncommon",
-   "sigilDigest": 3291543708
+   "sigilDigest": 2891976482
   },
   {
    "tierIndex": 0,
@@ -6713,7 +6713,7 @@
     "peakVelocity"
    ],
    "hash": 191397598,
-   "rarityScore": 413,
+   "rarityScore": 376,
    "rarity": "Common",
    "sigilDigest": 2402926144
   },
@@ -6738,7 +6738,7 @@
     "holdMs"
    ],
    "hash": 2566515315,
-   "rarityScore": 486,
+   "rarityScore": 456,
    "rarity": "Common",
    "sigilDigest": 2269723817
   },
@@ -6752,7 +6752,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750025802798,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 295,
     "peakVelocity": 1980.6186533505133,
@@ -6765,10 +6765,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 2091448821,
-   "rarityScore": 598,
+   "hash": 3849897315,
+   "rarityScore": 574,
    "rarity": "Uncommon",
-   "sigilDigest": 3357335143
+   "sigilDigest": 2959416276
   },
   {
    "tierIndex": 3,
@@ -6780,7 +6780,7 @@
     "holdMs": 8245
    },
    "timestampMs": 1750025899801,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 107,
     "peakVelocity": 1925.2347175963223,
@@ -6790,10 +6790,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 4293306947,
-   "rarityScore": 570,
+   "hash": 1769563349,
+   "rarityScore": 556,
    "rarity": "Uncommon",
-   "sigilDigest": 2137964941
+   "sigilDigest": 661396786
   },
   {
    "tierIndex": 4,
@@ -6805,7 +6805,7 @@
     "holdMs": 6862
    },
    "timestampMs": 1750025996804,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 19,
     "peakVelocity": 726.4756111893803,
@@ -6815,10 +6815,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3491386276,
-   "rarityScore": 311,
+   "hash": 2805790784,
+   "rarityScore": 307,
    "rarity": "Common",
-   "sigilDigest": 3107584909
+   "sigilDigest": 2352809717
   },
   {
    "tierIndex": 5,
@@ -6830,7 +6830,7 @@
     "holdMs": 15262
    },
    "timestampMs": 1750026093807,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 132,
     "peakVelocity": 1157.5628345366567,
@@ -6840,10 +6840,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3543173721,
+   "hash": 1349465021,
    "rarityScore": 559,
    "rarity": "Uncommon",
-   "sigilDigest": 4085470989
+   "sigilDigest": 3375235717
   },
   {
    "tierIndex": 0,
@@ -6866,7 +6866,7 @@
     "dropletsLanded"
    ],
    "hash": 2142375057,
-   "rarityScore": 413,
+   "rarityScore": 376,
    "rarity": "Common",
    "sigilDigest": 643832276
   },
@@ -6892,7 +6892,7 @@
     "peakVelocity"
    ],
    "hash": 2322385991,
-   "rarityScore": 508,
+   "rarityScore": 476,
    "rarity": "Common",
    "sigilDigest": 3046645710
   },
@@ -6906,7 +6906,7 @@
     "holdMs": 7182
    },
    "timestampMs": 1750026384816,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 26,
     "peakVelocity": 1921.0443664807826,
@@ -6914,10 +6914,10 @@
     "holdMs": 7182
    },
    "violations": [],
-   "hash": 2607171102,
-   "rarityScore": 396,
+   "hash": 2815708592,
+   "rarityScore": 380,
    "rarity": "Common",
-   "sigilDigest": 576843976
+   "sigilDigest": 2805940285
   },
   {
    "tierIndex": 3,
@@ -6929,7 +6929,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750026481819,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 20,
     "peakVelocity": 1207.9346573387156,
@@ -6942,10 +6942,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 4060661078,
-   "rarityScore": 540,
-   "rarity": "Uncommon",
-   "sigilDigest": 1627827930
+   "hash": 3651369176,
+   "rarityScore": 527,
+   "rarity": "Common",
+   "sigilDigest": 1830346138
   },
   {
    "tierIndex": 4,
@@ -6957,7 +6957,7 @@
     "holdMs": 7713
    },
    "timestampMs": 1750026578822,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 133,
     "peakVelocity": 1713.0387854762375,
@@ -6965,10 +6965,10 @@
     "holdMs": 7713
    },
    "violations": [],
-   "hash": 3983576350,
-   "rarityScore": 616,
+   "hash": 1192296090,
+   "rarityScore": 610,
    "rarity": "Uncommon",
-   "sigilDigest": 2488737778
+   "sigilDigest": 3351844237
   },
   {
    "tierIndex": 5,
@@ -6980,7 +6980,7 @@
     "holdMs": 15776
    },
    "timestampMs": 1750026675825,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 23,
     "peakVelocity": 1980.6186533505133,
@@ -6991,10 +6991,10 @@
     "holdMs",
     "peakVelocity"
    ],
-   "hash": 2908906375,
+   "hash": 3315736243,
    "rarityScore": 541,
    "rarity": "Uncommon",
-   "sigilDigest": 1374119849
+   "sigilDigest": 3831752759
   },
   {
    "tierIndex": 0,
@@ -7015,7 +7015,7 @@
    },
    "violations": [],
    "hash": 1300841788,
-   "rarityScore": 261,
+   "rarityScore": 238,
    "rarity": "Common",
    "sigilDigest": 3825422703
   },
@@ -7038,7 +7038,7 @@
    },
    "violations": [],
    "hash": 3706909314,
-   "rarityScore": 424,
+   "rarityScore": 397,
    "rarity": "Common",
    "sigilDigest": 57427160
   },
@@ -7052,7 +7052,7 @@
     "holdMs": 13795
    },
    "timestampMs": 1750026966834,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 118,
     "peakVelocity": 1127.4026109371334,
@@ -7063,10 +7063,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 3348332546,
-   "rarityScore": 538,
-   "rarity": "Uncommon",
-   "sigilDigest": 3939773955
+   "hash": 1226068544,
+   "rarityScore": 515,
+   "rarity": "Common",
+   "sigilDigest": 2258153888
   },
   {
    "tierIndex": 3,
@@ -7078,7 +7078,7 @@
     "holdMs": 1359
    },
    "timestampMs": 1750027063837,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 38,
     "peakVelocity": 1980.6186533505133,
@@ -7089,10 +7089,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 614684006,
-   "rarityScore": 629,
+   "hash": 662124984,
+   "rarityScore": 614,
    "rarity": "Uncommon",
-   "sigilDigest": 918972125
+   "sigilDigest": 2716081040
   },
   {
    "tierIndex": 4,
@@ -7104,7 +7104,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750027160840,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 75,
     "peakVelocity": 1980.6186533505133,
@@ -7117,10 +7117,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 2583945104,
-   "rarityScore": 618,
+   "hash": 1000527324,
+   "rarityScore": 612,
    "rarity": "Uncommon",
-   "sigilDigest": 691934681
+   "sigilDigest": 585865264
   },
   {
    "tierIndex": 5,
@@ -7132,7 +7132,7 @@
     "holdMs": 13611
    },
    "timestampMs": 1750027257843,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 137,
     "peakVelocity": 1898.43728877604,
@@ -7142,10 +7142,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1656742720,
+   "hash": 1768229908,
    "rarityScore": 659,
    "rarity": "Uncommon",
-   "sigilDigest": 79728136
+   "sigilDigest": 3688223408
   },
   {
    "tierIndex": 0,
@@ -7168,7 +7168,7 @@
     "dropletsLanded"
    ],
    "hash": 2655824043,
-   "rarityScore": 428,
+   "rarityScore": 389,
    "rarity": "Common",
    "sigilDigest": 362416237
   },
@@ -7191,7 +7191,7 @@
    },
    "violations": [],
    "hash": 2413435580,
-   "rarityScore": 452,
+   "rarityScore": 424,
    "rarity": "Common",
    "sigilDigest": 1825701467
   },
@@ -7205,7 +7205,7 @@
     "holdMs": 15583
    },
    "timestampMs": 1750027548852,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 74,
     "peakVelocity": 558.2348346710205,
@@ -7215,10 +7215,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 498314203,
-   "rarityScore": 365,
+   "hash": 666795933,
+   "rarityScore": 350,
    "rarity": "Common",
-   "sigilDigest": 1227687745
+   "sigilDigest": 1193938456
   },
   {
    "tierIndex": 3,
@@ -7230,7 +7230,7 @@
     "holdMs": 3930
    },
    "timestampMs": 1750027645855,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 109,
     "peakVelocity": 1473.0522859841585,
@@ -7240,10 +7240,10 @@
    "violations": [
     "dropletsLanded"
    ],
-   "hash": 823810529,
-   "rarityScore": 624,
+   "hash": 3806491015,
+   "rarityScore": 609,
    "rarity": "Uncommon",
-   "sigilDigest": 1601339238
+   "sigilDigest": 391901824
   },
   {
    "tierIndex": 4,
@@ -7255,7 +7255,7 @@
     "holdMs": 2693
    },
    "timestampMs": 1750027742858,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 64,
     "peakVelocity": 948.380088666454,
@@ -7266,10 +7266,10 @@
     "dropletsLanded",
     "holdMs"
    ],
-   "hash": 3322422122,
-   "rarityScore": 594,
+   "hash": 2076089046,
+   "rarityScore": 587,
    "rarity": "Uncommon",
-   "sigilDigest": 423604009
+   "sigilDigest": 617526270
   },
   {
    "tierIndex": 5,
@@ -7281,7 +7281,7 @@
     "holdMs": 9000000000
    },
    "timestampMs": 1750027839861,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 94,
     "peakVelocity": 1980.6186533505133,
@@ -7294,10 +7294,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 3462177461,
+   "hash": 1907977649,
    "rarityScore": 681,
    "rarity": "Rare",
-   "sigilDigest": 3625266371
+   "sigilDigest": 39840516
   },
   {
    "tierIndex": 0,
@@ -7321,7 +7321,7 @@
     "holdMs"
    ],
    "hash": 352925430,
-   "rarityScore": 350,
+   "rarityScore": 319,
    "rarity": "Common",
    "sigilDigest": 3593705053
   },
@@ -7346,7 +7346,7 @@
     "dropletsLanded"
    ],
    "hash": 3357035267,
-   "rarityScore": 404,
+   "rarityScore": 379,
    "rarity": "Common",
    "sigilDigest": 3368883374
   },
@@ -7360,7 +7360,7 @@
     "holdMs": 9416
    },
    "timestampMs": 1750028130870,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 14,
     "peakVelocity": 46.59723821096122,
@@ -7368,10 +7368,10 @@
     "holdMs": 9416
    },
    "violations": [],
-   "hash": 1175676047,
-   "rarityScore": 222,
+   "hash": 4234619545,
+   "rarityScore": 213,
    "rarity": "Common",
-   "sigilDigest": 3788540987
+   "sigilDigest": 3967146710
   },
   {
    "tierIndex": 3,
@@ -7383,7 +7383,7 @@
     "holdMs": 7341
    },
    "timestampMs": 1750028227873,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 16,
     "peakVelocity": 1023.3179097426175,
@@ -7396,10 +7396,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 4111549505,
-   "rarityScore": 538,
-   "rarity": "Uncommon",
-   "sigilDigest": 3184573643
+   "hash": 2435824091,
+   "rarityScore": 525,
+   "rarity": "Common",
+   "sigilDigest": 796420698
   },
   {
    "tierIndex": 4,
@@ -7411,7 +7411,7 @@
     "holdMs": 4267
    },
    "timestampMs": 1750028324876,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 44,
     "peakVelocity": 1010.1177094969898,
@@ -7421,10 +7421,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 1908443832,
-   "rarityScore": 477,
+   "hash": 2570516652,
+   "rarityScore": 472,
    "rarity": "Common",
-   "sigilDigest": 1522419729
+   "sigilDigest": 2505381836
   },
   {
    "tierIndex": 5,
@@ -7436,7 +7436,7 @@
     "holdMs": 303
    },
    "timestampMs": 1750028421879,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 12,
     "peakVelocity": 600.6630955868691,
@@ -7448,10 +7448,10 @@
     "peakVelocity",
     "tiltEnergy"
    ],
-   "hash": 318369806,
+   "hash": 4236102538,
    "rarityScore": 654,
    "rarity": "Uncommon",
-   "sigilDigest": 763990233
+   "sigilDigest": 4094488713
   },
   {
    "tierIndex": 0,
@@ -7477,7 +7477,7 @@
     "tiltEnergy"
    ],
    "hash": 3184086178,
-   "rarityScore": 397,
+   "rarityScore": 361,
    "rarity": "Common",
    "sigilDigest": 4171953985
   },
@@ -7500,7 +7500,7 @@
    },
    "violations": [],
    "hash": 626658531,
-   "rarityScore": 403,
+   "rarityScore": 378,
    "rarity": "Common",
    "sigilDigest": 3097508391
   },
@@ -7514,7 +7514,7 @@
     "holdMs": 1690
    },
    "timestampMs": 1750028712888,
-   "amountCents": 999,
+   "amountCents": 1299,
    "clamped": {
     "dropletsLanded": 39,
     "peakVelocity": 1980.6186533505133,
@@ -7525,10 +7525,10 @@
     "dropletsLanded",
     "peakVelocity"
    ],
-   "hash": 3086026948,
-   "rarityScore": 573,
+   "hash": 2111126566,
+   "rarityScore": 549,
    "rarity": "Uncommon",
-   "sigilDigest": 4075200328
+   "sigilDigest": 1054388893
   },
   {
    "tierIndex": 3,
@@ -7540,7 +7540,7 @@
     "holdMs": 9218
    },
    "timestampMs": 1750028809891,
-   "amountCents": 2499,
+   "amountCents": 2999,
    "clamped": {
     "dropletsLanded": 66,
     "peakVelocity": 523.5639175400138,
@@ -7548,10 +7548,10 @@
     "holdMs": 9218
    },
    "violations": [],
-   "hash": 2452995156,
-   "rarityScore": 353,
+   "hash": 2264661714,
+   "rarityScore": 344,
    "rarity": "Common",
-   "sigilDigest": 771209409
+   "sigilDigest": 3254390730
   },
   {
    "tierIndex": 4,
@@ -7563,7 +7563,7 @@
     "holdMs": 6944
    },
    "timestampMs": 1750028906894,
-   "amountCents": 4999,
+   "amountCents": 5999,
    "clamped": {
     "dropletsLanded": 90,
     "peakVelocity": 250.52255638875067,
@@ -7571,10 +7571,10 @@
     "holdMs": 6944
    },
    "violations": [],
-   "hash": 2437391332,
-   "rarityScore": 381,
+   "hash": 1219700888,
+   "rarityScore": 377,
    "rarity": "Common",
-   "sigilDigest": 3970987348
+   "sigilDigest": 773347407
   },
   {
    "tierIndex": 5,
@@ -7586,7 +7586,7 @@
     "holdMs": 10669
    },
    "timestampMs": 1750029003897,
-   "amountCents": 9999,
+   "amountCents": 14900,
    "clamped": {
     "dropletsLanded": 11,
     "peakVelocity": 969.0887426957488,
@@ -7596,10 +7596,10 @@
    "violations": [
     "holdMs"
    ],
-   "hash": 3543100313,
+   "hash": 1319483909,
    "rarityScore": 369,
    "rarity": "Common",
-   "sigilDigest": 608531622
+   "sigilDigest": 4233774579
   }
  ]
 }

@@ -32,11 +32,16 @@ const (
 	thresholdSingular = 771
 )
 
-// How much of the achievable score each tier can reach: 0.55 at tier 0 rising
+// How much of the achievable score each tier can reach: 0.50 at tier 0 rising
 // to 1.00 at tier 5.
+//
+// Tier 0's 0.50 sits below thresholdUncommon so the free sample is always a
+// Common, and the first four rungs own four distinct ceilings. Keep aligned
+// with TIER_REACH_BASE/TIER_REACH_STEP in app/sigil/rarity.ts — the corpus
+// scores change with them.
 const (
-	tierReachBase = 55.0
-	tierReachStep = 9.0
+	tierReachBase = 50.0
+	tierReachStep = 10.0
 )
 
 // permille reduces a value to 0-1000 of its ceiling, with an explicit floor.

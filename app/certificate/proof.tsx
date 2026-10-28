@@ -31,7 +31,7 @@ import "../global.css";
 /** One representative record per rarity, at a plausible tier for that outcome. */
 function specimen(rarity: Rarity, i: number): PourRecord {
   const tierIndex = [0, 2, 4, 5][i] ?? 0;
-  const amountCents = [0, 999, 4999, 9999][i] ?? 0;
+  const amountCents = [0, 1299, 5999, 14900][i] ?? 0;
   const seed = 1284 + i * 7919;
   const droplets = 82 + i * 37;
   return {

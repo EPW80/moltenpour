@@ -60,7 +60,11 @@ type Request struct {
 }
 
 // Prices, index-aligned with the tier table in app/ceremony/tiers.ts.
-var amountCents = [6]int{0, 299, 999, 2499, 4999, 9999}
+//
+// IMPORTANT: change TypeScript first and regenerate the corpus. The amount is
+// hashed into the sigil seed, so these six numbers are part of the artifact's
+// identity, not just its price. prices_test.go pins this table to the corpus.
+var amountCents = [6]int{0, 299, 1299, 2999, 5999, 14900}
 
 // MaxTierIndex is the highest tier the ledger can mint. A deployment may cap
 // itself lower — see the tier ceiling in httpapi — but never higher.
