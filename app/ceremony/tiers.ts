@@ -15,8 +15,16 @@
 import { clampTelemetry, SIM, TIER_BOUNDS } from "../sigil/telemetry";
 import { classify, type Rarity } from "../sigil/rarity";
 
-/** Prices, index-aligned with TIER_BOUNDS. Cents, never floats. */
-const AMOUNT_CENTS = [0, 299, 999, 2499, 4999, 9999] as const;
+/**
+ * Prices, index-aligned with TIER_BOUNDS. Cents, never floats.
+ *
+ * The schedule and its reasoning live in docs/monetization.md. Edit HERE, never
+ * on the Go side first: `amountCents` is part of BurnSeed, so a reprice changes
+ * every seed hash, and api/sigil/testdata/corpus.json has to be regenerated
+ * under Node 22 (see README) before Go can agree with it. api/pour/pour.go
+ * carries the server's copy, pinned by api/pour/prices_test.go.
+ */
+const AMOUNT_CENTS = [0, 299, 1299, 2999, 5999, 14900] as const;
 
 /** The ceremony's own name for each tier. Distinct from a rarity name. */
 const TIER_NAMES = [
@@ -90,7 +98,7 @@ export function tierAt(index: number): Tier {
 }
 
 /**
- * `USD 99.99`.
+ * `USD 149.00`.
  *
  * IMPORTANT: plain text, never a currency glyph. The product brief forbids
  * dollar-sign iconography and anything resembling real currency — US currency
@@ -101,7 +109,7 @@ export function formatUSD(amountCents: number): string {
 }
 
 /**
- * What a single tier costs: `USD 99.99`, or `Free` at zero.
+ * What a single tier costs: `USD 29.99`, or `Free` at zero.
  *
  * Only correct for a tier's own price. A running total of zero is `USD 0.00` —
  * a collection nobody has spent anything on has not been made free, it is empty.

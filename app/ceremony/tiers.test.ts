@@ -4,7 +4,7 @@ import { formatConsideration, formatUSD } from "./tiers";
 
 describe("formatUSD", () => {
   it("prints cents as a two-decimal dollar figure with no currency glyph", () => {
-    expect(formatUSD(9999)).toBe("USD 99.99");
+    expect(formatUSD(14900)).toBe("USD 149.00");
     expect(formatUSD(299)).toBe("USD 2.99");
   });
 
@@ -27,7 +27,7 @@ describe("formatConsideration", () => {
   });
 
   it("otherwise defers to formatUSD", () => {
-    expect(formatConsideration(2499)).toBe(formatUSD(2499));
-    expect(formatConsideration(2499)).toBe("USD 24.99");
+    expect(formatConsideration(2999)).toBe(formatUSD(2999));
+    expect(formatConsideration(2999)).toBe("USD 29.99");
   });
 });

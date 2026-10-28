@@ -49,15 +49,21 @@ export const THRESHOLDS = {
 } as const;
 
 /**
- * How much of the achievable score each tier can reach: 0.55 at tier 0 rising to
+ * How much of the achievable score each tier can reach: 0.50 at tier 0 rising to
  * 1.00 at tier 5.
  *
- * This is what keeps the accepted-risk note in telemetry.ts true — a client that
- * claims max-legal telemetry on every pour reaches Rare-to-Singular on tiers 3-5,
- * and cannot reach Singular at all on the cheap tiers.
+ * Tier 0's 0.50 lands below the Uncommon threshold on purpose: the free sample is
+ * a Common in every case, and the first four rungs then own four distinct
+ * ceilings (Common, Uncommon, Rare, Singular). Under the old 0.55/0.64 start the
+ * free and cheapest paid tiers reached the same ceiling, which made the entry
+ * tier unsellable. See docs/monetization.md.
+ *
+ * This is also what keeps the accepted-risk note in telemetry.ts true — a client
+ * that claims max-legal telemetry on every pour reaches Rare-to-Singular on tiers
+ * 3-5, and cannot reach Singular at all on the cheap tiers.
  */
-const TIER_REACH_BASE = 55;
-const TIER_REACH_STEP = 9;
+const TIER_REACH_BASE = 50;
+const TIER_REACH_STEP = 10;
 
 /**
  * The four components behind a score, each in permille, plus the score itself.
