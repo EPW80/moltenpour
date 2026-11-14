@@ -15,6 +15,9 @@ import { formatConsideration, formatUSD } from "../ceremony/tiers";
 import { formatOrdinal, type PourRecord } from "../pour/record";
 
 type Props = {
+  state: 'loading' | 'ready' | 'error';
+  notice: string | null;
+  onRetry: () => void;
   pours: PourRecord[];
   /** The sheet currently open, if any. The only tile that is marked. */
   current: PourRecord | null;
@@ -22,7 +25,7 @@ type Props = {
   onSelect: (pour: PourRecord) => void;
 };
 
-export function Gallery({ pours, current, wide, onSelect }: Props) {
+export function Gallery({ state, notice, onRetry, pours, current, wide, onSelect }: Props) {
   const totalCents = pours.reduce((sum, p) => sum + p.amountCents, 0);
 
   return (
@@ -49,7 +52,10 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
         </span>
       </div>
 
-      {pours.length === 0 ? (
+      <p>Your collection belongs to this browser. Clearing its cookies loses access.</p>
+      {state === 'loading' && <p role="status">Reading the collection…</p>}
+      {state === 'error' && <p role="alert">{notice} <button type="button" onClick={onRetry}>Retry collection</button></p>}
+      {pours.length === 0 ? (state === 'ready' && (
         <div
           role="status"
           style={{
@@ -99,7 +105,7 @@ export function Gallery({ pours, current, wide, onSelect }: Props) {
             nothing has yet been given for nothing
           </span>
         </div>
-      ) : (
+      )) : (
         <ul
           style={{
             listStyle: "none",

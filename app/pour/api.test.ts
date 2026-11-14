@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { ApiError, apiFetch, assertPourRecord, getPour, listPours, mintPour } from "./api";
+import { ApiError, apiFetch, assertPourRecord, getConfig, getPour, listPours, mintPour } from "./api";
 
 const record = {
   id: "p1",
@@ -23,6 +23,18 @@ const json = (body: unknown, status = 200) =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 
 const fast = { backoffMs: 0 };
+
+describe("configuration", () => {
+  it.each([-1, 6, 0.5, null, "0"])("rejects an invalid tier ceiling %s", async (maxTierIndex) => {
+    await expect(getConfig({ fetch: vi.fn<typeof fetch>().mockResolvedValue(json({ maxTierIndex })) }))
+      .rejects.toBeInstanceOf(ApiError);
+  });
+
+  it.each([0, 5])("accepts supported tier ceiling %s", async (maxTierIndex) => {
+    await expect(getConfig({ fetch: vi.fn<typeof fetch>().mockResolvedValue(json({ maxTierIndex })) }))
+      .resolves.toEqual({ maxTierIndex });
+  });
+});
 
 describe("apiFetch", () => {
   it("retries a GET on 503 and returns the later success", async () => {

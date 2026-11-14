@@ -19,7 +19,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { PourScreen, type Phase } from './ceremony/PourScreen';
-import { TIERS } from './ceremony/tiers';
 import { Gallery } from './collection/Gallery';
 import { CertificateView } from './certificate/CertificateView';
 import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION, RADIUS } from './design/tokens';
@@ -84,91 +83,91 @@ export function App() {
   const [notice, setNotice] = useState<string | null>(null);
   const [sealing, setSealing] = useState(false);
 
-  const [tierIndex, setTierIndex] = useState(3);
-  /**
-   * The highest tier this deployment will mint. Optimistic until the server
-   * answers: the whole tier table is what the ceremony has always shown, and
-   * blanking it for one round trip would flash the ledger empty.
-   */
-  const [maxTierIndex, setMaxTierIndex] = useState(TIERS.length - 1);
+  const [tierIndex, setTierIndex] = useState(0);
+  const [maxTierIndex, setMaxTierIndex] = useState(0);
+  const [configState, setConfigState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [collectionState, setCollectionState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [collectionNotice, setCollectionNotice] = useState<string | null>(null);
+  const [draftGeneration, setDraftGeneration] = useState(0);
   const [phase, setPhase] = useState<Phase>('idle');
   const [rarity, setRarity] = useState<Rarity>('Common');
 
   const wide = useIsWide();
   const sealTimer = useRef<number | null>(null);
+  const mintPending = useRef(false);
+  const listingSequence = useRef(0);
+  const configSequence = useRef(0);
+  const mintedRecords = useRef(new Map<string, PourRecord>());
 
   const refresh = useCallback(async () => {
+    const sequence = ++listingSequence.current;
+    setCollectionState('loading');
+    setCollectionNotice(null);
     try {
-      setPours(await listPours());
+      const records = await listPours();
+      if (sequence !== listingSequence.current) return;
+      const merged = new Map(records.map((record) => [record.id, record]));
+      for (const [id, record] of mintedRecords.current) merged.set(id, record);
+      setPours([...merged.values()].sort((a, b) => b.ledgerPosition - a.ledgerPosition));
+      setCollectionState('ready');
     } catch (e) {
-      setNotice(readNotice(e));
+      if (sequence !== listingSequence.current) return;
+      setCollectionState('error');
+      setCollectionNotice(readNotice(e));
     }
   }, []);
 
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
-
-  // The ceiling, not the ledger: a deployment that cannot charge refuses the
-  // paid tiers, and the picker greys them out rather than letting someone pour
-  // for fifteen seconds to be told no. A failure here leaves the optimistic
-  // default — the server still refuses, and says so in the notice band.
-  useEffect(() => {
-    void (async () => {
-      try {
-        const { maxTierIndex: max } = await getConfig();
-        setMaxTierIndex(max);
-        // The default selection may sit above the ceiling.
-        setTierIndex((current) => Math.min(current, max));
-      } catch {
-        // Deliberately silent. The tier picker is not where a config fetch
-        // failure should be announced.
-      }
-    })();
+  const loadConfig = useCallback(async () => {
+    const sequence = ++configSequence.current;
+    setConfigState('loading');
+    try {
+      const { maxTierIndex: max } = await getConfig();
+      if (sequence !== configSequence.current) return;
+      setMaxTierIndex(max);
+      setTierIndex((current) => Math.min(current, max));
+      setConfigState('ready');
+    } catch {
+      if (sequence === configSequence.current) setConfigState('error');
+    }
   }, []);
+
+  useEffect(() => { void refresh(); void loadConfig(); }, [refresh, loadConfig]);
 
   useEffect(() => () => {
     if (sealTimer.current !== null) window.clearTimeout(sealTimer.current);
+    listingSequence.current++;
+    configSequence.current++;
   }, []);
 
-  /**
-   * Seal, then show.
-   *
-   * The mint and the pause run together rather than in sequence: the seal is a
-   * fixed beat of the ceremony and should not stretch to whatever the network
-   * costs. A failure clears the seal, states itself in the notice band, and
-   * leaves the pour settled so it can be sent again — losing a completed pour to
-   * a dropped connection is not a thing this product may do.
-   */
-  const mint = useCallback(
-    (request: MintRequest) => {
-      setSealing(true);
-      setNotice(null);
-
-      const held = new Promise<void>((resolve) => {
-        sealTimer.current = window.setTimeout(resolve, prefersReducedMotion() ? SEAL_REDUCED_MS : SEAL_MS);
-      });
-
-      void (async () => {
-        try {
-          const [record] = await Promise.all([mintPour(request), held]);
-          setSealing(false);
-          setCurrent(record);
-          setView('certificate');
-          // The ceremony unmounts with the view, taking its rig with it. Reset
-          // the shell's half so the vessel is empty when the user comes back.
-          setPhase('idle');
-          setRarity('Common');
-          void refresh();
-        } catch (e) {
-          await held;
-          setSealing(false);
-          setNotice(mintNotice(e));
-        }
-      })();
-    },
-    [refresh],
-  );
+  const mint = useCallback((request: MintRequest) => {
+    if (mintPending.current) return;
+    mintPending.current = true;
+    setSealing(true);
+    setNotice(null);
+    const held = new Promise<void>((resolve) => {
+      sealTimer.current = window.setTimeout(resolve, prefersReducedMotion() ? SEAL_REDUCED_MS : SEAL_MS);
+    });
+    void (async () => {
+      try {
+        const [record] = await Promise.all([mintPour(request), held]);
+        mintedRecords.current.set(record.id, record);
+        setPours((records) => [record, ...records.filter((p) => p.id !== record.id)]
+          .sort((a, b) => b.ledgerPosition - a.ledgerPosition));
+        setCurrent(record);
+        setView('certificate');
+        setDraftGeneration((generation) => generation + 1);
+        setPhase('idle');
+        setRarity('Common');
+        void refresh();
+      } catch (e) {
+        await held;
+        setNotice(mintNotice(e));
+      } finally {
+        mintPending.current = false;
+        setSealing(false);
+      }
+    })();
+  }, [refresh]);
 
   const { accent } = RARITY_PRESENTATION[rarity];
   const poured = phase !== 'idle';
@@ -291,22 +290,27 @@ export function App() {
       </header>
 
       <nav className="app-chrome" style={{ position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 6, padding: '16px 0 0' }}>
-        <Tab active={view === 'ceremony'} onClick={() => setView('ceremony')}>
+        <Tab disabled={sealing} active={view === 'ceremony'} onClick={() => setView('ceremony')}>
           The ceremony
         </Tab>
-        <Tab active={view === 'collection'} onClick={() => setView('collection')}>
+        <Tab disabled={sealing} active={view === 'collection'} onClick={() => setView('collection')}>
           The collection · {pours.length}
         </Tab>
         {current && (
-          <Tab active={view === 'certificate'} onClick={() => setView('certificate')}>
+          <Tab disabled={sealing} active={view === 'certificate'} onClick={() => setView('certificate')}>
             The certificate
           </Tab>
         )}
       </nav>
 
-      <main style={{ position: 'relative', paddingTop: 'clamp(20px, 2.6vw, 32px)' }}>
-        {view === 'ceremony' && (
+      <main ref={(el) => { if (el) el.inert = sealing; }} style={{ position: 'relative', paddingTop: 'clamp(20px, 2.6vw, 32px)' }}>
+        <div hidden={view !== 'ceremony'}>
+          {configState === 'loading' && <p role="status">Checking available tiers…</p>}
+          {configState === 'error' && <p role="alert">Available tiers could not be loaded. <button type="button" onClick={() => void loadConfig()}>Retry availability</button></p>}
           <PourScreen
+            key={draftGeneration}
+            active={view === 'ceremony'}
+            enabled={configState === 'ready'}
             tierIndex={tierIndex}
             onTierIndex={setTierIndex}
             maxTierIndex={maxTierIndex}
@@ -320,10 +324,13 @@ export function App() {
             wide={wide}
             onMint={mint}
           />
-        )}
+        </div>
 
         {view === 'collection' && (
           <Gallery
+            state={collectionState}
+            notice={collectionNotice}
+            onRetry={() => void refresh()}
             pours={pours}
             current={current}
             wide={wide}
@@ -391,11 +398,12 @@ export function App() {
   );
 }
 
-function Tab({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+function Tab({ active, disabled, onClick, children }: { active: boolean; disabled: boolean; onClick: () => void; children: React.ReactNode }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       aria-current={active ? 'page' : undefined}
       style={{
         padding: '9px 16px',

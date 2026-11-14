@@ -10,6 +10,7 @@
  * idempotently on (owner, timestampMs), so a replay returns the same record.
  */
 
+import { TIERS } from "../ceremony/tiers";
 import { RARITIES } from "../sigil/rarity";
 import type { MintRequest, PourRecord, ServerConfig } from "./record";
 
@@ -214,7 +215,8 @@ export async function getPour(id: string, opts: ApiOptions = {}): Promise<PourRe
 
 export async function getConfig(opts: ApiOptions = {}): Promise<ServerConfig> {
   const config = await jsonBody(await apiFetch("/api/config", {}, opts));
-  if (!isObject(config) || typeof config.maxTierIndex !== "number")
+  if (!isObject(config) || !Number.isInteger(config.maxTierIndex) ||
+      (config.maxTierIndex as number) < 0 || (config.maxTierIndex as number) >= TIERS.length)
     throw new ApiError("server", 0, "The ledger returned a malformed configuration.");
   return config as ServerConfig;
 }

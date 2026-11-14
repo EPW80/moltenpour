@@ -16,8 +16,9 @@ The ledger is a SQLite file. `npm run api -- -db :memory:` for an ephemeral one.
 
 Set `MOLTENPOUR_SECRET` in anything but local development — it signs the owner
 cookie, and the default is a published constant that anyone can forge. Setting
-`MOLTENPOUR_ENV=production` without `MOLTENPOUR_SECRET` refuses to start
-rather than silently falling back to that default.
+`MOLTENPOUR_ENV=production` without a private `MOLTENPOUR_SECRET` refuses to
+start, as does enabling paid tiers before receipt validation exists. Fly sets
+production mode explicitly.
 
 ## Layout
 
@@ -146,6 +147,7 @@ npm test                       # includes the TS↔corpus and geometry invariant
 npm run gencorpus && git diff --exit-code api/sigil/testdata/corpus.json
 go vet ./api/... && go test -race ./api/...
 npm run verify:certificate     # renders and measures the A4 sheet, needs Chrome
+npm run verify:journeys        # desktop/mobile browser regressions, needs Chrome
 ```
 
 `-race` because the ledger is the one place with real concurrency: `Append`
@@ -211,7 +213,8 @@ docker run --rm -p 8080:8080 -v moltenpour-dev:/data -e MOLTENPOUR_SECRET=local 
 | `MOLTENPOUR_SECRET` | the published dev constant | Signs the owner cookie. Rotating it makes every visitor a new owner with an empty collection — it is not a routine rotation. |
 | `MOLTENPOUR_TRUST_PROXY` | unset | Legacy; prefer `MOLTENPOUR_TRUSTED_PROXIES`, which `fly.toml` uses. Set to `1` only behind a proxy that terminates TLS and sets `X-Forwarded-Proto` itself. Without it the cookie ships without `Secure` behind Fly; with it in front of nothing, a visitor picks their own cookie's flags. |
 | `MOLTENPOUR_TRUSTED_PROXIES` | unset | Comma-separated CIDRs of the proxies whose `X-Forwarded-*` headers are believed. A header is honoured only when the TCP peer is inside one, and the client address is the first `X-Forwarded-For` entry that is not itself a listed proxy. This is the precise form of `MOLTENPOUR_TRUST_PROXY`, which trusts every peer and treats the rightmost entry as the visitor. Every request's access-log line carries `peer` and `clientIp`; the `peer` values on a deployed instance are what to list. The mint rate limit (five pours in a burst, then one every six seconds, per client address) keys on this address. |
-| `MOLTENPOUR_MAX_TIER` | `0` | Highest tier the deployment will mint. Receipt validation is a stub, so anything above 0 mints for free. The picker reads it from `GET /api/config` and shows the rest of the schedule withdrawn. |
+| `MOLTENPOUR_ENV` | unset | Fly sets `production`, which refuses missing/development signing secrets and paid-tier enablement. |
+| `MOLTENPOUR_MAX_TIER` | `0` | Highest tier the deployment will mint. Production refuses values above 0 while receipt validation is a stub; local development can enable them for testing. The picker reads it from `GET /api/config` and shows the rest of the schedule withdrawn. |
 | `PORT` | `8787` | Listen port. `-addr` still wins. |
 
 **This must stay one machine.** `Append` assigns the global ledger position
@@ -250,30 +253,34 @@ Wednesday would be inside the window only by luck. They are also Fly's to lose
 along with the volume, the region, or the account, which is what the script is
 for: it pulls the files to somewhere you control.
 
-It pulls three of them. SQLite runs in WAL mode, so commits live in
-`moltenpour.db-wal` until a checkpoint folds them in, and a `.db` copied alone
-is a valid database silently missing the most recent pours — a failure that
-restores cleanly and is therefore the worst shape available. The script fetches
-them over `fly ssh sftp`, which works against the distroless image because it is
-served by Fly's init rather than by anything in the image; `fly ssh console`
-finds no shell to run.
+The backup script requires `fly`, `jq`, and Go locally. It first checks that
+exactly one machine is running, then invokes the deployed server directly over
+SSH (no shell needed). The server's `-backup` mode uses SQLite `VACUUM INTO` to
+export a consistent standalone snapshot including committed WAL data. It never
+copies live database and WAL files separately. Export runs alongside the writer;
+the snapshot represents a committed database state during the export.
 
-Verify a backup by opening it, not by reading its size, and do it once now
-rather than the first time it matters. Listing pours proves nothing — the list
-is owner-scoped, so a caller without the cookie that minted them gets `[]` from
-a perfectly good ledger and from an empty one alike. Mint into the copy instead
-and read the position back: continuity is the property worth checking, and a
-ledger that restored empty answers No. 1.
+The script downloads that snapshot and runs `PRAGMA integrity_check` locally.
+A failed export, transfer, or verification exits nonzero; partial files remain
+for diagnosis. Remote snapshots are retained in `/tmp` until machine replacement;
+remove old copies periodically through SFTP to avoid accumulating them.
+Deploy the updated server before using the script.
+
+You can also create and validate snapshots locally without starting the server
+or running migrations. The source must already exist; the destination must be a
+new file. Keep these files private: they contain owner identifiers.
 
 ```bash
-go run ./api/cmd/server -db backups/<stamp>/moltenpour.db -addr :8788
-curl -s -X POST localhost:8788/api/pours -H 'content-type: application/json' \
-  -d "{\"tierIndex\":0,\"timestampMs\":$(($(date +%s)*1000-3000)),\
-\"telemetry\":{\"dropletsLanded\":40,\"peakVelocity\":1200,\"tiltEnergy\":6,\"holdMs\":2000}}"
-# ledgerPosition is one past the last pour in the backup, not 1
+go run ./api/cmd/server -db moltenpour.db -backup /tmp/ledger-snapshot.db
+go run ./api/cmd/server -verify-backup /tmp/ledger-snapshot.db
 ```
 
-Do that against a copy, never against `/data`: it appends a real row.
+Rehearse restoration against a disposable copy, never the production volume.
+Compare its records and highest ledger position with the snapshot, start the
+server against the copy, mint once, and verify that the new position is one past
+the snapshot's maximum. The Go backup regression exercises this with an open
+writer and committed WAL data. A listing without the original owner cookie is
+empty even for a healthy restored ledger.
 
 Restoring in production is `fly volumes fork <snapshot-id>`, then pointing the
 mount at the fork and deploying. Never restore by writing into the volume of a
