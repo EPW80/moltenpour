@@ -93,6 +93,8 @@ const LABEL_11: React.CSSProperties = {
 };
 
 type Props = {
+  active: boolean;
+  enabled: boolean;
   tierIndex: number;
   onTierIndex: (index: number) => void;
   /**
@@ -114,6 +116,8 @@ type Props = {
 };
 
 export function PourScreen({
+  active,
+  enabled,
   tierIndex,
   onTierIndex,
   maxTierIndex,
@@ -134,6 +138,9 @@ export function PourScreen({
 
   const rigRef = useRef(createRig(tier));
   const rendererRef = useRef<Renderer | null>(null);
+  const wakeRef = useRef<() => void>(() => {});
+  const rendererCleanupRef = useRef<(() => void) | null>(null);
+  const requestRef = useRef<MintRequest | null>(null);
   const canvasElRef = useRef<HTMLCanvasElement | null>(null);
 
   /**
@@ -153,6 +160,7 @@ export function PourScreen({
   const leanRef = useRef(0);
   const startedAtRef = useRef<number | null>(null);
   const liveRef = useRef({
+    active, enabled, sealing,
     tier,
     tierIndex,
     phase,
@@ -162,6 +170,7 @@ export function PourScreen({
     onNotice,
   });
   liveRef.current = {
+    active, enabled, sealing,
     tier,
     tierIndex,
     phase,
@@ -187,9 +196,11 @@ export function PourScreen({
   const openStream = useCallback(() => {
     const rig = rigRef.current;
     const { phase: at } = liveRef.current;
+    if (!liveRef.current.active || !liveRef.current.enabled || liveRef.current.sealing || document.hidden) return;
     if (at === "settled" || rig.finished || pouringRef.current) return;
     if (startedAtRef.current === null) startedAtRef.current = Date.now();
     pouringRef.current = true;
+    wakeRef.current();
     if (at !== "pouring") {
       liveRef.current.onPhase("pouring");
       liveRef.current.onNotice(null);
@@ -200,35 +211,47 @@ export function PourScreen({
     if (!pouringRef.current) return;
     pouringRef.current = false;
     liveRef.current.onPhase("settling");
+    wakeRef.current();
   }, []);
 
   const discard = useCallback(() => {
+    if (liveRef.current.sealing) return;
+    requestRef.current = null;
     pouringRef.current = false;
     startedAtRef.current = null;
     resetRig(rigRef.current);
+    wakeRef.current();
     liveRef.current.onPhase("idle");
     liveRef.current.onRarity("Common");
     liveRef.current.onNotice(null);
   }, []);
 
-  /**
-   * The renderer's whole lifecycle, on a callback ref.
-   *
-   * IMPORTANT: this cannot be a mount-keyed effect. The canvas unmounts every
-   * time the user changes view, and an effect that sets GL up on mount leaves a
-   * live context attached to a detached canvas — measured as a leaked frame loop
-   * drawing into nothing.
-   */
+  // Renderer resources may disappear without discarding the simulation.
   const attachCanvas = useCallback((el: HTMLCanvasElement | null) => {
+    rendererCleanupRef.current?.();
+    rendererCleanupRef.current = null;
     canvasElRef.current = el;
-    if (!el) {
+    if (!el) return;
+    const restore = () => {
+      rendererRef.current = createRenderer(el, () => wakeRef.current());
+      setUnlit(!rendererRef.current);
+      wakeRef.current();
+    };
+    const lost = (event: Event) => {
+      event.preventDefault();
+      rendererRef.current?.dispose(false);
+      rendererRef.current = null;
+      setUnlit(true);
+    };
+    el.addEventListener('webglcontextlost', lost);
+    el.addEventListener('webglcontextrestored', restore);
+    restore();
+    rendererCleanupRef.current = () => {
+      el.removeEventListener('webglcontextlost', lost);
+      el.removeEventListener('webglcontextrestored', restore);
       rendererRef.current?.dispose();
       rendererRef.current = null;
-      return;
-    }
-    const renderer = createRenderer(el);
-    rendererRef.current = renderer;
-    setUnlit(!renderer);
+    };
   }, []);
 
   /**
@@ -242,7 +265,8 @@ export function PourScreen({
     let readoutAcc = 0;
 
     const frame = (now: number) => {
-      raf = requestAnimationFrame(frame);
+      raf = 0;
+      if (!liveRef.current.active || document.hidden) { last = 0; return; }
       const dtMs = last ? Math.min(now - last, 100) : 16;
       last = now;
 
@@ -275,15 +299,19 @@ export function PourScreen({
         liveRef.current.onNotice(HARD_STOP_NOTICE);
       }
 
-      if (
-        liveRef.current.phase === "settling" &&
-        isSettled(rig, pouringRef.current)
-      ) {
+      const justSettled = liveRef.current.phase === "settling" && isSettled(rig, pouringRef.current);
+      if (justSettled) {
         liveRef.current.onPhase("settled");
       }
 
+      const easing = Object.entries(liveRef.current.tier.feel).some(
+        ([name, value]) => Math.abs(rig.feel[name as keyof typeof rig.feel] - value) > 0.001,
+      );
+      if (pouringRef.current || rig.alive > 0 || easing) raf = requestAnimationFrame(frame);
+      else last = 0;
+
       readoutAcc += dtMs;
-      if (readoutAcc >= READOUT_MS) {
+      if (readoutAcc >= READOUT_MS || !raf || justSettled) {
         readoutAcc = 0;
         paintReadout();
       }
@@ -335,9 +363,27 @@ export function PourScreen({
       if (band !== liveRef.current.rarity) liveRef.current.onRarity(band);
     };
 
-    raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
+    const wake = () => {
+      if (!raf && liveRef.current.active && !document.hidden) raf = requestAnimationFrame(frame);
+    };
+    wakeRef.current = wake;
+    const suspend = () => { closeStream(); last = 0; };
+    const visibility = () => { suspend(); if (!document.hidden) wake(); };
+    window.addEventListener('blur', suspend);
+    document.addEventListener('visibilitychange', visibility);
+    wake();
+    return () => {
+      cancelAnimationFrame(raf);
+      wakeRef.current = () => {};
+      window.removeEventListener('blur', suspend);
+      document.removeEventListener('visibilitychange', visibility);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!active) closeStream();
+    wakeRef.current();
+  }, [active, tierIndex, closeStream]);
 
   // Real device tilt where it exists. No permission prompt on load: iOS gates
   // this behind a user gesture, and asking before the user has chosen to pour is
@@ -361,14 +407,14 @@ export function PourScreen({
   // is still free to change.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (phase !== "idle" || (e.key !== "ArrowUp" && e.key !== "ArrowDown"))
+      if (!active || !enabled || sealing || phase !== "idle" || (e.key !== "ArrowUp" && e.key !== "ArrowDown"))
         return;
       e.preventDefault();
       onTierIndex((tierIndex + (e.key === "ArrowDown" ? 1 : offered - 1)) % offered);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [phase, tierIndex, onTierIndex, offered]);
+  }, [active, enabled, sealing, phase, tierIndex, onTierIndex, offered]);
 
   const stageHeight = wide ? "min(68vh, 700px)" : "min(58vh, 520px)";
 
@@ -427,6 +473,8 @@ export function PourScreen({
           tabIndex={0}
           aria-label="Hold to pour"
           aria-pressed={phase === "pouring"}
+          aria-disabled={!enabled || sealing || settled}
+          onBlur={closeStream}
           onPointerDown={(e) => {
             // Captured so a drag that leaves the stage still steers the stream
             // rather than silently closing it.
@@ -675,7 +723,7 @@ export function PourScreen({
                   key={t.index}
                   type="button"
                   className="mp-tier-row"
-                  disabled={poured || withdrawn}
+                  disabled={!enabled || poured || withdrawn || sealing}
                   aria-disabled={withdrawn || undefined}
                   onClick={() => onTierIndex(t.index)}
                   style={{
@@ -1057,13 +1105,14 @@ export function PourScreen({
             disabled={!settled || sealing}
             onClick={() => {
               if (!settled || sealing) return;
-              onMint({
+              requestRef.current ??= {
                 tierIndex,
                 // The pour's real start, not the mint time: it feeds the seed
                 // hash, so a later figure would mint a sigil the user never saw.
                 timestampMs: startedAtRef.current ?? Date.now(),
                 telemetry: telemetryOf(rigRef.current),
-              });
+              };
+              onMint(requestRef.current);
             }}
             style={{
               position: "relative",
@@ -1099,6 +1148,7 @@ export function PourScreen({
             <button
               type="button"
               onClick={discard}
+              disabled={sealing}
               style={{
                 padding: "17px 20px",
                 background: "transparent",

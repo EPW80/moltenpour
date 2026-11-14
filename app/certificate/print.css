@@ -35,6 +35,24 @@
     visibility: hidden;
   }
 
+  /* Screen wrappers are positioned, padded, and sometimes sized to a scaled
+     sheet. Remove those containing blocks and their layout space on paper. */
+  body *:has(.print-root) {
+    position: static !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+
+  .app-chrome {
+    display: none !important;
+  }
+
   .print-root,
   .print-root * {
     visibility: visible;

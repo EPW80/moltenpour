@@ -12,6 +12,7 @@ primary_region = "sjc"
   dockerfile = "Dockerfile"
 
 [env]
+  MOLTENPOUR_ENV = "production"
   # Fly terminates TLS and forwards plain HTTP, so without this the owner cookie
   # would ship without Secure — on the one value that is the whole access
   # control. See session.overTLS. The range is where fly-proxy connects from,
@@ -27,7 +28,7 @@ primary_region = "sjc"
 
 # MOLTENPOUR_SECRET is a secret, never an env line:
 #   fly secrets set MOLTENPOUR_SECRET=$(openssl rand -hex 32)
-# Unset, the server signs with a published constant and says so in the log.
+# Production refuses to start without a private signing secret.
 # Rotating it invalidates every owner cookie — every visitor silently becomes a
 # new owner with an empty collection. It is not a routine rotation.
 
@@ -47,7 +48,7 @@ primary_region = "sjc"
     grace_period = "10s"
     interval = "30s"
     method = "GET"
-    path = "/api/health"
+    path = "/api/ready"
     protocol = "http"
     timeout = "5s"
 

@@ -71,6 +71,11 @@ jobs:
           CHROME_PATH: /usr/bin/google-chrome
         run: npm run verify:certificate
 
+      - name: Browser user journeys and application printing
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: npm run verify:journeys
+
   smoke:
     name: live smoke test
     runs-on: ubuntu-latest

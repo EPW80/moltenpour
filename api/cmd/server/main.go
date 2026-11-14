@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"flag"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -22,15 +23,42 @@ func main() {
 	addr := flag.String("addr", defaultAddr(), "listen address; defaults to :$PORT, else :8787")
 	dbPath := flag.String("db", "moltenpour.db", `ledger file, or ":memory:" for an ephemeral one`)
 	staticDir := flag.String("static", "", "directory of the built SPA to serve; empty serves the API alone")
+	backupPath := flag.String("backup", "", "export a consistent SQLite snapshot to a new file, then exit")
+	verifyPath := flag.String("verify-backup", "", "check an existing SQLite snapshot, then exit")
 	flag.Parse()
 
 	log := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+
+	if *backupPath != "" || *verifyPath != "" {
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		defer cancel()
+		var err error
+		if *backupPath != "" && *verifyPath != "" {
+			err = fmt.Errorf("use either -backup or -verify-backup")
+		} else if *backupPath != "" {
+			err = pour.SnapshotSQLite(ctx, *dbPath, *backupPath)
+		} else {
+			err = pour.VerifySQLite(ctx, *verifyPath)
+		}
+		if err != nil {
+			log.Error("backup failed", "err", err)
+			os.Exit(1)
+		}
+		log.Info("backup verified")
+		return
+	}
 
 	// Paid tiers mint for free while receipt validation is a stub, so the
 	// default refuses them. A deployment that can charge raises this.
 	maxTier := envInt("MOLTENPOUR_MAX_TIER", 0, log)
 	if maxTier > pour.MaxTierIndex {
 		maxTier = pour.MaxTierIndex
+	}
+
+	secret := os.Getenv("MOLTENPOUR_SECRET")
+	if err := validateProduction(os.Getenv("MOLTENPOUR_ENV"), secret, maxTier); err != nil {
+		log.Error("unsafe production configuration", "err", err)
+		os.Exit(1)
 	}
 
 	// Behind a TLS-terminating proxy the owner cookie needs X-Forwarded-Proto to
@@ -53,14 +81,6 @@ func main() {
 	}()
 	log.Info("ledger open", "path", *dbPath)
 
-	secret := os.Getenv("MOLTENPOUR_SECRET")
-	if secret == "" && os.Getenv("MOLTENPOUR_ENV") == "production" {
-		// session.New would fall back to the published dev secret and only warn —
-		// fine for local development, not acceptable for a deployment that has
-		// declared itself production. Refuse to hand out forgeable cookies.
-		log.Error("MOLTENPOUR_SECRET is unset with MOLTENPOUR_ENV=production — refusing to start with a forgeable signing secret")
-		os.Exit(1)
-	}
 	sessions := session.New(secret, trustProxy, log)
 
 	// The precise form of MOLTENPOUR_TRUST_PROXY: forwarded headers are believed
@@ -149,4 +169,17 @@ func envInt(name string, fallback int, log *slog.Logger) int {
 		return fallback
 	}
 	return n
+}
+
+func validateProduction(environment, secret string, maxTier int) error {
+	if environment != "production" {
+		return nil
+	}
+	if secret == "" || secret == "moltenpour-development-secret-do-not-use-in-production" {
+		return fmt.Errorf("production requires a private MOLTENPOUR_SECRET")
+	}
+	if maxTier > 0 {
+		return fmt.Errorf("production paid tiers require receipt validation; set MOLTENPOUR_MAX_TIER=0")
+	}
+	return nil
 }

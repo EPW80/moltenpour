@@ -92,7 +92,7 @@ export type Renderer = {
   readonly width: number;
   readonly height: number;
   draw(rig: Rig): void;
-  dispose(): void;
+  dispose(releaseContext?: boolean): void;
 };
 
 /**
@@ -145,12 +145,10 @@ function compile(
  * windows and some machines have it blocklisted. The caller shows a notice and
  * carries on.
  *
- * IMPORTANT: call dispose() on detach. The canvas unmounts every time the user
- * changes view, and a renderer whose RAF is driven against a dropped context is
- * the exact leak that a mount-keyed effect produced here before this was a
- * callback-ref lifecycle.
+ * Dispose on detach or context loss. Resize invalidates the picture so a
+ * sleeping ceremony redraws once without requiring a continuous frame loop.
  */
-export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
+export function createRenderer(canvas: HTMLCanvasElement, onInvalidate: () => void = () => {}): Renderer | null {
   const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
   if (!gl) return null;
 
@@ -158,17 +156,23 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
   try {
     program = gl.createProgram();
     if (!program) return null;
-    gl.attachShader(program, compile(gl, gl.VERTEX_SHADER, VERTEX_SRC));
-    gl.attachShader(program, compile(gl, gl.FRAGMENT_SHADER, FRAGMENT_SRC));
+    const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX_SRC);
+    gl.attachShader(program, vertex);
+    gl.deleteShader(vertex);
+    const fragment = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT_SRC);
+    gl.attachShader(program, fragment);
+    gl.deleteShader(fragment);
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
       console.error(
         "metaball: program failed to link",
         gl.getProgramInfoLog(program),
       );
+      gl.deleteProgram(program);
       return null;
     }
   } catch (e) {
+    if (program) gl.deleteProgram(program);
     console.error("metaball:", e);
     return null;
   }
@@ -206,17 +210,18 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
       gl.uniform1f(uniforms.roughness, rig.feel.roughness);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     },
-    dispose() {
+    dispose(releaseContext = true) {
       observer.disconnect();
       gl.deleteBuffer(buffer);
       if (program) gl.deleteProgram(program);
       // Frees the drawing buffer immediately rather than at the next GC, which
       // matters because contexts are a small fixed pool per document.
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      if (releaseContext) gl.getExtension("WEBGL_lose_context")?.loseContext();
     },
   };
 
   const resize = () => {
+    if (!canvas.clientWidth || !canvas.clientHeight) return;
     const size = backingSize(canvas);
     renderer.width = size.width;
     renderer.height = size.height;
@@ -225,6 +230,7 @@ export function createRenderer(canvas: HTMLCanvasElement): Renderer | null {
     canvas.width = size.width;
     canvas.height = size.height;
     gl.viewport(0, 0, size.width, size.height);
+    onInvalidate();
   };
 
   const observer = new ResizeObserver(resize);
