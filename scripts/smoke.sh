@@ -85,4 +85,20 @@ code="$(curl -sS -o /dev/null -w '%{http_code}' "$base/api/pours/$id")"
 [ "$code" = 404 ] || fail "a stranger got $code for someone else's pour, expected 404"
 echo "smoke: owner-scoped"
 
+# The audit reads a FILE ledger. Create one schema-only by briefly serving it,
+# then audit it read-only and expect a clean exit — a `pours` line proves the
+# flag reached the ledger, and the rates cannot divide by zero on an empty one.
+if [ -x "$dir/server" ]; then
+  audit_db="$dir/audit.db"
+  "$dir/server" -db "$audit_db" -addr 127.0.0.1:8793 >"$dir/audit.log" 2>&1 &
+  audit_pid=$!
+  for _ in $(seq 1 50); do
+    curl -fsS -o /dev/null "http://127.0.0.1:8793/api/ready" 2>/dev/null && break
+    sleep 0.1
+  done
+  kill "$audit_pid" 2>/dev/null && wait "$audit_pid" 2>/dev/null || true
+  "$dir/server" -audit "$audit_db" | grep -q "^pours " || { echo "audit of an empty ledger failed:"; "$dir/server" -audit "$audit_db"; fail "audit did not report"; }
+  echo "smoke: audit"
+fi
+
 echo "smoke: ok"

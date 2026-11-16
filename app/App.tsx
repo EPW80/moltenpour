@@ -16,13 +16,10 @@
  * outcome. Those are hard constraints from the product brief, not preferences.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
 import { PourScreen, type Phase } from './ceremony/PourScreen';
-import { Gallery } from './collection/Gallery';
-import { CertificateView } from './certificate/CertificateView';
 import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION, RADIUS } from './design/tokens';
-import { MoltenBackground } from './design/MoltenBackground';
 import { useIsWide } from './design/viewport';
 import type { Rarity } from './sigil/rarity';
 import { ApiError, getConfig, listPours, mintPour } from './pour/api';
@@ -32,6 +29,12 @@ import './certificate/fonts/bodoni.css';
 import './certificate/print.css';
 
 type View = 'ceremony' | 'collection' | 'certificate';
+
+// Views load on first use. The decorative WebGL ground waits for interaction;
+// lazy alone would still download Three.js on the initial ceremony render.
+const Gallery = lazy(() => import('./collection/Gallery').then((m) => ({ default: m.Gallery })));
+const CertificateView = lazy(() => import('./certificate/CertificateView').then((m) => ({ default: m.CertificateView })));
+const MoltenBackground = lazy(() => import('./design/MoltenBackground').then((m) => ({ default: m.MoltenBackground })));
 
 /**
  * How long the seal is held before the certificate appears.
@@ -63,6 +66,8 @@ function mintNotice(e: unknown): string {
   if (e instanceof ApiError) {
     if (e.retryable)
       return 'The ledger could not be reached. The pour has been kept; seal it again.';
+    if (e.code === 'expired')
+      return 'This pour has lapsed and can no longer be sealed. Begin again.';
     if (e.code === 'conflict')
       return `The ledger already holds a different record for this pour. ${e.message}`;
     return `The record could not be sealed. ${e.message}`;
@@ -82,6 +87,7 @@ export function App() {
   const [current, setCurrent] = useState<PourRecord | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [sealing, setSealing] = useState(false);
+  const [backgroundReady, setBackgroundReady] = useState(false);
 
   const [tierIndex, setTierIndex] = useState(0);
   const [maxTierIndex, setMaxTierIndex] = useState(0);
@@ -133,6 +139,20 @@ export function App() {
 
   useEffect(() => { void refresh(); void loadConfig(); }, [refresh, loadConfig]);
 
+  useEffect(() => {
+    const activate = () => {
+      setBackgroundReady(true);
+      window.removeEventListener('pointerdown', activate);
+      window.removeEventListener('keydown', activate);
+    };
+    window.addEventListener('pointerdown', activate);
+    window.addEventListener('keydown', activate);
+    return () => {
+      window.removeEventListener('pointerdown', activate);
+      window.removeEventListener('keydown', activate);
+    };
+  }, []);
+
   useEffect(() => () => {
     if (sealTimer.current !== null) window.clearTimeout(sealTimer.current);
     listingSequence.current++;
@@ -162,6 +182,14 @@ export function App() {
       } catch (e) {
         await held;
         setNotice(mintNotice(e));
+        // A lapsed pour cannot be resealed: the server's settle window has
+        // closed over its start time. Clear the retained draft so the schedule
+        // returns to idle instead of offering a seal that can never succeed.
+        if (e instanceof ApiError && e.code === 'expired') {
+          setDraftGeneration((generation) => generation + 1);
+          setPhase('idle');
+          setRarity('Common');
+        }
       } finally {
         mintPending.current = false;
         setSealing(false);
@@ -190,7 +218,11 @@ export function App() {
         fontFamily: FONT.instrument,
       }}
     >
-      {view !== 'certificate' && <MoltenBackground dimmed={phase === 'pouring'} />}
+      {backgroundReady && view !== 'certificate' && (
+        <Suspense fallback={null}>
+          <MoltenBackground dimmed={phase === 'pouring'} />
+        </Suspense>
+      )}
       {/* The ledger-paper ground, full-bleed. Decorative, and never in the way
           of a pointer. */}
       <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.5, backgroundImage: COLUMN_RULE }} />
@@ -327,21 +359,27 @@ export function App() {
         </div>
 
         {view === 'collection' && (
-          <Gallery
-            state={collectionState}
-            notice={collectionNotice}
-            onRetry={() => void refresh()}
-            pours={pours}
-            current={current}
-            wide={wide}
-            onSelect={(pour) => {
-              setCurrent(pour);
-              setView('certificate');
-            }}
-          />
+          <Suspense fallback={<p role="status">Reading the collection…</p>}>
+            <Gallery
+              state={collectionState}
+              notice={collectionNotice}
+              onRetry={() => void refresh()}
+              pours={pours}
+              current={current}
+              wide={wide}
+              onSelect={(pour) => {
+                setCurrent(pour);
+                setView('certificate');
+              }}
+            />
+          </Suspense>
         )}
 
-        {view === 'certificate' && current && <CertificateView pour={current} />}
+        {view === 'certificate' && current && (
+          <Suspense fallback={null}>
+            <CertificateView pour={current} />
+          </Suspense>
+        )}
       </main>
 
       <footer

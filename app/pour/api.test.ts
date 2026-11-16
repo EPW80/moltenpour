@@ -54,6 +54,13 @@ describe("apiFetch", () => {
     expect(f).toHaveBeenCalledTimes(1);
   });
 
+  it("maps an explicit expired code without retrying", async () => {
+    const f = vi.fn<typeof fetch>().mockResolvedValue(json({ error: "lapsed", code: "expired" }, 400));
+    const err = await apiFetch("/x", {}, { ...fast, fetch: f }).catch((e) => e);
+    expect(err).toMatchObject({ code: "expired", status: 400, retryable: false, message: "lapsed" });
+    expect(f).toHaveBeenCalledTimes(1);
+  });
+
   it("maps 409 to conflict and does not retry", async () => {
     const f = vi.fn<typeof fetch>().mockResolvedValue(json({ error: "tier mismatch" }, 409));
     const err = await apiFetch("/x", {}, { ...fast, fetch: f }).catch((e) => e);

@@ -7,10 +7,12 @@ import (
 	"flag"
 	"fmt"
 	"log/slog"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -25,35 +27,25 @@ func main() {
 	staticDir := flag.String("static", "", "directory of the built SPA to serve; empty serves the API alone")
 	backupPath := flag.String("backup", "", "export a consistent SQLite snapshot to a new file, then exit")
 	verifyPath := flag.String("verify-backup", "", "check an existing SQLite snapshot, then exit")
+	auditPath := flag.String("audit", "", "read the ledger and report the escalation signals, then exit")
 	flag.Parse()
 
 	log := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
 
-	if *backupPath != "" || *verifyPath != "" {
+	if *backupPath != "" || *verifyPath != "" || *auditPath != "" {
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		defer cancel()
-		var err error
-		if *backupPath != "" && *verifyPath != "" {
-			err = fmt.Errorf("use either -backup or -verify-backup")
-		} else if *backupPath != "" {
-			err = pour.SnapshotSQLite(ctx, *dbPath, *backupPath)
-		} else {
-			err = pour.VerifySQLite(ctx, *verifyPath)
-		}
-		if err != nil {
-			log.Error("backup failed", "err", err)
+		if err := runOneShot(ctx, *dbPath, *backupPath, *verifyPath, *auditPath, log); err != nil {
+			log.Error("operation failed", "err", err)
 			os.Exit(1)
 		}
-		log.Info("backup verified")
+		log.Info("operation completed")
 		return
 	}
 
 	// Paid tiers mint for free while receipt validation is a stub, so the
 	// default refuses them. A deployment that can charge raises this.
-	maxTier := envInt("MOLTENPOUR_MAX_TIER", 0, log)
-	if maxTier > pour.MaxTierIndex {
-		maxTier = pour.MaxTierIndex
-	}
+	maxTier := clampTierCeiling(envInt("MOLTENPOUR_MAX_TIER", 0, log), log)
 
 	secret := os.Getenv("MOLTENPOUR_SECRET")
 	if err := validateProduction(os.Getenv("MOLTENPOUR_ENV"), secret, maxTier); err != nil {
@@ -126,9 +118,16 @@ func main() {
 		MaxHeaderBytes: 16 << 10,
 	}
 
+	listener, err := net.Listen("tcp", *addr)
+	if err != nil {
+		log.Error("binding server", "err", err)
+		os.Exit(1)
+	}
+	// The rehearsal uses this process's log to establish that it owns the port.
+	// Emit only after binding, including the assigned port when -addr ends in :0.
+	log.Info("listening", "addr", listener.Addr().String())
 	go func() {
-		log.Info("listening", "addr", *addr)
-		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		if err := srv.Serve(listener); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Error("server failed", "err", err)
 			os.Exit(1)
 		}
@@ -171,6 +170,24 @@ func envInt(name string, fallback int, log *slog.Logger) int {
 	return n
 }
 
+// clampTierCeiling keeps a deployment's tier ceiling inside what the ledger can
+// mint, at both ends. A ceiling above the ledger is clamped. One below zero is
+// floored to zero — "negative tiers" has no meaning, and passing a negative
+// ceiling through would disable even the free tier (handleMint rejects anything
+// above the ceiling), so a typo must not silently brick the one tier that costs
+// nothing.
+func clampTierCeiling(n int, log *slog.Logger) int {
+	if n < 0 {
+		log.Warn("tier ceiling below zero; flooring to 0", "value", n)
+		return 0
+	}
+	if n > pour.MaxTierIndex {
+		log.Warn("tier ceiling above the ledger maximum; clamping", "value", n, "max", pour.MaxTierIndex)
+		return pour.MaxTierIndex
+	}
+	return n
+}
+
 func validateProduction(environment, secret string, maxTier int) error {
 	if environment != "production" {
 		return nil
@@ -182,4 +199,51 @@ func validateProduction(environment, secret string, maxTier int) error {
 		return fmt.Errorf("production paid tiers require receipt validation; set MOLTENPOUR_MAX_TIER=0")
 	}
 	return nil
+}
+
+// runOneShot carries out a single -backup, -verify-backup, or -audit operation
+// and returns its error. Exactly one path may be set; the three share the
+// read-only ledger access and the two-minute timeout.
+func runOneShot(ctx context.Context, dbPath, backupPath, verifyPath, auditPath string, log *slog.Logger) error {
+	set := 0
+	for _, p := range []string{backupPath, verifyPath, auditPath} {
+		if p != "" {
+			set++
+		}
+	}
+	if set != 1 {
+		return fmt.Errorf("use exactly one of -backup, -verify-backup, -audit")
+	}
+	switch {
+	case backupPath != "":
+		if err := pour.SnapshotSQLite(ctx, dbPath, backupPath); err != nil {
+			return err
+		}
+		log.Info("backup verified")
+	case verifyPath != "":
+		if err := pour.VerifySQLite(ctx, verifyPath); err != nil {
+			return err
+		}
+		log.Info("snapshot verified")
+	case auditPath != "":
+		report, err := pour.Audit(ctx, auditPath)
+		if err != nil {
+			return err
+		}
+		printAudit(report)
+		if alarms := report.Alarms(); len(alarms) > 0 {
+			return fmt.Errorf("ledger audit alarms: %s", strings.Join(alarms, "; "))
+		}
+	}
+	return nil
+}
+
+func printAudit(r pour.AuditReport) {
+	fmt.Printf("pours             %d\n", r.Total)
+	fmt.Printf("highest position  %d\n", r.HighestPosition)
+	fmt.Printf("violation rate    %.2f%% (%d of %d)\n", r.ViolationRate()*100, r.Violations, r.Total)
+	fmt.Printf("singular (t3-5)   %.2f%% (%d of %d)\n", r.SingularShare()*100, r.Singular345, r.Tiers345)
+	for _, tc := range r.Tiers {
+		fmt.Printf("  tier %d          %d\n", tc.Tier, tc.Count)
+	}
 }

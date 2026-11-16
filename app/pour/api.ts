@@ -21,7 +21,7 @@ import type { MintRequest, PourRecord, ServerConfig } from "./record";
  * server    the server failed; it may succeed on another attempt
  * conflict  the request contradicts what the ledger already holds (409)
  */
-export type ApiErrorCode = "network" | "timeout" | "client" | "server" | "conflict";
+export type ApiErrorCode = "network" | "timeout" | "client" | "server" | "conflict" | "expired";
 
 export class ApiError extends Error {
   readonly status: number;
@@ -73,25 +73,33 @@ const FALLBACK: Record<ApiErrorCode, string> = {
   client: "The ledger refused the request.",
   server: "The ledger failed to process the request.",
   conflict: "The request conflicts with the ledger.",
+  expired: "The pour has lapsed.",
 };
 
-async function serverMessage(res: Response): Promise<string | undefined> {
+/** The server's own words and a machine-readable error code, if it sent one. */
+async function serverBody(res: Response): Promise<{ message?: string; code?: string }> {
   try {
     const body: unknown = await res.json();
-    if (typeof body === "object" && body !== null && "error" in body) {
-      const msg = (body as { error: unknown }).error;
-      if (typeof msg === "string" && msg !== "") return msg;
+    if (typeof body === "object" && body !== null) {
+      const b = body as { error?: unknown; code?: unknown };
+      return {
+        message: typeof b.error === "string" && b.error !== "" ? b.error : undefined,
+        code: typeof b.code === "string" && b.code !== "" ? b.code : undefined,
+      };
     }
   } catch {
     // Not JSON (a proxy's HTML page, say). Fall back to the fixed line.
   }
-  return undefined;
+  return {};
 }
 
 async function failureFor(res: Response): Promise<ApiError> {
-  const code: ApiErrorCode =
+  const { message, code } = await serverBody(res);
+  const byStatus: ApiErrorCode =
     res.status === 409 ? "conflict" : res.status >= 500 ? "server" : "client";
-  return new ApiError(code, res.status, (await serverMessage(res)) ?? FALLBACK[code]);
+  const apiCode: ApiErrorCode =
+    code === "expired" ? "expired" : code === "conflict" ? "conflict" : byStatus;
+  return new ApiError(apiCode, res.status, message ?? FALLBACK[apiCode]);
 }
 
 function isTimeout(e: unknown): boolean {

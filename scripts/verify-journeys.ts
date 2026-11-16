@@ -24,6 +24,62 @@ const drops = (page: Page) => page.evaluate(() => Number((document.body.textCont
 try {
   await server.listen();
   browser = await puppeteer.launch({ executablePath: await findChrome(), args: ['--no-sandbox', '--enable-unsafe-swiftshader'] });
+  // Exercise unsupported sensors and permission-gated touch without Puppeteer's
+  // element helpers, whose evaluation can itself grant user activation.
+  for (const touch of [false, true]) {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 390, height: 900, isMobile: touch, hasTouch: touch });
+    const errors: string[] = [];
+    const backgrounds: string[] = [];
+    page.on('pageerror', (err) => errors.push(String(err)));
+    await page.evaluateOnNewDocument((needsPermission) => {
+      const trace = { permissions: [] as boolean[], listeners: 0 };
+      (window as unknown as { orientationTrace: typeof trace }).orientationTrace = trace;
+      Object.defineProperty(window, 'DeviceOrientationEvent', {
+        configurable: true,
+        value: needsPermission ? class {
+          static requestPermission() {
+            const active = navigator.userActivation.isActive;
+            trace.permissions.push(active);
+            return active ? Promise.resolve('granted') : Promise.reject(new Error('No user activation'));
+          }
+        } : undefined,
+      });
+      const add = window.addEventListener;
+      const remove = window.removeEventListener;
+      window.addEventListener = function(type, ...args) {
+        if (type === 'deviceorientation') trace.listeners++;
+        return add.call(this, type, ...args);
+      };
+      window.removeEventListener = function(type, ...args) {
+        if (type === 'deviceorientation') trace.listeners--;
+        return remove.call(this, type, ...args);
+      };
+    }, touch);
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+      const path = new URL(request.url()).pathname;
+      if (path.endsWith('/MoltenBackground.tsx')) backgrounds.push(path);
+      void (path.startsWith('/api/')
+        ? request.respond({ status: 200, contentType: 'application/json', body: path === '/api/config' ? '{"maxTierIndex":0}' : '[]' })
+        : request.continue()).catch((err) => errors.push(String(err)));
+    });
+    await page.goto('http://localhost:5201/', { waitUntil: 'networkidle0' });
+    assert.equal(backgrounds.length, 0, 'decorative Three.js loaded before interaction');
+    const background = page.waitForRequest((r) => new URL(r.url()).pathname.endsWith('/MoltenBackground.tsx'));
+    if (touch) await page.touchscreen.tap(20, 20);
+    else await page.mouse.click(20, 20);
+    await background;
+    if (touch) {
+      await page.waitForFunction(() => (window as unknown as { orientationTrace: { listeners: number } }).orientationTrace.listeners === 1);
+      assert.deepEqual(await page.evaluate(() => (window as unknown as { orientationTrace: { permissions: boolean[] } }).orientationTrace.permissions), [true]);
+    } else {
+      await page.mouse.click(20, 20);
+    }
+    assert.deepEqual(errors, [], 'orientation fallback threw a browser error');
+    await page.close();
+    console.log(`${touch ? 'touch permission' : 'unavailable sensors'}: deferred background and orientation passed`);
+  }
   for (const width of [1280, 390]) {
     const page = await browser.newPage();
     await page.setViewport({ width, height: 900 });
