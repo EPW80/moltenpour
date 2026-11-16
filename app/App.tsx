@@ -88,7 +88,6 @@ export function App() {
   const [current, setCurrent] = useState<PourRecord | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [sealing, setSealing] = useState(false);
-  const [backgroundReady, setBackgroundReady] = useState(false);
   // Rendering resumes at fade start; interaction waits until the overlay is gone.
   const [introBusy, setIntroBusy] = useState(() => introInitial() !== 'done');
   const [introVisible, setIntroVisible] = useState(introBusy);
@@ -151,20 +150,6 @@ export function App() {
   }, []);
 
   useEffect(() => { void refresh(); void loadConfig(); }, [refresh, loadConfig]);
-
-  useEffect(() => {
-    const activate = () => {
-      setBackgroundReady(true);
-      window.removeEventListener('pointerdown', activate);
-      window.removeEventListener('keydown', activate);
-    };
-    window.addEventListener('pointerdown', activate);
-    window.addEventListener('keydown', activate);
-    return () => {
-      window.removeEventListener('pointerdown', activate);
-      window.removeEventListener('keydown', activate);
-    };
-  }, []);
 
   useEffect(() => () => {
     if (sealTimer.current !== null) window.clearTimeout(sealTimer.current);
@@ -231,7 +216,7 @@ export function App() {
         fontFamily: FONT.instrument,
       }}
     >
-      {backgroundReady && !introBusy && view !== 'certificate' && (
+      {!introVisible && view !== 'certificate' && (
         <Suspense fallback={null}>
           <MoltenBackground dimmed={phase === 'pouring'} />
         </Suspense>

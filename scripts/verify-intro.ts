@@ -11,6 +11,7 @@ declare global {
       frames: Set<number>;
       resize: Set<EventListenerOrEventListenerObject>;
       keys: Set<EventListenerOrEventListenerObject>;
+      backgroundDraws: number;
     };
     introHarness: { unmount(): void; events: string[] };
   }
@@ -57,12 +58,15 @@ async function open(mode: Mode, harness = false, width = 1280) {
   await page.setViewport({ width, height: 900 });
   const errors: string[] = [];
   const modules: string[] = [];
-  page.on('pageerror', (error) => errors.push(String(error)));
+  page.on('pageerror', (error) => {
+    errors.push(String(error));
+    console.error(`Intro browser error: ${error}`);
+  });
   if (mode === 'reduced') await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
   await page.evaluateOnNewDocument((mode) => {
     if (mode === 'seen') sessionStorage.setItem('molten-pour:intro-seen', '1');
     const trace = window.introTrace = {
-      contexts: [] as WebGLRenderingContext[], frames: new Set<number>(),
+      contexts: [] as WebGLRenderingContext[], frames: new Set<number>(), backgroundDraws: 0,
       resize: new Set<EventListenerOrEventListenerObject>(), keys: new Set<EventListenerOrEventListenerObject>(),
     };
     const getContext = HTMLCanvasElement.prototype.getContext;
@@ -76,6 +80,13 @@ async function open(mode: Mode, harness = false, width = 1280) {
       }
       return result;
     } as typeof getContext;
+    for (const method of ['drawArrays', 'drawElements'] as const) {
+      const draw = WebGL2RenderingContext.prototype[method];
+      WebGL2RenderingContext.prototype[method] = function(...args: number[]) {
+        if ((this.canvas as HTMLCanvasElement).closest('.mp-bg')) trace.backgroundDraws++;
+        return Reflect.apply(draw, this, args);
+      };
+    }
     const request = window.requestAnimationFrame.bind(window);
     const cancel = window.cancelAnimationFrame.bind(window);
     window.requestAnimationFrame = (callback) => {
@@ -181,9 +192,24 @@ try {
     assert.equal(await page.$('.mp-skip'), null, 'session reload replayed intro');
     assert(!reloadModules.some((url) => url.includes('/introScene.ts')), 'returning visit imported intro scene');
     assert(await page.evaluate(() => document.activeElement === document.body), 'skipped intro stole focus');
+    await page.waitForSelector('.mp-bg canvas');
     assert.deepEqual(errors, []);
     await page.close();
     console.log(`${width}px: GPU handoff, focus containment, skip, session reload passed`);
+  }
+
+  // No click, key, or pointer movement: smoke must start when the intro disappears.
+  {
+    const { page, errors } = await open('normal');
+    await started(page);
+    assert.equal(await page.$('.mp-bg'), null, 'background mounted before intro completion');
+    await dismissed(page);
+    await page.waitForFunction(() => window.introTrace.backgroundDraws > 0);
+    const before = await page.evaluate(() => window.introTrace.backgroundDraws);
+    await page.waitForFunction((before) => window.introTrace.backgroundDraws > before, {}, before);
+    assert.deepEqual(errors, []);
+    await page.close();
+    console.log('untouched intro: background starts and animates automatically after dismissal');
   }
 
   // Every fallback uses the same accessible overlay; static intros can also be skipped.
