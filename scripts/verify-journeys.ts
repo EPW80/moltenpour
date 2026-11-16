@@ -33,6 +33,7 @@ try {
     const backgrounds: string[] = [];
     page.on('pageerror', (err) => errors.push(String(err)));
     await page.evaluateOnNewDocument((needsPermission) => {
+      sessionStorage.setItem('molten-pour:intro-seen', '1');
       const trace = { permissions: [] as boolean[], listeners: 0 };
       (window as unknown as { orientationTrace: typeof trace }).orientationTrace = trace;
       Object.defineProperty(window, 'DeviceOrientationEvent', {
@@ -87,6 +88,7 @@ try {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(String(err)));
     await page.evaluateOnNewDocument(() => {
+      sessionStorage.setItem('molten-pour:intro-seen', '1');
       const original = WebGLRenderingContext.prototype.drawArrays;
       (window as unknown as { vesselDraws: number }).vesselDraws = 0;
       WebGLRenderingContext.prototype.drawArrays = function(...args) {

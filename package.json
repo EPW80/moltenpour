@@ -11,6 +11,7 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "verify:journeys": "vite-node scripts/verify-journeys.ts",
+    "verify:intro": "vite-node scripts/verify-intro.ts",
     "verify:certificate": "vite-node scripts/verify-certificate.ts",
     "certificate:pdf": "vite-node scripts/certificate-pdf.ts"
   },

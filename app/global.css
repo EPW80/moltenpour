@@ -63,6 +63,14 @@ a:hover {
   box-shadow: 0 30px 60px -26px rgba(0,0,0,.85), 0 0 40px -12px rgba(245,214,122,.25) !important;
 }
 
+/* The intro's skip control. Its rest state is inline like the rest of the
+   overlay; only :hover needs a class, so it wins here the same way the rows and
+   tiles above do. */
+.mp-skip:hover {
+  color: #f7e9c2 !important;
+  border-color: rgba(245, 214, 122, .6) !important;
+}
+
 :focus-visible {
   outline: 1px solid #f5d67a;
   outline-offset: 3px;
