@@ -1,6 +1,12 @@
 package main
 
-import "testing"
+import (
+	"io"
+	"log/slog"
+	"testing"
+
+	"moltenpour/api/pour"
+)
 
 func TestProductionConfiguration(t *testing.T) {
 	for _, tc := range []struct {
@@ -17,6 +23,27 @@ func TestProductionConfiguration(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			if err := validateProduction(tc.environment, tc.secret, tc.maxTier); (err != nil) != tc.bad {
 				t.Fatalf("error = %v, want refusal = %v", err, tc.bad)
+			}
+		})
+	}
+}
+
+func TestClampTierCeiling(t *testing.T) {
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	for _, tc := range []struct {
+		name string
+		in   int
+		want int
+	}{
+		{"within range", 2, 2},
+		{"at floor", 0, 0},
+		{"below floor", -1, 0},
+		{"at ceiling", pour.MaxTierIndex, pour.MaxTierIndex},
+		{"above ceiling", pour.MaxTierIndex + 1, pour.MaxTierIndex},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := clampTierCeiling(tc.in, log); got != tc.want {
+				t.Fatalf("clampTierCeiling(%d) = %d, want %d", tc.in, got, tc.want)
 			}
 		})
 	}

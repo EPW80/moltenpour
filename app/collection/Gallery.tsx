@@ -9,6 +9,8 @@
  * same stored seed, so the tile and the sheet cannot disagree.
  */
 
+import { useState } from "react";
+
 import { CARD_BORDER, COLOR, FONT, RARITY_PRESENTATION, RADIUS } from "../design/tokens";
 import { SigilSvg } from "../sigil/SigilSvg";
 import { formatConsideration, formatUSD } from "../ceremony/tiers";
@@ -25,8 +27,14 @@ type Props = {
   onSelect: (pour: PourRecord) => void;
 };
 
+/** How many tiles mount at once; the rest stay behind "Show more". */
+const GALLERY_PAGE = 60;
+
 export function Gallery({ state, notice, onRetry, pours, current, wide, onSelect }: Props) {
   const totalCents = pours.reduce((sum, p) => sum + p.amountCents, 0);
+  // The API returns every pour; mounting every sigil at once is unbounded work
+  // for a collection that grows forever. Render a window and ask for the rest.
+  const [limit, setLimit] = useState(GALLERY_PAGE);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
@@ -116,7 +124,7 @@ export function Gallery({ state, notice, onRetry, pours, current, wide, onSelect
             gap: "clamp(14px, 1.6vw, 22px)",
           }}
         >
-          {pours.map((p, i) => {
+          {pours.slice(0, limit).map((p, i) => {
             const presentation =
               RARITY_PRESENTATION[p.rarity] ?? RARITY_PRESENTATION.Common;
             // The sheet being viewed carries its own accent. That is the only
@@ -226,6 +234,27 @@ export function Gallery({ state, notice, onRetry, pours, current, wide, onSelect
             );
           })}
         </ul>
+      )}
+      {pours.length > limit && (
+        <button
+          type="button"
+          onClick={() => setLimit((limit) => limit + GALLERY_PAGE)}
+          style={{
+            alignSelf: "center",
+            padding: "12px 18px",
+            background: "transparent",
+            border: `1px solid ${COLOR.ruleStage}`,
+            borderRadius: RADIUS.button,
+            color: COLOR.goldCream,
+            fontFamily: FONT.instrument,
+            fontSize: 11,
+            letterSpacing: "2.6px",
+            textTransform: "uppercase",
+            cursor: "pointer",
+          }}
+        >
+          Show {Math.min(GALLERY_PAGE, pours.length - limit)} of {pours.length - limit} more
+        </button>
       )}
     </div>
   );

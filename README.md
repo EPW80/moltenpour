@@ -146,9 +146,15 @@ npm run typecheck
 npm test                       # includes the TS↔corpus and geometry invariants
 npm run gencorpus && git diff --exit-code api/sigil/testdata/corpus.json
 go vet ./api/... && go test -race ./api/...
+go run ./api/cmd/server -audit ./moltenpour.db   # escalation rates; exits 1 on alarm
 npm run verify:certificate     # renders and measures the A4 sheet, needs Chrome
 npm run verify:journeys        # desktop/mobile browser regressions, needs Chrome
 ```
+
+The audit is the accepted-risk note's review mechanism in one command: it aggregates
+the violation rate and the Singular share on tiers 3–5 and fails when either crosses
+the thresholds at the bottom of `app/sigil/telemetry.ts`. `scripts/ledger-audit.sh`
+wraps it for a ledger anywhere on disk.
 
 `-race` because the ledger is the one place with real concurrency: `Append`
 assigns a position and mints inside the same critical section, and a race there

@@ -385,16 +385,45 @@ export function PourScreen({
     wakeRef.current();
   }, [active, tierIndex, closeStream]);
 
-  // Real device tilt where it exists. No permission prompt on load: iOS gates
-  // this behind a user gesture, and asking before the user has chosen to pour is
-  // the kind of thing that reads as a dark pattern.
+  // Real device tilt where available; pointer steering covers unsupported or
+  // denied sensors. Permission requests run on click, after touch activation.
   useEffect(() => {
+    const orientation = window.DeviceOrientationEvent as (typeof DeviceOrientationEvent & {
+      requestPermission?: () => Promise<"granted" | "denied" | "default">;
+    }) | undefined;
+    if (!orientation) return;
+
     const onOrient = (e: DeviceOrientationEvent) => {
       if (typeof e.gamma === "number")
         leanRef.current = Math.max(-1, Math.min(1, e.gamma / 45));
     };
-    window.addEventListener("deviceorientation", onOrient);
-    return () => window.removeEventListener("deviceorientation", onOrient);
+    let attached = false;
+    let disposed = false;
+    const attach = () => {
+      if (disposed || attached) return;
+      attached = true;
+      window.addEventListener("deviceorientation", onOrient);
+    };
+
+    const onFirstGesture = async () => {
+      window.removeEventListener("click", onFirstGesture);
+      try {
+        if (await orientation.requestPermission?.() === "granted") attach();
+      } catch {
+        // Denied or unavailable: continue with pointer steering.
+      }
+    };
+    if (typeof orientation.requestPermission === "function") {
+      window.addEventListener("click", onFirstGesture);
+    } else {
+      attach();
+    }
+
+    return () => {
+      disposed = true;
+      window.removeEventListener("click", onFirstGesture);
+      if (attached) window.removeEventListener("deviceorientation", onOrient);
+    };
   }, []);
 
   // The rows that can actually be poured. Wrapping over the offered count

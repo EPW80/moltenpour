@@ -69,6 +69,21 @@ func honest() sigil.Telemetry {
 	return sigil.Telemetry{DropletsLanded: 60, PeakVelocity: 1400, TiltEnergy: 9, HoldMs: 4000}
 }
 
+// A timestamp outside the settle window must be identifiable as ErrClockSkew,
+// not just ErrValidation, so the HTTP layer can tell the client to start over.
+func TestMintExpiredTimestampIsClockSkew(t *testing.T) {
+	_, err := Mint(req(0, honest()), 1, ownerA, when.Add(6*time.Minute))
+	if err == nil {
+		t.Fatal("expected an out-of-window timestamp to be refused")
+	}
+	if !errors.Is(err, ErrClockSkew) {
+		t.Fatalf("expected ErrClockSkew, got %v", err)
+	}
+	if !errors.Is(err, ErrValidation) {
+		t.Fatalf("expected the clock-skew error to still be ErrValidation, got %v", err)
+	}
+}
+
 // The property the whole cross-language pipeline exists to protect: the seed the
 // server mints is the seed the client previewed. Here that means Mint's seed is
 // exactly HashSeed over the clamped telemetry, with no server-side substitution

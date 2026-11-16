@@ -20,6 +20,12 @@ import (
 // parsing error strings.
 var ErrValidation = errors.New("invalid pour request")
 
+// ErrClockSkew marks a Mint failure whose timestampMs fell outside the accepted
+// settle window. It is still ErrValidation to the HTTP layer (a 400), but the
+// client must tell a lapsed pour — recoverable, discard and begin again — apart
+// from any other refusal, so it is carried as its own cause for errors.Is.
+var ErrClockSkew = errors.New("pour timestamp outside the accepted window")
+
 // Record is the pour, as stored and as the certificate renders it.
 //
 // The JSON field names are the contract with app/pour/record.ts. Changing one
@@ -96,7 +102,7 @@ func Mint(req Request, ledgerPosition int, ownerID string, now time.Time) (Recor
 	nowMs := now.UnixMilli()
 	skewMs := maxClockSkew.Milliseconds()
 	if req.TimestampMs < nowMs-skewMs || req.TimestampMs > nowMs+skewMs {
-		return Record{}, fmt.Errorf("%w: timestampMs %d outside the accepted window", ErrValidation, req.TimestampMs)
+		return Record{}, fmt.Errorf("%w: %w: timestampMs %d outside the accepted window", ErrValidation, ErrClockSkew, req.TimestampMs)
 	}
 
 	// The wall clock the client had available: pour-start to now. A pour cannot

@@ -308,6 +308,64 @@ func TestMintAtATakenStartWithAnotherTierIsAConflict(t *testing.T) {
 	}
 }
 
+// An out-of-window pour is a 400 carrying a machine-readable "expired" code, so
+// the client can say "begin again" instead of offering a seal that cannot work.
+func TestExpiredPourCarriesAnExpiredCode(t *testing.T) {
+	h := newTestServer(t)
+	v := newVisitor(t, h)
+	// Six minutes before the server's fixed clock: outside the ±5 minute window.
+	start := now.Add(-6 * time.Minute).UnixMilli()
+	w := v.do(http.MethodPost, "/api/pours", mintBody(0, start))
+	if w.Code != http.StatusBadRequest {
+		t.Fatalf("got %d, want 400 (body %s)", w.Code, w.Body.String())
+	}
+	var body struct {
+		Code string `json:"code"`
+	}
+	if err := json.Unmarshal(w.Body.Bytes(), &body); err != nil {
+		t.Fatal(err)
+	}
+	if body.Code != "expired" {
+		t.Fatalf("got code %q, want %q (body %s)", body.Code, "expired", w.Body.String())
+	}
+	if got := v.list(); len(got) != 0 {
+		t.Fatalf("an expired pour took a ledger position: %d pours", len(got))
+	}
+}
+
+// Require EOF, including surfacing body-limit errors while reading the tail.
+func TestMintRejectsTrailingJSON(t *testing.T) {
+	for _, tc := range []struct {
+		name, tail string
+	}{
+		{"second object", ` {"junk":true}`},
+		{"closing array", `]`},
+		{"closing object", `}`},
+		{"second null", ` null`},
+		{"oversized whitespace", strings.Repeat(" ", 70000)},
+		{"object beyond limit", strings.Repeat(" ", 70000) + `{}`},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			v := newVisitor(t, newTestServer(t))
+			w := v.do(http.MethodPost, "/api/pours", mintBody(0, freshStart())+tc.tail)
+			if w.Code != http.StatusBadRequest {
+				t.Fatalf("got %d, want 400 (body %s)", w.Code, w.Body.String())
+			}
+			if got := v.list(); len(got) != 0 {
+				t.Fatalf("a malformed mint took a ledger position: %d pours", len(got))
+			}
+		})
+	}
+}
+
+func TestMintAcceptsTrailingWhitespace(t *testing.T) {
+	v := newVisitor(t, newTestServer(t))
+	w := v.do(http.MethodPost, "/api/pours", mintBody(0, freshStart())+" \n\t\r")
+	if w.Code != http.StatusCreated {
+		t.Fatalf("got %d, want 201 (body %s)", w.Code, w.Body.String())
+	}
+}
+
 // Replays must not double-count in the logs the rate escalations are computed
 // from: one "minted" line per pour, however many times it is retried.
 func TestReplayIsNotLoggedAsAMint(t *testing.T) {

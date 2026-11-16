@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"io"
 	"log/slog"
 	"net/http"
 	"strconv"
@@ -112,6 +113,13 @@ func (s *Server) writeErr(w http.ResponseWriter, code int, msg string) {
 	s.writeJSON(w, code, map[string]string{"error": msg})
 }
 
+// writeErrCode is writeErr plus a machine-readable code. The client keys
+// ApiError.code off it for errors it must act on differently — a lapsed pour is
+// told to begin again, for instance — rather than parsing the sentence.
+func (s *Server) writeErrCode(w http.ResponseWriter, status int, code, msg string) {
+	s.writeJSON(w, status, map[string]string{"error": msg, "code": code})
+}
+
 func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	if s.mintLimit != nil {
 		ip := s.sessions.ClientIP(r)
@@ -136,6 +144,12 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 	dec.DisallowUnknownFields()
 	if err := dec.Decode(&req); err != nil {
 		s.writeErr(w, http.StatusBadRequest, "malformed request: "+err.Error())
+		return
+	}
+	// Require EOF, rather than More (which is for array/object iteration).
+	// A second decode also surfaces malformed tails and body-limit read errors.
+	if err := dec.Decode(new(any)); err != io.EOF {
+		s.writeErr(w, http.StatusBadRequest, "malformed request: a single JSON object is expected")
 		return
 	}
 
@@ -164,6 +178,12 @@ func (s *Server) handleMint(w http.ResponseWriter, r *http.Request) {
 		return pour.Mint(req, position, ownerID, now)
 	})
 	if err != nil {
+		// A lapsed pour is a validation failure the client must distinguish: it
+		// is the one refusal that means start over, not try again.
+		if errors.Is(err, pour.ErrClockSkew) {
+			s.writeErrCode(w, http.StatusBadRequest, "expired", "that pour has lapsed and can no longer be sealed")
+			return
+		}
 		// pour.ErrValidation means the request itself was bad — safe to echo.
 		// Anything else is a store failure (disk, transaction, driver) and its
 		// raw message must not reach the client.
