@@ -33,6 +33,7 @@ try {
     const backgrounds: string[] = [];
     page.on('pageerror', (err) => errors.push(String(err)));
     await page.evaluateOnNewDocument((needsPermission) => {
+      sessionStorage.setItem('molten-pour:intro-seen', '1');
       const trace = { permissions: [] as boolean[], listeners: 0 };
       (window as unknown as { orientationTrace: typeof trace }).orientationTrace = trace;
       Object.defineProperty(window, 'DeviceOrientationEvent', {
@@ -65,11 +66,12 @@ try {
         : request.continue()).catch((err) => errors.push(String(err)));
     });
     await page.goto('http://localhost:5201/', { waitUntil: 'networkidle0' });
-    assert.equal(backgrounds.length, 0, 'decorative Three.js loaded before interaction');
-    const background = page.waitForRequest((r) => new URL(r.url()).pathname.endsWith('/MoltenBackground.tsx'));
+    assert.equal(backgrounds.length, 1, 'background must load automatically when the intro is already seen');
+    if (touch) {
+      assert.deepEqual(await page.evaluate(() => (window as unknown as { orientationTrace: { permissions: boolean[] } }).orientationTrace.permissions), [], 'automatic background must not request sensor permission');
+    }
     if (touch) await page.touchscreen.tap(20, 20);
     else await page.mouse.click(20, 20);
-    await background;
     if (touch) {
       await page.waitForFunction(() => (window as unknown as { orientationTrace: { listeners: number } }).orientationTrace.listeners === 1);
       assert.deepEqual(await page.evaluate(() => (window as unknown as { orientationTrace: { permissions: boolean[] } }).orientationTrace.permissions), [true]);
@@ -78,7 +80,7 @@ try {
     }
     assert.deepEqual(errors, [], 'orientation fallback threw a browser error');
     await page.close();
-    console.log(`${touch ? 'touch permission' : 'unavailable sensors'}: deferred background and orientation passed`);
+    console.log(`${touch ? 'touch permission' : 'unavailable sensors'}: automatic background and gesture-gated orientation passed`);
   }
   for (const width of [1280, 390]) {
     const page = await browser.newPage();
@@ -87,6 +89,7 @@ try {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(String(err)));
     await page.evaluateOnNewDocument(() => {
+      sessionStorage.setItem('molten-pour:intro-seen', '1');
       const original = WebGLRenderingContext.prototype.drawArrays;
       (window as unknown as { vesselDraws: number }).vesselDraws = 0;
       WebGLRenderingContext.prototype.drawArrays = function(...args) {

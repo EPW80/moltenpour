@@ -16,11 +16,12 @@
  * outcome. Those are hard constraints from the product brief, not preferences.
  */
 
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { PourScreen, type Phase } from './ceremony/PourScreen';
 import { APP_GROUND, COLOR, COLUMN_RULE, FONT, RARITY_PRESENTATION, RADIUS } from './design/tokens';
 import { useIsWide } from './design/viewport';
+import { Intro, introInitial } from './intro/Intro';
 import type { Rarity } from './sigil/rarity';
 import { ApiError, getConfig, listPours, mintPour } from './pour/api';
 import type { MintRequest, PourRecord } from './pour/record';
@@ -87,7 +88,18 @@ export function App() {
   const [current, setCurrent] = useState<PourRecord | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [sealing, setSealing] = useState(false);
-  const [backgroundReady, setBackgroundReady] = useState(false);
+  // Rendering resumes at fade start; interaction waits until the overlay is gone.
+  const [introBusy, setIntroBusy] = useState(() => introInitial() !== 'done');
+  const [introVisible, setIntroVisible] = useState(introBusy);
+  const wasIntroVisible = useRef(introVisible);
+  const navRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    if (wasIntroVisible.current && !introVisible) {
+      navRef.current?.querySelector<HTMLButtonElement>('[aria-current="page"]')?.focus({ preventScroll: true });
+    }
+    wasIntroVisible.current = introVisible;
+  }, [introVisible]);
 
   const [tierIndex, setTierIndex] = useState(0);
   const [maxTierIndex, setMaxTierIndex] = useState(0);
@@ -138,20 +150,6 @@ export function App() {
   }, []);
 
   useEffect(() => { void refresh(); void loadConfig(); }, [refresh, loadConfig]);
-
-  useEffect(() => {
-    const activate = () => {
-      setBackgroundReady(true);
-      window.removeEventListener('pointerdown', activate);
-      window.removeEventListener('keydown', activate);
-    };
-    window.addEventListener('pointerdown', activate);
-    window.addEventListener('keydown', activate);
-    return () => {
-      window.removeEventListener('pointerdown', activate);
-      window.removeEventListener('keydown', activate);
-    };
-  }, []);
 
   useEffect(() => () => {
     if (sealTimer.current !== null) window.clearTimeout(sealTimer.current);
@@ -218,7 +216,7 @@ export function App() {
         fontFamily: FONT.instrument,
       }}
     >
-      {backgroundReady && view !== 'certificate' && (
+      {!introVisible && view !== 'certificate' && (
         <Suspense fallback={null}>
           <MoltenBackground dimmed={phase === 'pouring'} />
         </Suspense>
@@ -231,6 +229,7 @@ export function App() {
           lives inside this container so an ultra-wide screen cannot push the
           vessel and the ledger to opposite edges. */}
       <div
+        ref={(el) => { if (el) el.inert = introVisible; }}
         style={{
           maxWidth: 1360,
           margin: '0 auto',
@@ -321,7 +320,7 @@ export function App() {
         </div>
       </header>
 
-      <nav className="app-chrome" style={{ position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 6, padding: '16px 0 0' }}>
+      <nav ref={navRef} className="app-chrome" style={{ position: 'relative', display: 'flex', flexWrap: 'wrap', gap: 6, padding: '16px 0 0' }}>
         <Tab disabled={sealing} active={view === 'ceremony'} onClick={() => setView('ceremony')}>
           The ceremony
         </Tab>
@@ -341,8 +340,8 @@ export function App() {
           {configState === 'error' && <p role="alert">Available tiers could not be loaded. <button type="button" onClick={() => void loadConfig()}>Retry availability</button></p>}
           <PourScreen
             key={draftGeneration}
-            active={view === 'ceremony'}
-            enabled={configState === 'ready'}
+            active={view === 'ceremony' && !introBusy}
+            enabled={configState === 'ready' && !introVisible}
             tierIndex={tierIndex}
             onTierIndex={setTierIndex}
             maxTierIndex={maxTierIndex}
@@ -404,6 +403,9 @@ export function App() {
         <span>{footerHint}</span>
       </footer>
       </div>
+
+      {/* The opening sequence overlays everything until it fades into the ceremony. */}
+      <Intro onBusyChange={setIntroBusy} onDismiss={() => setIntroVisible(false)} />
 
       {sealing && (
         <div
